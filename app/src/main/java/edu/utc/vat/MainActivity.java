@@ -1,22 +1,36 @@
 /**
  * UTC Virtual Athletic Trainer v0.000
- * 09.08.15
+ * rg 09.08.15
+ *
  */
 
 package edu.utc.vat;
 
 import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import android.view.Menu;
 import android.view.MenuItem;
 
+
 public class MainActivity extends AppCompatActivity {
+
+    private enum exercises {
+        NO_EXERCISE_SELECTED,
+        ONE_LEG_SQUAT_HOLD,
+        ONE_LEG_JUMP_BALANCE
+    }
+    private exercises exercise = exercises.NO_EXERCISE_SELECTED;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         CallNative.InstantiateSensorsHandler();
+
     }
 
 
@@ -26,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -41,4 +56,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    
 }
