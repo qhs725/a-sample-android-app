@@ -3,32 +3,48 @@ package edu.utc.vat;
  * UTC Virtual Athletic Trainer v0.000
  * 9/7/15
  */
+import android.util.Log;
 
 public class CallNative {
     static  {
-        System.loadLibrary("utc-vat-jni");
+        try {
+            System.loadLibrary("utcvatjni");
+        } catch (UnsatisfiedLinkError e) {
+            Log.e("ERROR --", "" + e);
+        }
     }
 
-    public static native void InstantiateSensorsHandler();
+    @SuppressWarnings("JniMissingFunction")
+    public static native int InstantiateSensorsHandler();
 
-    public static native void StartSensors();
+    @SuppressWarnings("JniMissingFunction")
+    public static native int StartSensors();
 
-    public static native void StopSensors();
+    @SuppressWarnings("JniMissingFunction")
+    public static native int StopSensors();
 
-    public static native void OpenFiles(); //a.dat, g.dat, c.dat
+    @SuppressWarnings("JniMissingFunction")
+    public static native int OpenFiles(); //a.dat, g.dat, c.dat
 
-    public static native void CloseFiles(); //a.dat, g.dat, c.dat
+    @SuppressWarnings("JniMissingFunction")
+    public static native int CloseFiles(); //a.dat, g.dat, c.dat
 
+    @SuppressWarnings("JniMissingFunction")
     public static native double PassFilePath(String path);
 
+    @SuppressWarnings("JniMissingFunction")
     public static native boolean SensorState();
 
+    @SuppressWarnings("JniMissingFunction")
     public static native boolean FilesOpen();
 
-    public static native void WriteOn();
+    @SuppressWarnings("JniMissingFunction")
+    public static native int WriteOn();
 
-    public static native void WriteOff();
+    @SuppressWarnings("JniMissingFunction")
+    public static native int WriteOff();
 
-    public static native void IO();
+    @SuppressWarnings("JniMissingFunction")
+    public static native int IO();
 
 }

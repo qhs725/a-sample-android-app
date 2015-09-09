@@ -9,22 +9,31 @@
 #include <iostream>
 #include <stdio.h>
 
+#include <android/log.h>
+
 #include "sensors.h"
 #include "comm.h"
+
+#define JNIEXPORT __attribute__ ((visibility ("default")))
 
 #define LOG_TAG "utc-vat-jni"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
+
+#define NELM(_) ((int) (sizeof(_)/sizeof((_)[0]))) // deprecated
+
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 
+
 JNIEXPORT jint JNICALL
 Java_edu_utc_vat_CallNative_InstantiateSensorsHandler(
         JNIEnv *, jobject) {
-    sh::sh_::sh__()._o_();
+    //sh::sh_::sh__()._o_();
+    LOGI("JNI::Initializing Sensors...\n");
 }
 
 JNIEXPORT jint JNICALL

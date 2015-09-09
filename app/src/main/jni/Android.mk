@@ -7,12 +7,12 @@ PROJECT_ROOT:= $(call my-dir)/../../../..
 
 include $(CLEAR_VARS)
 
-LOCAL_MODULE    := utc-vat-jni
+LOCAL_MODULE    := libutcvatjni
 
 LOCAL_SHARED_LIBRARIES := libPocoNet \
                           libPocoFoundation
 
-LOCAL_CFLAGS    := -Werror -std=c++11
+LOCAL_CPPFLAGS    := -Werror -std=c++11
 
 LOCAL_SRC_FILES := jni_native.cpp \
                    sensors.cpp \

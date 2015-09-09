@@ -24,6 +24,7 @@ extern "C" {
 
 /**
  * Sensors handler
+ *
  * */
 namespace sh {
 
@@ -106,6 +107,7 @@ namespace sh {
 
 /**
  * Write to internal memory
+ *
  * */
 namespace wti {
     void wti_::_path(const char *__p) {
