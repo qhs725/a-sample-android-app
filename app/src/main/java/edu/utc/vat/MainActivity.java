@@ -12,16 +12,18 @@ import android.os.Bundle;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    private enum exercises {
-        NO_EXERCISE_SELECTED,
-        ONE_LEG_SQUAT_HOLD,
-        ONE_LEG_JUMP_BALANCE
-    }
-    private exercises exercise = exercises.NO_EXERCISE_SELECTED;
+    final MainActivity self = this;
+
+    private static final int NO_EXERCISE_SELECTED = 0;
+    private static final int ONE_LEG_SQUAT_HOLD = 1;
+    private static final int ONE_LEG_JUMP_BALANCE = 2;
+    private static int exercise = NO_EXERCISE_SELECTED;
 
 
     @Override
@@ -29,6 +31,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        findViewById(R.id.MainMenuButton1).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                exercise = ONE_LEG_SQUAT_HOLD;
+                startActivity(TestingActivity.createIntent(self, ONE_LEG_SQUAT_HOLD));
+            }
+        });
+
+        findViewById(R.id.MainMenuButton2).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                exercise = ONE_LEG_JUMP_BALANCE;
+                startActivity(TestingActivity.createIntent(self, ONE_LEG_JUMP_BALANCE));
+            }
+        });
+
+        //TODO: complete preceding steps for instantiating sensors
         CallNative.InstantiateSensorsHandler();
 
     }
@@ -56,5 +75,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    
+
 }
