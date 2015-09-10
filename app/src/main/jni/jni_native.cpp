@@ -32,7 +32,7 @@ extern "C" {
 JNIEXPORT jint JNICALL
 Java_edu_utc_vat_CallNative_InstantiateSensorsHandler(
         JNIEnv *, jobject) {
-    //sh::sh_::sh__()._o_();
+    sh::sh_::sh__()._o_();
     LOGI("JNI::Initializing Sensors...\n");
 }
 

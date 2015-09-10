@@ -15,6 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import android.content.Context;
+
+import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
     private static final int ONE_LEG_SQUAT_HOLD = 1;
     private static final int ONE_LEG_JUMP_BALANCE = 2;
     private static int exercise = NO_EXERCISE_SELECTED;
+
+    private Context context;
 
 
     @Override
@@ -47,8 +52,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //TODO: complete preceding steps for instantiating sensors
+        File filepath = this.getFilesDir();
+        String path = filepath.toString();
+        CallNative.PassFilePath(path);
         CallNative.InstantiateSensorsHandler();
+        //CallNative.IO();
 
     }
 

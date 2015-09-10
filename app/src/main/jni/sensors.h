@@ -37,6 +37,10 @@ namespace sh {
             const ASensor *gIn;
             const ASensor *cIn;
 
+            int _0_;
+            int _1__;
+            int _2___;
+
             void _o_();
             void _o__();
             void _o___();
@@ -75,9 +79,9 @@ namespace wti {
             void _fopen();
             void _fclose();
 
-            FILE *fa_;
+            FILE *fa___;
             FILE *fg__;
-            FILE *fc___;
+            FILE *fc_;
 
             const char *___p;
             void _path(const char *__p);

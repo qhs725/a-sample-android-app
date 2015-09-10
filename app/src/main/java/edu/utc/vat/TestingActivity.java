@@ -16,7 +16,6 @@ import android.view.Menu;
 import android.view.inputmethod.InputMethodManager;
 
 import android.os.Bundle;
-import android.os.AsyncTask;
 
 import android.widget.EditText;
 import android.widget.TextView;
@@ -62,11 +61,9 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
 
     private final long DEFAULT_COUNTDOWN_TIME = 5;
     private final long DEFAULT_TESTING_TIME = 20;
-    //TODO: create alternate control for jump test; countdown timer then test until balanced or max
+    //TODO: create break for testing timer w/ jump test, i.e. if balanced prior to max/default time
 
     private Timer timer = new Timer(this);
-
-
 
 
     @Override
@@ -131,7 +128,7 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
             }
             case R.id.TestingResetButton: {
                 status = STOPPED;
-                //TODO: stop timer if necessary
+                //TODO: kill timer if running
                 getUserInfo.setText("");
                 getUserInfo.setOnClickListener(new View.OnClickListener() {
                        public void onClick(View view) {
@@ -155,6 +152,18 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
             }
         }
     }
+
+
+    //TODO: create onPause()
+    /**
+     * onPause()
+     */
+
+
+    //TODO: create onResume()
+    /**
+     * onResume()
+     */
 
 
     /**

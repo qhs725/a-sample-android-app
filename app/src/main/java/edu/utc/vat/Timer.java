@@ -30,6 +30,8 @@ public class Timer {
 
     private long countDownTime = 0;
     private long testingTime = 0;
+    private long countDownTimeConvert;
+    private long testingTimeConvert;
 
 
     public static final int STOPPED = 0;
@@ -64,20 +66,22 @@ public class Timer {
     }
 
 
+    //TODO: have reset kill timer
     public void countDown() {
 
-        if (state != STOPPED)
+        //TODO: if files are off, cut files on or read previous files first?
+        CallNative.StartSensors();
+
+        if (state != STOPPED) {;}
             //TODO: reset/continue?
 
         if (countDownTime > 0)
-            countDownTime = countDownTime * 1000 + 100;
+            countDownTimeConvert = countDownTime * 1000 + 100;
 
-        countDownTimer = new CountDownTimer(countDownTime, 1000) {
+        countDownTimer = new CountDownTimer(countDownTimeConvert, 1000) {
 
             @Override
             public void onTick(long timeRemaining) {
-
-                //TODO: start sensors
 
                 state = COUNTDOWN;
                 try {
@@ -109,15 +113,18 @@ public class Timer {
     }
 
 
+    //TODO: have reset kill timer
     public void testing() {
+
+        CallNative.WriteOn();
 
         if (state != TESTING) {;}
             //TODO: reset/continue?
 
         if (testingTime > 0)
-            testingTime = testingTime * 1000 + 100;
+            testingTimeConvert = testingTime * 1000 + 100;
 
-        testingTimer = new CountDownTimer(testingTime, 1000) {
+        testingTimer = new CountDownTimer(testingTimeConvert, 1000) {
 
             @Override
             public void onTick(long timeRemaining) {
@@ -139,8 +146,10 @@ public class Timer {
 
                 ((TestingActivity)appContext).timerUpdate(0);
                 ((TestingActivity)appContext).statusUpdate(state);
-                
-                //TODO: stop sensors
+
+                CallNative.WriteOff();
+                CallNative.StopSensors();
+                CallNative.CloseFiles();
             }
         }.start();
 
