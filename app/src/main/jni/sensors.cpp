@@ -22,13 +22,21 @@ extern "C" {
 #endif
 
 
-/**
- * Sensors handler
- *
- * */
+/*
+ * SENSORS HANDLER
+ */
 namespace sh {
 
+    /*
+     * 1) CONSTRUCTOR
+     * 2) VOID POINTER FOR SENSOR QUEUE TO USE
+     * 3) DESTRUCTOR
+     *
+     * THE BOOL sOn ISN'T BEING USED, _w_ IS
+     * I THINK THE STATIC FACTORY METHODS BYPASS THE CONSTRUCTOR
+     */
     sh_::sh_() : sOn(true) { wti::wti_::wti__()._w_ = false; }
+
     void *_ = malloc(10000);
 
     sh_::~sh_() {
@@ -36,6 +44,9 @@ namespace sh {
         sOn = false;
     };
 
+    /*
+     * THIS IS THE SENSOR 'CALLBACK' LOOP EQUIVALENT
+     */
     static int _o(int fd, int _e, void *_) {
         ASensorEvent __e;
         while (ASensorEventQueue_getEvents(sh_::sh__().sEq, &__e, 1) > 0) {
@@ -60,6 +71,11 @@ namespace sh {
         }
     }
 
+    /*
+     * THIS FUNCTION SETS UP SENSORS
+     * FIRST 3 VARS ARE COUNTERS FOR INITIALLY CHECKING THE NUMBER OF VALUES WRITTEN TO EACH SENSOR
+     * THEY'RE UNECESSARY
+     */
     void sh_::_o_() {
 
         _0_ = 0;
@@ -86,6 +102,10 @@ namespace sh {
                 sh_::sh__().sMg, sh_::sh__().lpr, 3, _o, _);
     }
 
+    /*
+     * THIS ENABLES THE SENSORS AND SETS THE SAMPLING RATE
+     * TODO: MAKE SAMPLING RATE CONSTANT SO IT'S CLEAR IT SHOULDN'T BE CHANGED
+     */
     void sh_::_o__() {
         ASensorEventQueue_enableSensor(sh_::sh__().sEq, sh_::sh__().aIn);
         ASensorEventQueue_enableSensor(sh_::sh__().sEq, sh_::sh__().gIn);
@@ -96,6 +116,11 @@ namespace sh {
         ASensorEventQueue_setEventRate(sh_::sh__().sEq, sh_::sh__().aIn, 10000);
     }
 
+    /*
+     * THIS DISABLES THE SENSORS
+     * SENSORS DRAIN BATTERY, SO, IF THE APP REMAINS ON IN THE BACKGROUND
+     * SENSORS NEED TO BE DISABLED.  IT'S BEST TO JUST CUT THEM ON FOR THE TEST THEN OFF AGAIN.
+     */
     void sh_::_o___() {
         ASensorEventQueue_disableSensor(sh_::sh__().sEq, sh_::sh__().cIn);
         ASensorEventQueue_disableSensor(sh_::sh__().sEq, sh_::sh__().gIn);
@@ -104,6 +129,10 @@ namespace sh {
         LOGI("NO VALUES WRITTEN FOR -> a: %d  g: %d  c: %d \n",_0_,_1__,_2___);
     }
 
+    /*
+     * THIS IS HERE FOR CHECKING THE SENSORS' STATE, i.e. ON/OFF, FROM JAVA
+     * IF THE CODE IS WRITTEN CORRECTLY IT CAN BE REMOVED
+     */
     bool sh_::_st() {
         if (st_)
             return true;
@@ -111,17 +140,26 @@ namespace sh {
             return false;
     }
 
-} // namespace sh
+} // NAMESPACE sh
 
-/**
- * Write to internal memory
- *
+/*
+ * WRITE TO INTERNAL MEMORY
  * */
 namespace wti {
+
+    /*
+     * DEPRECATED
+     */
     void wti_::_path(const char *__p) {
         ___p = __p;
     }
 
+    /*
+     * CHECKS IF FILES ARE OPEN TO WRITE OR CLOSED
+     * RETURNS TRUE IF ALL FILES ARE OPEN
+     * RETURNS FALSE IF ANY OR ALL FILES ARE CLOSED AND CLOSES OPEN FILES
+     * IF ANY OTHERS ARE ALREADY CLOSED
+     */
     bool wti_::_f() {
         if (fa___ != NULL && fg__ != NULL && fc_ != NULL) {
             return true;
@@ -142,6 +180,9 @@ namespace wti {
         }
     }
 
+    /*
+     * CLOSES ALL FILES AND SETS TO NULL FOR REALLOCATING AND REUSING
+     */
     void wti_::_fclose() {
         fclose(fg__);
         fg__ = NULL;
@@ -151,11 +192,20 @@ namespace wti {
         fc_ = NULL;
     }
 
+    /*
+     * CONSTRUCTOR/DESTRUCTOR
+     * BOOL UNUSED
+     */
     wti_::wti_() : _wti_(true) { }
     wti_::~wti_() {
         _wti_ = false;
     };
 
+    /*
+     * OPENS FILES TO WRITE
+     * PATHS ARE HARDCODED
+     * STRING BUILDING DEPRECATED
+     */
     void wti_::_fopen() {
         const char *_p = ___p;
         const char *a_ = "a.dat";
@@ -172,14 +222,23 @@ namespace wti {
         fg__ = fopen("/data/data/edu.utc.vat/files/g.dat", "w");
     }
 
+    /*
+     * SETS FLAG FOR ENABLING WRITING
+     */
     void wti_::_w() {
         _w_ = true;
     }
 
+    /*
+     * SETS FLAG FOR DISABLING WRITING
+     */
     void wti_::w_() {
         _w_ = false;
     }
 
+    /*
+     * WRITE FILES TO INTERNAL
+     */
     void wti_::_wti(const struct ASensorEvent _) {
         fprintf(fa___, "%f,%f,%f,%f\n", _.acceleration.x, _.acceleration.y, _.acceleration.z,
                 (double) (_.timestamp));
@@ -193,7 +252,7 @@ namespace wti {
                 (double) (_.timestamp));
     }
 
-} // namespace wti
+} // NAMESPACE wti
 
 
 #ifdef __cplusplus

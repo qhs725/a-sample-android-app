@@ -13,7 +13,9 @@
 extern "C" {
 #endif
 
-
+/*
+ * SENSORS HANDLER NAMESPACE
+ */
 namespace sh {
 
     class sh_ {
@@ -25,39 +27,49 @@ namespace sh {
                 return instance;
             }
 
+            //POINTER FOR LOOPER
             struct ALooper *lpr;
 
+            //POINTERS FOR 1. SENSOR MANAGER, 2. SENSOR EVENT QUEUE
             ASensorManager *sMg;
             ASensorEventQueue *sEq;
 
+            //CONSTRUCTOR/DESTRUCTOR
             sh_();
             ~sh_();
 
+            //SENSOR POINTERS FOR 1. ACCELEROMETER, 2. GYROSCOPE, 3. COMPASS
             const ASensor *aIn;
             const ASensor *gIn;
             const ASensor *cIn;
 
+            //COUNTERS FOR 1. ACCELEROMETER DATA, 2. GYROSCOPE DATA, 3. COMPASS DATA
             int _0_;
             int _1__;
             int _2___;
 
+            //1. INITIALIZE METHOD, 2. ENABLE SENSOR METHOD, 3. DISABLE SENSOR METHOD
             void _o_();
             void _o__();
             void _o___();
 
-            bool _st(); // state check
+            //CHECKS SENSORS STATE, i.e. ON/OFF
+            bool _st();
 
         private:
             bool sOn;
-            bool st_; // state var
+            bool st_;
 
     };
 
     static int _o(int fd, int _e, void *_);
 
-} // namespace sh
+} // NAMESPACE sh
 
 
+/*
+ * WRITE TO INTERNAL NAMESPACE
+ */
 namespace wti {
 
     class wti_ {
@@ -69,23 +81,29 @@ namespace wti {
 
             bool _w_;
 
+            //CONSTRUCTOR/DESTUCTOR -- 1. ACCELEROMETER, 2. GYROSCOPE, 3. COMPASS
             wti_();
             ~wti_();
 
-            void _wti(const struct ASensorEvent __e);
-            void __wti(const struct ASensorEvent __e);
-            void ___wti(const struct ASensorEvent __e);
+            //WRITE METHODS FOR EACH OF THE THREE SENSORS
+            void _wti(const struct ASensorEvent __e); //1.
+            void __wti(const struct ASensorEvent __e); //2.
+            void ___wti(const struct ASensorEvent __e); //3.
 
+            //METHODS FOR OPENING AND CLOSING FILES FOR WRITING TO INTERNAL STORAGE
             void _fopen();
             void _fclose();
 
-            FILE *fa___;
-            FILE *fg__;
-            FILE *fc_;
+            //FILES FOR WRITING TO INTERNAL STORAGE
+            FILE *fa___; //ACCELEROMETER
+            FILE *fg__; //GYROSCOPE
+            FILE *fc_; //COMPASS
 
+            // VAR FOR INTERNAL PATH AND FUNCTION TO WRITE INTERNAL PATH PASSED FROM JAVA
             const char *___p;
             void _path(const char *__p);
 
+            //CHECKS IF FILES ARE OPEN (_f) AND ENABLES/DISABLES WRITING { _w() / w_() }
             bool _f();
             void _w();
             void w_();
@@ -96,7 +114,7 @@ namespace wti {
 
     };
 
-} // namespace wti
+} // NAMESPACE wti
 
 
 #ifdef __cplusplus
