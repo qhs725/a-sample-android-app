@@ -47,4 +47,7 @@ public class CallNative {
     @SuppressWarnings("JniMissingFunction")
     public static native int IO();
 
+    @SuppressWarnings("JniMissingFunction")
+    public static native int DataCount(int sensor);
+
 }

@@ -101,11 +101,26 @@ Java_edu_utc_vat_CallNative_WriteOff(
     wti::wti_::wti__().w_();
 }
 
-
 JNIEXPORT jint JNICALL
 Java_edu_utc_vat_CallNative_IO(
         JNIEnv *, jobject) {
     io::io_::io__().__init();
+}
+
+JNIEXPORT jint JNICALL
+Java_edu_utc_vat_CallNative_DataCount(
+        JNIEnv *env, jobject jobj, jint sensor) {
+    jint count;
+    if (sensor == 0) {
+        count = sh::sh_::sh__()._0_;
+    } else if (sensor == 1) {
+        count = sh::sh_::sh__()._1__;
+    } else if (sensor == 2) {
+        count = sh::sh_::sh__()._2___;
+    } else {
+        count = -1;
+    }
+    return count;
 }
 
 

@@ -24,6 +24,8 @@ import android.widget.Toast;
 
 import android.util.Log;
 
+import android.os.StrictMode;
+
 import java.util.HashMap;
 
 
@@ -68,6 +70,12 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testing);
         status = VOID;
@@ -112,8 +120,10 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.TestingStartButton: {
-                if (getUserInfo.getText().toString().trim().length() > 0)
+                if (getUserInfo.getText().toString().trim().length() > 0) {
+                    timer.passUserInfo(userInfo);
                     status = READY;
+                }
                 if (status != READY) {
                     Toast.makeText(this, "Please enter your NAME, etc...",
                             Toast.LENGTH_SHORT).show();

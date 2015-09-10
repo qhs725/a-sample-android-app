@@ -40,6 +40,7 @@ public class Timer {
     public static final int READY = 3;
     public int state;
 
+    private InternalData internalData;
 
     /**
      * This accepts time in seconds or milliseconds, so,
@@ -63,6 +64,11 @@ public class Timer {
 
     public void initTimer() {
         state = READY;
+        internalData = new InternalData(appContext);
+    }
+
+    public void passUserInfo (String info) {
+        internalData.passUserInfo(info);
     }
 
 
@@ -150,6 +156,10 @@ public class Timer {
                 CallNative.WriteOff();
                 CallNative.StopSensors();
                 CallNative.CloseFiles();
+                internalData.readInternal();
+                internalData.postAccelerometer();
+                internalData.postGyroscope();
+                internalData.postCompass();
             }
         }.start();
 
