@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                // exercise = 0;
-                startActivity(ScrollViewActivity.createIntent(self));
+                startActivity(ExerciseListActivity.createIntent(self));
             }
         });
 

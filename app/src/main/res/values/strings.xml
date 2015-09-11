@@ -14,4 +14,7 @@
     <string name="reset_testing_menu">RESET</string>
     <string name="testing_timer">00:00</string>
     <string name="title_testing_activity">UTC Virtual Athletic Trainer</string>
+    <string name="title_activity_exercise_prep">ExercisePrepActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>
