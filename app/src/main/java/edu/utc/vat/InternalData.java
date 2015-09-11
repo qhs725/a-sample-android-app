@@ -1,6 +1,7 @@
 /**
  * UTC Virtual Athletic Trainer v0.000
  * rg 9/10/15
+ * TODO: once this is deprecated apache .jar can be removed
  * TODO: add low pass filter on accelerometer, no?
  */
 

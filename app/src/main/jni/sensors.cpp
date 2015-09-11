@@ -1,7 +1,18 @@
-//
-// UTC Virtual Athletic Trainer v0.000
-// Created by rg on 9/7/15.
-//
+/*
+ * UTC Virtual Athletic Trainer v0.000
+ * rg 9.7.15
+ * TODO: STORE ALL TESTS PERMANENTLY ON DEVICE
+ * TODO: CREATE DEVICE UUID AND STORE AT TOP OF HISTORY.DAT FILE
+ * TODO: STORE TOTAL COUNT
+ * TODO: NUMBER, DATE, TEST ID, UUID --> GOES IN HISTORY.DAT FILE
+ *
+ * TODO: THE STORED TESTS WILL BE MARKED AS UPLOADED OR NOT UPLOADED
+ * TODO: THE STORED TESTS CAN BE VIEWED ON THE PHONE AND UPLOADED IF NOT ALREADY
+ *
+ * TODO: WRITE UUID TO DATABASE SO UUIDs CAN BE USED TO IDENTIFY THE DEVICE
+ *
+ * TODO: ASSIGN UUID TO NAMES, HAVE PEOPLE REGISTER
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -46,7 +57,9 @@ namespace sh {
 
     /*
      * THIS IS THE SENSOR 'CALLBACK' LOOP EQUIVALENT
+     * TODO: RUN FUNCTION ON SEPARATE THREAD
      */
+    //static int _o(int fd, int _e, void *_); TODO: TRY C++11 COMPILE AGAIN
     static int _o(int fd, int _e, void *_) {
         ASensorEvent __e;
         while (ASensorEventQueue_getEvents(sh_::sh__().sEq, &__e, 1) > 0) {
@@ -104,16 +117,15 @@ namespace sh {
 
     /*
      * THIS ENABLES THE SENSORS AND SETS THE SAMPLING RATE
-     * TODO: MAKE SAMPLING RATE CONSTANT SO IT'S CLEAR IT SHOULDN'T BE CHANGED
      */
     void sh_::_o__() {
         ASensorEventQueue_enableSensor(sh_::sh__().sEq, sh_::sh__().aIn);
         ASensorEventQueue_enableSensor(sh_::sh__().sEq, sh_::sh__().gIn);
         ASensorEventQueue_enableSensor(sh_::sh__().sEq, sh_::sh__().cIn);
         st_ = true;
-        ASensorEventQueue_setEventRate(sh_::sh__().sEq, sh_::sh__().gIn, 10000);
-        ASensorEventQueue_setEventRate(sh_::sh__().sEq, sh_::sh__().cIn, 10000);
-        ASensorEventQueue_setEventRate(sh_::sh__().sEq, sh_::sh__().aIn, 10000);
+        ASensorEventQueue_setEventRate(sh_::sh__().sEq, sh_::sh__().gIn, sh_::sh__().SAMPLING_RATE);
+        ASensorEventQueue_setEventRate(sh_::sh__().sEq, sh_::sh__().cIn, sh_::sh__().SAMPLING_RATE);
+        ASensorEventQueue_setEventRate(sh_::sh__().sEq, sh_::sh__().aIn, sh_::sh__().SAMPLING_RATE);
     }
 
     /*

@@ -50,4 +50,10 @@ public class CallNative {
     @SuppressWarnings("JniMissingFunction")
     public static native int DataCount(int sensor);
 
+    @SuppressWarnings("JniMissingFunction")
+    public static native int PackageData();
+
+    @SuppressWarnings("JniMissingFunction")
+    public static native int SendPackage();
+
 }

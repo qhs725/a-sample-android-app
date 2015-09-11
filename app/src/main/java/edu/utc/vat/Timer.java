@@ -1,7 +1,7 @@
 /**
  * UTC Virtual Athletic Trainer v0.000
  * rg 9/8/15
- *
+ * TODO: quit instantiating internalData once deprecated
  */
 
 package edu.utc.vat;
@@ -156,10 +156,11 @@ public class Timer {
                 CallNative.WriteOff();
                 CallNative.StopSensors();
                 CallNative.CloseFiles();
-                internalData.readInternal();
-                internalData.postAccelerometer();
-                internalData.postGyroscope();
-                internalData.postCompass();
+                CallNative.PackageData();
+                //internalData.readInternal();
+                //internalData.postAccelerometer();
+                //internalData.postGyroscope();
+                //internalData.postCompass();
             }
         }.start();
 

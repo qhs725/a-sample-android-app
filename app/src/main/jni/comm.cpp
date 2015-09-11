@@ -1,7 +1,8 @@
-//
-// UTC Virtual Athletic Trainer v0.000
-// Created by rg on 9/7/15.
-//
+/*
+ * UTC Virtual Athletic Trainer v0.000
+ * rg 9.7.15
+ * TODO: PASS DATA COUNT LINE TO DB TO ENSURE COMPLETE DATA SEND
+ */
 
 #include "Poco/Net/MessageHeader.h"
 #include "Poco/Net/HTTPClientSession.h"
@@ -11,6 +12,7 @@
 #include "Poco/Net/NameValueCollection.h"
 
 #include "comm.h"
+#include "packdat.h"
 
 #include <iostream>
 #include <sstream>
@@ -20,7 +22,7 @@
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
 
-
+//TODO: DEPRECATED??
 namespace p {
     template < typename T > std::string to_string( const T& n ) {
         std::ostringstream _0x;
@@ -47,32 +49,51 @@ namespace io {
         pss.setPort(8080);
         pss.setKeepAlive(true);
         prq.setMethod(Poco::Net::HTTPRequest::HTTP_POST);
-        prq.setURI("/ta2");
+        prq.setURI("/dat");
         prq.setKeepAlive(true);
+
+        std::string e_ = prq.getTransferEncoding();
+        char *e__ = new char[e_.length()+1];
+        std::strcpy(e__,e_.c_str());
+        LOGI("ENCODING %s", e__);
 
         prsp.setKeepAlive(true);
     }
 
-    void io_::_0(const struct ASensorEvent __e) {
+    void io_::P_() {
+        for (int i = 0; i < pd::pd_::pd__()._c_; i++) {
+            const char *_s = pd::pd_::pd__().__b[i];
+            std::string _s_(_s);
+            io_::io__()._0(_s_);
+            /*if (i == 10) {
+                char *ss = new char[10000];
+                std::strcpy(ss, _s_.c_str());
+                LOGI("DATACHECK: %s", ss);
+            }*/
+        }
+    }
 
+    //TODO: THIS NEEDS TO ACCEPT A STRING *
+    void io_::_0(std::string _s_) {
+
+        /*
         Poco::Net::MessageHeader nameValuePair;
         std::string aX = p::to_string(__e.acceleration.x);
-        nameValuePair.add("accx",aX);
+        nameValuePair.add("ax",aX);
         std::string aY = p::to_string(__e.acceleration.y);
-        nameValuePair.add("accy",aY);
+        nameValuePair.add("ay",aY);
         std::string aZ = p::to_string(__e.acceleration.z);
-        nameValuePair.add("accz",aZ);
+        nameValuePair.add("az",aZ);
         std::string ts = p::to_string(__e.timestamp);
         nameValuePair.add("ts",ts);
-        nameValuePair.add("session_info","test001");
+        nameValuePair.add("sinfo","test001");*/
 
-        std::string test = "ts=this is a test&session_info=this is also a test";
+        //std::string test = "ts=this is a test&session_info=this is also a test";
+        std::string test = _s_;
         prq.setContentLength(test.length());
 
         try {
-            std::ostream& _os = pss.sendRequest(prq); // sends request, returns open stream
-            //LOGI("postAccel GOOD");
-            //nameValuePair.write(_os);
+            std::ostream& _os = pss.sendRequest(prq);
             _os << test << std::endl;
             prq.write(std::cout);
         } catch (const Poco::Exception& e) {
@@ -85,32 +106,8 @@ namespace io {
             std::cerr << e.what() << std::endl;
         }
 
-        //std::istream& _is = pss.receiveResponse(prsp);
+        pss.receiveResponse(prsp);
 
-        try {
-            //Poco::Net::HTTPResponse postResponse;
-            std::istream& _is = pss.receiveResponse(prsp);
-            std::cerr << _is.rdbuf();
-            //char *stm = new char[_is.rdbuf().length()+1];
-            //LOGI("postAccel response %s", _is.rdbuf());
-        } catch (const Poco::Exception& e) {
-            char *err1 = new char[e.displayText().length()+1];
-            std::strcpy(err1,e.displayText().c_str());
-            LOGI("postAccel no4b ERROR1: %s", err1);
-            std::cout << e.displayText() << std::endl;
-        } catch (const std::exception& e) {
-            LOGI("postAccel no4b ERROR2");
-            std::cerr << e.what() << std::endl;
-        }
-
-    }
-
-    void io_::_1(const struct ASensorEvent __e) {
-        //TODO: add gyroscope event io
-    }
-
-    void io_::_2(const struct ASensorEvent __e) {
-        //TODO: add compass event io
     }
 
 }  //  namespace io

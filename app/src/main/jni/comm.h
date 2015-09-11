@@ -33,11 +33,11 @@ namespace io {
         io_();
         ~io_();
 
-        void _0(const struct ASensorEvent _0);
-        void _1(const struct ASensorEvent _1);
-        void _2(const struct ASensorEvent _2);
+        void _0(std::string _s_);
 
         void __init();
+
+        void P_();
 
     private:
         bool o;

@@ -12,11 +12,12 @@ LOCAL_MODULE    := libutcvatjni
 LOCAL_SHARED_LIBRARIES := libPocoNet \
                           libPocoFoundation
 
-LOCAL_CPPFLAGS    := -Werror -std=c++11
+LOCAL_CPPFLAGS    := -Werror -std=c++11 #-Wall -g Add before c++11 for c++11 compile
 
 LOCAL_SRC_FILES := jni_native.cpp \
                    sensors.cpp \
-                   comm.cpp
+                   comm.cpp \
+                   packdat.cpp
 
 LOCAL_LDLIBS    := -llog -landroid -lGLESv2 -L$(SYSROOT)/usr/lib
 

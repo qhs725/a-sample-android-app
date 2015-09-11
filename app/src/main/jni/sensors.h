@@ -59,6 +59,7 @@ namespace sh {
         private:
             bool sOn;
             bool st_;
+            const static int SAMPLING_RATE = 10000;
 
     };
 
@@ -110,7 +111,6 @@ namespace wti {
 
         private:
             bool _wti_;
-
 
     };
 

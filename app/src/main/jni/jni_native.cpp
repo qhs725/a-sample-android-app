@@ -13,6 +13,7 @@
 
 #include "sensors.h"
 #include "comm.h"
+#include "packdat.h"
 
 #define JNIEXPORT __attribute__ ((visibility ("default")))
 
@@ -34,30 +35,35 @@ Java_edu_utc_vat_CallNative_InstantiateSensorsHandler(
         JNIEnv *, jobject) {
     sh::sh_::sh__()._o_();
     LOGI("JNI::Initializing Sensors...\n");
+    return 0;
 }
 
 JNIEXPORT jint JNICALL
 Java_edu_utc_vat_CallNative_StartSensors(
         JNIEnv *, jobject) {
     sh::sh_::sh__()._o__();
+    return 0;
 }
 
 JNIEXPORT jint JNICALL
 Java_edu_utc_vat_CallNative_StopSensors(
         JNIEnv *, jobject) {
     sh::sh_::sh__()._o___();
+    return 0;
 }
 
 JNIEXPORT jint JNICALL
 Java_edu_utc_vat_CallNative_OpenFiles(
         JNIEnv *, jobject) {
     wti::wti_::wti__()._fopen();
+    return 0;
 }
 
 JNIEXPORT jint JNICALL
 Java_edu_utc_vat_CallNative_CloseFiles(
         JNIEnv *, jobject) {
     wti::wti_::wti__()._fclose();
+    return 0;
 }
 
 JNIEXPORT jdouble JNICALL
@@ -93,18 +99,21 @@ JNIEXPORT jint JNICALL
 Java_edu_utc_vat_CallNative_WriteOn(
         JNIEnv *, jobject) {
     wti::wti_::wti__()._w();
+    return 0;
 }
 
 JNIEXPORT jint JNICALL
 Java_edu_utc_vat_CallNative_WriteOff(
         JNIEnv *, jobject) {
     wti::wti_::wti__().w_();
+    return 0;
 }
 
 JNIEXPORT jint JNICALL
 Java_edu_utc_vat_CallNative_IO(
         JNIEnv *, jobject) {
     io::io_::io__().__init();
+    return 0;
 }
 
 JNIEXPORT jint JNICALL
@@ -122,6 +131,22 @@ Java_edu_utc_vat_CallNative_DataCount(
     }
     return count;
 }
+
+JNIEXPORT jint JNICALL
+Java_edu_utc_vat_CallNative_PackageData(
+        JNIEnv *, jobject) {
+    pd::pd_::pd__().__m__();
+    return 0;
+}
+
+JNIEXPORT jint JNICALL
+Java_edu_utc_vat_CallNative_SendPackage(
+        JNIEnv *, jobject) {
+    io::io_::io__().P_();
+    return 0;
+}
+
+
 
 
 #ifdef __cplusplus

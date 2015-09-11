@@ -1,7 +1,7 @@
 /**
  * UTC Virtual Athletic Trainer v0.000
  * rg 09.08.15
- *
+ * TODO: once InternalData is deprecated apache .jar should be removed
  */
 
 package edu.utc.vat;
@@ -52,11 +52,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        File filepath = this.getFilesDir();
-        String path = filepath.toString();
-        CallNative.PassFilePath(path);
+        File filepath = this.getFilesDir(); //deprecated see below
+        String path = filepath.toString(); //deprecated see below
+        CallNative.PassFilePath(path); //deprecated but still passes required path for _fopen
         CallNative.InstantiateSensorsHandler();
-        //CallNative.IO();
+        CallNative.IO(); //deprecated if using http posts?
 
     }
 
