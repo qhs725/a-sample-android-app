@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 exercise = ONE_LEG_SQUAT_HOLD;
-                startActivity(TestingActivity.createIntent(self, ONE_LEG_SQUAT_HOLD));
+                startActivity(TestingActivity.createIntent(self, exercise));
             }
         });
 
@@ -48,7 +48,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 exercise = ONE_LEG_JUMP_BALANCE;
-                startActivity(TestingActivity.createIntent(self, ONE_LEG_JUMP_BALANCE));
+                startActivity(TestingActivity.createIntent(self, exercise));
+            }
+        });
+
+        findViewById(R.id.MainMenuButton3).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               // exercise = 0;
+                startActivity(ScrollViewActivity.createIntent(self));
             }
         });
 

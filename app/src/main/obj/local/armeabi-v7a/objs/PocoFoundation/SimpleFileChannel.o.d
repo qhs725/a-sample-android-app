@@ -1,122 +1,122 @@
-/Users/kristof/git/UTC-VAT/app/src/main/obj/local/armeabi-v7a/objs/PocoFoundation/SimpleFileChannel.o: \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/SimpleFileChannel.cpp \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/SimpleFileChannel.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Foundation.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Config.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Platform.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Platform_POSIX.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Bugcheck.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/string \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Types.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Channel.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Configurable.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Mutex.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Exception.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/stdexcept \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/ScopedLock.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Mutex_POSIX.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/errno.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/errno.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm/errno.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm-generic/errno.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm-generic/errno-base.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/RefCountedObject.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/AtomicCounter.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Timestamp.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/ctime \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/LogFile.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/LogFile_STD.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/FileStream.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/FileStream_POSIX.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/BufferedBidirectionalStreamBuf.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/BufferAllocator.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/ios \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/cstddef \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/StreamUtil.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/istream \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/File.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/vector \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/File_UNIX.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Message.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/map \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Ascii.h
+D:/Documents/GitHub/utc-vat/app/src/main/obj/local/armeabi-v7a/objs/PocoFoundation/SimpleFileChannel.o: \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/SimpleFileChannel.cpp \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/SimpleFileChannel.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Foundation.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Config.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Platform.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Platform_POSIX.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Bugcheck.h \
+ D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/string \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Types.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Channel.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Configurable.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Mutex.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Exception.h \
+ D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/stdexcept \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/ScopedLock.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Mutex_POSIX.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/errno.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/errno.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm/errno.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm-generic/errno.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm-generic/errno-base.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/RefCountedObject.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/AtomicCounter.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Timestamp.h \
+ D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/ctime \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/LogFile.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/LogFile_STD.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/FileStream.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/FileStream_POSIX.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/BufferedBidirectionalStreamBuf.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/BufferAllocator.h \
+ D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/ios \
+ D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/cstddef \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/StreamUtil.h \
+ D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/istream \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/File.h \
+ D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/vector \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/File_UNIX.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Message.h \
+ D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/map \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Ascii.h
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/SimpleFileChannel.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/SimpleFileChannel.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Foundation.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Foundation.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Config.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Config.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Platform.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Platform.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Platform_POSIX.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Platform_POSIX.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Bugcheck.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Bugcheck.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/string:
+D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/string:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Types.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Types.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Channel.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Channel.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Configurable.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Configurable.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Mutex.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Mutex.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Exception.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Exception.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/stdexcept:
+D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/stdexcept:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/ScopedLock.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/ScopedLock.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Mutex_POSIX.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Mutex_POSIX.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/errno.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/errno.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/errno.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/errno.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm/errno.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm/errno.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm-generic/errno.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm-generic/errno.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm-generic/errno-base.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm-generic/errno-base.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/RefCountedObject.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/RefCountedObject.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/AtomicCounter.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/AtomicCounter.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Timestamp.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Timestamp.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/ctime:
+D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/ctime:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/LogFile.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/LogFile.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/LogFile_STD.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/LogFile_STD.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/FileStream.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/FileStream.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/FileStream_POSIX.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/FileStream_POSIX.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/BufferedBidirectionalStreamBuf.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/BufferedBidirectionalStreamBuf.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/BufferAllocator.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/BufferAllocator.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/ios:
+D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/ios:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/cstddef:
+D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/cstddef:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/StreamUtil.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/StreamUtil.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/istream:
+D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/istream:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/File.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/File.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/vector:
+D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/vector:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/File_UNIX.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/File_UNIX.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Message.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Message.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/map:
+D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/map:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Ascii.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Ascii.h:
