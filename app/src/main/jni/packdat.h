@@ -2,10 +2,6 @@
  * UTC Virtual Athletic Assistant v0.000
  * rg 9.10.15
  */
-//TODO: READ FROM INTERNAL -- USE PTHREAD MUTEX
-//TODO: PACKAGE INTO A SINGLE ARRAY
-
-
 
 
 #ifndef UTC_VIRTUAL_ATHLETIC_TRAINER_PACKDAT_H
@@ -36,8 +32,6 @@ namespace pd {
         bool o;
 
     };
-
-
 
 } // namespace pd
 
