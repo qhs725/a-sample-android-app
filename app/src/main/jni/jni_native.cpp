@@ -139,6 +139,7 @@ Java_edu_utc_vat_CallNative_PackageData(
     return 0;
 }
 
+//TODO: DEPRECATED OR CALL FROM JAVA
 JNIEXPORT jint JNICALL
 Java_edu_utc_vat_CallNative_SendPackage(
         JNIEnv *, jobject) {

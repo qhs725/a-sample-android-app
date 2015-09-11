@@ -4,6 +4,7 @@
  * TODO: PASS DATA COUNT LINE TO DB TO ENSURE COMPLETE DATA SEND
  */
 
+
 #include "Poco/Net/MessageHeader.h"
 #include "Poco/Net/HTTPClientSession.h"
 #include "Poco/Net/HTTPRequest.h"
@@ -22,7 +23,8 @@
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
 
-//TODO: DEPRECATED??
+
+//TODO: DEPRECATED?
 namespace p {
     template < typename T > std::string to_string( const T& n ) {
         std::ostringstream _0x;
@@ -65,15 +67,9 @@ namespace io {
             const char *_s = pd::pd_::pd__().__b[i];
             std::string _s_(_s);
             io_::io__()._0(_s_);
-            /*if (i == 10) {
-                char *ss = new char[10000];
-                std::strcpy(ss, _s_.c_str());
-                LOGI("DATACHECK: %s", ss);
-            }*/
         }
     }
 
-    //TODO: THIS NEEDS TO ACCEPT A STRING *
     void io_::_0(std::string _s_) {
 
         /*

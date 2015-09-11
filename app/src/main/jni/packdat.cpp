@@ -49,16 +49,9 @@ namespace pd {
         LOGI("PACKAGE in __m__");
         pthread_create(&___, NULL, &pd_::pd__().rw_, NULL);
         void *____;
-        pthread_join(___, NULL);// &____);
-        /*
-        _ ___v = *(_*)____;
-        pd_::pd__().__b = new char[___v._c];
-        for (int _c = 0; _c < ___v._c; _c++) {
-            *pd_::pd__().__b[_c] = &___v.__b[_c];
-        }*/
+        pthread_join(___, NULL);
         io::io_::io__().P_();
     }
-
 
     void *pd_::rw_(void *__A) {
         int _c0 = sh::sh_::sh__()._0_;
@@ -83,22 +76,6 @@ namespace pd {
             strcpy(pd_::pd__().__b[_cc], _l.c_str());
         }
         pd_::pd__()._c_ = _c;
-        /*
-        __i.getline(__i, _l);
-        int _L = length(_l);
-        _s = _L+12;
-        if (__i.is_open()) {
-        */
-
-        //_ __;
-        //__._c = _c;
-        //__.__b = __b;
-
-        //TODO: FIGURE OUT WHICH ONE OF THESE WORKS PROPERLY::
-        //pthread_exit((void *) &__);
-        //for (int i = 0; i < _c; i++) delete __b[i];
-        //delete __b;
-        //return (void *) __;
     }
 
 } // namespace pd
