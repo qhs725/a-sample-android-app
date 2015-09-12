@@ -17,7 +17,6 @@ import android.view.View.OnClickListener;
 
 import android.content.Context;
 
-import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,12 +51,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        File filepath = this.getFilesDir(); //deprecated see below
-        String path = filepath.toString(); //deprecated see below
-        CallNative.PassFilePath(path); //deprecated but still passes required path for _fopen
         CallNative.InstantiateSensorsHandler();
-        CallNative.IO(); //deprecated if using http posts?
-
+        CallNative.IO();
     }
 
 

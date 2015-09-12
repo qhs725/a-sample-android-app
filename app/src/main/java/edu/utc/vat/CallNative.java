@@ -53,7 +53,4 @@ public class CallNative {
     @SuppressWarnings("JniMissingFunction")
     public static native int PackageData();
 
-    @SuppressWarnings("JniMissingFunction")
-    public static native int SendPackage();
-
 }

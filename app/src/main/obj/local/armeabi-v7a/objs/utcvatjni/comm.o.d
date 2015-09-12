@@ -78,6 +78,7 @@
  /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPMessage.h \
  /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPResponse.h \
  /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPCookie.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/MediaType.h \
  /Users/kristof/git/UTC-VAT/app/src/main/jni/comm.h \
  /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/android/sensor.h \
  /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/android/looper.h \
@@ -241,6 +242,8 @@
 /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPResponse.h:
 
 /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPCookie.h:
+
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/MediaType.h:
 
 /Users/kristof/git/UTC-VAT/app/src/main/jni/comm.h:
 
