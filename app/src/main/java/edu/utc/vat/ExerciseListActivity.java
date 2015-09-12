@@ -85,7 +85,7 @@ public class ExerciseListActivity extends AppCompatActivity {
 
                     Toast.makeText(ExerciseListActivity.this, "Loading[" + ex.name + "]", Toast.LENGTH_LONG).show();
 
-                    startActivity(mIntent);//Start TestingActivity
+                    startActivity(mIntent);//Start ExerciseActivity
 
                 }
                 catch(Exception e){
