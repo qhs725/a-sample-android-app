@@ -135,8 +135,9 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
                 } else {
                     userInfo = getUserInfo.getText().toString().trim();
                     Toast.makeText(this, userInfo, Toast.LENGTH_SHORT).show();
-                    timer.countDown();
+                    timer.countDown(); //TODO: RETURN BOOLEAN, TRUE --> UPLOAD PROMPT?
                 }
+                status = READY;
                 break;
             }
             case R.id.TestingResetButton: {

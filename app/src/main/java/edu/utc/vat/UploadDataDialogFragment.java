@@ -3,13 +3,20 @@ package edu.utc.vat;
 import android.app.DialogFragment;
 import android.app.Dialog;
 import android.app.AlertDialog;
+import android.app.Activity;
 
 import android.content.DialogInterface;
+import android.content.Context;
 
 import android.os.Bundle;
 import android.os.AsyncTask;
 
 import android.util.Log;
+
+import android.widget.Toast;
+
+import android.view.View;
+import android.widget.TextView;
 
 
 /**
@@ -18,6 +25,14 @@ import android.util.Log;
  */
 public class UploadDataDialogFragment extends DialogFragment {
 
+    Context context;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        context = activity;
+    }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -25,8 +40,48 @@ public class UploadDataDialogFragment extends DialogFragment {
                 .setPositiveButton(R.string.dialog_upload, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Log.i("UPLOAD","Calling PackageData");
-                        //CallNative.PackageData();
                         new UpdateTask().execute();
+                        Toast.makeText(context, "Uploading...", Toast.LENGTH_LONG);
+                    }
+                })
+                .setNegativeButton(R.string.dialog_discard, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //TODO: nothing
+                    }
+                });
+        return builder.create();
+    }
+
+    private class UpdateTask extends AsyncTask<Void, Void, Boolean> {
+
+        protected Void onPreExecute(Void v) {
+
+            return null;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... v) {
+            CallNative.PackageData();
+            return true;
+        }
+
+        protected void onPostExecute(Boolean b) {
+            //TODO: something that will work if TestingActivity has been destroyed?
+
+        }
+    }
+}
+
+/*
+public class UploadingDataDialogFragment extends DialogFragment {
+
+    @Override
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(R.string.dialog_upload_exercise_data)
+                .setPositiveButton(R.string.dialog_upload, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
                     }
                 })
                 .setNegativeButton(R.string.dialog_discard, new DialogInterface.OnClickListener() {
@@ -36,13 +91,5 @@ public class UploadDataDialogFragment extends DialogFragment {
                 });
         return builder.create();
     }
-
-    private class UpdateTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... v) {
-            CallNative.PackageData();
-            return null;
-        }
-    }
 }
+*/

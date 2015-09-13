@@ -27,7 +27,7 @@
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__)
 
 
-//TODO: DEPRECATED?
+// DEPRECATED
 namespace p {
     template < typename T > std::string to_string( const T& n ) {
         std::ostringstream _0x;
@@ -63,19 +63,17 @@ namespace io {
         io_::io__().prq.setMethod(Poco::Net::HTTPRequest::HTTP_POST);
         io_::io__().prq.setURI("/dat");
         io_::io__().prq.setKeepAlive(true);
-
         std::string e_ = prq.getTransferEncoding();
         char *e__ = new char[e_.length()+1];
         std::strcpy(e__,e_.c_str());
         LOGI("ENCODING %s", e__);
-
         io_::io__().prsp.setKeepAlive(true);
         io_::io__()._f_ = true;
     }
 
     void io_::P_() {
-        if (pthread_mutex_init(&___l, NULL) != 0)
-            LOGE("PTHREAD MUTEX ERROR");
+        //TODO: UNCOMMENT ALL CODE IN io_ AND MUTEX LOCK/UNLOCK IN _0()
+        //if (pthread_mutex_init(&___l, NULL) != 0) LOGE("PTHREAD MUTEX ERROR");
         for (int i = 0; i < pd::pd_::pd__()._c_; i+=1) {
             const char *_s_ = pd::pd_::pd__().__b[i];
             std::string _s0(_s_);
@@ -108,18 +106,14 @@ namespace io {
             //pthread_join(___t[3], NULL);
             //pthread_join(___t[4], NULL);
         }
-        pthread_mutex_destroy(&___l);
+        //pthread_mutex_destroy(&___l);
     }
 
     void *io_::_0(void *__A) {
-
-        pthread_mutex_lock(&___l);
-
+        //pthread_mutex_lock(&___l);
         std::string _s_ = ((_ *)__A)->_s;
-
         std::string message = _s_;
         io_::io__().prq.setContentLength(message.length());
-
         try {
             std::ostream& _os = io_::io__().pss.sendRequest(io_::io__().prq);
             _os << message << std::endl;
@@ -133,10 +127,8 @@ namespace io {
             LOGI("postAccel no3b ERROR2");
             std::cerr << e.what() << std::endl;
         }
-
         io_::io__().pss.receiveResponse(io_::io__().prsp);
-
-        pthread_mutex_unlock(&___l);
+        //pthread_mutex_unlock(&___l);
     }
 
 }  //  namespace io
