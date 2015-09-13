@@ -47,12 +47,13 @@ namespace pd {
     pd_::pd_() : o(true) {}
     pd_::~pd_() { o = false; };
 
-    void pd_::__m__() {
+    boolean pd_::__m__() {
         LOGI("PACKAGE in __m__");
         pthread_create(&___, NULL, &pd_::pd__().rw_, NULL);
         void *____;
         pthread_join(___, NULL);
         //io::io_::io__().P_();
+        return true;
     }
 
     void *pd_::rw_(void *__A) {
