@@ -66,6 +66,8 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
 
     private final long DEFAULT_COUNTDOWN_TIME = 5;
     private final long DEFAULT_TESTING_TIME = 20;
+
+
     //TODO: create break for testing timer w/ jump test, i.e. if balanced prior to max/default time
 
     private Timer timer = new Timer(this);
@@ -74,10 +76,12 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        /*
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+        */
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testing);
