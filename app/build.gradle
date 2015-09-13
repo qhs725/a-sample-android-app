@@ -1,3 +1,5 @@
+import org.apache.tools.ant.taskdefs.condition.Os
+
 apply plugin: 'com.android.application'
 
 android {
@@ -35,7 +37,12 @@ task ndkBuild(type: Exec) {
     Properties properties = new Properties()
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
     def ndkbuild = properties.getProperty('ndk.dir', null)+"/ndk-build"
-    commandLine ndkbuild, '-C', file('src/main/jni').absolutePath
+    if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+        commandLine '\\Documents\\Android\\NDK\\ndk-build.cmd', '-C', file('src/main/jni').absolutePath
+    } else {
+        commandLine 'ndk-build', '-C', file('src/main/jni').absolutePath
+    }
+
 }
 
 dependencies {
