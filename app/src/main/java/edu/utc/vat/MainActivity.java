@@ -54,8 +54,12 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.MainMenuButton3).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+<<<<<<< HEAD
                // exercise = 0;
                 startActivity(ExerciseListActivity.createIntent(self));
+=======
+                 startActivity(ExerciseListActivity.createIntent(self));
+>>>>>>> rgdev
             }
         });
 

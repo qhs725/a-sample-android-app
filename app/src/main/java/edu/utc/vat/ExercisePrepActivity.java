@@ -43,7 +43,11 @@ public class ExercisePrepActivity extends AppCompatActivity {
             case R.id.nextbtn1: {
                 num++;
                 if(exercise.instruction[num] != null)
+<<<<<<< HEAD
                 updateInstructions();
+=======
+                    updateInstructions();
+>>>>>>> rgdev
                 else{
                     mIntent = new Intent(context, ExerciseActivity.class);
                     Bundle mBundle = new Bundle();

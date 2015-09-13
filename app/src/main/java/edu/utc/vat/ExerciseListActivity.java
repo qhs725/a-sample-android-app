@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package edu.utc.vat;
 
 /**
@@ -23,11 +24,43 @@ package edu.utc.vat;
 
         import java.io.Serializable;
         import java.util.ArrayList;
+=======
+/**
+ * UTC Virtual Athletic Trainer v0.000
+ * jay 9.11.15
+ */
+
+
+package edu.utc.vat;
+
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.FrameLayout.LayoutParams;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
+>>>>>>> rgdev
 
 public class ExerciseListActivity extends AppCompatActivity {
     final ExerciseListActivity self = this;
     private Intent mIntent;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> rgdev
     //Exercise  exercises;
     ArrayList<Exercise> exercises = new ArrayList<>();
     ArrayList<String> exercise_names = new ArrayList<String>();
@@ -35,6 +68,10 @@ public class ExerciseListActivity extends AppCompatActivity {
         return new Intent(context, ExerciseListActivity.class);
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> rgdev
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -60,7 +97,10 @@ public class ExerciseListActivity extends AppCompatActivity {
         exercise_names.add(e2.name); //add new exercise to listview
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> rgdev
         ListView listView1 = (ListView)findViewById(R.id.ListView1);
         setListViewHeightBasedOnChildren(listView1);
         listView1.setOnItemClickListener(new OnItemClickListener() {
@@ -108,21 +148,31 @@ public class ExerciseListActivity extends AppCompatActivity {
             return;
         }
         int totalHeight = listView.getPaddingTop() + listView.getPaddingBottom();
+<<<<<<< HEAD
 //        for(int i = 0; i < listAdapter.getCount(); i++){
+=======
+>>>>>>> rgdev
         View listItem = listAdapter.getView(0, null, listView);
         if(listItem instanceof ViewGroup){
             listItem.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         }
         listItem.measure(0, 0);
         totalHeight += listItem.getMeasuredHeight() * listAdapter.getCount();
+<<<<<<< HEAD
 //        }
 
+=======
+>>>>>>> rgdev
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
     }
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> rgdev
 class Exercise extends ExerciseListActivity implements Serializable{
     private static final long serialVersionUID = -7060210544600464481L;
 
@@ -141,7 +191,11 @@ class Exercise extends ExerciseListActivity implements Serializable{
     }
     public Boolean isInstructions(){
         if(instruction[1] != null) {
+<<<<<<< HEAD
         return true;
+=======
+            return true;
+>>>>>>> rgdev
         }
         else{return false;}
     }
