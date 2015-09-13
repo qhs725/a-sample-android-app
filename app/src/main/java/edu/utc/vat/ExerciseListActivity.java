@@ -1,9 +1,10 @@
-package edu.utc.vat;
-
 /**
- * Created by Jaysp656 on 9/11/2015.
+ * UTC Virtual Athletic Trainer v0.000
+ * jay 9.11.15
  */
 
+
+package edu.utc.vat;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,9 +24,11 @@ import android.widget.Toast;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+
 public class ExerciseListActivity extends AppCompatActivity {
     final ExerciseListActivity self = this;
     private Intent mIntent;
+
 
     //Exercise  exercises;
     ArrayList<Exercise> exercises = new ArrayList<>();
@@ -33,6 +36,7 @@ public class ExerciseListActivity extends AppCompatActivity {
     public static Intent createIntent(Context context){
         return new Intent(context, ExerciseListActivity.class);
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -57,7 +61,6 @@ public class ExerciseListActivity extends AppCompatActivity {
         e2.timeLimit = 15000;
         exercises.add(e2);//append to ArrayList
         exercise_names.add(e2.name); //add new exercise to listview
-
 
 
         ListView listView1 = (ListView)findViewById(R.id.ListView1);
@@ -107,20 +110,18 @@ public class ExerciseListActivity extends AppCompatActivity {
             return;
         }
         int totalHeight = listView.getPaddingTop() + listView.getPaddingBottom();
-//        for(int i = 0; i < listAdapter.getCount(); i++){
         View listItem = listAdapter.getView(0, null, listView);
         if(listItem instanceof ViewGroup){
             listItem.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         }
         listItem.measure(0, 0);
         totalHeight += listItem.getMeasuredHeight() * listAdapter.getCount();
-//        }
-
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
     }
 }
+
 
 class Exercise extends ExerciseListActivity implements Serializable{
     private static final long serialVersionUID = -7060210544600464481L;
