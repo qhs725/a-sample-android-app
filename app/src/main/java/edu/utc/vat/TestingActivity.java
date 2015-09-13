@@ -5,7 +5,9 @@
 
 package edu.utc.vat;
 
+import android.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentManager;
 
 import android.content.Context;
 import android.content.Intent;
@@ -42,6 +44,7 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
     public static final int TESTING = 1;
     public static final int READY = 3;
     public static final int VOID = -1;
+    public static final int UPLOADING = 4;
     public int status;
     private TextView testStatus;
     private String statusMessage;
@@ -121,7 +124,7 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
         switch (view.getId()) {
             case R.id.TestingStartButton: {
                 if (getUserInfo.getText().toString().trim().length() > 0) {
-                    timer.passUserInfo(userInfo);
+                    //timer.passUserInfo(userInfo); //TODO: pass to native
                     status = READY;
                 }
                 if (status != READY) {
@@ -132,8 +135,9 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
                 } else {
                     userInfo = getUserInfo.getText().toString().trim();
                     Toast.makeText(this, userInfo, Toast.LENGTH_SHORT).show();
-                    timer.countDown();
+                    timer.countDown(); //TODO: RETURN BOOLEAN, TRUE --> UPLOAD PROMPT?
                 }
+                status = READY;
                 break;
             }
             case R.id.TestingResetButton: {
@@ -164,26 +168,44 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    //TODO: create onPause()
     /**
      * onPause()
      */
+    public void onPause() {
+        super.onPause();
+
+    }
 
 
-    //TODO: create onResume()
     /**
      * onResume()
      */
+    public void onResume() {
+        super.onResume();
 
+    }
+
+
+    /**
+     * onDestroy()
+     */
+    public void onDestroy() {
+        super.onDestroy();
+
+    }
 
     /**
      * Methods for updating UI with time and status from timer
      *
      */
     public void statusUpdate(int status) {
-        Log.i("update","statusUpdate");
+        Log.i("update", "statusUpdate");
         String statusUpdate  = statusList.get(status);
         testStatus.setText(statusUpdate);
+
+        if(status == STOPPED) {
+            Upload();
+        }
     }
     public void timerUpdate(long time) {
         Log.i("update","timerUpdate");
@@ -195,6 +217,18 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
         }
         timerString = timerToString(timerTime);
         timerClock.setText(timerString);
+    }
+
+
+    public int Upload() {
+        status = UPLOADING;
+        String statusUpdate = statusList.get(status);
+        testStatus.setText(statusUpdate);
+        Log.i("TESTING", "Upload method call");
+        DialogFragment uploadData = new UploadDataDialogFragment();
+        uploadData.show(getFragmentManager(), "uploadData");
+        Log.i("TESTING","Upload method return");
+        return 0;
     }
 
 
@@ -211,6 +245,7 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
         statusList.put(2, "Countdown to test...");
         statusList.put(1, "Testing...");
         statusList.put(0, "Finished...");
+        statusList.put(4, "Uploading...");
     }
 
 
