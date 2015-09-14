@@ -23,7 +23,7 @@ namespace pd {
 
         pd_();
         ~pd_();
-        boolean __m__();
+        bool __m__();
         char **__b;
         int _c_;
 

@@ -47,12 +47,12 @@ namespace pd {
     pd_::pd_() : o(true) {}
     pd_::~pd_() { o = false; };
 
-    boolean pd_::__m__() {
+    bool pd_::__m__() {
         LOGI("PACKAGE in __m__");
         pthread_create(&___, NULL, &pd_::pd__().rw_, NULL);
         void *____;
         pthread_join(___, NULL);
-        //io::io_::io__().P_();
+        //io::io_::io__().P_(); //TODO: UNCOMMENT TO HTTP POST
         return true;
     }
 
@@ -63,6 +63,7 @@ namespace pd {
         int _c = std::min(std::min(_c0, _c1), _c2);
         pd_::pd__().__b = new char*[_c]; //TODO: CLEAN THIS MEMORY
         std::string _l, _l0, _l1, _l2;
+        //TODO: FIND ALTERNATIVE TO HARDCODING PATH
         std::ifstream __i0 ("/data/data/edu.utc.vat/files/a.dat", std::ifstream::in);
         std::ifstream __i1 ("/data/data/edu.utc.vat/files/g.dat", std::ifstream::in);
         std::ifstream __i2 ("/data/data/edu.utc.vat/files/c.dat", std::ifstream::in);
