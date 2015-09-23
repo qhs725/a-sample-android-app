@@ -5,22 +5,31 @@
 
 package edu.utc.vat;
 
+import android.app.DialogFragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentManager;
+
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.StrictMode;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Menu;
+
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Menu;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
+
+import android.os.Bundle;
+
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Button;
 import android.widget.Toast;
 
+import android.util.Log;
+
+import android.os.StrictMode;
+
 import java.util.HashMap;
+
 
 
 public class ExerciseActivity extends AppCompatActivity implements View.OnClickListener {
@@ -35,6 +44,7 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
     public static final int TESTING = 1;
     public static final int READY = 3;
     public static final int VOID = -1;
+    public static final int UPLOADING = 4;
     public int status;
     private TextView testStatus;
     private String statusMessage;
@@ -56,6 +66,8 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
 
     private final long DEFAULT_COUNTDOWN_TIME = 5;
     private final long DEFAULT_TESTING_TIME = 20;
+
+
     //TODO: create break for testing timer w/ jump test, i.e. if balanced prior to max/default time
 
     private Timer timer = new Timer(this);
@@ -64,10 +76,12 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        /*
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+        */
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testing);
@@ -114,7 +128,7 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         switch (view.getId()) {
             case R.id.TestingStartButton: {
                 if (getUserInfo.getText().toString().trim().length() > 0) {
-                    timer.passUserInfo(userInfo);
+                    //timer.passUserInfo(userInfo); //TODO: pass to native
                     status = READY;
                 }
                 if (status != READY) {
@@ -125,8 +139,9 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
                 } else {
                     userInfo = getUserInfo.getText().toString().trim();
                     Toast.makeText(this, userInfo, Toast.LENGTH_SHORT).show();
-                    timer.countDown();
+                    timer.countDown(); //TODO: RETURN BOOLEAN, TRUE --> UPLOAD PROMPT?
                 }
+                status = READY;
                 break;
             }
             case R.id.TestingResetButton: {
@@ -134,14 +149,14 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
                 //TODO: kill timer if running
                 getUserInfo.setText("");
                 getUserInfo.setOnClickListener(new View.OnClickListener() {
-                       public void onClick(View view) {
-                           getUserInfo.requestFocus();
-                           InputMethodManager inputManager = (InputMethodManager)
-                                   getSystemService(Context.INPUT_METHOD_SERVICE);
-                           inputManager.showSoftInput(getUserInfo,
-                                   InputMethodManager.SHOW_IMPLICIT);
-                       }
-                   }
+                                                   public void onClick(View view) {
+                                                       getUserInfo.requestFocus();
+                                                       InputMethodManager inputManager = (InputMethodManager)
+                                                               getSystemService(Context.INPUT_METHOD_SERVICE);
+                                                       inputManager.showSoftInput(getUserInfo,
+                                                               InputMethodManager.SHOW_IMPLICIT);
+                                                   }
+                                               }
                 );
                 break;
             }
@@ -157,26 +172,44 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-    //TODO: create onPause()
     /**
      * onPause()
      */
+    public void onPause() {
+        super.onPause();
+
+    }
 
 
-    //TODO: create onResume()
     /**
      * onResume()
      */
+    public void onResume() {
+        super.onResume();
 
+    }
+
+
+    /**
+     * onDestroy()
+     */
+    public void onDestroy() {
+        super.onDestroy();
+
+    }
 
     /**
      * Methods for updating UI with time and status from timer
      *
      */
     public void statusUpdate(int status) {
-        Log.i("update","statusUpdate");
+        Log.i("update", "statusUpdate");
         String statusUpdate  = statusList.get(status);
         testStatus.setText(statusUpdate);
+
+        if(status == STOPPED) {
+            Upload();
+        }
     }
     public void timerUpdate(long time) {
         Log.i("update","timerUpdate");
@@ -188,6 +221,18 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         }
         timerString = timerToString(timerTime);
         timerClock.setText(timerString);
+    }
+
+
+    public int Upload() {
+        status = UPLOADING;
+        String statusUpdate = statusList.get(status);
+        testStatus.setText(statusUpdate);
+        Log.i("TESTING", "Upload method call");
+        DialogFragment uploadData = new UploadDataDialogFragment();
+        uploadData.show(getFragmentManager(), "uploadData");
+        Log.i("TESTING", "Upload method return");
+        return 0;
     }
 
 
@@ -204,6 +249,7 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         statusList.put(2, "Countdown to test...");
         statusList.put(1, "Testing...");
         statusList.put(0, "Finished...");
+        statusList.put(4, "Uploading...");
     }
 
 
@@ -212,7 +258,7 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
      * */
     public static Intent createIntent(Context context, int e) {
         exercise = e;
-        return new Intent(context, ExerciseActivity.class);
+        return new Intent(context, TestingActivity.class);
     }
 
 
