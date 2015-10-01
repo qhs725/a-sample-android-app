@@ -51,12 +51,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*
         findViewById(R.id.MainMenuButton3).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                 startActivity(ExerciseListActivity.createIntent(self));
+                startActivity(ExerciseListActivity.createIntent(self));
             }
-        });
+        }); */
 
         CallNative.InstantiateSensorsHandler();
         CallNative.IO();
