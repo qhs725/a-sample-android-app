@@ -27,21 +27,23 @@ namespace io {
             return instance;
         }
 
-        Poco::Net::HTTPClientSession pss;
-        Poco::Net::HTTPRequest prq;
-        Poco::Net::HTTPResponse prsp;
-
         io_();
         ~io_();
-
-        void _0(std::string _s_);
 
         void __init();
 
         void P_();
 
+        bool _f_;
+
     private:
         bool o;
+
+        Poco::Net::HTTPClientSession pss;
+        Poco::Net::HTTPRequest prq;
+        Poco::Net::HTTPResponse prsp;
+
+        static void *_0(void *);
 
     };
 

@@ -7,14 +7,15 @@
     <string name="action_change_test">Go To Another Test</string>
     <string name="test1_main_menu">One Leg Squat Hold</string>
     <string name="test2_main_menu">One Leg Jump Balance</string>
-    <string name="test3_main_menu">View Exercise List</string>
     <string name="exercise1">One Leg Squat Hold</string>
     <string name="exercise2">One Leg Jump Balance</string>
     <string name="start_testing_menu">START</string>
     <string name="reset_testing_menu">RESET</string>
     <string name="testing_timer">00:00</string>
     <string name="title_testing_activity">UTC Virtual Athletic Trainer</string>
+    <string name="dialog_upload_exercise_data">Do you want to upload data from this exercise?</string>
+    <string name="dialog_upload">Upload</string>
+    <string name="dialog_discard">Discard</string>
+    <string name="test3_main_menu">View Exercise List</string>
     <string name="title_activity_exercise_prep">ExercisePrepActivity</string>
-
-    <string name="hello_world">Hello world!</string>
 </resources>

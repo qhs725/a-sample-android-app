@@ -32,15 +32,13 @@ public class Timer {
     private long testingTime = 0;
     private long countDownTimeConvert;
     private long testingTimeConvert;
-
+    private boolean upload;
 
     public static final int STOPPED = 0;
     public static final int COUNTDOWN = 2;
     public static final int TESTING = 1;
     public static final int READY = 3;
     public int state;
-
-    private InternalData internalData;
 
     /**
      * This accepts time in seconds or milliseconds, so,
@@ -64,13 +62,11 @@ public class Timer {
 
     public void initTimer() {
         state = READY;
-        internalData = new InternalData(appContext);
     }
 
+    //TODO: pass to native
     public void passUserInfo (String info) {
-        internalData.passUserInfo(info);
     }
-
 
     //TODO: have reset kill timer
     public void countDown() {
@@ -156,11 +152,6 @@ public class Timer {
                 CallNative.WriteOff();
                 CallNative.StopSensors();
                 CallNative.CloseFiles();
-                CallNative.PackageData();
-                //internalData.readInternal();
-                //internalData.postAccelerometer();
-                //internalData.postGyroscope();
-                //internalData.postCompass();
             }
         }.start();
 

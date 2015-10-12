@@ -2,35 +2,35 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.utc.vat" >
 
-    <uses-feature
-        android:name="android.hardware.sensor.accelerometer"
-        android:required="true" />
-    <uses-feature
-        android:name="android.hardware.sensor.gyroscope"
-        android:required="true" />
-    <uses-feature
-        android:name="android.hardware.sensor.compass"
-        android:required="true" />
+
+    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true" />
+    <uses-feature android:name="android.hardware.sensor.gyroscope" android:required="true" />
+    <uses-feature android:name="android.hardware.sensor.compass" android:required="true" />
+
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE"/>
+
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
         <activity
             android:name=".TestingActivity"
             android:label="@string/title_testing_activity"
@@ -39,7 +39,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.utc.vat.TestingActivity" />
         </activity>
+
+
         <activity android:name=".ExerciseListActivity" />
+
+
         <activity
             android:name=".ExercisePrepActivity"
             android:label="@string/title_activity_exercise_prep"
@@ -48,6 +52,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.utc.vat.ExerciseListActivity" />
         </activity>
+
+
         <activity
             android:name=".ExerciseActivity"
             android:label="@string/title_testing_activity"
@@ -56,6 +62,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.utc.vat.ExerciseActivity" />
         </activity>
+
+
     </application>
 
+
 </manifest>
+
