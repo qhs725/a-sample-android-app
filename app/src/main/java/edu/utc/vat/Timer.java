@@ -32,15 +32,13 @@ public class Timer {
     private long testingTime = 0;
     private long countDownTimeConvert;
     private long testingTimeConvert;
-
+    private boolean upload;
 
     public static final int STOPPED = 0;
     public static final int COUNTDOWN = 2;
     public static final int TESTING = 1;
     public static final int READY = 3;
     public int state;
-
-    private InternalData internalData;
 
     /**
      * This accepts time in seconds or milliseconds, so,
@@ -64,13 +62,24 @@ public class Timer {
 
     public void initTimer() {
         state = READY;
-        internalData = new InternalData(appContext);
     }
 
+    //TODO: pass to native
     public void passUserInfo (String info) {
-        internalData.passUserInfo(info);
     }
 
+    public void stopTimer() {
+        if (state == TESTING) {
+            testingTimer.cancel();
+            CallNative.WriteOff();
+            CallNative.StopSensors();
+            CallNative.CloseFiles();
+        } else {
+            countDownTimer.cancel();
+            CallNative.CloseFiles();
+        }
+        CallNative.OpenFiles();
+    }
 
     //TODO: have reset kill timer
     public void countDown() {
@@ -110,6 +119,7 @@ public class Timer {
 
             @Override
             public void onFinish() {
+                Log.i("timer", "finished timer");
                 state = TESTING;
                 testing();
             }
@@ -122,7 +132,7 @@ public class Timer {
     //TODO: have reset kill timer
     public void testing() {
 
-        CallNative.WriteOn();
+        //CallNative.WriteOn();
 
         if (state != TESTING) {;}
             //TODO: reset/continue?
@@ -153,14 +163,9 @@ public class Timer {
                 ((TestingActivity)appContext).timerUpdate(0);
                 ((TestingActivity)appContext).statusUpdate(state);
 
-                CallNative.WriteOff();
-                CallNative.StopSensors();
-                CallNative.CloseFiles();
-                CallNative.PackageData();
-                //internalData.readInternal();
-                //internalData.postAccelerometer();
-                //internalData.postGyroscope();
-                //internalData.postCompass();
+                //CallNative.WriteOff();
+                //CallNative.StopSensors();
+                //CallNative.CloseFiles();
             }
         }.start();
 

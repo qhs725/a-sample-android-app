@@ -17,7 +17,6 @@ import android.view.View.OnClickListener;
 
 import android.content.Context;
 
-import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -49,9 +48,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 exercise = ONE_LEG_JUMP_BALANCE;
                 startActivity(TestingActivity.createIntent(self, exercise));
-            }
-        });
-
+				
         findViewById(R.id.MainMenuButton3).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,11 +57,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        File filepath = this.getFilesDir(); //deprecated see below
-        String path = filepath.toString(); //deprecated see below
-        CallNative.PassFilePath(path); //deprecated but still passes required path for _fopen
         CallNative.InstantiateSensorsHandler();
-        CallNative.IO(); //deprecated if using http posts?
+        CallNative.IO();
 
     }
 

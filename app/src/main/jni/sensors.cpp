@@ -14,6 +14,7 @@
  * TODO: ASSIGN UUID TO NAMES, HAVE PEOPLE REGISTER
  */
 
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -26,7 +27,6 @@
 #define LOG_TAG "sh"
 #define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO,LOG_TAG, __VA_ARGS__))
 #define LOGE(...) ((void)__android_log_print(ANDROID_LOG_ERROR,LOG_TAG,__VA_ARGS__))
-
 
 #ifdef __cplusplus
 extern "C" {
@@ -219,18 +219,18 @@ namespace wti {
      * STRING BUILDING DEPRECATED
      */
     void wti_::_fopen() {
-        const char *_p = ___p;
-        const char *a_ = "a.dat";
-        char _f[strlen(_p) + strlen(a_) + 1];
-        snprintf(_f, sizeof(_f), "%s/%s", _p, a_);
+        //const char *_p = ___p;
+        //const char *a_ = "a.dat";
+        //char _f[strlen(_p) + strlen(a_) + 1];
+        //snprintf(_f, sizeof(_f), "%s/%s", _p, a_);
         fa___ = fopen("/data/data/edu.utc.vat/files/a.dat", "w");
-        const char *c_ = "c.dat";
-        char ___f[strlen(_p) + strlen(c_) + 1];
-        snprintf(___f, sizeof(___f), "%s%s", _p, c_);
+        //const char *c_ = "c.dat";
+        //char ___f[strlen(_p) + strlen(c_) + 1];
+        //snprintf(___f, sizeof(___f), "%s%s", _p, c_);
         fc_ = fopen("/data/data/edu.utc.vat/files/c.dat", "w");
-        const char *g_ = "g.dat";
-        char __f[strlen(_p) + strlen(g_) + 1];
-        snprintf(__f, sizeof(__f), "%s%s", _p, g_);
+        //const char *g_ = "g.dat";
+        //char __f[strlen(_p) + strlen(g_) + 1];
+        //snprintf(__f, sizeof(__f), "%s%s", _p, g_);
         fg__ = fopen("/data/data/edu.utc.vat/files/g.dat", "w");
     }
 

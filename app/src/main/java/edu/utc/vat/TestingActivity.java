@@ -5,7 +5,9 @@
 
 package edu.utc.vat;
 
+import android.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentManager;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.view.inputmethod.InputMethodManager;
+import android.view.Gravity;
 
 import android.os.Bundle;
 
@@ -27,6 +30,8 @@ import android.util.Log;
 import android.os.StrictMode;
 
 import java.util.HashMap;
+
+import java.lang.Object;
 
 
 
@@ -42,6 +47,7 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
     public static final int TESTING = 1;
     public static final int READY = 3;
     public static final int VOID = -1;
+    public static final int UPLOADING = 4;
     public int status;
     private TextView testStatus;
     private String statusMessage;
@@ -60,21 +66,28 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
 
     private Button resetButton;
     private Button startButton;
+    private Button instructionsButton;
 
     private final long DEFAULT_COUNTDOWN_TIME = 5;
     private final long DEFAULT_TESTING_TIME = 20;
+
+    private Toast concurrentToast;
+
+
     //TODO: create break for testing timer w/ jump test, i.e. if balanced prior to max/default time
 
-    private Timer timer = new Timer(this);
+    private Timer timer;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        /*
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+        */
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testing);
@@ -94,8 +107,11 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
         getUserInfo = (EditText) findViewById(R.id.SessionInfo);
         resetButton = (Button) findViewById(R.id.TestingResetButton);
         startButton = (Button) findViewById(R.id.TestingStartButton);
+        instructionsButton = (Button) findViewById(R.id.TestingInstructionsButton);
         resetButton.setOnClickListener(this);
         startButton.setOnClickListener(this);
+        instructionsButton.setOnClickListener(this);
+        timer = new Timer(this);
 
         timer.setCountDownTime(DEFAULT_COUNTDOWN_TIME);
         timer.setTestingTime(DEFAULT_TESTING_TIME);
@@ -121,23 +137,29 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
         switch (view.getId()) {
             case R.id.TestingStartButton: {
                 if (getUserInfo.getText().toString().trim().length() > 0) {
-                    timer.passUserInfo(userInfo);
+                    //timer.passUserInfo(userInfo); //TODO: pass to native
                     status = READY;
                 }
                 if (status != READY) {
                     Toast.makeText(this, "Please enter your NAME, etc...",
-                            Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();
                     resetButton.performClick();
                     break;
                 } else {
                     userInfo = getUserInfo.getText().toString().trim();
                     Toast.makeText(this, userInfo, Toast.LENGTH_SHORT).show();
-                    timer.countDown();
+                    timer.countDown(); //TODO: RETURN BOOLEAN, TRUE --> UPLOAD PROMPT?
                 }
+                status = READY;
                 break;
             }
             case R.id.TestingResetButton: {
-                status = STOPPED;
+                timer.stopTimer();
+                //timer.delete();
+                timerUpdate(0);
+                status = VOID;
+                statusUpdate(status);
+                //Toast.makeText(this, "Reseting..", Toast.LENGTH_LONG).show();
                 //TODO: kill timer if running
                 getUserInfo.setText("");
                 getUserInfo.setOnClickListener(new View.OnClickListener() {
@@ -152,11 +174,18 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
                 );
                 break;
             }
+            case R.id.TestingInstructionsButton: {
+                //TODO: Something to play concurrent Toasts for instructions w/ hash map
+                showToast("ENTER EXERCISE INSTRUCTIONS HERE... \n INSTRUCTION 1..\n " +
+                        "INSTRUCTION 2..\n INSTRUCTION 3..\n INSTRUCTION 4..\n" +
+                        " ...\n INSTRUCTION N");
+                break;
+            }
             case R.id.SessionInfo: {
                 getUserInfo.setText("");
                 getUserInfo.requestFocus();
                 InputMethodManager inputManager = (InputMethodManager)
-                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputManager.showSoftInput(getUserInfo, InputMethodManager.SHOW_IMPLICIT);
                 break;
             }
@@ -164,26 +193,45 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    //TODO: create onPause()
     /**
      * onPause()
      */
+    public void onPause() {
+        super.onPause();
+
+    }
 
 
-    //TODO: create onResume()
     /**
      * onResume()
      */
+    public void onResume() {
+        super.onResume();
 
+    }
+
+
+    /**
+     * onDestroy()
+     */
+    public void onDestroy() {
+        super.onDestroy();
+
+    }
 
     /**
      * Methods for updating UI with time and status from timer
      *
      */
     public void statusUpdate(int status) {
-        Log.i("update","statusUpdate");
+        Log.i("update", "statusUpdate");
         String statusUpdate  = statusList.get(status);
         testStatus.setText(statusUpdate);
+
+        if(status == STOPPED) {
+            Upload();
+            //resetButton.performClick();
+        }
     }
     public void timerUpdate(long time) {
         Log.i("update","timerUpdate");
@@ -195,6 +243,18 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
         }
         timerString = timerToString(timerTime);
         timerClock.setText(timerString);
+    }
+
+
+    public int Upload() {
+        status = UPLOADING;
+        String statusUpdate = statusList.get(status);
+        testStatus.setText(statusUpdate);
+        Log.i("TESTING", "Upload method call");
+        DialogFragment uploadData = new UploadDataDialogFragment();
+        uploadData.show(getFragmentManager(), "uploadData");
+        Log.i("TESTING", "Upload method return");
+        return 0;
     }
 
 
@@ -211,6 +271,7 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
         statusList.put(2, "Countdown to test...");
         statusList.put(1, "Testing...");
         statusList.put(0, "Finished...");
+        statusList.put(4, "Uploading...");
     }
 
 
@@ -238,6 +299,15 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
         return string;
     }
 
+
+
+    void showToast(String message) {
+        if(concurrentToast != null) {
+            concurrentToast.cancel();
+        }
+        concurrentToast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+        concurrentToast.show();
+    }
 }
 
 
