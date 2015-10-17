@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 exercise = ONE_LEG_JUMP_BALANCE;
                 startActivity(TestingActivity.createIntent(self, exercise));
+            }
+        });
 				
         findViewById(R.id.MainMenuButton3).setOnClickListener(new OnClickListener() {
             @Override
