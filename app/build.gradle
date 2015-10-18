@@ -1,6 +1,7 @@
 import org.apache.tools.ant.taskdefs.condition.Os
 
 apply plugin: 'com.android.application'
+//apply plugin: "com.android.library"
 
 android {
     compileSdkVersion 23
@@ -9,8 +10,8 @@ android {
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
-        applicationId "edu.utc.vat"
-        minSdkVersion 19
+       // applicationId "edu.utc.vat"
+        minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -36,7 +37,7 @@ tasks.withType(JavaCompile) {
 task ndkBuild(type: Exec) {
     Properties properties = new Properties()
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
-    def ndkbuild = properties.getProperty('ndk.dir', null)+"/ndk-build"
+    def ndkbuild = properties.getProperty('ndk.dir', null) + "/ndk-build"
     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
         commandLine '\\Documents\\Android\\NDK\\ndk-build.cmd', '-C', file('src/main/jni').absolutePath
     } else {
@@ -46,6 +47,20 @@ task ndkBuild(type: Exec) {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile files('libs/ibmdata.jar')
+    compile files('libs/ibmfilesync.jar')
+    compile files('libs/ibmpush.jar')
+    compile files('libs/ibmbluemix.jar')
+    compile files('libs/ibmcloudcode.jar')
+    // compile 'com.google.http-client:google-http-client-gson:1.20.0'
+    //compile 'com.google.http-client:google-http-client:1.20.0'
+    compile 'com.google.api-client:google-api-client:1.20.0'
+    compile 'com.google.android.gms:play-services:8.1.0'
     compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.google.android.gms:play-services-gcm:8.1.0'
+    compile 'org.codehaus.jackson:jackson-core-asl:1.9.13'
+    compile 'com.google.http-client:google-http-client-jackson:1.20.0'
+    compile 'com.google.oauth-client:google-oauth-client:1.20.0'
 }
