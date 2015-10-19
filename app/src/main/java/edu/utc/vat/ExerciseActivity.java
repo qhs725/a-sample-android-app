@@ -31,7 +31,6 @@ import android.os.StrictMode;
 import java.util.HashMap;
 
 
-
 public class ExerciseActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int NO_EXERCISE_SELECTED = 0;
@@ -63,9 +62,12 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
 
     private Button resetButton;
     private Button startButton;
+    private Button instructionsButton;
 
     private final long DEFAULT_COUNTDOWN_TIME = 5;
     private final long DEFAULT_TESTING_TIME = 20;
+    private Toast concurrentToast;
+
 
 
     //TODO: create break for testing timer w/ jump test, i.e. if balanced prior to max/default time
@@ -76,12 +78,6 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        /*
-        if (android.os.Build.VERSION.SDK_INT > 9) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
-        */
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testing);
@@ -101,9 +97,11 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         getUserInfo = (EditText) findViewById(R.id.SessionInfo);
         resetButton = (Button) findViewById(R.id.TestingResetButton);
         startButton = (Button) findViewById(R.id.TestingStartButton);
+
+        instructionsButton = (Button) findViewById(R.id.TestingInstructionsButton);
         resetButton.setOnClickListener(this);
         startButton.setOnClickListener(this);
-
+        instructionsButton.setOnClickListener(this);
         timer.setCountDownTime(DEFAULT_COUNTDOWN_TIME);
         timer.setTestingTime(DEFAULT_TESTING_TIME);
         timer.initTimer();
@@ -125,8 +123,59 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
 
 
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.TestingStartButton: {
+
+        /*
+        int id = view.getId();
+        if (id == R.id.TestingStartButton) {
+            if (getUserInfo.getText().toString().trim().length() > 0) {
+                //timer.passUserInfo(userInfo); //TODO: pass to native
+                status = READY;
+            }
+            if (status != READY) {
+                Toast.makeText(this, "Please enter your NAME, etc...",
+                        Toast.LENGTH_SHORT).show();
+                resetButton.performClick();
+            } else {
+                userInfo = getUserInfo.getText().toString().trim();
+                Toast.makeText(this, userInfo, Toast.LENGTH_SHORT).show();
+                timer.countDown(); //TODO: RETURN BOOLEAN, TRUE --> UPLOAD PROMPT?
+            }
+            status = READY;
+        }*/
+        int id2 = view.getId();
+        if (id2 == R.id.TestingResetButton) {
+            status = STOPPED;
+            //TODO: kill timer if running
+            Log.i("RESET","Clicked reset button");
+            getUserInfo.setText("");
+            getUserInfo.setOnClickListener(new View.OnClickListener() {
+                   public void onClick(View view) {
+                       getUserInfo.requestFocus();
+                       InputMethodManager inputManager = (InputMethodManager)
+                               getSystemService(Context.INPUT_METHOD_SERVICE);
+                       inputManager.showSoftInput(getUserInfo,
+                               InputMethodManager.SHOW_IMPLICIT);
+                   }
+               }
+            );
+        }
+        if (id2 == R.id.TestingInstructionsButton) {
+            Log.i("INSTRUCTIONS","Toast called");
+            Toast.makeText(this, "Instructions", Toast.LENGTH_LONG).show();
+            //showToast("ENTER FIRST EXERCISE INSTRUCTION HERE...");
+            //showToast("ENTER SECOND EXERCISE INSTRUCTION HERE...");
+        }
+        if (id2 == R.id.SessionInfo) {
+            getUserInfo.setText("");
+            getUserInfo.requestFocus();
+            InputMethodManager inputManager = (InputMethodManager)
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.showSoftInput(getUserInfo, InputMethodManager.SHOW_IMPLICIT);
+        }
+
+        /*
+        switch (id) {
+            case R.id.TestingStartButton:
                 if (getUserInfo.getText().toString().trim().length() > 0) {
                     //timer.passUserInfo(userInfo); //TODO: pass to native
                     status = READY;
@@ -143,32 +192,40 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
                 }
                 status = READY;
                 break;
-            }
-            case R.id.TestingResetButton: {
+
+            case R.id.TestingResetButton:
                 status = STOPPED;
                 //TODO: kill timer if running
+                Log.i("RESET","Clicked reset button");
                 getUserInfo.setText("");
                 getUserInfo.setOnClickListener(new View.OnClickListener() {
-                                                   public void onClick(View view) {
-                                                       getUserInfo.requestFocus();
-                                                       InputMethodManager inputManager = (InputMethodManager)
-                                                               getSystemService(Context.INPUT_METHOD_SERVICE);
-                                                       inputManager.showSoftInput(getUserInfo,
-                                                               InputMethodManager.SHOW_IMPLICIT);
-                                                   }
-                                               }
+                       public void onClick(View view) {
+                           getUserInfo.requestFocus();
+                           InputMethodManager inputManager = (InputMethodManager)
+                                   getSystemService(Context.INPUT_METHOD_SERVICE);
+                           inputManager.showSoftInput(getUserInfo,
+                                   InputMethodManager.SHOW_IMPLICIT);
+                       }
+                   }
                 );
                 break;
-            }
-            case R.id.SessionInfo: {
+
+            case R.id.TestingInstructionsButton:
+                Log.i("INSTRUCTIONS","Toast called");
+                Toast.makeText(this, "Instructions", Toast.LENGTH_LONG).show();
+                //showToast("ENTER FIRST EXERCISE INSTRUCTION HERE...");
+                //showToast("ENTER SECOND EXERCISE INSTRUCTION HERE...");
+                break;
+
+            case R.id.SessionInfo:
                 getUserInfo.setText("");
                 getUserInfo.requestFocus();
                 InputMethodManager inputManager = (InputMethodManager)
                         getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputManager.showSoftInput(getUserInfo, InputMethodManager.SHOW_IMPLICIT);
                 break;
-            }
-        }
+
+        }*/
     }
 
 
@@ -258,7 +315,8 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
      * */
     public static Intent createIntent(Context context, int e) {
         exercise = e;
-        return new Intent(context, TestingActivity.class);
+        return new Intent(context, ExerciseActivity.class);
+       // return new Intent(context, TestingActivity.class);
     }
 
 
@@ -275,6 +333,15 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
             string = stringBuilder.toString();
         }
         return string;
+    }
+
+
+    void showToast(String message) {
+        if(concurrentToast != null) {
+            concurrentToast.cancel();
+        }
+        concurrentToast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+        concurrentToast.show();
     }
 
 }
