@@ -45,7 +45,7 @@ public final class BlueListApplication extends Application {
 	private static final String APP_ID = "applicationID";
 	private static final String APP_SECRET = "applicationSecret";
 	private static final String APP_ROUTE = "applicationRoute";
-	private static final String PROPS_FILE = "bluelist.properties";
+	private static final String PROPS_FILE = "google_bluemix.properties";
 	public Properties appProperties = null;
 
 	private IBMPushNotificationListener notificationListener = null;
