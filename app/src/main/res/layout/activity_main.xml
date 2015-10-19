@@ -64,6 +64,7 @@
         android:layout_marginTop="33dp"
         android:layout_alignEnd="@+id/MainMenuButton1"
         />
+		
     <Button
         android:paddingTop="6dp"
         android:layout_width="450dip"
@@ -79,4 +80,5 @@
         android:layout_marginTop="33dp"
         android:layout_alignEnd="@+id/MainMenuButton2"
         />
+
 </RelativeLayout>

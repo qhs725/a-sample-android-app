@@ -29,14 +29,12 @@ public class ExerciseListActivity extends AppCompatActivity {
     final ExerciseListActivity self = this;
     private Intent mIntent;
 
-
     //Exercise  exercises;
     ArrayList<Exercise> exercises = new ArrayList<>();
     ArrayList<String> exercise_names = new ArrayList<String>();
     public static Intent createIntent(Context context){
         return new Intent(context, ExerciseListActivity.class);
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -110,12 +108,14 @@ public class ExerciseListActivity extends AppCompatActivity {
             return;
         }
         int totalHeight = listView.getPaddingTop() + listView.getPaddingBottom();
+
         View listItem = listAdapter.getView(0, null, listView);
         if(listItem instanceof ViewGroup){
             listItem.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         }
         listItem.measure(0, 0);
         totalHeight += listItem.getMeasuredHeight() * listAdapter.getCount();
+
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
         listView.setLayoutParams(params);
