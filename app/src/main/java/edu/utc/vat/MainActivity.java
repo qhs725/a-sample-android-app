@@ -6,6 +6,7 @@
 
 package edu.utc.vat;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -17,8 +18,14 @@ import android.view.View.OnClickListener;
 
 import android.content.Context;
 
+import edu.utc.vat.util.GoogleTokenManager;
 
-public class MainActivity extends AppCompatActivity {
+
+
+
+public class MainActivity extends AppCompatActivity implements OnClickListener {
+
+    private com.google.android.gms.common.SignInButton mGetGoogleTokenButton;
 
     final MainActivity self = this;
 
@@ -50,7 +57,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(TestingActivity.createIntent(self, exercise));
             }
         });
-				
+
+        mGetGoogleTokenButton = (com.google.android.gms.common.SignInButton) findViewById(R.id.get_google_token_button);
+        mGetGoogleTokenButton.setOnClickListener(this);
+
+        /*
         findViewById(R.id.MainMenuButton3).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(ExerciseListActivity.createIntent(self));
             }
         });
+        */
 
         CallNative.InstantiateSensorsHandler();
         CallNative.IO();
@@ -88,4 +100,20 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onClick(View v) {
+        final Context context = self;
+        Intent intent = null;
+
+        switch (v.getId()) {
+
+            case R.id.get_google_token_button:
+                intent = new Intent(context, GoogleTokenManager.class);
+                startActivity(intent);
+                finish();
+                break;
+            default:
+                break;
+        }
+    }
 }

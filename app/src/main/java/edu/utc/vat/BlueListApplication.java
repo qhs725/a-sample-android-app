@@ -73,7 +73,9 @@ public final class BlueListApplication extends Application {
 								Class<? extends Activity> actClass = mActivity.getClass();
 								if (actClass == MainActivity.class) {
 									// Update the Grocery List
-									((MainActivity)mActivity).listItems();
+
+									// Commented out due to error
+									//((MainActivity)mActivity).listItems();
 									Log.e(CLASS_NAME, "Notification message received: " + message.toString());
 									//present the message when sent from Push notification console.
 									if(!message.getAlert().contains("ItemList was updated")){

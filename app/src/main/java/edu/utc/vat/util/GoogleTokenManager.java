@@ -17,8 +17,9 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.apache.ApacheHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson.JacksonFactory;
-import com.ibm.bluelist.BlueListApplication;
-import com.ibm.bluelist.MainActivity;
+import edu.utc.vat.BlueListApplication;
+import edu.utc.vat.ExerciseListActivity;
+import edu.utc.vat.MainActivity;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -453,7 +454,7 @@ public class GoogleTokenManager extends Activity
 			accountId = null;
 
 			final Context context = thisActivity;
-			Intent intent = new Intent(context, MainActivity.class);
+			Intent intent = new Intent(context, ExerciseListActivity.class);
 			intent.putExtra("GOOGLE_ID_TOKEN",googleIdToken);
 			intent.putExtra("GOOGLE_OAUTH_TOKEN",googleAccessToken);
 			intent.putExtra("GOOGLE_NAME", firstName+" "+lastName);

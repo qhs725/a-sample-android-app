@@ -1,25 +1,43 @@
 import org.apache.tools.ant.taskdefs.condition.Os
 
 apply plugin: 'com.android.application'
-//apply plugin: "com.android.library"
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '23.0.0'
+    signingConfigs {
+        config {
+            keyAlias 'utc_vat'
+            keyPassword 'utcandroid'
+            storeFile file(projectDir.getParent() + '/utc-vat.keystore')
+            storePassword 'utcandroid'
+        }
+    }
+
+    compileSdkVersion 'Google Inc.:Google APIs:23'
+    buildToolsVersion '23.0.1'
 
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
-       // applicationId "edu.utc.vat"
-        minSdkVersion 14
+        applicationId "edu.utc.vat"
+        minSdkVersion 21
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
+    }
+
+    dexOptions {
+        javaMaxHeapSize "2g"
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            jniDebuggable false
+            signingConfig signingConfigs.config
         }
     }
     sourceSets {
@@ -48,16 +66,11 @@ task ndkBuild(type: Exec) {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile files('libs/ibmdata.jar')
-    compile files('libs/ibmfilesync.jar')
-    compile files('libs/ibmpush.jar')
-    compile files('libs/ibmbluemix.jar')
-    compile files('libs/ibmcloudcode.jar')
     // compile 'com.google.http-client:google-http-client-gson:1.20.0'
     //compile 'com.google.http-client:google-http-client:1.20.0'
     compile 'com.google.api-client:google-api-client:1.20.0'
     compile 'com.google.android.gms:play-services:8.1.0'
-    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.google.android.gms:play-services-gcm:8.1.0'
     compile 'org.codehaus.jackson:jackson-core-asl:1.9.13'
