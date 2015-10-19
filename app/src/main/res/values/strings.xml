@@ -7,6 +7,7 @@
     <string name="action_change_test">Go To Another Test</string>
     <string name="test1_main_menu">One Leg Squat Hold</string>
     <string name="test2_main_menu">One Leg Jump Balance</string>
+    <string name="test3_main_menu">Experimental</string>
     <string name="exercise1">One Leg Squat Hold</string>
     <string name="exercise2">One Leg Jump Balance</string>
     <string name="start_testing_menu">START</string>
