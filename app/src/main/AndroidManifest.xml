@@ -39,11 +39,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.utc.vat.TestingActivity" />
         </activity>
-
-
         <activity android:name=".ExerciseListActivity" />
-
-
         <activity
             android:name=".ExercisePrepActivity"
             android:label="@string/title_activity_exercise_prep"
@@ -52,8 +48,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.utc.vat.ExerciseListActivity" />
         </activity>
-
-
         <activity
             android:name=".ExerciseActivity"
             android:label="@string/title_testing_activity"
@@ -62,8 +56,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.utc.vat.ExerciseActivity" />
         </activity>
-
-
     </application>
 
 

@@ -50,11 +50,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(TestingActivity.createIntent(self, exercise));
             }
         });
-
+				
         findViewById(R.id.MainMenuButton3).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                 startActivity(ExerciseListActivity.createIntent(self));
+               // exercise = 0;
+                startActivity(ExerciseListActivity.createIntent(self));
             }
         });
 
