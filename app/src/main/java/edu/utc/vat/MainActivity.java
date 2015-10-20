@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,11 @@ import android.view.View.OnClickListener;
 
 import android.content.Context;
 
+import com.ibm.mobile.services.core.IBMBluemix;
+import com.ibm.mobile.services.core.IBMCurrentUser;
+
+import bolts.Continuation;
+import bolts.Task;
 import edu.utc.vat.util.GoogleTokenManager;
 
 
@@ -36,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     private Context context;
 
+    public static final String CLASS_NAME = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_testing, menu);
         return true;
     }
 
@@ -92,12 +99,33 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        //respond to menu item selection
+        switch (item.getItemId()) {
+            case R.id.action_settings:
 
-        return super.onOptionsItemSelected(item);
+                return true;
+            case R.id.logout:
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                IBMBluemix.clearSecurityToken().continueWith(
+                        new Continuation<IBMCurrentUser, Void>() {
+                            @Override
+                            public Void then(Task<IBMCurrentUser> task) throws Exception {
+                                if (task.isFaulted()) {
+                                    Log.e(CLASS_NAME, "Exception : " + task.getError().getMessage());
+                                    return null;
+                                }
+                                IBMCurrentUser user = task.getResult();
+                                Log.i(CLASS_NAME, "Successfully logged out of user: " + user.getUuid());
+                                return null;
+                            }
+                        });
+                Log.i(CLASS_NAME, "Finishing Main Activity. Returning to Login Screen.");
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -115,5 +143,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             default:
                 break;
         }
+    }
+
+    public static Intent createIntent(Context context) {
+        return new Intent(context, MainActivity.class);
     }
 }

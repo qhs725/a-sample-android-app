@@ -17,9 +17,6 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.http.apache.ApacheHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson.JacksonFactory;
-import edu.utc.vat.BlueListApplication;
-import edu.utc.vat.ExerciseListActivity;
-import edu.utc.vat.MainActivity;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -35,6 +32,10 @@ import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.Properties;
+
+import edu.utc.vat.BlueListApplication;
+import edu.utc.vat.LoginActivity;
+import edu.utc.vat.MainActivity;
 
 
 public class GoogleTokenManager extends Activity
@@ -173,6 +174,11 @@ public class GoogleTokenManager extends Activity
 				// start the getToken task to get the ID token
 				System.out.println("Get Google ID Token...");
 				new GetTokenTask().execute();
+			}
+			else {
+                //Go back if cancel is hit
+				Intent intent = new Intent(thisActivity, LoginActivity.class);
+				startActivity(intent);
 			}
 		}
 
@@ -454,7 +460,7 @@ public class GoogleTokenManager extends Activity
 			accountId = null;
 
 			final Context context = thisActivity;
-			Intent intent = new Intent(context, ExerciseListActivity.class);
+			Intent intent = new Intent(context, MainActivity.class);
 			intent.putExtra("GOOGLE_ID_TOKEN",googleIdToken);
 			intent.putExtra("GOOGLE_OAUTH_TOKEN",googleAccessToken);
 			intent.putExtra("GOOGLE_NAME", firstName+" "+lastName);

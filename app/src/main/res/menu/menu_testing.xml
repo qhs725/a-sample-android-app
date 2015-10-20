@@ -17,4 +17,8 @@
         android:title="@string/action_exit"
         android:orderInCategory="400"
         app:showAsAction="never" />
+    <item android:id="@+id/logout"
+        android:title="@string/action_logout"
+        android:orderInCategory="400"
+        app:showAsAction="never" />
 </menu>

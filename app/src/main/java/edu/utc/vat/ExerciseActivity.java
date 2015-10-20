@@ -28,7 +28,13 @@ import android.util.Log;
 
 import android.os.StrictMode;
 
+import com.ibm.mobile.services.core.IBMBluemix;
+import com.ibm.mobile.services.core.IBMCurrentUser;
+
 import java.util.HashMap;
+
+import bolts.Continuation;
+import bolts.Task;
 
 
 public class ExerciseActivity extends AppCompatActivity implements View.OnClickListener {
@@ -74,6 +80,8 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
 
     private Timer timer = new Timer(this);
 
+    public static final String CLASS_NAME = "MainActivity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,9 +124,32 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) { return true; }
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+
+                return true;
+            case R.id.logout:
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                IBMBluemix.clearSecurityToken().continueWith(
+                        new Continuation<IBMCurrentUser, Void>() {
+                            @Override
+                            public Void then(Task<IBMCurrentUser> task) throws Exception {
+                                if (task.isFaulted()) {
+                                    Log.e(CLASS_NAME, "Exception : " + task.getError().getMessage());
+                                    return null;
+                                }
+                                IBMCurrentUser user = task.getResult();
+                                Log.i(CLASS_NAME, "Successfully logged out of user: " + user.getUuid());
+                                return null;
+                            }
+                        });
+                Log.i(CLASS_NAME, "Finishing Main Activity. Retuning to Login Screen.");
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 
