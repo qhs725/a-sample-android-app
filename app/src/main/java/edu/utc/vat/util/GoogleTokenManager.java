@@ -466,6 +466,7 @@ public class GoogleTokenManager extends Activity
 			intent.putExtra("GOOGLE_NAME", firstName+" "+lastName);
 			intent.putExtra("GOOGLE_EMAIL", email);
 			intent.putExtra("GOOGLE_PICTURE", picture);
+            intent.putExtra("IS_GUEST", false);
 			Log.i(CLASS_NAME, "Opening Main Activity and passing Google ID Token:\n"+googleIdToken);
 			startActivity(intent);
 			finish();

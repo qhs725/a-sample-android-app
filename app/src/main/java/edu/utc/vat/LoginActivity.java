@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
@@ -18,6 +19,7 @@ public class LoginActivity extends Activity implements OnClickListener{
 	private Activity thisActivity = this;
 	
 	private com.google.android.gms.common.SignInButton mGetGoogleTokenButton;
+	private android.widget.Button mGetWorklightTokenButton;
 	@SuppressWarnings("unused")
 	private TextView mStatus;
 	@SuppressWarnings("unused")
@@ -42,9 +44,7 @@ public class LoginActivity extends Activity implements OnClickListener{
 
 	protected void onActivityResult(final int requestCode, final int resultCode,
 	         final Intent data) {
-	     
 
-		
 	}
 	
 	protected void onStart() {
@@ -65,9 +65,12 @@ public class LoginActivity extends Activity implements OnClickListener{
 		
 			case R.id.guestbtn:
 				intent = new Intent(context, MainActivity.class);
-				startActivity(intent);
+                intent.putExtra("GOOGLE_NAME", "null");
+                intent.putExtra("IS_GUEST", true);
+                Log.i("LoginActivity", "Opening Main Activity as GUEST");
+                startActivity(intent);
 				finish();
-				break;
+                break;
 			case R.id.get_google_token_button:
 			    intent = new Intent(context, GoogleTokenManager.class);
 	            startActivity(intent); 
