@@ -150,4 +150,27 @@ public class MainActivity extends BaseActivity implements OnClickListener {
     public static Intent createIntent(Context context) {
         return new Intent(context, MainActivity.class);
     }
+
+    @Override
+    public void onBackPressed(){
+        intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+        IBMBluemix.clearSecurityToken().continueWith(
+                new Continuation<IBMCurrentUser, Void>() {
+                    @Override
+                    public Void then(Task<IBMCurrentUser> task) throws Exception {
+                        if (task.isFaulted()) {
+                            Log.e(CLASS_NAME, "Exception : " + task.getError().getMessage());
+                            return null;
+                        }
+                        IBMCurrentUser user = task.getResult();
+                        Log.i(CLASS_NAME, "Successfully logged out of user: " + user.getUuid());
+                        return null;
+                    }
+                });
+        Log.i(CLASS_NAME, "Finishing Main Activity. Returning to Login Screen.");
+        finish();
+            super.onBackPressed();
+    }
+
 }
