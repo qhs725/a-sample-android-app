@@ -29,7 +29,7 @@ import edu.utc.vat.util.GoogleTokenManager;
 
 
 
-public class MainActivity extends AppCompatActivity implements OnClickListener {
+public class MainActivity extends BaseActivity implements OnClickListener {
 
     private com.google.android.gms.common.SignInButton mGetGoogleTokenButton;
 
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
 
     private Context context;
 
-    public static final String CLASS_NAME = "MainActivity";
+    public static final String CLASS_NAME = "LoginActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -37,7 +37,7 @@ import bolts.Continuation;
 import bolts.Task;
 
 
-public class ExerciseActivity extends AppCompatActivity implements View.OnClickListener {
+public class ExerciseActivity extends BaseActivity implements View.OnClickListener {
 
     private static final int NO_EXERCISE_SELECTED = 0;
     private static final int ONE_LEG_SQUAT_HOLD = 1;
@@ -115,43 +115,6 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         timer.initTimer();
 
     }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_testing, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-
-                return true;
-            case R.id.logout:
-                Intent intent = new Intent(this, LoginActivity.class);
-                startActivity(intent);
-                IBMBluemix.clearSecurityToken().continueWith(
-                        new Continuation<IBMCurrentUser, Void>() {
-                            @Override
-                            public Void then(Task<IBMCurrentUser> task) throws Exception {
-                                if (task.isFaulted()) {
-                                    Log.e(CLASS_NAME, "Exception : " + task.getError().getMessage());
-                                    return null;
-                                }
-                                IBMCurrentUser user = task.getResult();
-                                Log.i(CLASS_NAME, "Successfully logged out of user: " + user.getUuid());
-                                return null;
-                            }
-                        });
-                Log.i(CLASS_NAME, "Finishing Main Activity. Retuning to Login Screen.");
-                finish();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
 
     public void onClick(View view) {
 
