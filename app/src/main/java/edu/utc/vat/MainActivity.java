@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
     private static final int ONE_LEG_SQUAT_HOLD = 1;
     private static final int ONE_LEG_JUMP_BALANCE = 2;
     private static int exercise = NO_EXERCISE_SELECTED;
+    private Intent intent;
 
     private Context context;
 
@@ -65,8 +66,6 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
             }
         });
 
-        mGetGoogleTokenButton = (com.google.android.gms.common.SignInButton) findViewById(R.id.get_google_token_button);
-        mGetGoogleTokenButton.setOnClickListener(this);
 
         /*
         findViewById(R.id.MainMenuButton3).setOnClickListener(new OnClickListener() {
@@ -102,10 +101,13 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         //respond to menu item selection
         switch (item.getItemId()) {
             case R.id.action_settings:
-
+                return true;
+            case R.id.action_exercise:
+                intent = new Intent(this, ExerciseListActivity.class);
+                startActivity(intent);
                 return true;
             case R.id.logout:
-                Intent intent = new Intent(this, MainActivity.class);
+                intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 IBMBluemix.clearSecurityToken().continueWith(
                         new Continuation<IBMCurrentUser, Void>() {

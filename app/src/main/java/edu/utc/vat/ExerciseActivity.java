@@ -129,7 +129,7 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
 
                 return true;
             case R.id.logout:
-                Intent intent = new Intent(this, MainActivity.class);
+                Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 IBMBluemix.clearSecurityToken().continueWith(
                         new Continuation<IBMCurrentUser, Void>() {
