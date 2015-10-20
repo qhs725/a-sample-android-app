@@ -39,6 +39,9 @@ android {
             jniDebuggable false
             signingConfig signingConfigs.config
         }
+        debug {
+            jniDebuggable true
+        }
     }
     sourceSets {
         main {
