@@ -25,7 +25,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class ExerciseListActivity extends AppCompatActivity {
+public class ExerciseListActivity extends BaseActivity {
     final ExerciseListActivity self = this;
     private Intent mIntent;
 

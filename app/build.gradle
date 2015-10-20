@@ -3,22 +3,41 @@ import org.apache.tools.ant.taskdefs.condition.Os
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '23.0.0'
+    signingConfigs {
+        config {
+            keyAlias 'utc_vat'
+            keyPassword 'utcandroid'
+            storeFile file(projectDir.getParent() + '/utc-vat.keystore')
+            storePassword 'utcandroid'
+        }
+    }
+
+    compileSdkVersion 'Google Inc.:Google APIs:23'
+    buildToolsVersion '23.0.1'
 
     useLibrary 'org.apache.http.legacy'
 
     defaultConfig {
         applicationId "edu.utc.vat"
-        minSdkVersion 19
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
+    }
+
+    dexOptions {
+        javaMaxHeapSize "2g"
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        debug {
+            jniDebuggable false
+            signingConfig signingConfigs.config
         }
         debug {
             jniDebuggable true
@@ -39,7 +58,7 @@ tasks.withType(JavaCompile) {
 task ndkBuild(type: Exec) {
     Properties properties = new Properties()
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
-    def ndkbuild = properties.getProperty('ndk.dir', null)+"/ndk-build"
+    def ndkbuild = properties.getProperty('ndk.dir', null) + "/ndk-build"
     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
         commandLine '\\Documents\\Android\\NDK\\ndk-build.cmd', '-C', file('src/main/jni').absolutePath
     } else {
@@ -50,5 +69,14 @@ task ndkBuild(type: Exec) {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:23.0.1'
+    // compile 'com.google.http-client:google-http-client-gson:1.20.0'
+    //compile 'com.google.http-client:google-http-client:1.20.0'
+    compile 'com.google.api-client:google-api-client:1.20.0'
+    compile 'com.google.android.gms:play-services:8.1.0'
+    compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'com.android.support:multidex:1.0.1'
+    compile 'com.google.android.gms:play-services-gcm:8.1.0'
+    compile 'org.codehaus.jackson:jackson-core-asl:1.9.13'
+    compile 'com.google.http-client:google-http-client-jackson:1.20.0'
+    compile 'com.google.oauth-client:google-oauth-client:1.20.0'
 }

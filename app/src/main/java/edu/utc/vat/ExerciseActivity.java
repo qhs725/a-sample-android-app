@@ -28,10 +28,16 @@ import android.util.Log;
 
 import android.os.StrictMode;
 
+import com.ibm.mobile.services.core.IBMBluemix;
+import com.ibm.mobile.services.core.IBMCurrentUser;
+
 import java.util.HashMap;
 
+import bolts.Continuation;
+import bolts.Task;
 
-public class ExerciseActivity extends AppCompatActivity implements View.OnClickListener {
+
+public class ExerciseActivity extends BaseActivity implements View.OnClickListener {
 
     private static final int NO_EXERCISE_SELECTED = 0;
     private static final int ONE_LEG_SQUAT_HOLD = 1;
@@ -74,6 +80,8 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
 
     private Timer timer = new Timer(this);
 
+    public static final String CLASS_NAME = "MainActivity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,20 +115,6 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         timer.initTimer();
 
     }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_testing, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) { return true; }
-        return super.onOptionsItemSelected(item);
-    }
-
 
     public void onClick(View view) {
 
