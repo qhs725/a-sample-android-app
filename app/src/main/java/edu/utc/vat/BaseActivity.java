@@ -8,15 +8,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
 import com.ibm.mobile.services.cloudcode.IBMCloudCode;
 import com.ibm.mobile.services.core.IBMBluemix;
 import com.ibm.mobile.services.core.IBMCurrentUser;
+import com.ibm.mobile.services.core.http.IBMHttpResponse;
 import com.ibm.mobile.services.data.IBMData;
 import com.ibm.mobile.services.data.IBMDataException;
+import com.ibm.mobile.services.data.IBMDataObject;
 import com.ibm.mobile.services.data.IBMQuery;
 import com.ibm.mobile.services.push.IBMPush;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import bolts.Continuation;
@@ -26,7 +39,6 @@ public class BaseActivity extends AppCompatActivity {
 
     private Intent intent;
     public static final String CLASS_NAME = "LoginActivity";
-    private boolean bluemixServicesInitialized = false;
     public IBMPush push;
     public IBMCloudCode myCloudCodeService;
     public String deviceAlias = "VAT_user_device";
@@ -86,105 +98,10 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (UserAccount.getIdToken() != null) {
-            // set ID TOKEN so that all subsequent Service calls
-            // will contain the ID TOKEN in the header
-            Log.d(CLASS_NAME, "Setting the Google ID token: \n"
-                    + UserAccount.getIdToken());
-
-            Log.d(CLASS_NAME, "Setting the Google Access token for all future IBM Bluemix Mobile Cloud Service calls: \n"
-                    + UserAccount.getAccessToken());
-
-            // set the access token so that all subsequent calls to IBM Bluemix Mobile Cloud Services
-            // will contain the access token in the header
-            // Note: Kicking off a Bolts Asynchronous task to initialize services, chained with
-            // an additional Bolts Task, in series with first one, in order to register the device
-            // with the IBM Push service
-            IBMBluemix.setSecurityToken(IBMBluemix.IBMSecurityProvider.GOOGLE, UserAccount.getAccessToken())
-                    .continueWithTask(
-                            new Continuation<IBMCurrentUser, Task<String>>() {
-                                @Override
-                                public Task<String> then(Task<IBMCurrentUser> user) throws Exception {
-                                    // if setting the security token has failed...
-                                    if (user.isFaulted()) {
-                                        Log.e(CLASS_NAME, "There was an error setting the Google security token: " + user.getError().getMessage());
-                                        user.getError().printStackTrace();
-                                        // clear the security token
-                                        return null;
-                                    }
-
-                                    // if setting the security token succeeds...
-                                    Log.i(CLASS_NAME, "Set the Google security token successfully. Retrieved IBMCurrentUser: "
-                                            + user.getResult().getUuid());
-
-                                    // Save the IBMCurrentUser unique User Id
-                                    uUserID = user.getResult().getUuid();
-
-                                    // initialize IBM Bluemix Mobile Cloud Services
-                                    initializeBluemixServices();
-                                    Log.i(CLASS_NAME, "Done initializing IBM Bluemix Services");
-                                    // refresh the list
-                                    listItems();
-                                    Log.i(CLASS_NAME, "Done refreshing Item list.");
-
-                                    Log.i(CLASS_NAME, "Registering device with the IBM Push service.");
-                                    // register the device with the IBM Push service
-                                    return push.register(deviceAlias, consumerID);
-                                }
-
-                            }).continueWith(new Continuation<String, Void>() {
-                public Void then(Task<String> deviceIdTask) {
-                    if (deviceIdTask.isFaulted()) {
-                        Log.e(CLASS_NAME, "Device not registered with IBM Push service successfully.");
-                        Log.e(CLASS_NAME, "Exception : " + deviceIdTask.getError().getMessage());
-                        deviceIdTask.getError().printStackTrace();
-                        return null;
-                    }
-
-                    Log.i(CLASS_NAME, "Device registered with IBM Push service successfully. Device Id: "
-                            + deviceIdTask.getResult());
-                    return null;
-                }
-            });
-        } else {
-            Log.e(CLASS_NAME, "Did not receive an expected authentication token. Finishing activity.");
-            finish();
-        }
     }
 
 
-    public void initializeBluemixServices() {
-        Log.d(CLASS_NAME, "Entering initializeBluemixServices() method.");
 
-        if(!bluemixServicesInitialized) {
-            Log.i(CLASS_NAME, "IBM Bluemix Mobile Cloud Service SDKs have not been previously initialized...initializing.");
-            // initialize the IBM Data Service
-            IBMData.initializeService();
-            // register Item Specialization here
-            Item.registerSpecialization(Item.class);
-
-            // initialize and retrieve an instance of the IBM CloudCode service
-            IBMCloudCode.initializeService();
-        } else {
-            Log.i(CLASS_NAME, "IBM Bluemix Mobile Cloud Service SDKs have been previously initialized...skipping.");
-        }
-
-        if(myCloudCodeService == null) {
-            myCloudCodeService = IBMCloudCode.getService();
-        }
-
-        if(!bluemixServicesInitialized) {
-            // initialize IBM Push service
-            IBMPush.initializeService();
-        }
-        // retrieve instance of the IBM Push service
-        if(push == null) {
-            push = IBMPush.getService();
-        }
-
-        bluemixServicesInitialized = true;
-        Log.d(CLASS_NAME, "Exiting initializeBluemixServices() method.");
-    }
 
     /**
      * Refreshes itemList from data service.
@@ -216,7 +133,22 @@ public class BaseActivity extends AppCompatActivity {
 
                     // If the result succeeds
                     if (!isFinishing()) {
-                        //Add code here
+                        //If result succeeds then add Items to List. Code below is from sample
+                        /*
+                        //clear local itemList, as we'll be reordering & repopulating from DataService.
+                        itemList.clear();
+                        Log.d(CLASS_NAME, "Clearing item list to re-load from IBMData for username: " + uEmail);
+                        for(Item item:objects) {
+                            if(item.getUserId() != null && item.getUserId().equals(uUserID)) {
+                                itemList.add(item);
+                                Log.d(CLASS_NAME, "Added item to list.");
+                            }
+                        }
+                        sortItems(itemList);
+
+                        // tells the view to refresh itself, since the underlying data has changed.
+                        lvArrayAdapter.notifyDataSetChanged();
+                        */
                     }
                     return null;
                 }
@@ -224,6 +156,107 @@ public class BaseActivity extends AppCompatActivity {
         }  catch (IBMDataException error) {
             Log.e(CLASS_NAME, "Exception : " + error.getMessage());
         }
+    }
+
+
+    /**
+     * Send a notification to all devices whenever the BlueList is modified (create, update, or delete)
+     */
+    private void updateOtherDevices() {
+        JSONObject jsonObj = new JSONObject();
+        try {
+            jsonObj.put("key1", "value1");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        // Call the node.js application hosted in the IBM Cloud Code service
+        // with a POST call, passing in a non-essential JSONObject
+        // The URI is relative to, appended to, the BlueMix context root
+        myCloudCodeService.post("notifyOtherDevices", jsonObj).continueWith(new Continuation<IBMHttpResponse, Void>() {
+
+            @Override
+            public Void then(Task<IBMHttpResponse> task) throws Exception {
+                int responseCode;
+                if (task.isFaulted()) {
+                    Log.e(CLASS_NAME, "Exception : " + task.getError().getMessage());
+                    return null;
+                }
+
+                responseCode = task.getResult().getHttpResponseCode();
+                InputStream is = task.getResult().getInputStream();
+                try {
+                    BufferedReader in = new BufferedReader(new InputStreamReader(is));
+                    String responseString = "";
+                    String myString = "";
+                    while ((myString = in.readLine()) != null)
+                        responseString += myString;
+
+                    in.close();
+                    Log.i(CLASS_NAME, "Response Body: " + responseString);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Log.i(CLASS_NAME, "Response Status from notifyOtherDevices: " + responseCode);
+                if(responseCode == 401) {
+                    Intent intent = new Intent(context, LoginActivity.class);
+                    context.startActivity(intent);
+                    IBMBluemix.clearSecurityToken();
+                    finish();
+                }
+                return null;
+            }
+
+        });
+    }
+    /**
+     * on return from other activity, check result code to determine behavior
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        switch (resultCode)
+        {
+		/*if an edit has been made, notify that the data set has changed.*/
+            case BlueListApplication.EDIT_ACTIVITY_RC:
+                updateOtherDevices();
+                break;
+        }
+    }
+
+    /**
+     * called on done and will add item to list.
+     *
+     * @param  v edittext View to get item from.
+     * @throws IBMDataException
+     */
+    public void createItem(View v) {
+
+    }
+
+    /**
+     * will delete an item from the list
+     *
+     * @param  Item item to be deleted
+     */
+    public void deleteItem(Item item) {
+
+    }
+
+    /**
+     * Will call new activity for editing item on list
+     * @parm String name - name of the item.
+     */
+    public void updateItem(String name) {
+
+    }
+
+    /**
+     * sort a list of Items
+     * @param List<Item> theList
+     */
+    private void sortItems(List<Item> theList) {
+
     }
 
 }

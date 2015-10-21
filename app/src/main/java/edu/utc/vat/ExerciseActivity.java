@@ -32,6 +32,7 @@ import com.ibm.mobile.services.core.IBMBluemix;
 import com.ibm.mobile.services.core.IBMCurrentUser;
 
 import java.util.HashMap;
+import java.util.List;
 
 import bolts.Continuation;
 import bolts.Task;
@@ -73,8 +74,8 @@ public class ExerciseActivity extends BaseActivity implements View.OnClickListen
     private final long DEFAULT_COUNTDOWN_TIME = 5;
     private final long DEFAULT_TESTING_TIME = 20;
     private Toast concurrentToast;
-
-
+    public BlueListApplication blApplication = null;
+    public List<Item> itemList;
 
     //TODO: create break for testing timer w/ jump test, i.e. if balanced prior to max/default time
 
@@ -85,10 +86,15 @@ public class ExerciseActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testing);
+
+
+        // use application class to maintain global state
+        blApplication = (BlueListApplication) getApplication();
+        itemList = blApplication.getItemList();
+        blApplication.initServices();
+
         status = VOID;
         completeExerciseList();
         completeStatusList();
