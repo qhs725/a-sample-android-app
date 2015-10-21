@@ -36,6 +36,7 @@ import java.util.Properties;
 import edu.utc.vat.BlueListApplication;
 import edu.utc.vat.LoginActivity;
 import edu.utc.vat.MainActivity;
+import edu.utc.vat.UserAccount;
 
 
 public class GoogleTokenManager extends Activity
@@ -459,14 +460,16 @@ public class GoogleTokenManager extends Activity
 			// button again.
 			accountId = null;
 
+            if (googleIdToken != null) {
+                UserAccount.setIdToken(googleIdToken);
+                UserAccount.setAccessToken(googleAccessToken);
+                UserAccount.setName(firstName+" "+lastName);
+                UserAccount.setEmail(email);
+                UserAccount.setPicture(picture);
+            }
 			final Context context = thisActivity;
 			Intent intent = new Intent(context, MainActivity.class);
-			intent.putExtra("GOOGLE_ID_TOKEN",googleIdToken);
-			intent.putExtra("GOOGLE_OAUTH_TOKEN",googleAccessToken);
-			intent.putExtra("GOOGLE_NAME", firstName+" "+lastName);
-			intent.putExtra("GOOGLE_EMAIL", email);
-			intent.putExtra("GOOGLE_PICTURE", picture);
-            intent.putExtra("IS_GUEST", false);
+
 			Log.i(CLASS_NAME, "Opening Main Activity and passing Google ID Token:\n"+googleIdToken);
 			startActivity(intent);
 			finish();

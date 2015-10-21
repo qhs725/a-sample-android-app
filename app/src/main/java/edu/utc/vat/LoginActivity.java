@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,13 +14,12 @@ import android.widget.TextView;
 import edu.utc.vat.util.GoogleTokenManager;
 
 
-public class LoginActivity extends Activity implements OnClickListener{
+public class LoginActivity extends AppCompatActivity implements OnClickListener{
 
 
 	private Activity thisActivity = this;
 	
 	private com.google.android.gms.common.SignInButton mGetGoogleTokenButton;
-	private android.widget.Button mGetWorklightTokenButton;
 	@SuppressWarnings("unused")
 	private TextView mStatus;
 	@SuppressWarnings("unused")
@@ -81,7 +81,7 @@ public class LoginActivity extends Activity implements OnClickListener{
 				
 		}
 	}
-	
-		
+
+
 
 }

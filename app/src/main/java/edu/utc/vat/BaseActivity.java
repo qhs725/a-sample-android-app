@@ -1,6 +1,9 @@
 package edu.utc.vat;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -19,7 +22,6 @@ import java.util.List;
 import bolts.Continuation;
 import bolts.Task;
 
-
 public class BaseActivity extends AppCompatActivity {
 
     private Intent intent;
@@ -27,6 +29,10 @@ public class BaseActivity extends AppCompatActivity {
     private boolean bluemixServicesInitialized = false;
     public IBMPush push;
     public IBMCloudCode myCloudCodeService;
+    public String deviceAlias = "VAT_user_device";
+    public String consumerID = "utc-vat-app";
+    private String uUserID = null;
+    private Context context;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -74,6 +80,78 @@ public class BaseActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        if (UserAccount.getIdToken() != null) {
+            // set ID TOKEN so that all subsequent Service calls
+            // will contain the ID TOKEN in the header
+            Log.d(CLASS_NAME, "Setting the Google ID token: \n"
+                    + UserAccount.getIdToken());
+
+            Log.d(CLASS_NAME, "Setting the Google Access token for all future IBM Bluemix Mobile Cloud Service calls: \n"
+                    + UserAccount.getAccessToken());
+
+            // set the access token so that all subsequent calls to IBM Bluemix Mobile Cloud Services
+            // will contain the access token in the header
+            // Note: Kicking off a Bolts Asynchronous task to initialize services, chained with
+            // an additional Bolts Task, in series with first one, in order to register the device
+            // with the IBM Push service
+            IBMBluemix.setSecurityToken(IBMBluemix.IBMSecurityProvider.GOOGLE, UserAccount.getAccessToken())
+                    .continueWithTask(
+                            new Continuation<IBMCurrentUser, Task<String>>() {
+                                @Override
+                                public Task<String> then(Task<IBMCurrentUser> user) throws Exception {
+                                    // if setting the security token has failed...
+                                    if (user.isFaulted()) {
+                                        Log.e(CLASS_NAME, "There was an error setting the Google security token: " + user.getError().getMessage());
+                                        user.getError().printStackTrace();
+                                        // clear the security token
+                                        return null;
+                                    }
+
+                                    // if setting the security token succeeds...
+                                    Log.i(CLASS_NAME, "Set the Google security token successfully. Retrieved IBMCurrentUser: "
+                                            + user.getResult().getUuid());
+
+                                    // Save the IBMCurrentUser unique User Id
+                                    uUserID = user.getResult().getUuid();
+
+                                    // initialize IBM Bluemix Mobile Cloud Services
+                                    initializeBluemixServices();
+                                    Log.i(CLASS_NAME, "Done initializing IBM Bluemix Services");
+                                    // refresh the list
+                                    listItems();
+                                    Log.i(CLASS_NAME, "Done refreshing Item list.");
+
+                                    Log.i(CLASS_NAME, "Registering device with the IBM Push service.");
+                                    // register the device with the IBM Push service
+                                    return push.register(deviceAlias, consumerID);
+                                }
+
+                            }).continueWith(new Continuation<String, Void>() {
+                public Void then(Task<String> deviceIdTask) {
+                    if (deviceIdTask.isFaulted()) {
+                        Log.e(CLASS_NAME, "Device not registered with IBM Push service successfully.");
+                        Log.e(CLASS_NAME, "Exception : " + deviceIdTask.getError().getMessage());
+                        deviceIdTask.getError().printStackTrace();
+                        return null;
+                    }
+
+                    Log.i(CLASS_NAME, "Device registered with IBM Push service successfully. Device Id: "
+                            + deviceIdTask.getResult());
+                    return null;
+                }
+            });
+        } else {
+            Log.e(CLASS_NAME, "Did not receive an expected authentication token. Finishing activity.");
+            finish();
+        }
+    }
+
 
     public void initializeBluemixServices() {
         Log.d(CLASS_NAME, "Entering initializeBluemixServices() method.");
@@ -149,3 +227,5 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 }
+
+
