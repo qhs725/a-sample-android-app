@@ -56,6 +56,8 @@ public class IBMDataTest extends BaseActivity {
 
         // use application class to maintain global state
         blApplication = (BlueListApplication) getApplication();
+        blApplication.initServices();
+
         sessionList = blApplication.getSessionList();
         if(sessionList.size() == 0){
             Session s = new Session();
