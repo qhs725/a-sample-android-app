@@ -71,13 +71,22 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     // compile 'com.google.http-client:google-http-client-gson:1.20.0'
     //compile 'com.google.http-client:google-http-client:1.20.0'
-    compile 'com.google.api-client:google-api-client:1.20.0'
+    compile ('com.google.api-client:google-api-client:1.20.0'){
+        exclude module: 'httpcore'
+        exclude module: 'httpclient'
+    }
+    compile ('com.google.http-client:google-http-client-jackson:1.20.0'){
+        exclude module: 'httpcore'
+        exclude module: 'httpclient'
+    }
+    compile ('com.google.oauth-client:google-oauth-client:1.20.0'){
+        exclude module: 'httpcore'
+        exclude module: 'httpclient'
+    }
     compile 'com.google.android.gms:play-services:8.1.0'
-    compile 'com.android.support:appcompat-v7:23.1.0'
-    compile 'com.android.support:multidex:1.0.1'
     compile 'com.google.android.gms:play-services-gcm:8.1.0'
     compile 'org.codehaus.jackson:jackson-core-asl:1.9.13'
-    compile 'com.google.http-client:google-http-client-jackson:1.20.0'
-    compile 'com.google.oauth-client:google-oauth-client:1.20.0'
     compile 'com.android.support:design:23.1.0'
+    compile 'com.android.support:appcompat-v7:23.1.0'
+    compile 'com.android.support:multidex:1.0.1'
 }
