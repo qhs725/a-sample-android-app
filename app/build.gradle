@@ -79,4 +79,5 @@ dependencies {
     compile 'org.codehaus.jackson:jackson-core-asl:1.9.13'
     compile 'com.google.http-client:google-http-client-jackson:1.20.0'
     compile 'com.google.oauth-client:google-oauth-client:1.20.0'
+    compile 'com.android.support:design:23.1.0'
 }

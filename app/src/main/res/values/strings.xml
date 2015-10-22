@@ -20,4 +20,5 @@
     <string name="dialog_upload">Upload</string>
     <string name="dialog_discard">Discard</string>
     <string name="title_activity_exercise_prep">ExercisePrepActivity</string>
+    <string name="title_activity_ibmdata_test">IBMDataTest</string>
 </resources>

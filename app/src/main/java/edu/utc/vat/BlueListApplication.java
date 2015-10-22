@@ -63,7 +63,8 @@ public final class BlueListApplication extends Application {
 
 
 	private IBMPushNotificationListener notificationListener = null;
-	List<Item> itemList;
+	private List<Item> itemList;
+    private List<Session> sessionList;
 
 	public BlueListApplication() {
 		registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
@@ -92,7 +93,7 @@ public final class BlueListApplication extends Application {
                                     ((BaseActivity) mActivity).listItems();
                                     Log.e(CLASS_NAME, "Notification message received: " + message.toString());
                                     //present the message when sent from Push notification console.
-                                    if (!message.getAlert().contains("ItemList was updated")) {
+                                    if (!message.getAlert().contains("SessionList was updated")) {
                                         mActivity.runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
@@ -171,6 +172,7 @@ public final class BlueListApplication extends Application {
 
 
 		itemList = new ArrayList<Item>();
+        sessionList = new ArrayList<Session>();
 		// Read from properties file
 		appProperties = new Properties();
 		Context context = getApplicationContext();
@@ -204,10 +206,20 @@ public final class BlueListApplication extends Application {
 	public List<Item> getItemList() {
 		return itemList;
 	}
-	
+
+    /**
+     * returns the sessionsList, an array of Item objects.
+     * @return sessionList
+     */
+    public List<Session> getSessionList() {
+        return sessionList;
+    }
+
 	public Properties getApplicationSettings() {
 		return appProperties;
 	}
+
+
 
 
 

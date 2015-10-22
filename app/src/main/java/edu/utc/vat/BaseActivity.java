@@ -38,7 +38,7 @@ import bolts.Task;
 public class BaseActivity extends AppCompatActivity {
 
     private Intent intent;
-    public static final String CLASS_NAME = "LoginActivity";
+    private static final String CLASS_NAME = "LoginActivity";
     public IBMPush push;
     public IBMCloudCode myCloudCodeService;
     public String deviceAlias = "VAT_user_device";
@@ -66,7 +66,7 @@ public class BaseActivity extends AppCompatActivity {
             case R.id.action_settings:
                 return true;
             case R.id.action_exercise:
-                intent = new Intent(this, ExerciseListActivity.class);
+                intent = new Intent(this, IBMDataTest.class);
                 startActivity(intent);
                 return true;
             case R.id.logout:
