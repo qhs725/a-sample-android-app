@@ -55,6 +55,7 @@ public final class BlueListApplication extends Application {
 	public Properties appProperties = null;
 
     public BaseActivity IBMFunctions= new BaseActivity();
+    private IBMDataTest ibmDataTest = new IBMDataTest();
     private boolean bluemixServicesInitialized = false;
     public IBMCloudCode myCloudCodeService;
     public String deviceAlias = "VAT_user_device";
@@ -87,10 +88,11 @@ public final class BlueListApplication extends Application {
                             public void run() {
                                 Class<? extends Activity> actClass = mActivity.getClass();
                                 if (actClass == MainActivity.class) {
-                                    // Update the Grocery List
+                                    // Update data
 
 
-                                    ((BaseActivity) mActivity).listItems();
+                                    IBMFunctions.listItems();
+                                    ibmDataTest.listSessions();
                                     Log.e(CLASS_NAME, "Notification message received: " + message.toString());
                                     //present the message when sent from Push notification console.
                                     if (!message.getAlert().contains("SessionList was updated")) {
@@ -264,6 +266,8 @@ public final class BlueListApplication extends Application {
                                     Log.i(CLASS_NAME, "Done initializing IBM Bluemix Services");
                                     // refresh the list
                                     IBMFunctions.listItems();
+
+                                    ibmDataTest.listSessions();
                                     Log.i(CLASS_NAME, "Done refreshing Item list.");
 
                                     // retrieve instance of the IBM Push service

@@ -11,6 +11,7 @@ import android.view.ActionMode;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -45,7 +46,9 @@ public class IBMDataTest extends BaseActivity {
     private String uUserID = null;
     private Context context = this;
     private static final String CLASS_NAME = "LoginActivity";
-
+    private  EditText sessionToAdd;
+    private Button submitbtn;
+    private String sessionName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +68,18 @@ public class IBMDataTest extends BaseActivity {
             s.setUserId(UserAccount.getName());
             sessionList.add(s);
         }
+
+        submitbtn = (Button) findViewById(R.id.submit);
+        sessionToAdd = (EditText) findViewById(R.id.sessionToAdd);
+        // String toAdd = sessionToAdd.getText().toString();
+        submitbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sessionName = sessionToAdd.getText().toString();
+                createSession(view);
+            }
+        });
+
         // set up the array adapter for items list view
        // ListView sessionsLV = (ListView)findViewById(R.id.sessionsList);
        // lvArrayAdapter = new ArrayAdapter<Session>(this, R.layout.list_session_1, sessionList);
@@ -92,6 +107,7 @@ public class IBMDataTest extends BaseActivity {
     /**
      * Send a notification to all devices whenever the BlueList is modified (create, update, or delete)
      */
+
     private void updateOtherDevices() {
         JSONObject jsonObj = new JSONObject();
         try {
@@ -227,10 +243,12 @@ public class IBMDataTest extends BaseActivity {
      * @throws IBMDataException
      */
     public void createSession(View v) {
-        EditText sessionToAdd = (EditText) findViewById(R.id.sessionToAdd);
-        String toAdd = sessionToAdd.getText().toString();
+
+        String toAdd =sessionName; //Test session (name only from EditView)
+        Log.i(CLASS_NAME, "Session : " + toAdd + " has been received from EditView");
         Session session = new Session();
         if (!toAdd.equals("")) {
+            Log.i(CLASS_NAME, "Session : value from EditView is not null");
            session.setName(toAdd);
             session.setUserId(uUserID);
             /**

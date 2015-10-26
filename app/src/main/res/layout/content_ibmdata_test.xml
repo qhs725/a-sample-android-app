@@ -9,5 +9,19 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_ibmdata_test" tools:context="edu.utc.vat.IBMDataTest">
 
-
+    <Button
+        android:paddingTop="6dp"
+        android:layout_width="100dip"
+        android:layout_height="36dip"
+        android:textSize="24sp"
+        android:text="Submit"
+        android:id="@+id/submit"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textAlignment="gravity"
+        android:background="#ddb9a826"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/text_color"
+        android:singleLine="false"
+        android:foregroundGravity="center" />
 </RelativeLayout>

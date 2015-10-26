@@ -19,9 +19,9 @@ package edu.utc.vat;
 import com.ibm.mobile.services.data.IBMDataObject;
 import com.ibm.mobile.services.data.IBMDataObjectSpecialization;
 
-@IBMDataObjectSpecialization("session")
+@IBMDataObjectSpecialization("Session")
 public class Session extends IBMDataObject {
-    public static final String CLASS_NAME = "session";
+    public static final String CLASS_NAME = "Session";
     private static final String NAME = "name";
     private static final String USERID = "userId";
 
