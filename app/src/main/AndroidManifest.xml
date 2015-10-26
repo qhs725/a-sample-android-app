@@ -18,7 +18,6 @@
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="com.ibm.bluelist.permission.C2D_MESSAGE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -80,8 +79,6 @@
             android:label="@string/title_activity_ibmdata_test"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
-
-        <service android:name="com.ibm.mobile.services.push.IBMPushIntentService" />
 
         <!-- Push Settings Start -->
 
