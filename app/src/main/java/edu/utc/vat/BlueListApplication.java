@@ -64,7 +64,6 @@ public final class BlueListApplication extends Application {
 
 
 	private IBMPushNotificationListener notificationListener = null;
-	private List<Item> itemList;
     private List<Session> sessionList;
 
 	public BlueListApplication() {
@@ -91,7 +90,7 @@ public final class BlueListApplication extends Application {
                                     // Update data
 
 
-                                    IBMFunctions.listItems();
+
                                     ibmDataTest.listSessions();
                                     Log.e(CLASS_NAME, "Notification message received: " + message.toString());
                                     //present the message when sent from Push notification console.
@@ -173,8 +172,7 @@ public final class BlueListApplication extends Application {
 		super.onCreate();
 
 
-		itemList = new ArrayList<Item>();
-        sessionList = new ArrayList<Session>();
+	    sessionList = new ArrayList<Session>();
 		// Read from properties file
 		appProperties = new Properties();
 		Context context = getApplicationContext();
@@ -202,16 +200,9 @@ public final class BlueListApplication extends Application {
         MultiDex.install(this);
     }
 
-	/**
-	 * returns the itemList, an array of Item objects.
-	 * @return itemList
-	 */
-	public List<Item> getItemList() {
-		return itemList;
-	}
 
     /**
-     * returns the sessionsList, an array of Item objects.
+     * returns the sessionsList, an array of Session objects.
      * @return sessionList
      */
     public List<Session> getSessionList() {
@@ -223,11 +214,6 @@ public final class BlueListApplication extends Application {
 	}
 
 
-
-
-
-
-
     public void initializeBluemixServices() {
         Log.d(CLASS_NAME, "Entering initializeBluemixServices() method.");
 
@@ -235,8 +221,6 @@ public final class BlueListApplication extends Application {
             Log.i(CLASS_NAME, "IBM Bluemix Mobile Cloud Service SDKs have not been previously initialized...initializing.");
             // initialize the IBM Data Service
             IBMData.initializeService();
-            // register Item Specialization here. TO BE REMOVED
-            Item.registerSpecialization(Item.class);
 
             // register the Session Specialization
             Session.registerSpecialization(Session.class);

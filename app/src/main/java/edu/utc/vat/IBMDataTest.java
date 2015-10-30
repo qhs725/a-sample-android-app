@@ -87,12 +87,7 @@ public class IBMDataTest extends BaseActivity {
             }
         });
 
-        // set up the array adapter for items list view
-       // ListView sessionsLV = (ListView)findViewById(R.id.sessionsList);
-       // lvArrayAdapter = new ArrayAdapter<Session>(this, R.layout.list_session_1, sessionList);
-        // SessionsLV.setAdapter(lvArrayAdapter);
-
-/* Refresh the list. */
+        // Refresh the list.
         listSessions();
 
 
@@ -244,9 +239,9 @@ public class IBMDataTest extends BaseActivity {
     }
 
     /**
-     * called on done and will add item to list.
+     * called on done and will add session to list.
      *
-     * @param  v edittext View to get item from.
+     * @param  v edittext View to get session from.
      * @throws IBMDataException
      */
     public void createSession(View v) {
@@ -284,7 +279,7 @@ public class IBMDataTest extends BaseActivity {
                 }
             }, Task.UI_THREAD_EXECUTOR);
 
-            //set text field back to empty after item added
+            //set text field back to empty after session added
            sessionToAdd.setText("");
         }
     }
@@ -296,7 +291,7 @@ public class IBMDataTest extends BaseActivity {
      */
     public void deleteSession(Session session) {
         sessionList.remove(listSessionPosition);
-        //This will attempt to delete the item on the server
+        //This will attempt to delete the session on the server
         session.delete().continueWith(new Continuation<IBMDataObject, Void>() {
             //Called if the object was successfully deleted
             @Override
@@ -357,11 +352,9 @@ public class IBMDataTest extends BaseActivity {
                                     // initialize IBM Bluemix Mobile Cloud Services
                                     blApplication.initializeBluemixServices();
                                     Log.i(CLASS_NAME, "Done initializing IBM Bluemix Services");
-                                    // refresh the list
-                                    listItems();
 
                                     listSessions();
-                                    Log.i(CLASS_NAME, "Done refreshing Item list.");
+                                    Log.i(CLASS_NAME, "Done refreshing Session list.");
 
                                     // retrieve instance of the IBM Push service
                                     if(push == null) {

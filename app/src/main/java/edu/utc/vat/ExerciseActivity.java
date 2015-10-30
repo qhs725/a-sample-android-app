@@ -75,7 +75,7 @@ public class ExerciseActivity extends BaseActivity implements View.OnClickListen
     private final long DEFAULT_TESTING_TIME = 20;
     private Toast concurrentToast;
     public BlueListApplication blApplication = null;
-    public List<Item> itemList;
+
 
     //TODO: create break for testing timer w/ jump test, i.e. if balanced prior to max/default time
 
@@ -92,8 +92,7 @@ public class ExerciseActivity extends BaseActivity implements View.OnClickListen
 
         // use application class to maintain global state
         blApplication = (BlueListApplication) getApplication();
-        itemList = blApplication.getItemList();
-       // blApplication.initServices(); //Might be deprecated soon
+
 
         status = VOID;
         completeExerciseList();

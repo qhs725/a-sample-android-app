@@ -14,7 +14,7 @@
         android:orderInCategory="300"
         app:showAsAction="never" />
     <item android:id="@+id/action_exercise"
-        android:title="Exercise Alt."
+        android:title="IBM Session Test"
         android:orderInCategory="300"
         app:showAsAction="never" />
     <item android:id="@+id/logout"
