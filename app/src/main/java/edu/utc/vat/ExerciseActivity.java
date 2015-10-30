@@ -93,7 +93,7 @@ public class ExerciseActivity extends BaseActivity implements View.OnClickListen
         // use application class to maintain global state
         blApplication = (BlueListApplication) getApplication();
         itemList = blApplication.getItemList();
-        blApplication.initServices();
+       // blApplication.initServices(); //Might be deprecated soon
 
         status = VOID;
         completeExerciseList();
