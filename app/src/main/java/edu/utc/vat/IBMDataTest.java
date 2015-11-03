@@ -19,6 +19,8 @@ import com.ibm.mobile.services.core.IBMBluemix;
 import com.ibm.mobile.services.core.IBMCurrentUser;
 import com.ibm.mobile.services.core.http.IBMHttpResponse;
 import com.ibm.mobile.services.data.IBMDataException;
+import com.ibm.mobile.services.data.IBMDataFile;
+import com.ibm.mobile.services.data.IBMDataFileException;
 import com.ibm.mobile.services.data.IBMDataObject;
 import com.ibm.mobile.services.data.IBMQuery;
 import com.ibm.mobile.services.push.IBMPush;
@@ -30,8 +32,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import bolts.Continuation;
@@ -51,6 +56,12 @@ public class IBMDataTest extends BaseActivity {
     private  EditText sessionToAdd;
     private Button submitbtn;
     private String sessionName;
+
+    //ArrayLists to gather data into JSON request for new Session object
+    private ArrayList<String> accelx = new ArrayList<String>();
+    private ArrayList<String> accely = new ArrayList<String>();
+    private ArrayList<String> accelz = new ArrayList<String>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +100,6 @@ public class IBMDataTest extends BaseActivity {
 
         // Refresh the list.
         listSessions();
-
-
 
         // hide the keyboard until needed
         getWindow().setSoftInputMode(
@@ -244,14 +253,18 @@ public class IBMDataTest extends BaseActivity {
      * @param  v edittext View to get session from.
      * @throws IBMDataException
      */
-    public void createSession(View v) {
+    public void createSession(View  v) {
 
         String toAdd = sessionName; //Test session (name only from EditView)
         Log.i(CLASS_NAME, "Session : " + toAdd + " has been received from EditView");
+
         Session session = new Session();
+
+        session.getSensorData(getApplicationContext(), session);
         if (!toAdd.equals("")) {
             Log.i(CLASS_NAME, "Session : value from EditView is not null");
            session.setName(toAdd);
+
            session.setUserId(uUserID);
             /**
              * IBMObjectResult is used to handle the response from the server after
