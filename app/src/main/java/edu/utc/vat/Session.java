@@ -19,7 +19,6 @@ package edu.utc.vat;
 import android.content.Context;
 import android.util.Log;
 
-import com.ibm.mobile.services.data.IBMDataFile;
 import com.ibm.mobile.services.data.IBMDataObject;
 import com.ibm.mobile.services.data.IBMDataObjectSpecialization;
 
@@ -29,7 +28,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,15 +36,8 @@ public class Session extends IBMDataObject {
     public static final String CLASS_NAME = "Session";
     private static final String NAME = "name";
     private static final String USERID = "userId";
-    private static final String ACCELX = "accelx";
-    private static final String ACCELY = "accely";
-    private static final String ACCELZ = "accelz";
-
-
-    //ArrayLists to gather data into JSON request for new Session object
-    private ArrayList<String> accelx = new ArrayList<String>();
-    private ArrayList<String> accely = new ArrayList<String>();
-    private ArrayList<String> accelz = new ArrayList<String>();
+    private static final String LOGINSESSIONID = "loginSessionId";
+    private static final String USERINPUT = "userInput";
 
     /**
      * gets the name of the session.
@@ -72,49 +63,12 @@ public class Session extends IBMDataObject {
         return (String) getObject(USERID);
     }
 
-
-    /**
-     * gets the the sensor data associated with the session.
-     *
-     */
-
-    //Accelerometer Sensor Data
-    public ArrayList<String[]> getAccelx() {
-        return (ArrayList<String[]>) getObject(ACCELX);
-    }
-
-    public ArrayList<String[]> getAccely() {
-        return (ArrayList<String[]>) getObject(ACCELY);
-    }
-
-    public ArrayList<String[]> getAccelz() {
-        return (ArrayList<String[]>) getObject(ACCELZ);
-    }
-
-    /**
+     /**
      * sets the email address of the user who is maintain list sessions
      * @param String userId
      */
     public void setUserId(String userId) {
         setObject(USERID, (userId != null) ? userId : "");
-    }
-
-    /**
-     * sets the sensor data for the respective dimension and sensor
-     *
-     */
-
-    //Save Accelerometer data to Session object
-    public void setAccelx(ArrayList<String> data) {
-        setObject(ACCELX, (data != null) ? data : "");
-    }
-
-    public void setAccely(ArrayList<String> data) {
-        setObject(ACCELY, (data != null) ? data : "");
-    }
-
-    public void setAccelz(ArrayList<String> data) {
-        setObject(ACCELZ, (data != null) ? data : "");
     }
 
     /**

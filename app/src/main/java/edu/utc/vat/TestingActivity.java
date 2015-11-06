@@ -6,6 +6,8 @@
 package edu.utc.vat;
 
 import android.app.DialogFragment;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.FragmentManager;
 
@@ -29,10 +31,17 @@ import android.util.Log;
 
 import android.os.StrictMode;
 
+import com.ibm.mobile.services.core.IBMBluemix;
+import com.ibm.mobile.services.core.IBMCurrentUser;
+import com.ibm.mobile.services.data.IBMDataObject;
+import com.ibm.mobile.services.push.IBMPush;
+
 import java.util.HashMap;
 
 import java.lang.Object;
 
+import bolts.Continuation;
+import bolts.Task;
 
 
 public class TestingActivity extends BaseActivity implements View.OnClickListener {
@@ -72,6 +81,10 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     private final long DEFAULT_TESTING_TIME = 20;
 
     private Toast concurrentToast;
+
+    public BlueListApplication blApplication = null;
+    private static final String CLASS_NAME = "LoginActivity";
+    private String uUserID = null;
 
 
     //TODO: create break for testing timer w/ jump test, i.e. if balanced prior to max/default time
@@ -117,6 +130,10 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         timer.setTestingTime(DEFAULT_TESTING_TIME);
         timer.initTimer();
 
+        //use application class to maintain global state
+        blApplication = (BlueListApplication) getApplication();
+        initServices(); //Initialize Bluemix connection
+
     }
 
     public void onClick(View view) {
@@ -124,6 +141,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
             case R.id.TestingStartButton: {
                 if (getUserInfo.getText().toString().trim().length() > 0) {
                     //timer.passUserInfo(userInfo); //TODO: pass to native
+
                     status = READY;
                 }
                 if (status != READY) {
@@ -215,7 +233,16 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         testStatus.setText(statusUpdate);
 
         if(status == STOPPED) {
-            Upload();
+            // Upload();
+
+            //check if network connection is available
+            if(isNetworkAvailable()){
+                createSession(); //Create Session Object and upload
+            }
+            else{
+                concurrentToast = Toast.makeText(this, "No internet connection found", Toast.LENGTH_LONG);
+                concurrentToast.show();
+            }
             //resetButton.performClick();
         }
     }
@@ -294,6 +321,134 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         concurrentToast = Toast.makeText(this, message, Toast.LENGTH_LONG);
         concurrentToast.show();
     }
+
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    public void createSession() {
+
+        String toAdd = getUserInfo.getText().toString().trim(); //User Input Info (MAY BE CHANGED)
+        Log.i(CLASS_NAME, "Session : " + toAdd + " has been received from EditView");
+
+        Session session = new Session();
+
+        session.getSensorData(getApplicationContext(), session);
+        if (!toAdd.equals("")) {
+            Log.i(CLASS_NAME, "Session : value from EditView is not null");
+            session.setName(toAdd);
+
+            session.setUserId(UserAccount.getuUserID());
+            /**
+             * IBMObjectResult is used to handle the response from the server after
+             * either creating or saving an object.
+             *
+             * onResult is called if the object was successfully saved
+             * onError is called if an error occurred saving the object
+             */
+            session.save().continueWith(new Continuation<IBMDataObject, Void>() {
+                @Override
+                public Void then(Task<IBMDataObject> task) throws Exception {
+                    // Log error message, if the save task fail.
+                    if (task.isFaulted()) {
+                        Log.e(CLASS_NAME, "Exception : " + task.getError().getMessage());
+                        return null;
+                    }
+
+                    Log.i(CLASS_NAME, "Successfully saved a new session!");
+                    // If the result succeeds, load the list
+                    if (!isFinishing()) {
+                       // updateOtherDevices(); //not used
+                    }
+                    return null;
+                }
+            }, Task.UI_THREAD_EXECUTOR);
+
+            //set text field back to empty after session added
+          //  sessionToAdd.setText("");
+        }
+    }
+
+    public  void initServices(){
+        if (UserAccount.getIdToken() != null) {
+
+            // set ID TOKEN so that all subsequent Service calls
+            // will contain the ID TOKEN in the header
+            Log.d(CLASS_NAME, "Setting the Google ID token: \n"
+                    + UserAccount.getIdToken());
+
+            Log.d(CLASS_NAME, "Setting the Google Access token for all future IBM Bluemix Mobile Cloud Service calls: \n"
+                    + UserAccount.getAccessToken());
+
+            // set the access token so that all subsequent calls to IBM Bluemix Mobile Cloud Services
+            // will contain the access token in the header
+            // Note: Kicking off a Bolts Asynchronous task to initialize services, chained with
+            // an additional Bolts Task, in series with first one, in order to register the device
+            // with the IBM Push service
+            IBMBluemix.setSecurityToken(IBMBluemix.IBMSecurityProvider.GOOGLE, UserAccount.getAccessToken())
+                    .continueWithTask(
+                            new Continuation<IBMCurrentUser, Task<String>>() {
+                                @Override
+                                public Task<String> then(Task<IBMCurrentUser> user) throws Exception {
+                                    // if setting the security token has failed...
+                                    if (user.isFaulted()) {
+                                        Log.e(CLASS_NAME, "There was an error setting the Google security token: " + user.getError().getMessage());
+                                        user.getError().printStackTrace();
+                                        // clear the security token
+                                        return null;
+                                    }
+
+                                    // if setting the security token succeeds...
+                                    Log.i(CLASS_NAME, "Set the Google security token successfully. Retrieved IBMCurrentUser: "
+                                            + user.getResult().getUuid());
+
+                                    // Save the IBMCurrentUser unique User Id
+                                    uUserID = user.getResult().getUuid();
+
+                                    //Add uUserID to User Account
+                                    UserAccount.setuUserID(uUserID);
+
+                                    // initialize IBM Bluemix Mobile Cloud Services
+                                    blApplication.initializeBluemixServices();
+                                    Log.i(CLASS_NAME, "Done initializing IBM Bluemix Services");
+
+                                    Log.i(CLASS_NAME, "Done refreshing Session list.");
+
+                                    // retrieve instance of the IBM Push service
+                                    if(push == null) {
+                                        push = IBMPush.getService();
+                                    }
+
+                                    Log.i(CLASS_NAME, "Registering device with the IBM Push service.");
+                                    // register the device with the IBM Push service
+                                    return push.register(deviceAlias, consumerID);
+                                }
+
+                            }).continueWith(new Continuation<String, Void>() {
+                public Void then(Task<String> deviceIdTask) {
+                    if (deviceIdTask.isFaulted()) {
+                        Log.e(CLASS_NAME, "Device not registered with IBM Push service successfully.");
+                        Log.e(CLASS_NAME, "Exception : " + deviceIdTask.getError().getMessage());
+                        deviceIdTask.getError().printStackTrace();
+                        return null;
+                    }
+
+                    Log.i(CLASS_NAME, "Device registered with IBM Push service successfully. Device Id: "
+                            + deviceIdTask.getResult());
+
+                    return null;
+                }
+            });
+        } else {
+            Log.e(CLASS_NAME, "Did not receive an expected authentication token. Finishing activity.");
+            finish();
+        }
+    }
+
 }
 
 

@@ -7,20 +7,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.ActionMode;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 
 import com.ibm.mobile.services.core.IBMBluemix;
 import com.ibm.mobile.services.core.IBMCurrentUser;
 import com.ibm.mobile.services.core.http.IBMHttpResponse;
 import com.ibm.mobile.services.data.IBMDataException;
-import com.ibm.mobile.services.data.IBMDataFile;
-import com.ibm.mobile.services.data.IBMDataFileException;
 import com.ibm.mobile.services.data.IBMDataObject;
 import com.ibm.mobile.services.data.IBMQuery;
 import com.ibm.mobile.services.push.IBMPush;
@@ -32,11 +27,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.sql.Array;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import bolts.Continuation;
@@ -44,24 +36,18 @@ import bolts.Task;
 
 public class IBMDataTest extends BaseActivity {
 
-    public List<Session> sessionList;
+    //TO BE DELETED SOON\\
+
+
+
     public BlueListApplication blApplication = null;
-    public ArrayAdapter<Session> lvArrayAdapter = null;
-    int listSessionPosition = 0;
-    public ListView SessionsLV = null;
-    public ActionMode mActionMode = null;
+
     private String uUserID = null;
     private Context context = this;
     private static final String CLASS_NAME = "LoginActivity";
     private  EditText sessionToAdd;
     private Button submitbtn;
     private String sessionName;
-
-    //ArrayLists to gather data into JSON request for new Session object
-    private ArrayList<String> accelx = new ArrayList<String>();
-    private ArrayList<String> accely = new ArrayList<String>();
-    private ArrayList<String> accelz = new ArrayList<String>();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,36 +56,25 @@ public class IBMDataTest extends BaseActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         // use application class to maintain global state
         blApplication = (BlueListApplication) getApplication();
         initServices();
 
-        sessionList = blApplication.getSessionList();
-       // uUserID = blApplication.getBMUserID(); // Get uUserID From BlueListApplication class
-        /*
-        if(sessionList.size() == 0){
-            Session s = new Session();
-            s.setName("List Was Null");
-            s.setUserId(uUserID);
-            //s.setUserId(UserAccount.getName());
-            sessionList.add(s);
-        }
-        */
 
 
         submitbtn = (Button) findViewById(R.id.submit);
         sessionToAdd = (EditText) findViewById(R.id.sessionToAdd);
-        // String toAdd = sessionToAdd.getText().toString();
+
         submitbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sessionName = sessionToAdd.getText().toString();
-                createSession(view);
+                sessionName = sessionToAdd.getText().toString(); //Get name of session.
+                createSession(view); //Call to create session object
             }
         });
 
-        // Refresh the list.
-        listSessions();
+
 
         // hide the keyboard until needed
         getWindow().setSoftInputMode(
@@ -167,86 +142,6 @@ public class IBMDataTest extends BaseActivity {
         });
     }
 
-    public void listSessions() {
-        try {
-            IBMQuery<Session> query = IBMQuery.queryForClass(Session.class);
-            /**
-             * IBMQueryResult is used to receive array of objects from server.
-             *
-             * onResult is called when it successfully retrieves the objects associated with the
-             * query, and will reorder these sessions based on creation time.
-             *
-             * onError is called when an error occurs during the query.
-             */
-            query.find().continueWith(new Continuation<List<Session>, Void>() {
-                @Override
-                public Void then(Task<List<Session>> task) throws Exception {
-                    // Log error message, if the save task fail.
-                    if (task.isFaulted()) {
-                        Log.e(CLASS_NAME, "Exception : " + task.getError().getMessage());
-                        return null;
-                    }
-
-                    final String uEmail = UserAccount.getEmail();
-                    final List<Session> objects = task.getResult();
-
-                    // If the result succeeds, load the list
-                    if (!isFinishing()) {
-                        //clear local sessionList, as we'll be reordering & repopulating from DataService.
-                        sessionList.clear();
-                        Log.d(CLASS_NAME, "Clearing session list to re-load from IBMData for username: " + uEmail);
-                        for(Session session:objects) {
-                            if(session.getUserId() != null && session.getUserId().equals(uUserID)) {
-                                sessionList.add(session);
-                                Log.d(CLASS_NAME, "Added session to list.");
-                            }
-                        }
-                        sortSessions(sessionList);
-
-                        // tells the view to refresh itself, since the underlying data has changed.
-                        lvArrayAdapter.notifyDataSetChanged();
-                    }
-                    return null;
-                }
-            }, Task.UI_THREAD_EXECUTOR);
-        }  catch (IBMDataException error) {
-            Log.e(CLASS_NAME, "Exception : " + error.getMessage());
-        }
-    }
-
-    /**
-     * sort a list of Sessions
-     * @param List<Session> theList
-     */
-    private void sortSessions(List<Session> theList) {
-        //sort collection by case insensitive alphabetical order
-        Collections.sort(theList, new Comparator<Session>() {
-            @Override
-            public int compare(Session lhs,
-                               Session rhs) {
-                String lhsName = lhs.getName();
-                String rhsName = rhs.getName();
-                return lhsName.compareToIgnoreCase(rhsName);
-            }
-        });
-    }
-    /**
-     * on return from other activity, check result code to determine behavior
-     */
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        switch (resultCode)
-        {
-		/*if an edit has been made, notify that the data set has changed.*/
-            case BlueListApplication.EDIT_ACTIVITY_RC:
-                updateOtherDevices();
-                sortSessions(sessionList);
-                lvArrayAdapter.notifyDataSetChanged();
-                break;
-        }
-    }
-
     /**
      * called on done and will add session to list.
      *
@@ -263,9 +158,9 @@ public class IBMDataTest extends BaseActivity {
         session.getSensorData(getApplicationContext(), session);
         if (!toAdd.equals("")) {
             Log.i(CLASS_NAME, "Session : value from EditView is not null");
-           session.setName(toAdd);
+            session.setName(toAdd);
 
-           session.setUserId(uUserID);
+            session.setUserId(uUserID);
             /**
              * IBMObjectResult is used to handle the response from the server after
              * either creating or saving an object.
@@ -285,7 +180,6 @@ public class IBMDataTest extends BaseActivity {
                     Log.i(CLASS_NAME, "Successfully saved a new session!");
                     // If the result succeeds, load the list
                     if (!isFinishing()) {
-                        listSessions();
                         updateOtherDevices();
                     }
                     return null;
@@ -293,38 +187,10 @@ public class IBMDataTest extends BaseActivity {
             }, Task.UI_THREAD_EXECUTOR);
 
             //set text field back to empty after session added
-           sessionToAdd.setText("");
+            sessionToAdd.setText("");
         }
     }
 
-    /**
-     * will delete an session from the list
-     *
-     * @param  Session session to be deleted
-     */
-    public void deleteSession(Session session) {
-        sessionList.remove(listSessionPosition);
-        //This will attempt to delete the session on the server
-        session.delete().continueWith(new Continuation<IBMDataObject, Void>() {
-            //Called if the object was successfully deleted
-            @Override
-            public Void then(Task<IBMDataObject> task) throws Exception {
-                // Log error message, if the delete task fail.
-                if (task.isFaulted()) {
-                    Log.e(CLASS_NAME, "Exception : " + task.getError().getMessage());
-                    return null;
-                }
-
-                // If the result succeeds, reload the list
-                if (!isFinishing()) {
-                    updateOtherDevices();
-                    lvArrayAdapter.notifyDataSetChanged();
-                }
-                return null;
-            }
-        }, Task.UI_THREAD_EXECUTOR);
-        lvArrayAdapter.notifyDataSetChanged();
-    }
 
     public  void initServices(){
         if (UserAccount.getIdToken() != null) {
@@ -366,7 +232,6 @@ public class IBMDataTest extends BaseActivity {
                                     blApplication.initializeBluemixServices();
                                     Log.i(CLASS_NAME, "Done initializing IBM Bluemix Services");
 
-                                    listSessions();
                                     Log.i(CLASS_NAME, "Done refreshing Session list.");
 
                                     // retrieve instance of the IBM Push service
