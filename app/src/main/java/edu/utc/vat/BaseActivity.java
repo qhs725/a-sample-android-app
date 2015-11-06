@@ -66,7 +66,7 @@ public class BaseActivity extends AppCompatActivity {
             case R.id.action_settings:
                 return true;
             case R.id.action_exercise:
-                intent = new Intent(this, IBMDataTest1.class);
+                intent = new Intent(this, IBMDataTest.class);
                 startActivity(intent);
                 return true;
             case R.id.logout:

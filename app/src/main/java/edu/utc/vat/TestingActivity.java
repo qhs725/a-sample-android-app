@@ -82,7 +82,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
     private Toast concurrentToast;
 
-    public BlueListApplication blApplication = null;
+    public BlueMixApplication blApplication = null;
     private static final String CLASS_NAME = "LoginActivity";
     private String uUserID = null;
 
@@ -131,7 +131,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         timer.initTimer();
 
         //use application class to maintain global state
-        blApplication = (BlueListApplication) getApplication();
+        blApplication = (BlueMixApplication) getApplication();
         initServices(); //Initialize Bluemix connection
 
     }

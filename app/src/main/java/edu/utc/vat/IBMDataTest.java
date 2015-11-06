@@ -40,7 +40,7 @@ public class IBMDataTest extends BaseActivity {
 
 
 
-    public BlueListApplication blApplication = null;
+    public BlueMixApplication blApplication = null;
 
     private String uUserID = null;
     private Context context = this;
@@ -58,7 +58,7 @@ public class IBMDataTest extends BaseActivity {
 
 
         // use application class to maintain global state
-        blApplication = (BlueListApplication) getApplication();
+        blApplication = (BlueMixApplication) getApplication();
         initServices();
 
 
@@ -91,7 +91,7 @@ public class IBMDataTest extends BaseActivity {
     }
 
     /**
-     * Send a notification to all devices whenever the BlueList is modified (create, update, or delete)
+     * Send a notification to all devices whenever the Sessions are modified (create, update, or delete)
      */
 
     private void updateOtherDevices() {

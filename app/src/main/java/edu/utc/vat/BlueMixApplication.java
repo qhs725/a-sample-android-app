@@ -43,11 +43,11 @@ import java.util.Properties;
 import bolts.Continuation;
 import bolts.Task;
 
-public final class BlueListApplication extends Application {
+public final class BlueMixApplication extends Application {
 	public static final int EDIT_ACTIVITY_RC = 1;
 	public static IBMPush push = null;
 	private Activity mActivity;
-	private static final String CLASS_NAME = BlueListApplication.class.getSimpleName();
+	private static final String CLASS_NAME = BlueMixApplication.class.getSimpleName();
 	private static final String APP_ID = "applicationID";
 	private static final String APP_SECRET = "applicationSecret";
 	private static final String APP_ROUTE = "applicationRoute";
@@ -66,7 +66,7 @@ public final class BlueListApplication extends Application {
 	private IBMPushNotificationListener notificationListener = null;
     private List<Session> sessionList;
 
-	public BlueListApplication() {
+	public BlueMixApplication() {
 		registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
@@ -91,7 +91,7 @@ public final class BlueListApplication extends Application {
 
 
 
-                                    ibmDataTest.listSessions();
+
                                     Log.e(CLASS_NAME, "Notification message received: " + message.toString());
                                     //present the message when sent from Push notification console.
                                     if (!message.getAlert().contains("SessionList was updated")) {
@@ -181,9 +181,9 @@ public final class BlueListApplication extends Application {
 			appProperties.load(assetManager.open(PROPS_FILE));
 			Log.i(CLASS_NAME, "Found configuration file: " + PROPS_FILE);
 		} catch (FileNotFoundException e) {
-			Log.e(CLASS_NAME, "The bluelist.properties file was not found.", e);
+			Log.e(CLASS_NAME, "The bluemix properties file was not found.", e);
 		} catch (IOException e) {
-			Log.e(CLASS_NAME, "The bluelist.properties file could not be read properly.", e);
+			Log.e(CLASS_NAME, "The bluemix properties file could not be read properly.", e);
 		}
 		Log.i(CLASS_NAME, "Application ID is: " + appProperties.getProperty(APP_ID));
 
