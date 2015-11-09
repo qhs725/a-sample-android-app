@@ -248,8 +248,5 @@ public final class BlueMixApplication extends Application {
         Log.d(CLASS_NAME, "Exiting initializeBluemixServices() method.");
     }
 
-    public String getBMUserIDet(){
 
-        return uUserID;
-    }
 }

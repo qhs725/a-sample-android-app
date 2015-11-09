@@ -337,7 +337,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
         Session session = new Session();
 
-        session.getSensorData(getApplicationContext(), session);
+        session.getSensorData(session);
         if (!toAdd.equals("")) {
             Log.i(CLASS_NAME, "Session : value from EditView is not null");
             session.setName(toAdd);

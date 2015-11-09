@@ -38,7 +38,7 @@ public class Session extends IBMDataObject {
     private static final String USERID = "userId";
     private static final String LOGINSESSIONID = "loginSessionId";
     private static final String USERINPUT = "userInput";
-
+    private static  Context context = AppContext.getAppContext();
     /**
      * gets the name of the session.
      * @return String sessionName
@@ -81,11 +81,10 @@ public class Session extends IBMDataObject {
         return thesessionName;
     }
 
-    public void getSensorData(Context context, Session session) {
+    public void getSensorData(Session session) {
 
         ArrayList<String> dataFileNames = new ArrayList<String>();
         int numColumns = 0;
-        int num = 0;
         InputStream file = null;
 
         //Get files directory and get names of all files within
@@ -105,7 +104,6 @@ public class Session extends IBMDataObject {
                 //dataFileNames[num] = fileList[i].getName();
                 dataFileNames.add(fileList[i].getName());
                 Log.i("Files", "Found Data file:" + fileList[i].getName());
-                num++;
             }
         }
 
@@ -191,6 +189,38 @@ public class Session extends IBMDataObject {
         }
         }
 
+
+    }
+
+
+
+    //Check if session files exist
+    public void isDataFiles() {
+
+        ArrayList<String> dataFileNames = new ArrayList<String>();
+
+        InputStream file = null;
+
+        //Get files directory and get names of all files within
+        File fileFinder = new File( context.getFilesDir() + "/" );
+        File fileList[] = fileFinder.listFiles();
+        Log.i("Files", "Size: "+ fileList.length);
+
+        //Look at each file in the directory
+        for (int i=0; i < fileList.length -1; i++)
+        {
+            Log.i("Files", "FileName:" + fileList[i].getName());
+            String filenameArray[] = fileList[i].getName().split("\\.");
+            String extension = filenameArray[filenameArray.length-1];
+
+            //Check if file extension is txt (CHANGE TO 'dat' when files are working)
+            if(extension.equals("txt")){
+                //dataFileNames[num] = fileList[i].getName();
+                dataFileNames.add(fileList[i].getName());
+                Log.i("Files", "Found Data file:" + fileList[i].getName());
+
+            }
+        }
 
     }
 }
