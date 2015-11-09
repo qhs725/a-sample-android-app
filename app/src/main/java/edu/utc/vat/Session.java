@@ -39,6 +39,7 @@ public class Session extends IBMDataObject {
     private static final String LOGINSESSIONID = "loginSessionId";
     private static final String USERINPUT = "userInput";
     private static  Context context = AppContext.getAppContext();
+    private static final String EXT = "txt";
     /**
      * gets the name of the session.
      * @return String sessionName
@@ -100,7 +101,7 @@ public class Session extends IBMDataObject {
             String extension = filenameArray[filenameArray.length-1];
 
             //Check if file extension is txt (CHANGE TO 'dat' when files are working)
-            if(extension.equals("txt")){
+            if(extension.equals(EXT)){
                 //dataFileNames[num] = fileList[i].getName();
                 dataFileNames.add(fileList[i].getName());
                 Log.i("Files", "Found Data file:" + fileList[i].getName());
@@ -131,13 +132,12 @@ public class Session extends IBMDataObject {
                         numColumns = keyNames.length;
                     }
 
+                    //Create list of lists to dynamically load file data
                     List<List<String>> group = new ArrayList<List<String>>();
                     for(int u = 0; u < numColumns ; u++){
                         List<String> tempList = new ArrayList<String>();
                         group.add(tempList);
                     }
-
-                    int listNum = 0;
 
                     //Loop through file line by line
                     while ((lineRow = reader.readLine()) != null) {
@@ -163,13 +163,6 @@ public class Session extends IBMDataObject {
                         List data =  group.get(t);
                         session.setObject(keyNames[t].toUpperCase(), (data != null) ? data : "");
                     }
-
-
-                     //   file.close();
-                    //session.setAccelx(accelx);
-                    //session.setAccely(accely);
-                    //session.setAccelz(accelz);
-
                     group.clear();
                 }
             } catch (FileNotFoundException e) {
@@ -194,17 +187,10 @@ public class Session extends IBMDataObject {
 
 
 
-    //Check if session files exist
-    public void isDataFiles() {
-
-        ArrayList<String> dataFileNames = new ArrayList<String>();
-
-        InputStream file = null;
-
-        //Get files directory and get names of all files within
-        File fileFinder = new File( context.getFilesDir() + "/" );
-        File fileList[] = fileFinder.listFiles();
-        Log.i("Files", "Size: "+ fileList.length);
+    //Check if session data files exist
+    public Boolean isDataFiles() {
+        //Get files directory and get names of all files
+        File fileList[] = (new File( context.getFilesDir() + "/" )).listFiles();
 
         //Look at each file in the directory
         for (int i=0; i < fileList.length -1; i++)
@@ -213,14 +199,11 @@ public class Session extends IBMDataObject {
             String filenameArray[] = fileList[i].getName().split("\\.");
             String extension = filenameArray[filenameArray.length-1];
 
-            //Check if file extension is txt (CHANGE TO 'dat' when files are working)
-            if(extension.equals("txt")){
-                //dataFileNames[num] = fileList[i].getName();
-                dataFileNames.add(fileList[i].getName());
-                Log.i("Files", "Found Data file:" + fileList[i].getName());
-
+            //Check if file extension matches data file
+            if(extension.equals(EXT)){
+                return true; //some file exists that has data file extension, return true
             }
         }
-
+        return false; //false if no files found that matches extension
     }
 }
