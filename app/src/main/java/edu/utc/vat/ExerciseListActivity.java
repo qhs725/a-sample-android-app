@@ -146,3 +146,4 @@ class Exercise extends ExerciseListActivity implements Serializable{
         else{return false;}
     }
 }
+

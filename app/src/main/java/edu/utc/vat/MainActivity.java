@@ -86,6 +86,7 @@ public class MainActivity extends BaseActivity {
             public void onClick(View view) {
                // exercise = 0;
                 startActivity(ExerciseListActivity.createIntent(self));
+                 startActivity(ExerciseListActivity.createIntent(self));
             }
         });
         */

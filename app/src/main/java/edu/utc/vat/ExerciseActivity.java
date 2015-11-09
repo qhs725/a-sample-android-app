@@ -148,14 +148,14 @@ public class ExerciseActivity extends BaseActivity implements View.OnClickListen
             Log.i("RESET","Clicked reset button");
             getUserInfo.setText("");
             getUserInfo.setOnClickListener(new View.OnClickListener() {
-                   public void onClick(View view) {
-                       getUserInfo.requestFocus();
-                       InputMethodManager inputManager = (InputMethodManager)
-                               getSystemService(Context.INPUT_METHOD_SERVICE);
-                       inputManager.showSoftInput(getUserInfo,
-                               InputMethodManager.SHOW_IMPLICIT);
-                   }
-               }
+                                               public void onClick(View view) {
+                                                   getUserInfo.requestFocus();
+                                                   InputMethodManager inputManager = (InputMethodManager)
+                                                           getSystemService(Context.INPUT_METHOD_SERVICE);
+                                                   inputManager.showSoftInput(getUserInfo,
+                                                           InputMethodManager.SHOW_IMPLICIT);
+                                               }
+                                           }
             );
         }
         if (id2 == R.id.TestingInstructionsButton) {
@@ -191,7 +191,6 @@ public class ExerciseActivity extends BaseActivity implements View.OnClickListen
                 }
                 status = READY;
                 break;
-
             case R.id.TestingResetButton:
                 status = STOPPED;
                 //TODO: kill timer if running
@@ -208,14 +207,12 @@ public class ExerciseActivity extends BaseActivity implements View.OnClickListen
                    }
                 );
                 break;
-
             case R.id.TestingInstructionsButton:
                 Log.i("INSTRUCTIONS","Toast called");
                 Toast.makeText(this, "Instructions", Toast.LENGTH_LONG).show();
                 //showToast("ENTER FIRST EXERCISE INSTRUCTION HERE...");
                 //showToast("ENTER SECOND EXERCISE INSTRUCTION HERE...");
                 break;
-
             case R.id.SessionInfo:
                 getUserInfo.setText("");
                 getUserInfo.requestFocus();
@@ -223,7 +220,6 @@ public class ExerciseActivity extends BaseActivity implements View.OnClickListen
                         getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputManager.showSoftInput(getUserInfo, InputMethodManager.SHOW_IMPLICIT);
                 break;
-
         }*/
     }
 
@@ -315,7 +311,7 @@ public class ExerciseActivity extends BaseActivity implements View.OnClickListen
     public static Intent createIntent(Context context, int e) {
         exercise = e;
         return new Intent(context, ExerciseActivity.class);
-       // return new Intent(context, TestingActivity.class);
+        // return new Intent(context, TestingActivity.class);
     }
 
 
@@ -344,6 +340,3 @@ public class ExerciseActivity extends BaseActivity implements View.OnClickListen
     }
 
 }
-
-
-

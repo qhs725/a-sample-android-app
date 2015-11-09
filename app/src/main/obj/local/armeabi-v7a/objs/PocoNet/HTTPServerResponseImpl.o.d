@@ -1,362 +1,347 @@
-D:/Documents/GitHub/utc-vat/app/src/main/obj/local/armeabi-v7a/objs/PocoNet/HTTPServerResponseImpl.o: \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/HTTPServerResponseImpl.cpp \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPServerResponseImpl.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/Net.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Foundation.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Config.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Platform.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Platform_POSIX.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Bugcheck.h \
- D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/string \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Types.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPServerResponse.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPResponse.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPMessage.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/MessageHeader.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/NameValueCollection.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/String.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Ascii.h \
- D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/cstring \
- D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/map \
- D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/ostream \
- D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/istream \
- D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/vector \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPCookie.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Timestamp.h \
- D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/ctime \
- D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/cstddef \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPServerSession.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPSession.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/StreamSocket.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/Socket.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/SocketImpl.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/SocketDefs.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/unistd.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/sys/select.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/sys/sysconf.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/capability.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/pathconf.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/errno.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/errno.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm/errno.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm-generic/errno.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm-generic/errno-base.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/sys/socket.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/socket.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm/socket.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm/sockios.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/sockios.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/uio.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/sys/ioctl.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/ioctl.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm/ioctl.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm-generic/ioctl.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm/ioctls.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm/termbits.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/sys/ioctl_compat.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/arpa/inet.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/netinet/in.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/endian.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/sys/endian.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/machine/endian.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/in.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm/byteorder.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/byteorder/little_endian.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/byteorder/swab.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/byteorder/generic.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/in6.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/ipv6.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/netinet/in6.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/netinet/tcp.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/tcp.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/netdb.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/net/if.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/if.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/hdlc/ioctl.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/SocketAddress.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/IPAddress.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/RefCountedObject.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/AtomicCounter.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Mutex.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Exception.h \
- D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/stdexcept \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/ScopedLock.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Mutex_POSIX.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Timespan.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Any.h \
- D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/algorithm \
- D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/typeinfo \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPServerParams.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/TCPServerParams.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Thread.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Thread_POSIX.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Runnable.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/SignalHandler.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/setjmp.h \
- D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/machine/setjmp.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Event.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Event_POSIX.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/AutoPtr.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPHeaderStream.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPBasicStreamBuf.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/BufferedStreamBuf.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/BufferAllocator.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/StreamUtil.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPBufferAllocator.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/MemoryPool.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPStream.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPFixedLengthStream.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPChunkedStream.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/File.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/File_UNIX.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/NumberFormatter.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/StreamCopier.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/CountingStream.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/UnbufferedStreamBuf.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/FileStream.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/FileStream_POSIX.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/BufferedBidirectionalStreamBuf.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/DateTimeFormatter.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/DateTime.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/LocalDateTime.h \
- D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/DateTimeFormat.h
+/Users/kristof/git/UTC-VAT/app/src/main/obj/local/armeabi-v7a/objs/PocoNet/HTTPServerResponseImpl.o: \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/HTTPServerResponseImpl.cpp \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPServerResponseImpl.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/Net.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Foundation.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Config.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Platform.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Platform_POSIX.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Bugcheck.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/string \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Types.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPServerResponse.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPResponse.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPMessage.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/MessageHeader.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/NameValueCollection.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/String.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Ascii.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/cstring \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/map \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/ostream \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/istream \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/vector \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPCookie.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Timestamp.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/ctime \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/cstddef \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPServerSession.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPSession.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/StreamSocket.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/Socket.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/SocketImpl.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/SocketDefs.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/errno.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/errno.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm/errno.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm-generic/errno.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm-generic/errno-base.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/sys/socket.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/socket.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm/socket.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm/sockios.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/sockios.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/uio.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/sys/ioctl.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/ioctl.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm/ioctl.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm-generic/ioctl.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm/ioctls.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm/termbits.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/sys/ioctl_compat.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/arpa/inet.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/netinet/in.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/endian.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/sys/endian.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/machine/endian.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/in.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm/byteorder.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/byteorder/little_endian.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/byteorder/swab.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/byteorder/generic.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/in6.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/ipv6.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/netinet/in6.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/netinet/tcp.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/tcp.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/netdb.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/net/if.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/if.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/hdlc/ioctl.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/SocketAddress.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/IPAddress.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/RefCountedObject.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/AtomicCounter.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Mutex.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Exception.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/stdexcept \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/ScopedLock.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Mutex_POSIX.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Timespan.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Any.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/algorithm \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/typeinfo \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPServerParams.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/TCPServerParams.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Thread.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Thread_POSIX.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Runnable.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/SignalHandler.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/setjmp.h \
+ /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/machine/setjmp.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Event.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Event_POSIX.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/AutoPtr.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPHeaderStream.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPBasicStreamBuf.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/BufferedStreamBuf.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/BufferAllocator.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/StreamUtil.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPBufferAllocator.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/MemoryPool.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPStream.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPFixedLengthStream.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPChunkedStream.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/File.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/File_UNIX.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/NumberFormatter.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/StreamCopier.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/CountingStream.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/UnbufferedStreamBuf.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/FileStream.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/FileStream_POSIX.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/BufferedBidirectionalStreamBuf.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/DateTimeFormatter.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/DateTime.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/LocalDateTime.h \
+ /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/DateTimeFormat.h
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPServerResponseImpl.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPServerResponseImpl.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/Net.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/Net.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Foundation.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Foundation.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Config.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Config.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Platform.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Platform.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Platform_POSIX.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Platform_POSIX.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Bugcheck.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Bugcheck.h:
 
-D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/string:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/string:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Types.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Types.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPServerResponse.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPServerResponse.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPResponse.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPResponse.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPMessage.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPMessage.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/MessageHeader.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/MessageHeader.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/NameValueCollection.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/NameValueCollection.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/String.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/String.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Ascii.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Ascii.h:
 
-D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/cstring:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/cstring:
 
-D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/map:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/map:
 
-D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/ostream:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/ostream:
 
-D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/istream:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/istream:
 
-D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/vector:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/vector:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPCookie.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPCookie.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Timestamp.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Timestamp.h:
 
-D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/ctime:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/ctime:
 
-D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/cstddef:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/cstddef:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPServerSession.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPServerSession.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPSession.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPSession.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/StreamSocket.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/StreamSocket.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/Socket.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/Socket.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/SocketImpl.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/SocketImpl.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/SocketDefs.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/SocketDefs.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/unistd.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/errno.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/sys/select.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/errno.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/sys/sysconf.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm/errno.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/capability.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm-generic/errno.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/pathconf.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm-generic/errno-base.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/errno.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/sys/socket.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/errno.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/socket.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm/errno.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm/socket.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm-generic/errno.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm/sockios.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm-generic/errno-base.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/sockios.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/sys/socket.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/uio.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/socket.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/sys/ioctl.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm/socket.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/ioctl.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm/sockios.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm/ioctl.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/sockios.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm-generic/ioctl.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/uio.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm/ioctls.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/sys/ioctl.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm/termbits.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/ioctl.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/sys/ioctl_compat.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm/ioctl.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/arpa/inet.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm-generic/ioctl.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/netinet/in.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm/ioctls.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/endian.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm/termbits.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/sys/endian.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/sys/ioctl_compat.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/machine/endian.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/arpa/inet.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/in.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/netinet/in.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm/byteorder.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/endian.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/byteorder/little_endian.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/sys/endian.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/byteorder/swab.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/machine/endian.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/byteorder/generic.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/in.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/in6.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm/byteorder.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/ipv6.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/byteorder/little_endian.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/netinet/in6.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/byteorder/swab.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/netinet/tcp.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/byteorder/generic.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/tcp.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/in6.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/netdb.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/ipv6.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/net/if.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/netinet/in6.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/if.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/netinet/tcp.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/hdlc/ioctl.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/tcp.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/SocketAddress.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/netdb.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/IPAddress.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/net/if.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/RefCountedObject.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/if.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/AtomicCounter.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/hdlc/ioctl.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Mutex.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/SocketAddress.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Exception.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/IPAddress.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/stdexcept:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/RefCountedObject.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/ScopedLock.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/AtomicCounter.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Mutex_POSIX.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Mutex.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Timespan.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Exception.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Any.h:
 
-D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/stdexcept:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/algorithm:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/ScopedLock.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/gnu-libstdc++/4.6/include/typeinfo:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Mutex_POSIX.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPServerParams.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Timespan.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/TCPServerParams.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Any.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Thread.h:
 
-D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/algorithm:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Thread_POSIX.h:
 
-D:/Documents/Android/NDK/sources/cxx-stl/gnu-libstdc++/4.8/include/typeinfo:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Runnable.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPServerParams.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/SignalHandler.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/TCPServerParams.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/setjmp.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Thread.h:
+/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/machine/setjmp.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Thread_POSIX.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Event.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Runnable.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Event_POSIX.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/SignalHandler.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/AutoPtr.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/setjmp.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPHeaderStream.h:
 
-D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/machine/setjmp.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPBasicStreamBuf.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Event.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/BufferedStreamBuf.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Event_POSIX.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/BufferAllocator.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/AutoPtr.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/StreamUtil.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPHeaderStream.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPBufferAllocator.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPBasicStreamBuf.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/MemoryPool.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/BufferedStreamBuf.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPStream.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/BufferAllocator.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPFixedLengthStream.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/StreamUtil.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPChunkedStream.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPBufferAllocator.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/File.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/MemoryPool.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/File_UNIX.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPStream.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/NumberFormatter.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPFixedLengthStream.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/StreamCopier.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/Net/HTTPChunkedStream.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/CountingStream.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/File.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/UnbufferedStreamBuf.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/File_UNIX.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/FileStream.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/NumberFormatter.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/FileStream_POSIX.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/StreamCopier.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/BufferedBidirectionalStreamBuf.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/CountingStream.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/DateTimeFormatter.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/UnbufferedStreamBuf.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/DateTime.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/FileStream.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/LocalDateTime.h:
 
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/FileStream_POSIX.h:
-
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/BufferedBidirectionalStreamBuf.h:
-
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/DateTimeFormatter.h:
-
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/DateTime.h:
-
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/LocalDateTime.h:
-
-D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/DateTimeFormat.h:
+/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-net-android/jni/Net/../include/Poco/DateTimeFormat.h:
