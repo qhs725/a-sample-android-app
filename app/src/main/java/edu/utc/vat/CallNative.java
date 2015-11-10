@@ -64,4 +64,10 @@ public class CallNative {
 
     @SuppressWarnings("JniMissingFunction")
     public static native int Load(int s); //load sprite sheet(s) --> xxhdpi png(s) in /res/drawable
+
+    @SuppressWarnings("JniMissingFunction")
+    public static native int PassID(String id); //pass user id and session id to C++
+
+    @SuppressWarnings("JniMissingFunction")
+    public static native boolean CheckData(); //checks if data has been packaged
 }

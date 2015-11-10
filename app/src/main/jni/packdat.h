@@ -23,9 +23,13 @@ namespace pd {
 
         pd_();
         ~pd_();
+
         bool __m__();
+        bool pk_();
+
         char **__b;
         int _c_;
+        bool _pd;
 
     private:
         static void *rw_(void *);

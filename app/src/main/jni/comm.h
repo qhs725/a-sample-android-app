@@ -43,6 +43,10 @@ namespace io {
 
         void __s__();
 
+        void id_(const char *);
+
+        const char * __id;
+
     private:
         bool o;
 
