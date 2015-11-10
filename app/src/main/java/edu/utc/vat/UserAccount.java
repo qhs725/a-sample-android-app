@@ -45,8 +45,5 @@ public class UserAccount {
 	public static void setuUserID(String uUserID) {
 		UserAccount.uUserID = uUserID;
 	}
-	
-	
-	
 
 }

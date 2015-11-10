@@ -224,14 +224,17 @@ namespace wti {
         //char _f[strlen(_p) + strlen(a_) + 1];
         //snprintf(_f, sizeof(_f), "%s/%s", _p, a_);
         fa___ = fopen("/data/data/edu.utc.vat/files/a.dat", "w");
+        fprintf(fa___,"accelx,accely,accelz,timestamp\n");
         //const char *c_ = "c.dat";
         //char ___f[strlen(_p) + strlen(c_) + 1];
         //snprintf(___f, sizeof(___f), "%s%s", _p, c_);
         fc_ = fopen("/data/data/edu.utc.vat/files/c.dat", "w");
+        fprintf(fc_,"accelx,accely,accelz,timestamp\n");
         //const char *g_ = "g.dat";
         //char __f[strlen(_p) + strlen(g_) + 1];
         //snprintf(__f, sizeof(__f), "%s%s", _p, g_);
         fg__ = fopen("/data/data/edu.utc.vat/files/g.dat", "w");
+        fprintf(fg__,"accelx,accely,accelz,timestamp\n");
     }
 
     /*
