@@ -25,6 +25,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -99,6 +100,30 @@ public class BaseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
     }
+    //Check if session data files exist
+    public Boolean isDataFiles() {
+        Log.i(CLASS_NAME, "Checking for Session data files...");
+
+        //Get files directory and get names of all files
+        File fileList[] = (new File( context.getFilesDir() + "/" )).listFiles();
+
+        //Look at each file in the directory
+        for (int i=0; i < fileList.length -1; i++)
+        {
+            Log.i("Files", "FileName:" + fileList[i].getName());
+            String filenameArray[] = fileList[i].getName().split("\\.");
+            String extension = filenameArray[filenameArray.length-1];
+
+            //Check if file extension matches data file
+            if(extension.equals("txt")){
+                Log.i(CLASS_NAME, "Session Files found");
+                return true; //some file exists that has data file extension, return true
+            }
+        }
+        Log.i(CLASS_NAME, "No Session Files found stored in memory.");
+        return false; //false if no files found that matches extension
+    }
+
 
 }
 

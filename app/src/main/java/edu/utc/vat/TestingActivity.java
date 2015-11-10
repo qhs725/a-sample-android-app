@@ -425,7 +425,18 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
                                     Log.i(CLASS_NAME, "Registering device with the IBM Push service.");
                                     // register the device with the IBM Push service
+
+                                    //Check if there are stored session data files and upload them if there are
+                                    if(isDataFiles()){
+
+                                        //***
+                                        // add call to recursive-ish session creating function based on files present in directory
+                                        //**
+                                    }
+
                                     return push.register(deviceAlias, consumerID);
+
+
                                 }
 
                             }).continueWith(new Continuation<String, Void>() {

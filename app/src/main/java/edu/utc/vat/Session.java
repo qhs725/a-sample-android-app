@@ -187,23 +187,5 @@ public class Session extends IBMDataObject {
 
 
 
-    //Check if session data files exist
-    public Boolean isDataFiles() {
-        //Get files directory and get names of all files
-        File fileList[] = (new File( context.getFilesDir() + "/" )).listFiles();
 
-        //Look at each file in the directory
-        for (int i=0; i < fileList.length -1; i++)
-        {
-            Log.i("Files", "FileName:" + fileList[i].getName());
-            String filenameArray[] = fileList[i].getName().split("\\.");
-            String extension = filenameArray[filenameArray.length-1];
-
-            //Check if file extension matches data file
-            if(extension.equals(EXT)){
-                return true; //some file exists that has data file extension, return true
-            }
-        }
-        return false; //false if no files found that matches extension
-    }
 }
