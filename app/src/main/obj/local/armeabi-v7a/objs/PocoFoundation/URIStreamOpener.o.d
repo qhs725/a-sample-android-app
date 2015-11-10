@@ -1,299 +1,305 @@
-/Users/kristof/git/UTC-VAT/app/src/main/obj/local/armeabi-v7a/objs/PocoFoundation/URIStreamOpener.o: \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/URIStreamOpener.cpp \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/URIStreamOpener.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Foundation.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Config.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Platform.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Platform_POSIX.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Bugcheck.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/string \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/__config \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/iosfwd \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/../../android/support/include/wchar.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/../../android/support/include/stdio.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/stdio.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/../../android/support/include/xlocale.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/../../android/support/include/wctype.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/cstring \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/../../android/support/include/string.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/string.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/malloc.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/../../android/support/include/monetary.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/cstdio \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/cwchar \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/cwctype \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/cctype \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/../../android/support/include/ctype.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/ctype.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/algorithm \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/initializer_list \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/cstddef \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/type_traits \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/utility \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/__tuple \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/memory \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/typeinfo \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/exception \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/cstdint \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/new \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/limits \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/iterator \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/__functional_base \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/tuple \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/stdexcept \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Types.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Mutex.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Exception.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/ScopedLock.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Mutex_POSIX.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/pthread.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/../../android/support/include/time.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/time.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/sys/time.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/time.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm/siginfo.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm-generic/siginfo.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/signal.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm/signal.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm-generic/signal.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm/sigcontext.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/sched.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/../../android/support/include/errno.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/errno.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/errno.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm/errno.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm-generic/errno.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm-generic/errno-base.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/istream \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/ostream \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/ios \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/__locale \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/mutex \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/__mutex_base \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/chrono \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/ctime \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/ratio \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/climits \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/system_error \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/cerrno \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/functional \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/../../android/support/include/locale.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/locale.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/streambuf \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/locale \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/cstdarg \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/cstdlib \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/../../android/support/include/stdlib.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/stdlib.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/alloca.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/strings.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/memory.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/../../android/support/include/nl_types.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/bitset \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/map \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/__tree \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/URIStreamFactory.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/FileStreamFactory.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/URI.h \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/vector \
- /Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/__split_buffer \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Path.h \
- /Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/SingletonHolder.h
+D:/Documents/GitHub/utc-vat/app/src/main/obj/local/armeabi-v7a/objs/PocoFoundation/URIStreamOpener.o: \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/URIStreamOpener.cpp \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/URIStreamOpener.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Foundation.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Config.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Platform.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Platform_POSIX.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Bugcheck.h \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/string \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/__config \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/iosfwd \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/../../android/support/include/wchar.h \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/../../android/support/include/stdio.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/stdio.h \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/../../android/support/include/xlocale.h \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/../../android/support/include/wctype.h \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/cstring \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/../../android/support/include/string.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/string.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/malloc.h \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/cstdio \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/cwchar \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/cwctype \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/cctype \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/../../android/support/include/ctype.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/ctype.h \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/algorithm \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/initializer_list \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/cstddef \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/type_traits \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/utility \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/__tuple \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/memory \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/typeinfo \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/exception \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/cstdint \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/new \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/limits \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/iterator \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/__functional_base \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/tuple \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/atomic \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/stdexcept \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Types.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Mutex.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Exception.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/ScopedLock.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Mutex_POSIX.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/pthread.h \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/../../android/support/include/time.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/time.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/sys/time.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/time.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm/siginfo.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm-generic/siginfo.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/signal.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm/signal.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm-generic/signal.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm/sigcontext.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/sys/ucontext.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/sys/user.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/sched.h \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/../../android/support/include/errno.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/errno.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/errno.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm/errno.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm-generic/errno.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm-generic/errno-base.h \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/istream \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/ostream \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/ios \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/__locale \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/mutex \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/__mutex_base \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/chrono \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/ctime \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/ratio \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/climits \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/system_error \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/cerrno \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/functional \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/../../android/support/include/locale.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/locale.h \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/streambuf \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/locale \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/cstdarg \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/cstdlib \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/../../android/support/include/stdlib.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/stdlib.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/alloca.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/strings.h \
+ D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/memory.h \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/../../android/support/include/nl_types.h \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/bitset \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/map \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/__tree \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/URIStreamFactory.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/FileStreamFactory.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/URI.h \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/vector \
+ D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/__split_buffer \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Path.h \
+ D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/SingletonHolder.h
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/URIStreamOpener.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/URIStreamOpener.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Foundation.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Foundation.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Config.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Config.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Platform.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Platform.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Platform_POSIX.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Platform_POSIX.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Bugcheck.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Bugcheck.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/string:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/string:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/__config:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/__config:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/iosfwd:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/iosfwd:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/../../android/support/include/wchar.h:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/../../android/support/include/wchar.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/../../android/support/include/stdio.h:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/../../android/support/include/stdio.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/stdio.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/stdio.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/../../android/support/include/xlocale.h:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/../../android/support/include/xlocale.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/../../android/support/include/wctype.h:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/../../android/support/include/wctype.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/cstring:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/cstring:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/../../android/support/include/string.h:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/../../android/support/include/string.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/string.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/string.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/malloc.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/malloc.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/../../android/support/include/monetary.h:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/cstdio:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/cstdio:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/cwchar:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/cwchar:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/cwctype:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/cwctype:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/cctype:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/cctype:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/../../android/support/include/ctype.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/../../android/support/include/ctype.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/ctype.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/ctype.h:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/algorithm:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/algorithm:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/initializer_list:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/initializer_list:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/cstddef:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/cstddef:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/type_traits:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/type_traits:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/utility:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/utility:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/__tuple:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/__tuple:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/memory:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/memory:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/typeinfo:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/typeinfo:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/exception:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/exception:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/cstdint:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/cstdint:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/new:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/new:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/limits:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/limits:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/iterator:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/iterator:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/__functional_base:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/__functional_base:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/tuple:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/tuple:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/atomic:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/stdexcept:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/stdexcept:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Types.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Types.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Mutex.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Mutex.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Exception.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Exception.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/ScopedLock.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/ScopedLock.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Mutex_POSIX.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Mutex_POSIX.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/pthread.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/pthread.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/../../android/support/include/time.h:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/../../android/support/include/time.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/time.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/time.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/sys/time.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/sys/time.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/time.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/time.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm/siginfo.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm/siginfo.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm-generic/siginfo.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm-generic/siginfo.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/signal.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/signal.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm/signal.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm/signal.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm-generic/signal.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm-generic/signal.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm/sigcontext.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm/sigcontext.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/sched.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/sys/ucontext.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/../../android/support/include/errno.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/sys/user.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/errno.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/sched.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/linux/errno.h:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/../../android/support/include/errno.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm/errno.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/errno.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm-generic/errno.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/linux/errno.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm-generic/errno-base.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm/errno.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/istream:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm-generic/errno.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/ostream:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/asm-generic/errno-base.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/ios:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/istream:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/__locale:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/ostream:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/mutex:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/ios:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/__mutex_base:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/__locale:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/chrono:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/mutex:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/ctime:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/__mutex_base:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/ratio:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/chrono:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/climits:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/ctime:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/system_error:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/ratio:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/cerrno:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/climits:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/functional:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/system_error:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/../../android/support/include/locale.h:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/cerrno:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/locale.h:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/functional:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/streambuf:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/../../android/support/include/locale.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/locale:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/locale.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/cstdarg:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/streambuf:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/cstdlib:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/locale:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/../../android/support/include/stdlib.h:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/cstdarg:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/stdlib.h:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/cstdlib:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/alloca.h:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/../../android/support/include/stdlib.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/strings.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/stdlib.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/memory.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/alloca.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/../../android/support/include/nl_types.h:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/strings.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/bitset:
+D:/Documents/Android/NDK/platforms/android-19/arch-arm/usr/include/memory.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/map:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/../../android/support/include/nl_types.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/__tree:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/bitset:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/URIStreamFactory.h:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/map:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/FileStreamFactory.h:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/__tree:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/URI.h:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/URIStreamFactory.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/vector:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/FileStreamFactory.h:
 
-/Users/kristof/devo/adt-bundle-mac-x86_64-20140321/android-ndk-r9d/sources/cxx-stl/llvm-libc++/libcxx/include/__split_buffer:
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/URI.h:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Path.h:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/vector:
 
-/Users/kristof/git/UTC-VAT/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/SingletonHolder.h:
+D:/Documents/Android/NDK/sources/cxx-stl/llvm-libc++/libcxx/include/__split_buffer:
+
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/Path.h:
+
+D:/Documents/GitHub/utc-vat/app/src/main/jni/../../../..//third_party/poco-foundation-android/jni/Foundation/../include/Poco/SingletonHolder.h:
