@@ -31,8 +31,9 @@ import java.util.List;
 
 import bolts.Continuation;
 import bolts.Task;
-import edu.utc.vat.util.GoogleTokenManager;
 
+import edu.utc.vat.util.GoogleTokenManager;
+import edu.utc.vat.flanker.FlankerActivity;
 
 
 
@@ -77,7 +78,12 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-
+        findViewById(R.id.MainMenuButton3).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startFlanker();
+            }
+        });
 
 
         /*
@@ -97,7 +103,7 @@ public class MainActivity extends BaseActivity {
     }
 
 
-public static Intent createIntent(Context context) {
+    public static Intent createIntent(Context context) {
         return new Intent(context, MainActivity.class);
     }
 
@@ -121,6 +127,10 @@ public static Intent createIntent(Context context) {
         Log.i(CLASS_NAME, "Finishing Main Activity. Returning to Login Screen.");
         finish();
             super.onBackPressed();
+    }
+
+    private void startFlanker() {
+        startActivity(new Intent(this, FlankerActivity.class));
     }
 
 }

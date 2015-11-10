@@ -70,4 +70,18 @@
         android:textColor="@color/text_color"
         />
 
+    <Button
+        android:paddingTop="6dp"
+        android:layout_width="450dip"
+        android:layout_height="36dip"
+        android:textSize="24sp"
+        android:text="FLANKER*"
+        android:id="@+id/MainMenuButton3"
+        android:textStyle="bold"
+        android:textAlignment="gravity"
+        android:background="#ddb9a826"
+        android:layout_marginTop="31dp"
+        android:layout_below="@+id/MainMenuButton2"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>

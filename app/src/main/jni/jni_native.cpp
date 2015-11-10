@@ -14,6 +14,7 @@
 #include "sensors.h"
 #include "comm.h"
 #include "packdat.h"
+#include "gl.h"
 
 #define JNIEXPORT __attribute__ ((visibility ("default")))
 
@@ -29,116 +30,133 @@ extern "C" {
 #endif
 
 
-
 JNIEXPORT jint JNICALL
-Java_edu_utc_vat_CallNative_InstantiateSensorsHandler(
-        JNIEnv *, jobject) {
-    sh::sh_::sh__()._o_();
-    LOGI("JNI::Initializing Sensors...\n");
-    return 0;
+Java_edu_utc_vat_CallNative_InstantiateSensorsHandler(JNIEnv *, jobject) {
+sh::sh_::sh__()._o_();
+LOGI("JNI::Initializing Sensors...\n");
+return 0;
 }
 
 JNIEXPORT jint JNICALL
-Java_edu_utc_vat_CallNative_StartSensors(
-        JNIEnv *, jobject) {
-    sh::sh_::sh__()._o__();
-    return 0;
+Java_edu_utc_vat_CallNative_StartSensors(JNIEnv *, jobject) {
+sh::sh_::sh__()._o__();
+return 0;
 }
 
 JNIEXPORT jint JNICALL
-Java_edu_utc_vat_CallNative_StopSensors(
-        JNIEnv *, jobject) {
-    sh::sh_::sh__()._o___();
-    return 0;
+Java_edu_utc_vat_CallNative_StopSensors(JNIEnv *, jobject) {
+sh::sh_::sh__()._o___();
+return 0;
 }
 
 JNIEXPORT jint JNICALL
-Java_edu_utc_vat_CallNative_OpenFiles(
-        JNIEnv *, jobject) {
-    wti::wti_::wti__()._fopen();
-    return 0;
+Java_edu_utc_vat_CallNative_OpenFiles(JNIEnv *, jobject) {
+wti::wti_::wti__()._fopen();
+return 0;
 }
 
 JNIEXPORT jint JNICALL
-Java_edu_utc_vat_CallNative_CloseFiles(
-        JNIEnv *, jobject) {
-    wti::wti_::wti__()._fclose();
-    return 0;
+Java_edu_utc_vat_CallNative_CloseFiles(JNIEnv *, jobject) {
+wti::wti_::wti__()._fclose();
+return 0;
 }
 
 JNIEXPORT jdouble JNICALL
-Java_edu_utc_vat_CallNative_PassFilePath(
-        JNIEnv *env, jobject jobj, jstring fp) {
-    const char *path;
-    jboolean isCopy;
-    path = env->GetStringUTFChars(fp, &isCopy);
-    if (isCopy == JNI_TRUE) {
-        (env)->ReleaseStringUTFChars(fp, path);
-    }
-    wti::wti_::wti__()._path(path);
-    return 0.;
+Java_edu_utc_vat_CallNative_PassFilePath(JNIEnv *env, jobject jobj, jstring fp) {
+const char *path;
+jboolean isCopy;
+path = env->GetStringUTFChars(fp, &isCopy);
+if (isCopy == JNI_TRUE) {
+(env)->ReleaseStringUTFChars(fp, path);
+}
+wti::wti_::wti__()._path(path);
+return 0.;
 }
 
 JNIEXPORT jboolean JNICALL
-Java_edu_utc_vat_CallNative_SensorState(
-        JNIEnv *, jobject) {
-    bool st__;
-    st__ = sh::sh_::sh__()._st();
-    return st__;
+Java_edu_utc_vat_CallNative_SensorState(JNIEnv *, jobject) {
+bool st__;
+st__ = sh::sh_::sh__()._st();
+return st__;
 }
 
 JNIEXPORT jboolean JNICALL
-Java_edu_utc_vat_CallNative_FilesOpen(
-        JNIEnv *, jobject) {
-    bool __f;
-    __f = wti::wti_::wti__()._f();
-    return __f;
+Java_edu_utc_vat_CallNative_FilesOpen(JNIEnv *, jobject) {
+bool __f;
+__f = wti::wti_::wti__()._f();
+return __f;
 }
 
 JNIEXPORT jint JNICALL
-Java_edu_utc_vat_CallNative_WriteOn(
-        JNIEnv *, jobject) {
-    wti::wti_::wti__()._w();
-    return 0;
+Java_edu_utc_vat_CallNative_WriteOn(JNIEnv *, jobject) {
+wti::wti_::wti__()._w();
+return 0;
 }
 
 JNIEXPORT jint JNICALL
-Java_edu_utc_vat_CallNative_WriteOff(
-        JNIEnv *, jobject) {
-    wti::wti_::wti__().w_();
-    return 0;
+Java_edu_utc_vat_CallNative_WriteOff(JNIEnv *, jobject) {
+wti::wti_::wti__().w_();
+return 0;
 }
 
 JNIEXPORT jint JNICALL
-Java_edu_utc_vat_CallNative_IO(
-        JNIEnv *, jobject) {
-    io::io_::io__().__init();
-    return 0;
+Java_edu_utc_vat_CallNative_IO(JNIEnv *, jobject) {
+io::io_::io__().__init();
+return 0;
 }
 
 JNIEXPORT jint JNICALL
-Java_edu_utc_vat_CallNative_DataCount(
-        JNIEnv *env, jobject jobj, jint sensor) {
-    jint count;
-    if (sensor == 0) {
-        count = sh::sh_::sh__()._0_;
-    } else if (sensor == 1) {
-        count = sh::sh_::sh__()._1__;
-    } else if (sensor == 2) {
-        count = sh::sh_::sh__()._2___;
-    } else {
-        count = -1;
-    }
-    return count;
+Java_edu_utc_vat_CallNative_DataCount(JNIEnv *env, jobject jobj, jint sensor) {
+jint count;
+if (sensor == 0) {
+count = sh::sh_::sh__()._0_;
+} else if (sensor == 1) {
+count = sh::sh_::sh__()._1__;
+} else if (sensor == 2) {
+count = sh::sh_::sh__()._2___;
+} else {
+count = -1;
+}
+return count;
 }
 
 JNIEXPORT jboolean JNICALL
-Java_edu_utc_vat_CallNative_PackageData(
-        JNIEnv *, jobject) {
-    bool b;
-    b = pd::pd_::pd__().__m__();
-    return b;
+Java_edu_utc_vat_CallNative_PackageData(JNIEnv *, jobject) {
+bool b;
+b = pd::pd_::pd__().__m__();
+return b;
 }
+
+JNIEXPORT jint JNICALL
+Java_edu_utc_vat_CallNative_Render(JNIEnv *, jobject, jint o, jint oo) {
+gl::gl_::gl__().__r__(o, oo);
+return 0;
+}
+
+JNIEXPORT jint JNICALL
+Java_edu_utc_vat_CallNative_Load(JNIEnv *env, jobject jobj, jint o) {
+gl::gl_::gl__().__l__(o);
+return 0;
+}
+
+JNIEXPORT jint JNICALL
+Java_edu_utc_vat_CallNative_OnChanged(JNIEnv *, jobject) {
+gl::gl_::gl__().__oc__();
+return 0;
+}
+
+JNIEXPORT jint JNICALL
+Java_edu_utc_vat_CallNative_InitializeGL(JNIEnv *env, jobject jobj, jstring apkfp) {
+const char *o;
+jboolean is;
+o = env->GetStringUTFChars(apkfp, &is);
+gl::gl_::gl__().__i__(o);
+return 0;
+}
+
+
+
+
 
 
 #ifdef __cplusplus

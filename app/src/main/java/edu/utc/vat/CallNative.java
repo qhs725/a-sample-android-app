@@ -15,13 +15,13 @@ public class CallNative {
     }
 
     @SuppressWarnings("JniMissingFunction")
-    public static native int InstantiateSensorsHandler();
+    public static native int InstantiateSensorsHandler(); //initialize sensors
 
     @SuppressWarnings("JniMissingFunction")
-    public static native int StartSensors();
+    public static native int StartSensors(); //cut sensors on
 
     @SuppressWarnings("JniMissingFunction")
-    public static native int StopSensors();
+    public static native int StopSensors(); //cut sensors off
 
     @SuppressWarnings("JniMissingFunction")
     public static native int OpenFiles(); //a.dat, g.dat, c.dat
@@ -30,27 +30,38 @@ public class CallNative {
     public static native int CloseFiles(); //a.dat, g.dat, c.dat
 
     @SuppressWarnings("JniMissingFunction")
-    public static native double PassFilePath(String path);
+    public static native double PassFilePath(String path); //pass internal dir --> deprecated?
 
     @SuppressWarnings("JniMissingFunction")
-    public static native boolean SensorState();
+    public static native boolean SensorState(); //check sensors on/off --> deprecated?
 
     @SuppressWarnings("JniMissingFunction")
-    public static native boolean FilesOpen();
+    public static native boolean FilesOpen(); //checks files open --> deprecated?
 
     @SuppressWarnings("JniMissingFunction")
-    public static native int WriteOn();
+    public static native int WriteOn(); //starts writing to files in sensor loop --> deprecated?
 
     @SuppressWarnings("JniMissingFunction")
-    public static native int WriteOff();
+    public static native int WriteOff(); //stops writing to files in sensor loop
 
     @SuppressWarnings("JniMissingFunction")
-    public static native int IO();
+    public static native int IO(); //pass files to server
 
     @SuppressWarnings("JniMissingFunction")
-    public static native int DataCount(int sensor);
+    public static native int DataCount(int sensor); //.. ?? --> deprecated?
 
     @SuppressWarnings("JniMissingFunction")
-    public static native boolean PackageData();
+    public static native boolean PackageData(); //groups accel, gyro, comp data
 
+    @SuppressWarnings("JniMissingFunction")
+    public static native int Render(int o, int oo); //gl renderer
+
+    @SuppressWarnings("JniMissingFunction")
+    public static native int OnChanged(); //gl onSurfaceChanged
+
+    @SuppressWarnings("JniMissingFunction")
+    public static native int InitializeGL(String assets); //setup gl graphics
+
+    @SuppressWarnings("JniMissingFunction")
+    public static native int Load(int s); //load sprite sheet(s) --> xxhdpi png(s) in /res/drawable
 }
