@@ -45,6 +45,7 @@ import bolts.Task;
 
 public final class BlueMixApplication extends Application {
 	public static IBMPush push = null;
+    private static Context context;
 	private Activity mActivity;
 	private static final String CLASS_NAME = BlueMixApplication.class.getSimpleName();
 	private static final String APP_ID = "applicationID";
@@ -163,7 +164,7 @@ public final class BlueMixApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-
+        BlueMixApplication.context = getApplicationContext();
 
 	    sessionList = new ArrayList<Session>();
 		// Read from properties file
@@ -241,5 +242,8 @@ public final class BlueMixApplication extends Application {
         Log.d(CLASS_NAME, "Exiting initializeBluemixServices() method.");
     }
 
+    public static Context getAppContext() {
+        return BlueMixApplication.context;
+    }
 
 }

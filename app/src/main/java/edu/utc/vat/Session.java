@@ -22,6 +22,8 @@ import android.util.Log;
 import com.ibm.mobile.services.data.IBMDataObject;
 import com.ibm.mobile.services.data.IBMDataObjectSpecialization;
 
+import org.apache.http.message.BasicLineFormatter;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -38,7 +40,7 @@ public class Session extends IBMDataObject {
     private static final String USERID = "userId";
     private static final String LOGINSESSIONID = "loginSessionId";
     private static final String USERINPUT = "userInput";
-    private static  Context context = AppContext.getAppContext();
+    private static  Context context = BlueMixApplication.getAppContext();
     private static final String EXT = "txt";
     /**
      * gets the name of the session.
