@@ -428,15 +428,13 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
                                     //Check if there are stored session data files and upload them if there are
                                     if(isDataFiles()){
-
                                         //***
-                                        // add call to recursive-ish session creating function based on files present in directory
-                                        //**
+                                        //TODO: add call to recursive-ish session object-creating function based on files present in directory
+                                        //TODO: that function should read in values and call createSession for each one. createSession() may need to be edited for this or alternate version created
+                                        //***
                                     }
 
                                     return push.register(deviceAlias, consumerID);
-
-
                                 }
 
                             }).continueWith(new Continuation<String, Void>() {

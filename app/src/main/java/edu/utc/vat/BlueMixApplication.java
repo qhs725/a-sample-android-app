@@ -44,7 +44,6 @@ import bolts.Continuation;
 import bolts.Task;
 
 public final class BlueMixApplication extends Application {
-	public static final int EDIT_ACTIVITY_RC = 1;
 	public static IBMPush push = null;
 	private Activity mActivity;
 	private static final String CLASS_NAME = BlueMixApplication.class.getSimpleName();
@@ -54,14 +53,8 @@ public final class BlueMixApplication extends Application {
 	private static final String PROPS_FILE = "google_bluemix.properties";
 	public Properties appProperties = null;
 
-    public BaseActivity IBMFunctions= new BaseActivity();
-    private IBMDataTest ibmDataTest = new IBMDataTest();
     private boolean bluemixServicesInitialized = false;
     public IBMCloudCode myCloudCodeService;
-    public String deviceAlias = "VAT_user_device";
-    public String consumerID = "utc-vat-app";
-    private String uUserID = null;
-
 
 	private IBMPushNotificationListener notificationListener = null;
     private List<Session> sessionList;
