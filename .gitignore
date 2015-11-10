@@ -8,4 +8,5 @@
 .idea
 /.idea
 /app/app.iml
-/app/src/main.obj.local.armeabi-v7a/objs
+/app/src/main.obj.local.armeabi-v7a/objs/*
+/app/build/*
