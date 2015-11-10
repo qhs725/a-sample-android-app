@@ -1,6 +1,6 @@
 #
-# GNU STL
-# kitkat
+# STL: C++
+# Min API: 16
 #
 
 APP_ABI := armeabi-v7a

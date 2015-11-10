@@ -70,7 +70,8 @@ namespace pd {
         std::ifstream __i2 ("/data/data/edu.utc.vat/files/c.dat", std::ifstream::in);
         std::ofstream __o ("/data/data/edu.utc.vat/files/data.csv", std::ofstream::out);
         __o << _s << "\n";
-        int _cc = 0-1;
+        int _cc = 0;
+        _c++;
         while (_cc++ < _c) {
             LOGI("PACKAGE in while loop @ _cc = %d", _cc);
             std::getline(__i0, _l0);

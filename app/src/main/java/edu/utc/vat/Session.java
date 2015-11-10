@@ -187,7 +187,4 @@ public class Session extends IBMDataObject {
 
     }
 
-
-
-
 }

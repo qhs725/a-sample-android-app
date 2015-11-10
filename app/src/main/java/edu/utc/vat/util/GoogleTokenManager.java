@@ -483,5 +483,4 @@ public class GoogleTokenManager extends Activity
 
 	}
 
-
 }
