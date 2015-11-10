@@ -1,0 +1,9 @@
+  try {
+          mSocket = IO.socket("http://192.168.0.105");
+      } catch (URISyntaxException e) {}
+
+            super.onCreate(savedInstanceState);
+            mSocket.connect();
+
+
+            mSocket.emit("chat message", "Test message~");

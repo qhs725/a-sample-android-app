@@ -51,6 +51,6 @@ public class CallNative {
     public static native int DataCount(int sensor);
 
     @SuppressWarnings("JniMissingFunction")
-    public static native int PackageData();
+    public static native boolean PackageData();
 
 }

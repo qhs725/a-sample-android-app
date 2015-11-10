@@ -132,11 +132,12 @@ Java_edu_utc_vat_CallNative_DataCount(
     return count;
 }
 
-JNIEXPORT jint JNICALL
+JNIEXPORT jboolean JNICALL
 Java_edu_utc_vat_CallNative_PackageData(
         JNIEnv *, jobject) {
-    pd::pd_::pd__().__m__();
-    return 0;
+    bool b;
+    b = pd::pd_::pd__().__m__();
+    return b;
 }
 
 

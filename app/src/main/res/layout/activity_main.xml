@@ -30,6 +30,7 @@
         android:foreground="@color/abc_search_url_text_normal"
         android:layout_alignBottom="@+id/imageView"
         android:layout_alignEnd="@+id/MainMenuButton1"
+        android:layout_alignRight="@+id/MainMenuButton1"
         />
 
     <Button
@@ -47,7 +48,8 @@
         android:layout_marginTop="30dp"
         android:layout_below="@+id/text"
         android:layout_alignParentEnd="true"
-        />
+        android:layout_alignParentRight="true"
+        android:textColor="@color/text_color" />
 
     <Button
         android:paddingTop="6dp"
@@ -61,22 +63,11 @@
         android:background="#ddb9a826"
         android:layout_below="@+id/MainMenuButton1"
         android:layout_alignStart="@+id/MainMenuButton1"
+        android:layout_alignLeft="@+id/MainMenuButton1"
         android:layout_marginTop="33dp"
         android:layout_alignEnd="@+id/MainMenuButton1"
+        android:layout_alignRight="@+id/MainMenuButton1"
+        android:textColor="@color/text_color"
         />
-    <Button
-        android:paddingTop="6dp"
-        android:layout_width="450dip"
-        android:layout_height="36dip"
-        android:textSize="24sp"
-        android:text="@string/test3_main_menu"
-        android:id="@+id/MainMenuButton3"
-        android:textStyle="bold"
-        android:textAlignment="gravity"
-        android:background="#ddb9a826"
-        android:layout_below="@+id/MainMenuButton2"
-        android:layout_alignStart="@+id/MainMenuButton2"
-        android:layout_marginTop="33dp"
-        android:layout_alignEnd="@+id/MainMenuButton2"
-        />
+
 </RelativeLayout>

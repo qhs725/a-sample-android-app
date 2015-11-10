@@ -1,0 +1,100 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    style="@style/AppTheme"
+    android:background="#d6155d15"
+    android:clickable="false"
+    android:textAlignment="gravity" >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher"
+        android:id="@+id/imageView"
+        />
+
+    <TextView android:text="UTC VAT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/text"
+        android:textSize="50sp"
+        android:textColor="#d3000000"
+        android:typeface="sans"
+        android:visibility="visible"
+        android:textStyle="bold"
+        android:foreground="@color/abc_search_url_text_normal"
+        android:layout_alignBottom="@+id/imageView"
+        android:layout_alignEnd="@+id/guestbtn"
+        android:layout_alignRight="@+id/guestbtn"
+        />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/get_google_token_button"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="21dp"
+        android:text="Sign in with Google"
+        android:textSize="28sp"
+        android:layout_alignStart="@+id/guestbtn"
+        android:layout_alignLeft="@+id/guestbtn"
+        android:layout_alignParentStart="false"
+        android:layout_alignParentEnd="false"
+        android:layout_below="@+id/guestbtn"
+        android:layout_centerInParent="true"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentLeft="true"
+        android:paddingRight="40dp"
+        android:paddingLeft="40dp"
+        />
+    <Button
+        android:paddingTop="6dp"
+        android:layout_width="400dip"
+        android:layout_height="36dip"
+        android:textSize="24sp"
+        android:text="Sign in as Guest"
+        android:id="@+id/guestbtn"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textAlignment="gravity"
+        android:foregroundGravity="center"
+        android:background="#ddb9a826"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/text"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/text_color"
+        android:singleLine="false"
+        android:clickable="true"
+        android:onClick="onClick" />
+
+    <TextView
+        android:id="@+id/status_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/get_google_token_button"
+        android:layout_below="@+id/get_google_token_button"
+        android:layout_marginTop="26dp"
+        android:text="Welcome"
+        android:textColor="@color/text_color_light"/>
+
+    <TextView
+        android:id="@+id/connection_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/get_google_token_button"
+        android:layout_below="@+id/status_msg"
+        android:layout_marginTop="5dp"
+        android:text="Sign in to get started"
+        android:textColor="@color/text_color_light"/>
+
+
+
+</RelativeLayout>

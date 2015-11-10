@@ -17,7 +17,8 @@ LOCAL_CPPFLAGS    := -Werror -std=c++11 #-Wall -g Add before c++11 for c++11 com
 LOCAL_SRC_FILES := jni_native.cpp \
                    sensors.cpp \
                    comm.cpp \
-                   packdat.cpp
+                   packdat.cpp \
+                   sk.cpp
 
 LOCAL_LDLIBS    := -llog -landroid -lGLESv2 -L$(SYSROOT)/usr/lib
 

@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.view.inputmethod.InputMethodManager;
+import android.view.Gravity;
 
 import android.os.Bundle;
 
@@ -30,9 +31,13 @@ import android.os.StrictMode;
 
 import java.util.HashMap;
 
+import java.lang.Object;
 
 
-public class TestingActivity extends AppCompatActivity implements View.OnClickListener {
+
+
+
+public class TestingActivity extends BaseActivity implements View.OnClickListener {
 
     private static final int NO_EXERCISE_SELECTED = 0;
     private static final int ONE_LEG_SQUAT_HOLD = 1;
@@ -63,14 +68,17 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
 
     private Button resetButton;
     private Button startButton;
+    private Button instructionsButton;
 
     private final long DEFAULT_COUNTDOWN_TIME = 5;
     private final long DEFAULT_TESTING_TIME = 20;
 
+    private Toast concurrentToast;
+
 
     //TODO: create break for testing timer w/ jump test, i.e. if balanced prior to max/default time
 
-    private Timer timer = new Timer(this);
+    private Timer timer;
 
 
     @Override
@@ -101,28 +109,17 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
         getUserInfo = (EditText) findViewById(R.id.SessionInfo);
         resetButton = (Button) findViewById(R.id.TestingResetButton);
         startButton = (Button) findViewById(R.id.TestingStartButton);
+        instructionsButton = (Button) findViewById(R.id.TestingInstructionsButton);
         resetButton.setOnClickListener(this);
         startButton.setOnClickListener(this);
+        instructionsButton.setOnClickListener(this);
+        timer = new Timer(this);
 
         timer.setCountDownTime(DEFAULT_COUNTDOWN_TIME);
         timer.setTestingTime(DEFAULT_TESTING_TIME);
         timer.initTimer();
 
     }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_testing, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) { return true; }
-        return super.onOptionsItemSelected(item);
-    }
-
 
     public void onClick(View view) {
         switch (view.getId()) {
@@ -133,7 +130,7 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
                 }
                 if (status != READY) {
                     Toast.makeText(this, "Please enter your NAME, etc...",
-                            Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();
                     resetButton.performClick();
                     break;
                 } else {
@@ -145,7 +142,12 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             }
             case R.id.TestingResetButton: {
-                status = STOPPED;
+                timer.stopTimer();
+                //timer.delete();
+                timerUpdate(0);
+                status = VOID;
+                statusUpdate(status);
+                //Toast.makeText(this, "Reseting..", Toast.LENGTH_LONG).show();
                 //TODO: kill timer if running
                 getUserInfo.setText("");
                 getUserInfo.setOnClickListener(new View.OnClickListener() {
@@ -160,11 +162,18 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
                 );
                 break;
             }
+            case R.id.TestingInstructionsButton: {
+                //TODO: Something to play concurrent Toasts for instructions w/ hash map
+                showToast("ENTER EXERCISE INSTRUCTIONS HERE... \n INSTRUCTION 1..\n " +
+                        "INSTRUCTION 2..\n INSTRUCTION 3..\n INSTRUCTION 4..\n" +
+                        " ...\n INSTRUCTION N");
+                break;
+            }
             case R.id.SessionInfo: {
                 getUserInfo.setText("");
                 getUserInfo.requestFocus();
                 InputMethodManager inputManager = (InputMethodManager)
-                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputManager.showSoftInput(getUserInfo, InputMethodManager.SHOW_IMPLICIT);
                 break;
             }
@@ -209,6 +218,7 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
 
         if(status == STOPPED) {
             Upload();
+            //resetButton.performClick();
         }
     }
     public void timerUpdate(long time) {
@@ -231,7 +241,7 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
         Log.i("TESTING", "Upload method call");
         DialogFragment uploadData = new UploadDataDialogFragment();
         uploadData.show(getFragmentManager(), "uploadData");
-        Log.i("TESTING","Upload method return");
+        Log.i("TESTING", "Upload method return");
         return 0;
     }
 
@@ -277,6 +287,15 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
         return string;
     }
 
+
+
+    void showToast(String message) {
+        if(concurrentToast != null) {
+            concurrentToast.cancel();
+        }
+        concurrentToast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+        concurrentToast.show();
+    }
 }
 
 
