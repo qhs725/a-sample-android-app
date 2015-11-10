@@ -57,6 +57,10 @@ namespace io {
         o = false;
     };
 
+    void io_::id_(const char *_) {
+        io_::io__().__id = _;
+    }
+
     void io_::__init() {
         io_::io__().pss.setHost("192.168.0.100");
         io_::io__().pss.setPort(8080);
@@ -70,6 +74,7 @@ namespace io {
         LOGI("ENCODING %s", e__);
         io_::io__().prsp.setKeepAlive(true);
         io_::io__()._f_ = true;
+        io_::io__().__id = NULL;
     }
 
     void io_::P_() {

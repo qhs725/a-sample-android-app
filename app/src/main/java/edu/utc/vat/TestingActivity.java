@@ -235,8 +235,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         testStatus.setText(statusUpdate);
 
         if(status == STOPPED) {
-            // Upload();
-
             //check if network connection is available
             if(isNetworkAvailable()){
                 createSession(); //Create Session Object and upload
@@ -244,7 +242,9 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
             else{
                 concurrentToast = Toast.makeText(this, "No internet connection found", Toast.LENGTH_LONG);
                 concurrentToast.show();
+                return;
             }
+            Upload();
             //resetButton.performClick();
         }
     }

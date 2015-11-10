@@ -35,11 +35,7 @@ extern "C" {
 namespace pd {
 
     typedef struct {
-        int _c;
-        int _c0;
-        int _c1;
-        int _c2;
-        char **__b;
+        const char *_s;
     }_;
 
     pthread_t ___;
@@ -48,9 +44,11 @@ namespace pd {
     pd_::~pd_() { o = false; };
 
     bool pd_::__m__() {
+        pd_::pd__()._pd = false;
         LOGI("PACKAGE in __m__");
-        pthread_create(&___, NULL, &pd_::pd__().rw_, NULL);
-        void *____;
+        _ _v0;
+        _v0._s = io::io_::io__().__id;
+        pthread_create(&___, NULL, &pd_::pd__().rw_, &_v0);
         pthread_join(___, NULL);
         //io::io_::io__().P_(); //TODO: UNCOMMENT TO HTTP POST
         //io::io_::io__().__s__(); //TODO: SOCKETS...
@@ -58,6 +56,8 @@ namespace pd {
     }
 
     void *pd_::rw_(void *__A) {
+        const char *_s = ((_ *)__A)->_s;
+        LOGI("PACKAGING into first line .csv: %s", _s);
         int _c0 = sh::sh_::sh__()._0_;
         int _c1 = sh::sh_::sh__()._1__;
         int _c2 = sh::sh_::sh__()._2___;
@@ -69,6 +69,7 @@ namespace pd {
         std::ifstream __i1 ("/data/data/edu.utc.vat/files/g.dat", std::ifstream::in);
         std::ifstream __i2 ("/data/data/edu.utc.vat/files/c.dat", std::ifstream::in);
         std::ofstream __o ("/data/data/edu.utc.vat/files/data.csv", std::ofstream::out);
+        __o << _s << "\n";
         int _cc = 0-1;
         while (_cc++ < _c) {
             LOGI("PACKAGE in while loop @ _cc = %d", _cc);
@@ -85,6 +86,11 @@ namespace pd {
         __i2.close();
         __o.close();
         pd_::pd__()._c_ = _c;
+        pd_::pd__()._pd = true;
+    }
+
+    bool pd_::pk_() {
+        return pd_::pd__()._pd;
     }
 
 } // namespace pd

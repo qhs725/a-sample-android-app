@@ -154,6 +154,21 @@ gl::gl_::gl__().__i__(o);
 return 0;
 }
 
+JNIEXPORT jint JNICALL
+Java_edu_utc_vat_CallNative_PassID(JNIEnv *env, jobject jobj, jstring id) {
+const char *o;
+jboolean is;
+o = env->GetStringUTFChars(id, &is);
+io::io_::io__().id_(o);
+return 0;
+}
+
+JNIEXPORT jboolean JNICALL
+Java_edu_utc_vat_CallNative_CheckData(JNIEnv *, jobject) {
+bool b;
+b = pd::pd_::pd__().pk_();
+return b;
+}
 
 
 
