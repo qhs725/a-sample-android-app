@@ -33,7 +33,7 @@ import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.Properties;
 
-import edu.utc.vat.BlueListApplication;
+import edu.utc.vat.BlueMixApplication;
 import edu.utc.vat.LoginActivity;
 import edu.utc.vat.MainActivity;
 import edu.utc.vat.UserAccount;
@@ -93,7 +93,7 @@ public class GoogleTokenManager extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		try {
-			BlueListApplication blApplication = (BlueListApplication) getApplication();
+			BlueMixApplication blApplication = (BlueMixApplication) getApplication();
 			Properties appSettings = blApplication.getApplicationSettings();
 			if(appSettings == null) throw new Exception();
 
