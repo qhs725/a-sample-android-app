@@ -217,7 +217,7 @@ public final class BlueMixApplication extends Application {
             IBMData.initializeService();
 
             // register the Session Specialization
-            Session.registerSpecialization(Session.class);
+          //  Session.registerSpecialization(Session.class);
 
             // initialize and retrieve an instance of the IBM CloudCode service
             IBMCloudCode.initializeService();

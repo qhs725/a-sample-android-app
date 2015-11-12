@@ -67,7 +67,7 @@ task ndkBuild(type: Exec) {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     // compile 'com.google.http-client:google-http-client-gson:1.20.0'
     //compile 'com.google.http-client:google-http-client:1.20.0'
     compile('com.google.api-client:google-api-client:1.20.0') {
@@ -88,4 +88,5 @@ dependencies {
     compile 'com.android.support:design:23.1.0'
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.android.support:multidex:1.0.1'
+    compile 'com.github.nkzawa:socket.io-client:0.6.0'
 }

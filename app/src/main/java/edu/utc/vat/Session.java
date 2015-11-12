@@ -1,28 +1,12 @@
-/*
- * Copyright 2014 IBM Corp. All Rights Reserved
- * 
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package edu.utc.vat;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.ibm.mobile.services.data.IBMDataObject;
-import com.ibm.mobile.services.data.IBMDataObjectSpecialization;
+import com.github.nkzawa.socketio.client.IO;
 
-import org.apache.http.message.BasicLineFormatter;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,61 +14,51 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-@IBMDataObjectSpecialization("Session")
-public class Session extends IBMDataObject {
-    public static final String CLASS_NAME = "Session";
+
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
+
+
+/**
+ * Created by Jaysp656 on 11/11/2015.
+ */
+public class Session {
+
+    public static final String LOG_NAME = "Session";
     private static final String NAME = "name";
     private static final String USERID = "userId";
-    private static final String LOGINSESSIONID = "loginSessionId";
+    private static final String SESSIONID = "sessionId";
     private static final String USERINPUT = "userInput";
-    private static  Context context = BlueMixApplication.getAppContext();
+    private static Context context = BlueMixApplication.getAppContext();
     private static final String EXT = "txt";
-    /**
-     * gets the name of the session.
-     * @return String sessionName
-     */
-    public String getName() {
-        return (String) getObject(NAME);
+    private static JSONObject session_json;
+
+    //private static final String SERVER_IP ="http://192.168.0.105:3000/utc-vat/v1/apps/0a27a50e-8c7f-487d-9135-5b360732abbf/upload";
+    private static final String SERVER_IP ="http://utc-vat.mybluemix.net/utc-vat/v1/apps/0a27a50e-8c7f-487d-9135-5b360732abbf/upload";
+    private static  Socket mSocket = null;
+
+
+    public static void sessionUpload(JSONObject sessJSON){//Send Session to NodeServer
+
+
+
+        try {
+            mSocket = IO.socket(SERVER_IP);
+            mSocket.connect();
+
+
+            mSocket.emit("data", sessJSON);
+        } catch (URISyntaxException e) {}
+
+
     }
 
-    /**
-     * sets the name of a list session, as well as calls setCreationTime()
-     * @param String sessionName
-     */
-    public void setName(String sessionName) {
-        setObject(NAME, (sessionName != null) ? sessionName : "");
-    }
 
-    /**
-     * gets the userId associated with the session.
-     * @return String userId
-     */
-    public String getUserId() {
-        return (String) getObject(USERID);
-    }
-
-     /**
-     * sets the email address of the user who is maintain list sessions
-     * @param String userId
-     */
-    public void setUserId(String userId) {
-        setObject(USERID, (userId != null) ? userId : "");
-    }
-
-    /**
-     * when calling toString() for an session, we'd really only want the name.
-     * @return String thesessionName
-     */
-    public String toString() {
-        String thesessionName = "";
-        thesessionName = getName();
-        return thesessionName;
-    }
-
-    public void getSensorData(Session session) {
+    public static void getSensorData() {
 
         ArrayList<String> dataFileNames = new ArrayList<String>();
         int numColumns = 0;
@@ -112,8 +86,12 @@ public class Session extends IBMDataObject {
 
         //Data files should be in dataFileNames[] at this point
 
+        session_json = new JSONObject(); //Single object upload for multiple files
+
         //Go through each data file, create object keys, add data values
         for(int i=0; i < dataFileNames.size();i++) {
+
+          //  session_json = new JSONObject(); //INDIVIDUAL FILE
 
             try {
                 //Get current file in dataFileNames
@@ -123,7 +101,7 @@ public class Session extends IBMDataObject {
 
                 //check if file has data in it
                 if (file != null) {
-                    Log.i(CLASS_NAME, "Data file is not null");
+                    Log.i(LOG_NAME, "Data file is not null");
                     InputStreamReader stream = new InputStreamReader(file);
                     BufferedReader reader = new BufferedReader(stream);
                     String lineRow = "";
@@ -152,10 +130,10 @@ public class Session extends IBMDataObject {
                                     RowData[y] = "null";
                                 }
                                 group.get(y).add(RowData[y]);
-                                Log.i(CLASS_NAME, "Added Data: " + RowData[y] + " to position " + y);
+                                Log.i(LOG_NAME, "Added Data: " + RowData[y] + " to position " + y);
                             }
                             catch(Exception e){
-                                Log.e(CLASS_NAME, "ERROR: " + e.getMessage());
+                                Log.e(LOG_NAME, "ERROR: " + e.getMessage());
                             }
                         }
                     }
@@ -163,7 +141,7 @@ public class Session extends IBMDataObject {
                     //Added each column to the Session object
                     for(int t = 0; t < numColumns ; t++){
                         List data =  group.get(t);
-                        session.setObject(keyNames[t].toUpperCase(), (data != null) ? data : "");
+                        session_json.put(keyNames[t].toUpperCase(), (data != null) ? data : "");
                     }
                     group.clear();
                 }
@@ -171,20 +149,29 @@ public class Session extends IBMDataObject {
                 Log.e("login activity", "File not found: " + e.toString());
             } catch (IOException e) {
                 Log.e("login activity", "Can not read file: " + e.toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+
+            //Call to upload file (INDIVIDUAL)
+           // sessionUpload(session_json);
         }
+
+        //Call to Upload all field together
+        sessionUpload(session_json);
 
         if(file != null) {
             try {
-            file.close(); //close file once done
-        } catch (FileNotFoundException e) {
-            Log.e("login activity", "File not found: " + e.toString());
-        } catch (IOException e) {
-            Log.e("login activity", "Can not read file: " + e.toString());
-        }
+                file.close(); //close file once done
+            } catch (FileNotFoundException e) {
+                Log.e("login activity", "File not found: " + e.toString());
+            } catch (IOException e) {
+                Log.e("login activity", "Can not read file: " + e.toString());
+            }
         }
 
 
     }
+
 
 }

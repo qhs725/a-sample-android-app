@@ -27,6 +27,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
+import java.net.URISyntaxException;
+import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -62,7 +65,6 @@ public class IBMDataTest extends BaseActivity {
         initServices();
 
 
-
         submitbtn = (Button) findViewById(R.id.submit);
         sessionToAdd = (EditText) findViewById(R.id.sessionToAdd);
 
@@ -73,7 +75,6 @@ public class IBMDataTest extends BaseActivity {
                 createSession(view); //Call to create session object
             }
         });
-
 
 
         // hide the keyboard until needed
@@ -88,6 +89,11 @@ public class IBMDataTest extends BaseActivity {
                         .setAction("Action", null).show();
             }
         });
+
+
+        Session.getSensorData();
+
+
     }
 
     /**
@@ -155,12 +161,12 @@ public class IBMDataTest extends BaseActivity {
 
         Session session = new Session();
 
-        session.getSensorData(session);
+       // session.getSensorData(session);
         if (!toAdd.equals("")) {
             Log.i(CLASS_NAME, "Session : value from EditView is not null");
-            session.setName(toAdd);
+       //     session.setName(toAdd);
 
-            session.setUserId(uUserID);
+          //  session_1.setUserId(uUserID);
             /**
              * IBMObjectResult is used to handle the response from the server after
              * either creating or saving an object.
@@ -168,7 +174,8 @@ public class IBMDataTest extends BaseActivity {
              * onResult is called if the object was successfully saved
              * onError is called if an error occurred saving the object
              */
-            session.save().continueWith(new Continuation<IBMDataObject, Void>() {
+           /*
+            session_1.save().continueWith(new Continuation<IBMDataObject, Void>() {
                 @Override
                 public Void then(Task<IBMDataObject> task) throws Exception {
                     // Log error message, if the save task fail.
@@ -182,13 +189,18 @@ public class IBMDataTest extends BaseActivity {
                     if (!isFinishing()) {
                         updateOtherDevices();
                     }
+
                     return null;
                 }
             }, Task.UI_THREAD_EXECUTOR);
 
+
+ */
             //set text field back to empty after session added
             sessionToAdd.setText("");
         }
+
+
     }
 
 

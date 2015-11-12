@@ -333,46 +333,8 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     }
 
     public void createSession() {
+        //session.getSensorData();
 
-        String toAdd = getUserInfo.getText().toString().trim(); //User Input Info (MAY BE CHANGED)
-        Log.i(CLASS_NAME, "Session : " + toAdd + " has been received from EditView");
-
-        Session session = new Session();
-
-        session.getSensorData(session);
-        if (!toAdd.equals("")) {
-            Log.i(CLASS_NAME, "Session : value from EditView is not null");
-            session.setName(toAdd);
-
-            session.setUserId(UserAccount.getuUserID());
-            /**
-             * IBMObjectResult is used to handle the response from the server after
-             * either creating or saving an object.
-             *
-             * onResult is called if the object was successfully saved
-             * onError is called if an error occurred saving the object
-             */
-            session.save().continueWith(new Continuation<IBMDataObject, Void>() {
-                @Override
-                public Void then(Task<IBMDataObject> task) throws Exception {
-                    // Log error message, if the save task fail.
-                    if (task.isFaulted()) {
-                        Log.e(CLASS_NAME, "Exception : " + task.getError().getMessage());
-                        return null;
-                    }
-
-                    Log.i(CLASS_NAME, "Successfully saved a new session!");
-                    // If the result succeeds, load the list
-                    if (!isFinishing()) {
-                       // updateOtherDevices(); //not used
-                    }
-                    return null;
-                }
-            }, Task.UI_THREAD_EXECUTOR);
-
-            //set text field back to empty after session added
-          //  sessionToAdd.setText("");
-        }
     }
 
     public  void initServices(){
@@ -432,7 +394,8 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                                     if(isDataFiles()){
                                         //***
                                         //TODO: add call to recursive-ish session object-creating function based on files present in directory
-                                        //TODO: that function should read in values and call createSession for each one. createSession() may need to be edited for this or alternate version created
+                                        //TODO: Create method call to Session class to check for files, add data from files present to json objects, send json obect to node server
+                                        // TODO: Call methoed here during bluemix initialization and after data collection
                                         //***
                                     }
 
