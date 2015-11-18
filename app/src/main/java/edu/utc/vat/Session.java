@@ -55,10 +55,14 @@ public class Session {
 
 
     public static void getSensorData(){
+        //TODO: Create Asynck task/service for uploading files and to to periodically check for internet and to upload as soon as possible. Possibly add in WIFI only option in settings.
+
+        //TODO: Change code to see each file as a unique exercise to upload. Line 1 will contain data provided from user. Line 2 will contain mapping for the following lines. The following lines will contain sensor data in the order shown by line 2.
 
         if(!BaseActivity.getisNetwork()){
             //Display Toast to warn user there is no detected internet connection
             Toast.makeText(BlueMixApplication.getAppContext(), "No internet connection found", Toast.LENGTH_LONG).show();
+
             return; //return if no internet connection
         }
 

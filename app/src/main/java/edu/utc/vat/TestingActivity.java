@@ -44,6 +44,7 @@ import bolts.Continuation;
 import bolts.Task;
 
 
+//TODO: Add fragments for displaying timer and Exercise instructions.
 
 
 public class TestingActivity extends BaseActivity implements View.OnClickListener {

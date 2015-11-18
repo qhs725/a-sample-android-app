@@ -35,7 +35,7 @@ import bolts.Task;
 import edu.utc.vat.util.GoogleTokenManager;
 import edu.utc.vat.flanker.FlankerActivity;
 
-
+//TODO: Exercise list needs to be generated from list that can easily be changed from outside the app by. Possibly unique list depending on person using app.
 
 public class MainActivity extends BaseActivity {
 
