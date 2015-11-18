@@ -72,7 +72,7 @@ public class IBMDataTest extends BaseActivity {
             @Override
             public void onClick(View view) {
                 sessionName = sessionToAdd.getText().toString(); //Get name of session.
-                createSession(view); //Call to create session object
+               // createSession(view); //Call to create session object
             }
         });
 
@@ -90,118 +90,12 @@ public class IBMDataTest extends BaseActivity {
             }
         });
 
-
-        Session.getSensorData();
-
-
-    }
-
-    /**
-     * Send a notification to all devices whenever the Sessions are modified (create, update, or delete)
-     */
-
-    private void updateOtherDevices() {
-        JSONObject jsonObj = new JSONObject();
-        try {
-            jsonObj.put("key1", "value1");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        // Call the node.js application hosted in the IBM Cloud Code service
-        // with a POST call, passing in a non-essential JSONObject
-        // The URI is relative to, appended to, the BlueMix context root
-        myCloudCodeService.post("notifyOtherDevices", jsonObj).continueWith(new Continuation<IBMHttpResponse, Void>() {
-
-            @Override
-            public Void then(Task<IBMHttpResponse> task) throws Exception {
-                int responseCode;
-                if (task.isFaulted()) {
-                    Log.e(CLASS_NAME, "Exception : " + task.getError().getMessage());
-                    return null;
-                }
-
-                responseCode = task.getResult().getHttpResponseCode();
-                InputStream is = task.getResult().getInputStream();
-                try {
-                    BufferedReader in = new BufferedReader(new InputStreamReader(is));
-                    String responseString = "";
-                    String myString = "";
-                    while ((myString = in.readLine()) != null)
-                        responseString += myString;
-
-                    in.close();
-                    Log.i(CLASS_NAME, "Response Body: " + responseString);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                Log.i(CLASS_NAME, "Response Status from notifyOtherDevices: " + responseCode);
-                if (responseCode == 401) {
-                    Intent intent = new Intent(context, LoginActivity.class);
-                    context.startActivity(intent);
-                    IBMBluemix.clearSecurityToken();
-                    finish();
-                }
-                return null;
-            }
-
-        });
-    }
-
-    /**
-     * called on done and will add session to list.
-     *
-     * @param  v edittext View to get session from.
-     * @throws IBMDataException
-     */
-    public void createSession(View  v) {
-
-        String toAdd = sessionName; //Test session (name only from EditView)
-        Log.i(CLASS_NAME, "Session : " + toAdd + " has been received from EditView");
-
-        Session session = new Session();
-
-       // session.getSensorData(session);
-        if (!toAdd.equals("")) {
-            Log.i(CLASS_NAME, "Session : value from EditView is not null");
-       //     session.setName(toAdd);
-
-          //  session_1.setUserId(uUserID);
-            /**
-             * IBMObjectResult is used to handle the response from the server after
-             * either creating or saving an object.
-             *
-             * onResult is called if the object was successfully saved
-             * onError is called if an error occurred saving the object
-             */
-           /*
-            session_1.save().continueWith(new Continuation<IBMDataObject, Void>() {
-                @Override
-                public Void then(Task<IBMDataObject> task) throws Exception {
-                    // Log error message, if the save task fail.
-                    if (task.isFaulted()) {
-                        Log.e(CLASS_NAME, "Exception : " + task.getError().getMessage());
-                        return null;
-                    }
-
-                    Log.i(CLASS_NAME, "Successfully saved a new session!");
-                    // If the result succeeds, load the list
-                    if (!isFinishing()) {
-                        updateOtherDevices();
-                    }
-
-                    return null;
-                }
-            }, Task.UI_THREAD_EXECUTOR);
-
-
- */
-            //set text field back to empty after session added
-            sessionToAdd.setText("");
-        }
-
+            //Call to uppload session data files
+            Session.getSensorData();
 
     }
+
+
 
 
     public  void initServices(){

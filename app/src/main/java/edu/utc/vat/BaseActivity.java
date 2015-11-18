@@ -3,6 +3,8 @@ package edu.utc.vat;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -46,6 +48,7 @@ public class BaseActivity extends AppCompatActivity {
     public String consumerID = "utc-vat-app";
     private String uUserID = null;
     private Context context;
+    private static boolean isNetwork;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -99,6 +102,8 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        isNetworkAvailable();
+
     }
     //Check if session data files exist
     public Boolean isDataFiles() {
@@ -126,6 +131,17 @@ public class BaseActivity extends AppCompatActivity {
         return false; //false if no files found that matches extension
     }
 
+    //Check if network is available
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        isNetwork = activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        return isNetwork;
+    }
+    public static boolean getisNetwork() {
+        return BaseActivity.isNetwork;
+    }
 
 }
 

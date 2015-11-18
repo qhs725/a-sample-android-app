@@ -325,15 +325,11 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     }
 
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
+
 
     public void createSession() {
-        //session.getSensorData();
+        //Call to upload session data files if any exist
+        Session.getSensorData();
 
     }
 
@@ -395,7 +391,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                                         //***
                                         //TODO: add call to recursive-ish session object-creating function based on files present in directory
                                         //TODO: Create method call to Session class to check for files, add data from files present to json objects, send json obect to node server
-                                        // TODO: Call methoed here during bluemix initialization and after data collection
+                                        // TODO: Call method here during bluemix initialization and after data collection
                                         //***
                                     }
 
@@ -422,7 +418,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
             finish();
         }
     }
-
 }
 
 

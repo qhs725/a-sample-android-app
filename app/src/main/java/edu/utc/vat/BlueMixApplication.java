@@ -58,7 +58,6 @@ public final class BlueMixApplication extends Application {
     public IBMCloudCode myCloudCodeService;
 
 	private IBMPushNotificationListener notificationListener = null;
-    private List<Session> sessionList;
 
 	public BlueMixApplication() {
 		registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
@@ -166,7 +165,6 @@ public final class BlueMixApplication extends Application {
 		super.onCreate();
         BlueMixApplication.context = getApplicationContext();
 
-	    sessionList = new ArrayList<Session>();
 		// Read from properties file
 		appProperties = new Properties();
 		Context context = getApplicationContext();
@@ -195,13 +193,6 @@ public final class BlueMixApplication extends Application {
     }
 
 
-    /**
-     * returns the sessionsList, an array of Session objects.
-     * @return sessionList
-     */
-    public List<Session> getSessionList() {
-        return sessionList;
-    }
 
 	public Properties getApplicationSettings() {
 		return appProperties;
@@ -214,10 +205,7 @@ public final class BlueMixApplication extends Application {
         if(!bluemixServicesInitialized) {
             Log.i(CLASS_NAME, "IBM Bluemix Mobile Cloud Service SDKs have not been previously initialized...initializing.");
             // initialize the IBM Data Service
-            IBMData.initializeService();
-
-            // register the Session Specialization
-          //  Session.registerSpecialization(Session.class);
+           // IBMData.initializeService();
 
             // initialize and retrieve an instance of the IBM CloudCode service
             IBMCloudCode.initializeService();
