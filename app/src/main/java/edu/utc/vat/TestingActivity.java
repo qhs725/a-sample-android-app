@@ -149,7 +149,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                 }
                 if (status != READY) {
                     Toast.makeText(this, "Please enter your NAME, etc...",
-                        Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_SHORT).show();
                     resetButton.performClick();
                     break;
                 } else {
@@ -170,14 +170,14 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                 //TODO: kill timer if running
                 getUserInfo.setText("");
                 getUserInfo.setOnClickListener(new View.OnClickListener() {
-                       public void onClick(View view) {
-                           getUserInfo.requestFocus();
-                           InputMethodManager inputManager = (InputMethodManager)
-                                   getSystemService(Context.INPUT_METHOD_SERVICE);
-                           inputManager.showSoftInput(getUserInfo,
-                                   InputMethodManager.SHOW_IMPLICIT);
-                       }
-                   }
+                                                   public void onClick(View view) {
+                                                       getUserInfo.requestFocus();
+                                                       InputMethodManager inputManager = (InputMethodManager)
+                                                               getSystemService(Context.INPUT_METHOD_SERVICE);
+                                                       inputManager.showSoftInput(getUserInfo,
+                                                               InputMethodManager.SHOW_IMPLICIT);
+                                                   }
+                                               }
                 );
                 break;
             }
@@ -192,7 +192,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                 getUserInfo.setText("");
                 getUserInfo.requestFocus();
                 InputMethodManager inputManager = (InputMethodManager)
-                    getSystemService(Context.INPUT_METHOD_SERVICE);
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputManager.showSoftInput(getUserInfo, InputMethodManager.SHOW_IMPLICIT);
                 break;
             }
@@ -228,19 +228,17 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
     /**
      * Methods for updating UI with time and status from timer
-     *
      */
     public void statusUpdate(int status) {
         Log.i("update", "statusUpdate");
-        String statusUpdate  = statusList.get(status);
+        String statusUpdate = statusList.get(status);
         testStatus.setText(statusUpdate);
 
-        if(status == STOPPED) {
+        if (status == STOPPED) {
             //check if network connection is available
-            if(isNetworkAvailable()){
+            if (isNetworkAvailable()) {
                 createSession(); //Create Session Object and upload
-            }
-            else{
+            } else {
                 concurrentToast = Toast.makeText(this, "No internet connection found", Toast.LENGTH_LONG);
                 concurrentToast.show();
                 return;
@@ -249,11 +247,12 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
             //resetButton.performClick();
         }
     }
+
     public void timerUpdate(long time) {
-        Log.i("update","timerUpdate");
-        time = time/1000;
-        timerTime = (int)time;
-        if (time <= 60);
+        Log.i("update", "timerUpdate");
+        time = time / 1000;
+        timerTime = (int) time;
+        if (time <= 60) ;
         else {
             //TODO: add support for times > 60s
         }
@@ -277,11 +276,12 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     /**
      * Fill hash maps with strings for view corresponding to constant ints
      */
-    public void completeExerciseList () {
+    public void completeExerciseList() {
         exerciseList.put(1, "One Leg Squat Hold Test");
         exerciseList.put(2, "One Leg Jump Balance Test");
     }
-    public void completeStatusList () {
+
+    public void completeStatusList() {
         statusList.put(-1, "Enter NAME, etc...");
         statusList.put(3, "Press START to begin...");
         statusList.put(2, "Countdown to test...");
@@ -293,7 +293,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
     /**
      * Intent creation also passes exercise
-     * */
+     */
     public static Intent createIntent(Context context, int e) {
         exercise = e;
         return new Intent(context, TestingActivity.class);
@@ -316,16 +316,13 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     }
 
 
-
     void showToast(String message) {
-        if(concurrentToast != null) {
+        if (concurrentToast != null) {
             concurrentToast.cancel();
         }
         concurrentToast = Toast.makeText(this, message, Toast.LENGTH_LONG);
         concurrentToast.show();
     }
-
-
 
 
     public void createSession() {
@@ -334,7 +331,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
     }
 
-    public  void initServices(){
+    public void initServices() {
         if (UserAccount.getIdToken() != null) {
 
             // set ID TOKEN so that all subsequent Service calls
@@ -380,7 +377,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                                     Log.i(CLASS_NAME, "Done refreshing Session list.");
 
                                     // retrieve instance of the IBM Push service
-                                    if(push == null) {
+                                    if (push == null) {
                                         push = IBMPush.getService();
                                     }
 
@@ -388,7 +385,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                                     // register the device with the IBM Push service
 
                                     //Check if there are stored session data files and upload them if there are
-                                    if(isDataFiles()){
+                                    if (isDataFiles()) {
                                         //***
                                         //TODO: add call to recursive-ish session object-creating function based on files present in directory
                                         //TODO: Create method call to Session class to check for files, add data from files present to json objects, send json obect to node server

@@ -45,14 +45,25 @@ public class Timer {
      * later, if we want to run tests for an arbitrary time,
      * to be set by the user, we can do so
      */
-    public void setCountDownTime(long time) { if (time >= 1000) time = time/1000;
-        countDownTime = time; }
-    public void setCountDownTime(int time) { if (time >= 1000) time = time/1000;
-        countDownTime = (long)time; }
-    public void setTestingTime(long time) { if (time >= 1000) time = time/1000;
-        testingTime = time; }
-    public void setTestingTime(int time) { if (time >= 1000) time = time/1000;
-        testingTime = (long)time; }
+    public void setCountDownTime(long time) {
+        if (time >= 1000) time = time / 1000;
+        countDownTime = time;
+    }
+
+    public void setCountDownTime(int time) {
+        if (time >= 1000) time = time / 1000;
+        countDownTime = (long) time;
+    }
+
+    public void setTestingTime(long time) {
+        if (time >= 1000) time = time / 1000;
+        testingTime = time;
+    }
+
+    public void setTestingTime(int time) {
+        if (time >= 1000) time = time / 1000;
+        testingTime = (long) time;
+    }
 
 
     public Timer(Context context) {
@@ -65,7 +76,7 @@ public class Timer {
     }
 
     //TODO: pass to native
-    public void passUserInfo (String info) {
+    public void passUserInfo(String info) {
     }
 
     public void stopTimer() {
@@ -87,8 +98,10 @@ public class Timer {
         //TODO: if files are off, cut files on or read previous files first?
         CallNative.StartSensors();
 
-        if (state != STOPPED) {;}
-            //TODO: reset/continue?
+        if (state != STOPPED) {
+            ;
+        }
+        //TODO: reset/continue?
 
         if (countDownTime > 0)
             countDownTimeConvert = countDownTime * 1000 + 100;
@@ -104,10 +117,10 @@ public class Timer {
                     ((TestingActivity) appContext).statusUpdate(state);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.e("timer","running countdown error");
+                    Log.e("timer", "running countdown error");
                 }
 
-                Log.i("timer","running countdown");
+                Log.i("timer", "running countdown");
 
                 try {
                     Ringtone playSound = RingtoneManager.getRingtone(appContext, sound);
@@ -134,8 +147,10 @@ public class Timer {
 
         CallNative.WriteOn();
 
-        if (state != TESTING) {;}
-            //TODO: reset/continue?
+        if (state != TESTING) {
+            ;
+        }
+        //TODO: reset/continue?
 
         if (testingTime > 0)
             testingTimeConvert = testingTime * 1000 + 100;
@@ -144,8 +159,8 @@ public class Timer {
 
             @Override
             public void onTick(long timeRemaining) {
-                ((TestingActivity)appContext).timerUpdate(timeRemaining);
-                ((TestingActivity)appContext).statusUpdate(state);
+                ((TestingActivity) appContext).timerUpdate(timeRemaining);
+                ((TestingActivity) appContext).statusUpdate(state);
             }
 
             @Override
@@ -160,8 +175,8 @@ public class Timer {
 
                 state = STOPPED;
 
-                ((TestingActivity)appContext).timerUpdate(0);
-                ((TestingActivity)appContext).statusUpdate(state);
+                ((TestingActivity) appContext).timerUpdate(0);
+                ((TestingActivity) appContext).statusUpdate(state);
 
                 CallNative.WriteOff();
                 CallNative.StopSensors();

@@ -35,18 +35,19 @@ public class Session {
     private static final String EXT = "txt";
     private static JSONObject session_json;
 
-   // private static final String SERVER_IP ="http://192.168.0.105:3000/upload";
-    private static final String SERVER_IP ="http://utc-vat.mybluemix.net/upload";
-    private static  Socket mSocket = null;
+    // private static final String SERVER_IP ="http://192.168.0.105:3000/upload";
+    private static final String SERVER_IP = "http://utc-vat.mybluemix.net/upload";
+    private static Socket mSocket = null;
 
 
-    public static void sessionUpload(JSONObject sessJSON){//Send Session to NodeServer
+    public static void sessionUpload(JSONObject sessJSON) {//Send Session to NodeServer
 
         //Attempt to connect to server
         try {
             mSocket = IO.socket(SERVER_IP);
             mSocket.connect();
-        } catch (URISyntaxException e) {}
+        } catch (URISyntaxException e) {
+        }
 
 
         //Send Session json object
@@ -54,12 +55,12 @@ public class Session {
     }
 
 
-    public static void getSensorData(){
+    public static void getSensorData() {
         //TODO: Create Asynck task/service for uploading files and to to periodically check for internet and to upload as soon as possible. Possibly add in WIFI only option in settings.
 
         //TODO: Change code to see each file as a unique exercise to upload. Line 1 will contain data provided from user. Line 2 will contain mapping for the following lines. The following lines will contain sensor data in the order shown by line 2.
 
-        if(!BaseActivity.getisNetwork()){
+        if (!BaseActivity.getisNetwork()) {
             //Display Toast to warn user there is no detected internet connection
             Toast.makeText(BlueMixApplication.getAppContext(), "No internet connection found", Toast.LENGTH_LONG).show();
 
@@ -68,6 +69,7 @@ public class Session {
 
         ArrayList<String> dataFileNames = new ArrayList<String>();
         int numColumns = 0;
+        String[] userInfo = null;
         InputStream file = null;
 
         //Get files directory and get names of all files within
@@ -111,13 +113,22 @@ public class Session {
                     BufferedReader reader = new BufferedReader(stream);
                     String lineRow = "";
 
-                    //Get first line to determine key names to add to current Session object
+                    //Get first line to retrieve user/session based info to add to the Session Object.
+                    if ((lineRow = reader.readLine()) != null) {
+                        userInfo = lineRow.split(","); // format of first line should be '{userId},{sessionId},{userInput}'
+
+                        //Add info from first line to Session Object
+                        session_json.put("USERID", (userInfo[0] != null) ? userInfo[0] : "null");
+                        session_json.put("SESSIONID", (userInfo[1] != null) ? userInfo[1] : "null");
+                        session_json.put("USERINPUT", (userInfo[2] != null) ? userInfo[2] : "null");
+                    }
+                    //Get second line to determine key names to sort data before adding it to the Session Object.
                     if ((lineRow = reader.readLine()) != null) {
                         keyNames = lineRow.split(",");
                         numColumns = keyNames.length;
                     }
 
-                    //Create list of lists to dynamically load file data
+                    //Create list of lists to dynamically load file's sensor data
                     List<List<String>> group = new ArrayList<List<String>>();
                     for (int u = 0; u < numColumns; u++) {
                         List<String> tempList = new ArrayList<String>();
@@ -147,7 +158,7 @@ public class Session {
                         List data = group.get(t);
                         session_json.put(keyNames[t].toUpperCase(), (data != null) ? data : "");
                     }
-                    group.clear();
+                    group.clear(); //reset for next file
                 }
             } catch (FileNotFoundException e) {
                 Log.e("login activity", "File not found: " + e.toString());
@@ -158,11 +169,11 @@ public class Session {
             }
 
             //Call to upload file (INDIVIDUAL)
-            // sessionUpload(session_json);
+            sessionUpload(session_json);
         }
 
         //Call to Upload all file fields together
-        sessionUpload(session_json);
+        //sessionUpload(session_json);
 
         //mSocket.disconnect();
         if (file != null) {
