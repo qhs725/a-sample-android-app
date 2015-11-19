@@ -39,6 +39,7 @@ import com.ibm.mobile.services.push.IBMPush;
 import java.util.HashMap;
 
 import java.lang.Object;
+import java.util.UUID;
 
 import bolts.Continuation;
 import bolts.Task;
@@ -88,6 +89,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     public BlueMixApplication blApplication = null;
     private static final String CLASS_NAME = "LoginActivity";
     private String uUserID = null;
+    private String sessionID = null;
 
 
     //TODO: create break for testing timer w/ jump test, i.e. if balanced prior to max/default time
@@ -137,6 +139,9 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         blApplication = (BlueMixApplication) getApplication();
         initServices(); //Initialize Bluemix connection
 
+        UUID uuid = UUID.randomUUID();
+        sessionID = uuid.toString();
+
     }
 
     public void onClick(View view) {
@@ -155,6 +160,10 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                 } else {
                     userInfo = getUserInfo.getText().toString().trim();
                     Toast.makeText(this, userInfo, Toast.LENGTH_SHORT).show();
+
+                    //Pass UserID, SessionID, and User Input to C++
+                    CallNative.PassID(uUserID + ","+ sessionID+ "," + userInfo); //TODO: Handle commas and quotations in userInfo
+
                     timer.countDown(); //TODO: RETURN BOOLEAN, TRUE --> UPLOAD PROMPT?
                 }
                 status = READY;
