@@ -32,6 +32,7 @@ public class dataUploadService extends IntentService {
     private static Context context = BlueMixApplication.getAppContext();
     private static final String EXT = "txt";
     private static JSONObject session_json;
+    private static int num = 1;
 
     // private static final String SERVER_IP ="http://192.168.0.105:3000/upload";
     private static final String SERVER_IP = "http://utc-vat.mybluemix.net/upload";
@@ -56,6 +57,13 @@ public class dataUploadService extends IntentService {
         // Gets data from the incoming Intent
         String dataString = workIntent.getDataString();
         // Do work here, based on the contents of dataString
+
+        if(num  != 0 ) {
+            getSensorData();
+          //  num = 0;
+            Log.i("UPLOAD", "NUM: " + num);
+
+        }
 
     }
 
@@ -87,9 +95,9 @@ public class dataUploadService extends IntentService {
             return; //return if no internet connection
         }
         //Check if C++ is still writing to file
-        if(!CallNative.CheckData()){
+        if(CallNative.CheckData() == false){
             Toast.makeText(BlueMixApplication.getAppContext(), "Unable to upload, still writing to file", Toast.LENGTH_LONG).show();
-            return; //quit is a file is being written to
+           return; //quit is a file is being written to
         }
 
         ArrayList<String> dataFileNames = new ArrayList<String>();

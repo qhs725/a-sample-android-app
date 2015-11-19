@@ -245,7 +245,8 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         if (status == STOPPED) {
             //check if network connection is available
             if (isNetworkAvailable()) {
-                Session.getSensorData(); //Create Session Object and upload
+                // Session.getSensorData(); //Create Session Object and upload
+                this.startService(new Intent(this, dataUploadService.class)); //Start background service to upload
             } else {
                 concurrentToast = Toast.makeText(this, "No internet connection found", Toast.LENGTH_LONG);
                 concurrentToast.show();
