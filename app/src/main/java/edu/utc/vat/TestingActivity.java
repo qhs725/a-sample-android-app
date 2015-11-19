@@ -161,9 +161,8 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                     userInfo = getUserInfo.getText().toString().trim();
                     Toast.makeText(this, userInfo, Toast.LENGTH_SHORT).show();
 
-                    //Pass UserID, SessionID, and User Input to C++
+                    //Pass UserID, SessionID, and User Input to C++ then start timer
                     CallNative.PassID(uUserID + ","+ sessionID+ "," + userInfo); //TODO: Handle commas and quotations in userInfo
-
                     timer.countDown(); //TODO: RETURN BOOLEAN, TRUE --> UPLOAD PROMPT?
                 }
                 status = READY;
@@ -246,7 +245,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         if (status == STOPPED) {
             //check if network connection is available
             if (isNetworkAvailable()) {
-                createSession(); //Create Session Object and upload
+                Session.getSensorData(); //Create Session Object and upload
             } else {
                 concurrentToast = Toast.makeText(this, "No internet connection found", Toast.LENGTH_LONG);
                 concurrentToast.show();
@@ -333,12 +332,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         concurrentToast.show();
     }
 
-
-    public void createSession() {
-        //Call to upload session data files if any exist
-        Session.getSensorData();
-
-    }
 
     public void initServices() {
         if (UserAccount.getIdToken() != null) {

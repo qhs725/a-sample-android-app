@@ -1,10 +1,13 @@
 package edu.utc.vat;
 
+import android.app.IntentService;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,12 +22,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import com.github.nkzawa.socketio.client.IO;
-import com.github.nkzawa.socketio.client.Socket;
-
-
-public class Session {
+public class dataUploadService extends IntentService {
 
     public static final String LOG_NAME = "Session";
     private static final String NAME = "name";
@@ -40,6 +38,28 @@ public class Session {
     private static Socket mSocket = null;
 
 
+    //default constructor
+    public dataUploadService() {
+        super("dataUploadService");
+    }
+    /**
+     * Creates an IntentService.  Invoked by your subclass's constructor.
+     *
+     * @param name Used to name the worker thread, important only for debugging.
+     */
+    public dataUploadService(String name) {
+        super(name);
+    }
+
+    @Override
+    protected void onHandleIntent(Intent workIntent) {
+        // Gets data from the incoming Intent
+        String dataString = workIntent.getDataString();
+        // Do work here, based on the contents of dataString
+
+    }
+
+
     public static void sessionUpload(JSONObject sessJSON) {//Send Session to NodeServer
 
         //Attempt to connect to server
@@ -53,7 +73,6 @@ public class Session {
         //Send Session json object
         mSocket.emit("data", sessJSON);
     }
-
 
     public static void getSensorData() {
         //TODO: Create Asynck task/service for uploading files and to to periodically check for internet and to upload as soon as possible. Possibly add in WIFI only option in settings.
@@ -192,6 +211,6 @@ public class Session {
             }
         }
     }
+
+
 }
-
-
