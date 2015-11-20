@@ -5,26 +5,6 @@
 
 package edu.utc.vat;
 
-<<<<<<< HEAD
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.StrictMode;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.HashMap;
-
-
-=======
 import android.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.FragmentManager;
@@ -48,12 +28,17 @@ import android.util.Log;
 
 import android.os.StrictMode;
 
+import com.ibm.mobile.services.core.IBMBluemix;
+import com.ibm.mobile.services.core.IBMCurrentUser;
+
 import java.util.HashMap;
+import java.util.List;
+
+import bolts.Continuation;
+import bolts.Task;
 
 
-
->>>>>>> rgdev
-public class ExerciseActivity extends AppCompatActivity implements View.OnClickListener {
+public class ExerciseActivity extends BaseActivity implements View.OnClickListener {
 
     private static final int NO_EXERCISE_SELECTED = 0;
     private static final int ONE_LEG_SQUAT_HOLD = 1;
@@ -65,10 +50,7 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
     public static final int TESTING = 1;
     public static final int READY = 3;
     public static final int VOID = -1;
-<<<<<<< HEAD
-=======
     public static final int UPLOADING = 4;
->>>>>>> rgdev
     public int status;
     private TextView testStatus;
     private String statusMessage;
@@ -87,37 +69,31 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
 
     private Button resetButton;
     private Button startButton;
+    private Button instructionsButton;
 
     private final long DEFAULT_COUNTDOWN_TIME = 5;
     private final long DEFAULT_TESTING_TIME = 20;
-<<<<<<< HEAD
-=======
+    private Toast concurrentToast;
+    public BlueMixApplication blApplication = null;
 
 
->>>>>>> rgdev
     //TODO: create break for testing timer w/ jump test, i.e. if balanced prior to max/default time
 
     private Timer timer = new Timer(this);
 
+    public static final String CLASS_NAME = "MainActivity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-<<<<<<< HEAD
-=======
-        /*
->>>>>>> rgdev
-        if (android.os.Build.VERSION.SDK_INT > 9) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
-<<<<<<< HEAD
-=======
-        */
->>>>>>> rgdev
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testing);
+
+
+        // use application class to maintain global state
+        blApplication = (BlueMixApplication) getApplication();
+
+
         status = VOID;
         completeExerciseList();
         completeStatusList();
@@ -134,38 +110,73 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         getUserInfo = (EditText) findViewById(R.id.SessionInfo);
         resetButton = (Button) findViewById(R.id.TestingResetButton);
         startButton = (Button) findViewById(R.id.TestingStartButton);
+
+        instructionsButton = (Button) findViewById(R.id.TestingInstructionsButton);
         resetButton.setOnClickListener(this);
         startButton.setOnClickListener(this);
-
+        instructionsButton.setOnClickListener(this);
         timer.setCountDownTime(DEFAULT_COUNTDOWN_TIME);
         timer.setTestingTime(DEFAULT_TESTING_TIME);
         timer.initTimer();
 
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_testing, menu);
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) { return true; }
-        return super.onOptionsItemSelected(item);
-    }
-
-
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.TestingStartButton: {
+
+        /*
+        int id = view.getId();
+        if (id == R.id.TestingStartButton) {
+            if (getUserInfo.getText().toString().trim().length() > 0) {
+                //timer.passUserInfo(userInfo); //TODO: pass to native
+                status = READY;
+            }
+            if (status != READY) {
+                Toast.makeText(this, "Please enter your NAME, etc...",
+                        Toast.LENGTH_SHORT).show();
+                resetButton.performClick();
+            } else {
+                userInfo = getUserInfo.getText().toString().trim();
+                Toast.makeText(this, userInfo, Toast.LENGTH_SHORT).show();
+                timer.countDown(); //TODO: RETURN BOOLEAN, TRUE --> UPLOAD PROMPT?
+            }
+            status = READY;
+        }*/
+        int id2 = view.getId();
+        if (id2 == R.id.TestingResetButton) {
+            status = STOPPED;
+            //TODO: kill timer if running
+            Log.i("RESET","Clicked reset button");
+            getUserInfo.setText("");
+            getUserInfo.setOnClickListener(new View.OnClickListener() {
+                                               public void onClick(View view) {
+                                                   getUserInfo.requestFocus();
+                                                   InputMethodManager inputManager = (InputMethodManager)
+                                                           getSystemService(Context.INPUT_METHOD_SERVICE);
+                                                   inputManager.showSoftInput(getUserInfo,
+                                                           InputMethodManager.SHOW_IMPLICIT);
+                                               }
+                                           }
+            );
+        }
+        if (id2 == R.id.TestingInstructionsButton) {
+            Log.i("INSTRUCTIONS","Toast called");
+            Toast.makeText(this, "Instructions", Toast.LENGTH_LONG).show();
+            //showToast("ENTER FIRST EXERCISE INSTRUCTION HERE...");
+            //showToast("ENTER SECOND EXERCISE INSTRUCTION HERE...");
+        }
+        if (id2 == R.id.SessionInfo) {
+            getUserInfo.setText("");
+            getUserInfo.requestFocus();
+            InputMethodManager inputManager = (InputMethodManager)
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputManager.showSoftInput(getUserInfo, InputMethodManager.SHOW_IMPLICIT);
+        }
+
+        /*
+        switch (id) {
+            case R.id.TestingStartButton:
                 if (getUserInfo.getText().toString().trim().length() > 0) {
-<<<<<<< HEAD
-                    timer.passUserInfo(userInfo);
-=======
                     //timer.passUserInfo(userInfo); //TODO: pass to native
->>>>>>> rgdev
                     status = READY;
                 }
                 if (status != READY) {
@@ -176,22 +187,16 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
                 } else {
                     userInfo = getUserInfo.getText().toString().trim();
                     Toast.makeText(this, userInfo, Toast.LENGTH_SHORT).show();
-<<<<<<< HEAD
-                    timer.countDown();
-                }
-=======
                     timer.countDown(); //TODO: RETURN BOOLEAN, TRUE --> UPLOAD PROMPT?
                 }
                 status = READY;
->>>>>>> rgdev
                 break;
-            }
-            case R.id.TestingResetButton: {
+            case R.id.TestingResetButton:
                 status = STOPPED;
                 //TODO: kill timer if running
+                Log.i("RESET","Clicked reset button");
                 getUserInfo.setText("");
                 getUserInfo.setOnClickListener(new View.OnClickListener() {
-<<<<<<< HEAD
                        public void onClick(View view) {
                            getUserInfo.requestFocus();
                            InputMethodManager inputManager = (InputMethodManager)
@@ -200,44 +205,25 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
                                    InputMethodManager.SHOW_IMPLICIT);
                        }
                    }
-=======
-                                                   public void onClick(View view) {
-                                                       getUserInfo.requestFocus();
-                                                       InputMethodManager inputManager = (InputMethodManager)
-                                                               getSystemService(Context.INPUT_METHOD_SERVICE);
-                                                       inputManager.showSoftInput(getUserInfo,
-                                                               InputMethodManager.SHOW_IMPLICIT);
-                                                   }
-                                               }
->>>>>>> rgdev
                 );
                 break;
-            }
-            case R.id.SessionInfo: {
+            case R.id.TestingInstructionsButton:
+                Log.i("INSTRUCTIONS","Toast called");
+                Toast.makeText(this, "Instructions", Toast.LENGTH_LONG).show();
+                //showToast("ENTER FIRST EXERCISE INSTRUCTION HERE...");
+                //showToast("ENTER SECOND EXERCISE INSTRUCTION HERE...");
+                break;
+            case R.id.SessionInfo:
                 getUserInfo.setText("");
                 getUserInfo.requestFocus();
                 InputMethodManager inputManager = (InputMethodManager)
                         getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputManager.showSoftInput(getUserInfo, InputMethodManager.SHOW_IMPLICIT);
                 break;
-            }
-        }
+        }*/
     }
 
 
-<<<<<<< HEAD
-    //TODO: create onPause()
-    /**
-     * onPause()
-     */
-
-
-    //TODO: create onResume()
-    /**
-     * onResume()
-     */
-
-=======
     /**
      * onPause()
      */
@@ -263,18 +249,12 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         super.onDestroy();
 
     }
->>>>>>> rgdev
 
     /**
      * Methods for updating UI with time and status from timer
      *
      */
     public void statusUpdate(int status) {
-<<<<<<< HEAD
-        Log.i("update","statusUpdate");
-        String statusUpdate  = statusList.get(status);
-        testStatus.setText(statusUpdate);
-=======
         Log.i("update", "statusUpdate");
         String statusUpdate  = statusList.get(status);
         testStatus.setText(statusUpdate);
@@ -282,7 +262,6 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         if(status == STOPPED) {
             Upload();
         }
->>>>>>> rgdev
     }
     public void timerUpdate(long time) {
         Log.i("update","timerUpdate");
@@ -297,8 +276,6 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-<<<<<<< HEAD
-=======
     public int Upload() {
         status = UPLOADING;
         String statusUpdate = statusList.get(status);
@@ -311,7 +288,6 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
->>>>>>> rgdev
     /**
      * Fill hash maps with strings for view corresponding to constant ints
      */
@@ -325,10 +301,7 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         statusList.put(2, "Countdown to test...");
         statusList.put(1, "Testing...");
         statusList.put(0, "Finished...");
-<<<<<<< HEAD
-=======
         statusList.put(4, "Uploading...");
->>>>>>> rgdev
     }
 
 
@@ -337,11 +310,8 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
      * */
     public static Intent createIntent(Context context, int e) {
         exercise = e;
-<<<<<<< HEAD
         return new Intent(context, ExerciseActivity.class);
-=======
-        return new Intent(context, TestingActivity.class);
->>>>>>> rgdev
+        // return new Intent(context, TestingActivity.class);
     }
 
 
@@ -360,7 +330,13 @@ public class ExerciseActivity extends AppCompatActivity implements View.OnClickL
         return string;
     }
 
+
+    void showToast(String message) {
+        if(concurrentToast != null) {
+            concurrentToast.cancel();
+        }
+        concurrentToast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+        concurrentToast.show();
+    }
+
 }
-
-
-

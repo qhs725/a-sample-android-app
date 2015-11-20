@@ -68,9 +68,22 @@ public class Timer {
     public void passUserInfo (String info) {
     }
 
+    public void stopTimer() {
+        if (state == TESTING) {
+            testingTimer.cancel();
+            CallNative.WriteOff();
+            CallNative.StopSensors();
+            CallNative.CloseFiles();
+        } else {
+            countDownTimer.cancel();
+            CallNative.CloseFiles();
+        }
+        CallNative.OpenFiles();
+    }
+
     //TODO: have reset kill timer
     public void countDown() {
-
+        CallNative.PassID("TESTING,TESTING,..,.."); //Should contain all values in .csv format...
         //TODO: if files are off, cut files on or read previous files first?
         CallNative.StartSensors();
 
@@ -106,6 +119,7 @@ public class Timer {
 
             @Override
             public void onFinish() {
+                Log.i("timer", "finished timer");
                 state = TESTING;
                 testing();
             }
@@ -152,6 +166,8 @@ public class Timer {
                 CallNative.WriteOff();
                 CallNative.StopSensors();
                 CallNative.CloseFiles();
+
+                ((TestingActivity)appContext).Upload();
             }
         }.start();
 

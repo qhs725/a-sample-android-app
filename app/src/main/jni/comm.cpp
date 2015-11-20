@@ -15,6 +15,7 @@
 
 #include "comm.h"
 #include "packdat.h"
+#include "sk.h"
 
 #include <pthread.h>
 #include <iostream>
@@ -56,6 +57,10 @@ namespace io {
         o = false;
     };
 
+    void io_::id_(const char *_) {
+        io_::io__().__id = _;
+    }
+
     void io_::__init() {
         io_::io__().pss.setHost("192.168.0.100");
         io_::io__().pss.setPort(8080);
@@ -69,6 +74,7 @@ namespace io {
         LOGI("ENCODING %s", e__);
         io_::io__().prsp.setKeepAlive(true);
         io_::io__()._f_ = true;
+        io_::io__().__id = NULL;
     }
 
     void io_::P_() {
@@ -129,6 +135,20 @@ namespace io {
         }
         io_::io__().pss.receiveResponse(io_::io__().prsp);
         //pthread_mutex_unlock(&___l);
+    }
+
+    void io_::__s__() {
+        if(!sk::sk_::sk__().__i__())
+            LOGE("CONNECTION FAILED");
+        for(int i; i < pd::pd_::pd__()._c_; i++) {
+            char const *__o = pd::pd_::pd__().__b[i];
+            int l = (int)strlen(__o);
+            if(!sk::sk_::sk__().__sb(__o, l))
+                LOGE("SENDING FAILED");
+            else
+                LOGI("SOCKET STREAM SENT %d of %d", i+1, pd::pd_::pd__()._c_);
+        }
+        sk::sk_::sk__().__d__();
     }
 
 }  //  namespace io

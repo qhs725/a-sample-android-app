@@ -6,6 +6,8 @@
 package edu.utc.vat;
 
 import android.app.DialogFragment;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.FragmentManager;
 
@@ -16,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.view.inputmethod.InputMethodManager;
+import android.view.Gravity;
 
 import android.os.Bundle;
 
@@ -28,11 +31,23 @@ import android.util.Log;
 
 import android.os.StrictMode;
 
+import com.ibm.mobile.services.core.IBMBluemix;
+import com.ibm.mobile.services.core.IBMCurrentUser;
+import com.ibm.mobile.services.data.IBMDataObject;
+import com.ibm.mobile.services.push.IBMPush;
+
 import java.util.HashMap;
 
+import java.lang.Object;
+
+import bolts.Continuation;
+import bolts.Task;
 
 
-public class TestingActivity extends AppCompatActivity implements View.OnClickListener {
+//TODO: Add fragments for displaying timer and Exercise instructions.
+
+
+public class TestingActivity extends BaseActivity implements View.OnClickListener {
 
     private static final int NO_EXERCISE_SELECTED = 0;
     private static final int ONE_LEG_SQUAT_HOLD = 1;
@@ -63,14 +78,21 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
 
     private Button resetButton;
     private Button startButton;
+    private Button instructionsButton;
 
     private final long DEFAULT_COUNTDOWN_TIME = 5;
     private final long DEFAULT_TESTING_TIME = 20;
 
+    private Toast concurrentToast;
+
+    public BlueMixApplication blApplication = null;
+    private static final String CLASS_NAME = "LoginActivity";
+    private String uUserID = null;
+
 
     //TODO: create break for testing timer w/ jump test, i.e. if balanced prior to max/default time
 
-    private Timer timer = new Timer(this);
+    private Timer timer;
 
 
     @Override
@@ -101,39 +123,33 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
         getUserInfo = (EditText) findViewById(R.id.SessionInfo);
         resetButton = (Button) findViewById(R.id.TestingResetButton);
         startButton = (Button) findViewById(R.id.TestingStartButton);
+        instructionsButton = (Button) findViewById(R.id.TestingInstructionsButton);
         resetButton.setOnClickListener(this);
         startButton.setOnClickListener(this);
+        instructionsButton.setOnClickListener(this);
+        timer = new Timer(this);
 
         timer.setCountDownTime(DEFAULT_COUNTDOWN_TIME);
         timer.setTestingTime(DEFAULT_TESTING_TIME);
         timer.initTimer();
 
-    }
+        //use application class to maintain global state
+        blApplication = (BlueMixApplication) getApplication();
+        initServices(); //Initialize Bluemix connection
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_testing, menu);
-        return true;
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) { return true; }
-        return super.onOptionsItemSelected(item);
-    }
-
 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.TestingStartButton: {
                 if (getUserInfo.getText().toString().trim().length() > 0) {
                     //timer.passUserInfo(userInfo); //TODO: pass to native
+
                     status = READY;
                 }
                 if (status != READY) {
                     Toast.makeText(this, "Please enter your NAME, etc...",
-                            Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();
                     resetButton.performClick();
                     break;
                 } else {
@@ -145,7 +161,12 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
                 break;
             }
             case R.id.TestingResetButton: {
-                status = STOPPED;
+                timer.stopTimer();
+                //timer.delete();
+                timerUpdate(0);
+                status = VOID;
+                statusUpdate(status);
+                //Toast.makeText(this, "Reseting..", Toast.LENGTH_LONG).show();
                 //TODO: kill timer if running
                 getUserInfo.setText("");
                 getUserInfo.setOnClickListener(new View.OnClickListener() {
@@ -160,11 +181,18 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
                 );
                 break;
             }
+            case R.id.TestingInstructionsButton: {
+                //TODO: Something to play concurrent Toasts for instructions w/ hash map
+                showToast("ENTER EXERCISE INSTRUCTIONS HERE... \n INSTRUCTION 1..\n " +
+                        "INSTRUCTION 2..\n INSTRUCTION 3..\n INSTRUCTION 4..\n" +
+                        " ...\n INSTRUCTION N");
+                break;
+            }
             case R.id.SessionInfo: {
                 getUserInfo.setText("");
                 getUserInfo.requestFocus();
                 InputMethodManager inputManager = (InputMethodManager)
-                        getSystemService(Context.INPUT_METHOD_SERVICE);
+                    getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputManager.showSoftInput(getUserInfo, InputMethodManager.SHOW_IMPLICIT);
                 break;
             }
@@ -208,7 +236,17 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
         testStatus.setText(statusUpdate);
 
         if(status == STOPPED) {
+            //check if network connection is available
+            if(isNetworkAvailable()){
+                createSession(); //Create Session Object and upload
+            }
+            else{
+                concurrentToast = Toast.makeText(this, "No internet connection found", Toast.LENGTH_LONG);
+                concurrentToast.show();
+                return;
+            }
             Upload();
+            //resetButton.performClick();
         }
     }
     public void timerUpdate(long time) {
@@ -231,7 +269,7 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
         Log.i("TESTING", "Upload method call");
         DialogFragment uploadData = new UploadDataDialogFragment();
         uploadData.show(getFragmentManager(), "uploadData");
-        Log.i("TESTING","Upload method return");
+        Log.i("TESTING", "Upload method return");
         return 0;
     }
 
@@ -277,6 +315,110 @@ public class TestingActivity extends AppCompatActivity implements View.OnClickLi
         return string;
     }
 
+
+
+    void showToast(String message) {
+        if(concurrentToast != null) {
+            concurrentToast.cancel();
+        }
+        concurrentToast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+        concurrentToast.show();
+    }
+
+
+
+
+    public void createSession() {
+        //Call to upload session data files if any exist
+        Session.getSensorData();
+
+    }
+
+    public  void initServices(){
+        if (UserAccount.getIdToken() != null) {
+
+            // set ID TOKEN so that all subsequent Service calls
+            // will contain the ID TOKEN in the header
+            Log.d(CLASS_NAME, "Setting the Google ID token: \n"
+                    + UserAccount.getIdToken());
+
+            Log.d(CLASS_NAME, "Setting the Google Access token for all future IBM Bluemix Mobile Cloud Service calls: \n"
+                    + UserAccount.getAccessToken());
+
+            // set the access token so that all subsequent calls to IBM Bluemix Mobile Cloud Services
+            // will contain the access token in the header
+            // Note: Kicking off a Bolts Asynchronous task to initialize services, chained with
+            // an additional Bolts Task, in series with first one, in order to register the device
+            // with the IBM Push service
+            IBMBluemix.setSecurityToken(IBMBluemix.IBMSecurityProvider.GOOGLE, UserAccount.getAccessToken())
+                    .continueWithTask(
+                            new Continuation<IBMCurrentUser, Task<String>>() {
+                                @Override
+                                public Task<String> then(Task<IBMCurrentUser> user) throws Exception {
+                                    // if setting the security token has failed...
+                                    if (user.isFaulted()) {
+                                        Log.e(CLASS_NAME, "There was an error setting the Google security token: " + user.getError().getMessage());
+                                        user.getError().printStackTrace();
+                                        // clear the security token
+                                        return null;
+                                    }
+
+                                    // if setting the security token succeeds...
+                                    Log.i(CLASS_NAME, "Set the Google security token successfully. Retrieved IBMCurrentUser: "
+                                            + user.getResult().getUuid());
+
+                                    // Save the IBMCurrentUser unique User Id
+                                    uUserID = user.getResult().getUuid();
+
+                                    //Add uUserID to User Account
+                                    UserAccount.setuUserID(uUserID);
+
+                                    // initialize IBM Bluemix Mobile Cloud Services
+                                    blApplication.initializeBluemixServices();
+                                    Log.i(CLASS_NAME, "Done initializing IBM Bluemix Services");
+
+                                    Log.i(CLASS_NAME, "Done refreshing Session list.");
+
+                                    // retrieve instance of the IBM Push service
+                                    if(push == null) {
+                                        push = IBMPush.getService();
+                                    }
+
+                                    Log.i(CLASS_NAME, "Registering device with the IBM Push service.");
+                                    // register the device with the IBM Push service
+
+                                    //Check if there are stored session data files and upload them if there are
+                                    if(isDataFiles()){
+                                        //***
+                                        //TODO: add call to recursive-ish session object-creating function based on files present in directory
+                                        //TODO: Create method call to Session class to check for files, add data from files present to json objects, send json obect to node server
+                                        // TODO: Call method here during bluemix initialization and after data collection
+                                        //***
+                                    }
+
+                                    return push.register(deviceAlias, consumerID);
+                                }
+
+                            }).continueWith(new Continuation<String, Void>() {
+                public Void then(Task<String> deviceIdTask) {
+                    if (deviceIdTask.isFaulted()) {
+                        Log.e(CLASS_NAME, "Device not registered with IBM Push service successfully.");
+                        Log.e(CLASS_NAME, "Exception : " + deviceIdTask.getError().getMessage());
+                        deviceIdTask.getError().printStackTrace();
+                        return null;
+                    }
+
+                    Log.i(CLASS_NAME, "Device registered with IBM Push service successfully. Device Id: "
+                            + deviceIdTask.getResult());
+
+                    return null;
+                }
+            });
+        } else {
+            Log.e(CLASS_NAME, "Did not receive an expected authentication token. Finishing activity.");
+            finish();
+        }
+    }
 }
 
 

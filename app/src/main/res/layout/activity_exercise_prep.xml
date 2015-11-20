@@ -7,11 +7,7 @@
     tools:context="edu.utc.vat.ExercisePrepActivity"
     android:id="@+id/myRelativeLayout">
 
-<<<<<<< HEAD
     <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-=======
-    <TextView android:text="hello_world" android:layout_width="wrap_content"
->>>>>>> rgdev
         android:layout_height="wrap_content"
         android:id="@+id/titletextView"
         android:paddingBottom="20dp"
@@ -34,6 +30,8 @@
         android:nestedScrollingEnabled="false"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:clickable="false"
         android:onClick="onClick" />
 
     <Button
@@ -42,13 +40,11 @@
         android:layout_height="wrap_content"
         android:text="Skip"
         android:nestedScrollingEnabled="false"
-        android:onClick="onClick"
         android:layout_alignTop="@+id/nextbtn1"
         android:layout_alignParentStart="true"
-        android:singleLine="true" />
+        android:layout_alignParentLeft="true"
+        android:singleLine="true"
+        android:clickable="true"
+        android:onClick="onClick" />
 
-<<<<<<< HEAD
 </RelativeLayout>
-=======
-</RelativeLayout>
->>>>>>> rgdev
