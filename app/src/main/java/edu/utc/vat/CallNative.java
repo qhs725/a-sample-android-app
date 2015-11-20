@@ -51,7 +51,7 @@ public class CallNative {
     public static native int DataCount(int sensor); //.. ?? --> deprecated?
 
     @SuppressWarnings("JniMissingFunction")
-    public static native boolean PackageData(); //groups accel, gyro, comp data
+    public static native boolean PackageData(long x); //groups accel, gyro, comp data
 
     @SuppressWarnings("JniMissingFunction")
     public static native int Render(int o, int oo); //gl renderer

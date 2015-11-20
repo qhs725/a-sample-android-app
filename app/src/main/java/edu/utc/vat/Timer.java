@@ -166,6 +166,8 @@ public class Timer {
                 CallNative.WriteOff();
                 CallNative.StopSensors();
                 CallNative.CloseFiles();
+
+                ((TestingActivity)appContext).Upload();
             }
         }.start();
 

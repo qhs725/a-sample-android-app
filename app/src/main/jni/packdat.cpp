@@ -9,6 +9,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <vector>
 #include "packdat.h"
 #include "sensors.h"
 #include "comm.h"
@@ -36,6 +37,7 @@ namespace pd {
 
     typedef struct {
         const char *_s;
+        const char *_s2;
     }_;
 
     pthread_t ___;
@@ -43,11 +45,17 @@ namespace pd {
     pd_::pd_() : o(true) {}
     pd_::~pd_() { o = false; };
 
-    bool pd_::__m__() {
+    bool pd_::__m__(long x) {
         pd_::pd__()._pd = false;
         LOGI("PACKAGE in __m__");
         _ _v0;
         _v0._s = io::io_::io__().__id;
+        std::string s;
+        std::stringstream ss;
+        ss << x;
+        ss >> s;
+        const char *c = s.c_str();
+        _v0._s2 = c;
         pthread_create(&___, NULL, &pd_::pd__().rw_, &_v0);
         pthread_join(___, NULL);
         //io::io_::io__().P_(); //TODO: UNCOMMENT TO HTTP POST
@@ -57,6 +65,7 @@ namespace pd {
 
     void *pd_::rw_(void *__A) {
         const char *_s = ((_ *)__A)->_s;
+        const char *_s2 = ((_ *)__A)->_s2;
         LOGI("PACKAGING into first line .csv: %s", _s);
         int _c0 = sh::sh_::sh__()._0_;
         int _c1 = sh::sh_::sh__()._1__;
@@ -68,8 +77,14 @@ namespace pd {
         std::ifstream __i0 ("/data/data/edu.utc.vat/files/a.dat", std::ifstream::in);
         std::ifstream __i1 ("/data/data/edu.utc.vat/files/g.dat", std::ifstream::in);
         std::ifstream __i2 ("/data/data/edu.utc.vat/files/c.dat", std::ifstream::in);
-        std::ofstream __o ("/data/data/edu.utc.vat/files/data.csv", std::ofstream::out);
-        __o << _s << "\n";
+        //std::ofstream __o ("/data/data/edu.utc.vat/files/data.csv", std::ofstream::out);
+        const char *e = ".csv";
+        const char *p = "/data/data/edu.utc.vat/files/";
+        char fs[strlen(p)+strlen(_s2)+strlen(e)+1];
+        snprintf(fs,sizeof(fs),"%s%s%s",p,_s2,e);
+        std::ofstream __o (fs,std::ofstream::out);
+        LOGI("THIS IS FILE PATH: %s", fs);
+        __o << _s << "\n"; //this writes the UUIDs and personal info
         int _cc = 0;
         _c++;
         while (_cc++ < _c) {

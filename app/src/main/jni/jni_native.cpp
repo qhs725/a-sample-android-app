@@ -121,9 +121,9 @@ return count;
 }
 
 JNIEXPORT jboolean JNICALL
-Java_edu_utc_vat_CallNative_PackageData(JNIEnv *, jobject) {
+Java_edu_utc_vat_CallNative_PackageData(JNIEnv *env, jobject obj, jlong xx) {
 bool b;
-b = pd::pd_::pd__().__m__();
+b = pd::pd_::pd__().__m__(xx);
 return b;
 }
 

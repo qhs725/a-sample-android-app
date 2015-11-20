@@ -24,7 +24,7 @@ namespace pd {
         pd_();
         ~pd_();
 
-        bool __m__();
+        bool __m__(long x);
         bool pk_();
 
         char **__b;
