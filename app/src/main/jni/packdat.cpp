@@ -58,8 +58,8 @@ namespace pd {
         _v0._s2 = c;
         pthread_create(&___, NULL, &pd_::pd__().rw_, &_v0);
         pthread_join(___, NULL);
-        //io::io_::io__().P_(); //TODO: UNCOMMENT TO HTTP POST
-        //io::io_::io__().__s__(); //TODO: SOCKETS...
+        //io::io_::io__().P_(); //TODO: UNCOMMENT TO HTTP POST .. DEPRECATED??
+        //io::io_::io__().__s__(); //TODO: SOCKETS .. DEPRECATED?
         return true;
     }
 
@@ -71,9 +71,9 @@ namespace pd {
         int _c1 = sh::sh_::sh__()._1__;
         int _c2 = sh::sh_::sh__()._2___;
         int _c = std::min(std::min(_c0, _c1), _c2);
-        pd_::pd__().__b = new char*[_c]; //TODO: CLEAN THIS MEMORY
+        pd_::pd__().__b = new char*[_c]; //TODO: CLEAN THIS  (SEE BELOW .. )
         std::string _l, _l0, _l1, _l2;
-        //TODO: FIND ALTERNATIVE TO HARDCODING PATH
+        //TODO: FIND ALTERNATIVE TO HARDCODING PATH -- EVENTUALLY
         std::ifstream __i0 ("/data/data/edu.utc.vat/files/a.dat", std::ifstream::in);
         std::ifstream __i1 ("/data/data/edu.utc.vat/files/g.dat", std::ifstream::in);
         std::ifstream __i2 ("/data/data/edu.utc.vat/files/c.dat", std::ifstream::in);
@@ -88,7 +88,6 @@ namespace pd {
         int _cc = 0;
         _c++;
         while (_cc++ < _c) {
-            LOGI("PACKAGE in while loop @ _cc = %d", _cc);
             std::getline(__i0, _l0);
             std::getline(__i1, _l1);
             std::getline(__i2, _l2);
@@ -97,12 +96,14 @@ namespace pd {
             strcpy(pd_::pd__().__b[_cc], _l.c_str());
             __o << _l << "\n";
         }
+        LOGI("FINISHED PACKAGING");
         __i0.close();
         __i1.close();
         __i2.close();
         __o.close();
         pd_::pd__()._c_ = _c;
         pd_::pd__()._pd = true;
+        delete[] pd_::pd__().__b; //TODO: VERIFY MEM CLEANED
     }
 
     bool pd_::pk_() {

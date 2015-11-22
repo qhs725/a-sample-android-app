@@ -1,16 +1,12 @@
 /*
  * UTC Virtual Athletic Trainer v0.000
  * rg 9.7.15
- * TODO: STORE ALL TESTS PERMANENTLY ON DEVICE
  * TODO: CREATE DEVICE UUID AND STORE AT TOP OF HISTORY.DAT FILE
  * TODO: STORE TOTAL COUNT
  * TODO: NUMBER, DATE, TEST ID, UUID --> GOES IN HISTORY.DAT FILE
- *
  * TODO: THE STORED TESTS WILL BE MARKED AS UPLOADED OR NOT UPLOADED
  * TODO: THE STORED TESTS CAN BE VIEWED ON THE PHONE AND UPLOADED IF NOT ALREADY
- *
  * TODO: WRITE UUID TO DATABASE SO UUIDs CAN BE USED TO IDENTIFY THE DEVICE
- *
  * TODO: ASSIGN UUID TO NAMES, HAVE PEOPLE REGISTER
  */
 
@@ -57,25 +53,21 @@ namespace sh {
 
     /*
      * THIS IS THE SENSOR 'CALLBACK' LOOP EQUIVALENT
-     * TODO: RUN FUNCTION ON SEPARATE THREAD
+     * TODO: TRY AGAIN ON SEPARATE THREAD
      */
-    //static int _o(int fd, int _e, void *_); TODO: TRY C++11 COMPILE AGAIN
     static int _o(int fd, int _e, void *_) {
         ASensorEvent __e;
         while (ASensorEventQueue_getEvents(sh_::sh__().sEq, &__e, 1) > 0) {
-            if (wti::wti_::wti__()._w_) { // TODO: ONLY IF _w_ IS ON .. ??
+            if (wti::wti_::wti__()._w_) {
                 if (__e.type == ASENSOR_TYPE_ACCELEROMETER) {
-                    //io::io_::io__()._0(__e);
                     wti::wti_::wti__()._wti(__e);
                     sh_::sh__()._0_++;
                 }
                 else if (__e.type == ASENSOR_TYPE_GYROSCOPE) {
-                    //io::io_::io__()._1(__e);
                     wti::wti_::wti__().__wti(__e);
                     sh_::sh__()._1__++;
                 }
                 else if (__e.type == ASENSOR_TYPE_MAGNETIC_FIELD) {
-                    //io::io_::io__()._2(__e);
                     wti::wti_::wti__().___wti(__e);
                     sh_::sh__()._2___++;
                 }
@@ -219,22 +211,27 @@ namespace wti {
      * STRING BUILDING DEPRECATED
      */
     void wti_::_fopen() {
-        //const char *_p = ___p;
-        //const char *a_ = "a.dat";
-        //char _f[strlen(_p) + strlen(a_) + 1];
-        //snprintf(_f, sizeof(_f), "%s/%s", _p, a_);
-        fa___ = fopen("/data/data/edu.utc.vat/files/a.dat", "w");
-        fprintf(fa___,"accelx,accely,accelz,acceltimestamp\n");
-        //const char *c_ = "c.dat";
-        //char ___f[strlen(_p) + strlen(c_) + 1];
-        //snprintf(___f, sizeof(___f), "%s%s", _p, c_);
-        fc_ = fopen("/data/data/edu.utc.vat/files/c.dat", "w");
-        fprintf(fc_,"magx,magy,magz,magtimestamp\n");
-        //const char *g_ = "g.dat";
-        //char __f[strlen(_p) + strlen(g_) + 1];
-        //snprintf(__f, sizeof(__f), "%s%s", _p, g_);
-        fg__ = fopen("/data/data/edu.utc.vat/files/g.dat", "w");
-        fprintf(fg__,"gyrox,gyroy,gyroz,gyrotimestamp\n");
+        //OPEN ACCELEROMETER
+        try {
+            fa___ = fopen("/data/data/edu.utc.vat/files/a.dat", "w");
+        } catch(...) {
+            LOGI("FLIE PATH ERROR OPENING FILE a.dat");
+        }
+        //fprintf(fa___,"accelx,accely,accelz,acceltimestamp\n");
+        //OPEN COMPASS
+        try {
+            fc_ = fopen("/data/data/edu.utc.vat/files/c.dat", "w");
+        } catch(...) {
+            LOGI("FLIE PATH ERROR OPENING c.dat");
+        }
+        //fprintf(fc_,"magx,magy,magz,magtimestamp\n");
+        //OPEN GYROSCOPE
+        try {
+            fg__ = fopen("/data/data/edu.utc.vat/files/g.dat", "w");
+        } catch(...){
+            LOGI("FILE PATH ERROR OPENING g.dat");
+        }
+        //fprintf(fg__,"gyrox,gyroy,gyroz,gyrotimestamp\n");
     }
 
     /*

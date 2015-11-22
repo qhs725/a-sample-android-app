@@ -6,42 +6,32 @@
 package edu.utc.vat;
 
 import android.app.DialogFragment;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v4.app.FragmentManager;
-
 import android.content.Context;
 import android.content.Intent;
-
-import android.view.MenuItem;
 import android.view.View;
-import android.view.Menu;
 import android.view.inputmethod.InputMethodManager;
-import android.view.Gravity;
-
 import android.os.Bundle;
-
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Toast;
-
 import android.util.Log;
-
-import android.os.StrictMode;
-
 import com.ibm.mobile.services.core.IBMBluemix;
 import com.ibm.mobile.services.core.IBMCurrentUser;
-import com.ibm.mobile.services.data.IBMDataObject;
 import com.ibm.mobile.services.push.IBMPush;
-
 import java.util.HashMap;
-
-import java.lang.Object;
-
 import bolts.Continuation;
 import bolts.Task;
+
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentManager;
+import android.os.StrictMode;
+import java.lang.Object;
 
 
 //TODO: Add fragments for displaying timer and Exercise instructions.
@@ -97,13 +87,11 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        /*
-        if (android.os.Build.VERSION.SDK_INT > 9) {
+        //DEPRECATED ... -->
+        /*if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
-        }
-        */
+        }*/
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testing);
@@ -136,7 +124,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         //use application class to maintain global state
         blApplication = (BlueMixApplication) getApplication();
         initServices(); //Initialize Bluemix connection
-
     }
 
     public void onClick(View view) {
@@ -205,7 +192,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
      */
     public void onPause() {
         super.onPause();
-
     }
 
 
@@ -214,7 +200,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
      */
     public void onResume() {
         super.onResume();
-
     }
 
 
@@ -223,7 +208,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
      */
     public void onDestroy() {
         super.onDestroy();
-
     }
 
     /**
@@ -246,6 +230,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                 return;
             }
             Upload();
+            //TODO: why is reset commented out??
             //resetButton.performClick();
         }
     }
@@ -390,8 +375,8 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                                     //Check if there are stored session data files and upload them if there are
                                     if(isDataFiles()){
                                         //***
-                                        //TODO: add call to recursive-ish session object-creating function based on files present in directory
-                                        //TODO: Create method call to Session class to check for files, add data from files present to json objects, send json obect to node server
+                                        // TODO: add call to recursive-ish session object-creating function based on files present in directory
+                                        // TODO: Create method call to Session class to check for files, add data from files present to json objects, send json obect to node server
                                         // TODO: Call method here during bluemix initialization and after data collection
                                         //***
                                     }
