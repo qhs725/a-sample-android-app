@@ -61,7 +61,7 @@ public class UploadDataDialogFragment extends DialogFragment {
 
         @Override
         protected Boolean doInBackground(Void... v) {
-            long x = 1000;
+            String x = "1000";
              CallNative.PackageData(x);
             return true;
         }

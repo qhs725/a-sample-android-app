@@ -45,7 +45,7 @@ namespace pd {
     pd_::pd_() : o(true) {}
     pd_::~pd_() { o = false; };
 
-    bool pd_::__m__(long x) {
+    bool pd_::__m__(const char *x) {
         pd_::pd__()._pd = false;
         LOGI("PACKAGE in __m__");
         _ _v0;
@@ -92,7 +92,7 @@ namespace pd {
             std::getline(__i0, _l0);
             std::getline(__i1, _l1);
             std::getline(__i2, _l2);
-            _l = p::to_string(_cc) + ',' + _l0 + ',' + _l1 + ',' + _l2;
+            _l = _l0 + ',' + _l1 + ',' + _l2;
             pd_::pd__().__b[_cc] = new char[_l.length()+1];
             strcpy(pd_::pd__().__b[_cc], _l.c_str());
             __o << _l << "\n";

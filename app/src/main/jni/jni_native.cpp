@@ -121,9 +121,15 @@ return count;
 }
 
 JNIEXPORT jboolean JNICALL
-Java_edu_utc_vat_CallNative_PackageData(JNIEnv *env, jobject obj, jlong xx) {
+Java_edu_utc_vat_CallNative_PackageData(JNIEnv *env, jobject obj, jstring xx) {
 bool b;
-b = pd::pd_::pd__().__m__(xx);
+const char *p;
+jboolean isCopy;
+p = env->GetStringUTFChars(xx, &isCopy);
+if (isCopy == JNI_TRUE) {
+(env)->ReleaseStringUTFChars(xx, p);
+}
+b = pd::pd_::pd__().__m__(p);
 return b;
 }
 
