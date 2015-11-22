@@ -9,6 +9,7 @@ public class UserAccount {
 	private static String accessToken = null;
 	private static String uUserID = null;
 	private static String sessionID = null;
+    private static String sessionInfo = null;
 	
 	public static String getPicture() {
 		return userPicture;
@@ -52,5 +53,11 @@ public class UserAccount {
 	public static void setSessionID(String sessionID) {
 		UserAccount.sessionID = sessionID;
 	}
+    public static String getSessionInfo() {
+        return sessionInfo;
+    }
+    public static void setSessionInfo(String sessionInfo) {
+        UserAccount.sessionInfo = sessionInfo;
+    }
 
 }

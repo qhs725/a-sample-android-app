@@ -145,8 +145,11 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                     break;
                 } else {
                     userInfo = getUserInfo.getText().toString().trim();
+                    UserAccount.setSessionInfo(userInfo);
                     Toast.makeText(this, userInfo, Toast.LENGTH_SHORT).show();
-                    CallNative.PassID(UserAccount.getSessionID() + "," + uUserID + "," + userInfo);
+
+                    //String sessionID = UserAccount.getSessionID();
+                   // CallNative.PassID(sessionID + "," + uUserID + "," + userInfo);
                     timer.countDown(); //TODO: RETURN BOOLEAN, TRUE --> UPLOAD PROMPT?
                 }
                 status = READY;
@@ -234,7 +237,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                 concurrentToast.show();
                 return;
             }
-           // Upload();
+            Upload();
             //TODO: why is reset commented out??
             //resetButton.performClick();
         }
