@@ -108,11 +108,17 @@ public class BaseActivity extends AppCompatActivity {
     //Check if session data files exist
     public Boolean isDataFiles() {
         Context context = BlueMixApplication.getAppContext();
-
+        File fileList[] = null;
         Log.i(CLASS_NAME, "Checking for Session data files...");
 
         //Get files directory and get names of all files
-        File fileList[] = (new File( context.getFilesDir() + "/" )).listFiles();
+        try {
+            fileList = (new File(context.getFilesDir() + "/")).listFiles();
+        }
+        catch(Exception err){
+            Log.e(CLASS_NAME, "ERROR: " + err.getMessage());
+        }
+
 
         //Look at each file in the directory
         for (int i=0; i < fileList.length -1; i++)

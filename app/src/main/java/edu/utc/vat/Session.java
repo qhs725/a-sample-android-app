@@ -35,18 +35,19 @@ public class Session {
     private static final String EXT = "txt";
     private static JSONObject session_json;
 
-   // private static final String SERVER_IP ="http://192.168.0.105:3000/upload";
-    private static final String SERVER_IP ="http://utc-vat.mybluemix.net/upload";
-    private static  Socket mSocket = null;
+    // private static final String SERVER_IP ="http://192.168.0.105:3000/upload";
+    private static final String SERVER_IP = "http://utc-vat.mybluemix.net/upload";
+    private static Socket mSocket = null;
 
 
-    public static void sessionUpload(JSONObject sessJSON){//Send Session to NodeServer
+    public static void sessionUpload(JSONObject sessJSON) {//Send Session to NodeServer
 
         //Attempt to connect to server
         try {
             mSocket = IO.socket(SERVER_IP);
             mSocket.connect();
-        } catch (URISyntaxException e) {}
+        } catch (URISyntaxException e) {
+        }
 
 
         //Send Session json object
@@ -54,12 +55,12 @@ public class Session {
     }
 
 
-    public static void getSensorData(){
+    public static void getSensorData() {
         //TODO: Create Asynck task/service for uploading files and to to periodically check for internet and to upload as soon as possible. Possibly add in WIFI only option in settings.
 
         //TODO: Change code to see each file as a unique exercise to upload. Line 1 will contain data provided from user. Line 2 will contain mapping for the following lines. The following lines will contain sensor data in the order shown by line 2.
 
-        if(!BaseActivity.getisNetwork()){
+        if (!BaseActivity.getisNetwork() || CallNative.CheckData() == false) {
             //Display Toast to warn user there is no detected internet connection
             Toast.makeText(BlueMixApplication.getAppContext(), "No internet connection found", Toast.LENGTH_LONG).show();
 
@@ -69,10 +70,18 @@ public class Session {
         ArrayList<String> dataFileNames = new ArrayList<String>();
         int numColumns = 0;
         InputStream file = null;
-
+        File fileList[] = null;
         //Get files directory and get names of all files within
         File fileFinder = new File(context.getFilesDir() + "/");
-        File fileList[] = fileFinder.listFiles();
+        try {
+            if(fileFinder.listFiles() == null){
+            return;
+            }
+            fileList = fileFinder.listFiles();
+
+        } catch (Exception err) {
+            Log.e("UPLOAD", "ERROR: " + err.getMessage());
+        }
         Log.i("Files", "Size: " + fileList.length);
 
         //Look at each file in the directory

@@ -32,6 +32,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v4.app.FragmentManager;
 import android.os.StrictMode;
 import java.lang.Object;
+import java.util.UUID;
 
 
 //TODO: Add fragments for displaying timer and Exercise instructions.
@@ -121,6 +122,9 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         timer.setTestingTime(DEFAULT_TESTING_TIME);
         timer.initTimer();
 
+        UUID uuid = UUID.randomUUID();
+        UserAccount.setSessionID(uuid.toString());
+
         //use application class to maintain global state
         blApplication = (BlueMixApplication) getApplication();
         initServices(); //Initialize Bluemix connection
@@ -142,6 +146,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                 } else {
                     userInfo = getUserInfo.getText().toString().trim();
                     Toast.makeText(this, userInfo, Toast.LENGTH_SHORT).show();
+                    CallNative.PassID(UserAccount.getSessionID() + "," + uUserID + "," + userInfo);
                     timer.countDown(); //TODO: RETURN BOOLEAN, TRUE --> UPLOAD PROMPT?
                 }
                 status = READY;
@@ -229,7 +234,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                 concurrentToast.show();
                 return;
             }
-            Upload();
+           // Upload();
             //TODO: why is reset commented out??
             //resetButton.performClick();
         }
@@ -315,7 +320,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
     public void createSession() {
         //Call to upload session data files if any exist
-        Session.getSensorData();
+      //  Session.getSensorData();
 
     }
 
@@ -372,14 +377,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                                     Log.i(CLASS_NAME, "Registering device with the IBM Push service.");
                                     // register the device with the IBM Push service
 
-                                    //Check if there are stored session data files and upload them if there are
-                                    if(isDataFiles()){
-                                        //***
-                                        // TODO: add call to recursive-ish session object-creating function based on files present in directory
-                                        // TODO: Create method call to Session class to check for files, add data from files present to json objects, send json obect to node server
-                                        // TODO: Call method here during bluemix initialization and after data collection
-                                        //***
-                                    }
 
                                     return push.register(deviceAlias, consumerID);
                                 }
