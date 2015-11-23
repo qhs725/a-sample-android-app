@@ -38,8 +38,15 @@ return 0;
 }
 
 JNIEXPORT jint JNICALL
-Java_edu_utc_vat_CallNative_StartSensors(JNIEnv *, jobject) {
+Java_edu_utc_vat_CallNative_StartSensors(JNIEnv *env, jobject jobj) {
 sh::sh_::sh__()._o__();
+return 0;
+}
+
+JNIEXPORT jint JNICALL
+Java_edu_utc_vat_CallNative_StartSensorsF(JNIEnv *env, jobject jobj, jboolean flag) {
+bool b = flag;
+sh::sh_::sh__()._o__(b);
 return 0;
 }
 
@@ -105,21 +112,6 @@ io::io_::io__().__init();
 return 0;
 }
 
-JNIEXPORT jint JNICALL
-Java_edu_utc_vat_CallNative_DataCount(JNIEnv *env, jobject jobj, jint sensor) {
-jint count;
-if (sensor == 0) {
-count = sh::sh_::sh__()._0_;
-} else if (sensor == 1) {
-count = sh::sh_::sh__()._1__;
-} else if (sensor == 2) {
-count = sh::sh_::sh__()._2___;
-} else {
-count = -1;
-}
-return count;
-}
-
 JNIEXPORT jboolean JNICALL
 Java_edu_utc_vat_CallNative_PackageData(JNIEnv *env, jobject obj, jstring xx) {
 bool b;
@@ -176,7 +168,13 @@ b = pd::pd_::pd__().pk_();
 return b;
 }
 
-
+JNIEXPORT jint JNICALL
+Java_edu_utc_vat_CallNative_SetFlankerFlag(JNIEnv *env, jobject jobj, jboolean flag) {
+bool b;
+b = flag;
+sh::sh_::sh__()._sff_(b);
+return b;
+}
 
 
 

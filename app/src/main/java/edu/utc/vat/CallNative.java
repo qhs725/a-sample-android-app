@@ -21,6 +21,9 @@ public class CallNative {
     public static native int StartSensors(); //cut sensors on
 
     @SuppressWarnings("JniMissingFunction")
+    public static native int StartSensorsF(boolean flag); //cut sensors && flanker on
+
+    @SuppressWarnings("JniMissingFunction")
     public static native int StopSensors(); //cut sensors off
 
     @SuppressWarnings("JniMissingFunction")
@@ -30,7 +33,7 @@ public class CallNative {
     public static native int CloseFiles(); //a.dat, g.dat, c.dat
 
     @SuppressWarnings("JniMissingFunction")
-    public static native double PassFilePath(String path); //pass internal dir --> deprecated?
+    public static native double PassFilePath(String path); //pass internal dir --> should use
 
     @SuppressWarnings("JniMissingFunction")
     public static native boolean SensorState(); //check sensors on/off
@@ -46,9 +49,6 @@ public class CallNative {
 
     @SuppressWarnings("JniMissingFunction")
     public static native int IO(); //pass files to server
-
-    @SuppressWarnings("JniMissingFunction")
-    public static native int DataCount(int sensor); //.. ?? --> deprecated?
 
     @SuppressWarnings("JniMissingFunction")
     public static native boolean PackageData(String x); //groups accel, gyro, comp data
@@ -70,4 +70,7 @@ public class CallNative {
 
     @SuppressWarnings("JniMissingFunction")
     public static native boolean CheckData(); //checks if data has been packaged
+
+    @SuppressWarnings("JniMissingFunction")
+    public static native void SetFlankerFlag(boolean flag); //sets flanker flag
 }

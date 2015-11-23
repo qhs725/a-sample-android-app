@@ -76,10 +76,30 @@ namespace sh {
                     o::_f.x = a * __e.acceleration.x + (1.f - a) * o::_f.x;
                     o::_f.y = a * __e.acceleration.y + (1.f - a) * o::_f.y;
                     o::_f.z = a * __e.acceleration.z + (1.f - a) * o::_f.z;
-                    wti::wti_::wti__()._wti(__e); //TODO: NEEDS TO TAKE STRUCT w/ FILTERED VALS, TOO
+                    wti::wti_::wti__()._wti(__e); //TODO: NEEDS TO TAKE STRUCT w/ FILTERED VALS, ALSO
                     sh_::sh__()._0_++;
                 }
                 else if (__e.type == ASENSOR_TYPE_GYROSCOPE) {
+                    if (wti::wti_::wti__()._f_) {
+                        if (sh_::sh__()._r == true) {
+                            if (__e.vector.x > sh_::sh__().FT) {
+                                LOGI("CORRECT --> CALL SOMETHING && RECORD RESULT");
+                                sh_::sh__()._r = false;
+                            } else if (__e.vector.x < -sh_::sh__().FT) {
+                                LOGI("INCORRECT --> CALL SOMETHING && RECORD RESULT");
+                                sh_::sh__()._r = false;
+                            }
+                        }
+                        if (sh_::sh__()._l == true) {
+                            if (__e.vector.x < -sh_::sh__().FT) {
+                                LOGI("CORRECT --> CALL SOMETHING && RECORD RESULT");
+                                sh_::sh__()._l = false;
+                            } else if (__e.vector.x > sh_::sh__().FT) {
+                                LOGI("INCORRECT --> CALL SOMETHING && RECORD RESULT");
+                                sh_::sh__()._l = false;
+                            }
+                        }
+                    }
                     wti::wti_::wti__().__wti(__e);
                     sh_::sh__()._1__++;
                 }
@@ -145,6 +165,25 @@ namespace sh {
         o::_f.y = 0.f;
         o::_f.z = 0.f;
     }
+    void sh_::_o__(bool _ff_) {
+        wti::wti_::wti__()._f_ = _ff_; //_ff_ should always be true when passed to _o__()
+        _0_ = 0;
+        _1__ = 0;
+        _2___ = 0;
+        ASensorEventQueue_enableSensor(sh_::sh__().sEq, sh_::sh__().aIn);
+        assert(sh_::sh__().sEq >= 0);
+        ASensorEventQueue_enableSensor(sh_::sh__().sEq, sh_::sh__().gIn);
+        assert(sh_::sh__().sEq >= 0);
+        ASensorEventQueue_enableSensor(sh_::sh__().sEq, sh_::sh__().cIn);
+        assert(sh_::sh__().sEq >= 0);
+        st_ = true;
+        ASensorEventQueue_setEventRate(sh_::sh__().sEq, sh_::sh__().gIn, sh_::sh__().SAMPLING_RATE);
+        ASensorEventQueue_setEventRate(sh_::sh__().sEq, sh_::sh__().cIn, sh_::sh__().SAMPLING_RATE);
+        ASensorEventQueue_setEventRate(sh_::sh__().sEq, sh_::sh__().aIn, sh_::sh__().SAMPLING_RATE);
+        o::_f.x = 0.f;
+        o::_f.y = 0.f;
+        o::_f.z = 0.f;
+    }
 
     /*
      * THIS DISABLES THE SENSORS
@@ -157,12 +196,26 @@ namespace sh {
         ASensorEventQueue_disableSensor(sh_::sh__().sEq, sh_::sh__().gIn);
         ASensorEventQueue_disableSensor(sh_::sh__().sEq, sh_::sh__().aIn);
         st_ = false;
+        wti::wti_::wti__()._f_ = false;
         LOGI("NUMBER OF VALUES WRITTEN FOR -> a: %d  g: %d  c: %d \n",_0_,_1__,_2___);
+    }
+
+    /**
+     * THIS SETS FLANKER FLAGS FOR ACTIVE EVALUATION
+     */
+    void sh_::_sff_(bool _sf) {
+        if (wti::wti_::wti__()._f_) {
+            sh_::sh__()._r = false;
+            sh_::sh__()._l = false;
+            if (_sf)
+                sh_::sh__()._r = true;
+            else
+                sh_::sh__()._l = true;
+        }
     }
 
     /*
      * THIS IS HERE FOR CHECKING THE SENSORS' STATE, i.e. ON/OFF, FROM JAVA
-     * IF THE CODE IS WRITTEN CORRECTLY IT CAN BE REMOVED
      */
     bool sh_::_st() {
         if (st_)

@@ -51,16 +51,22 @@ namespace sh {
             //1. INITIALIZE METHOD, 2. ENABLE SENSOR METHOD, 3. DISABLE SENSOR METHOD
             void _o_();
             void _o__();
+            void _o__(bool _ff_);
             void _o___();
 
             //CHECKS SENSORS STATE, i.e. ON/OFF
             bool _st();
 
+            //SETS FLANKER FLAG
+            void _sff_(bool b);
+            bool _r;
+            bool _l;
+            const float FT = 0.5f;
+
         private:
             bool sOn;
             bool st_;
             const static int SAMPLING_RATE = 10000;
-
     };
 
     static int _o(int fd, int _e, void *_);
@@ -81,6 +87,7 @@ namespace wti {
             }
 
             bool _w_;
+            bool _f_ = false;
 
             //CONSTRUCTOR/DESTUCTOR -- 1. ACCELEROMETER, 2. GYROSCOPE, 3. COMPASS
             wti_();
