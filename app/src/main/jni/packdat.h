@@ -3,6 +3,7 @@
  * rg 9.10.15
  */
 
+#include <string>
 
 #ifndef UTC_VIRTUAL_ATHLETIC_TRAINER_PACKDAT_H
 #define UTC_VIRTUAL_ATHLETIC_TRAINER_PACKDAT_H
@@ -24,7 +25,7 @@ namespace pd {
         pd_();
         ~pd_();
 
-        bool __m__();
+        bool __m__(const char *x);
         bool pk_();
 
         char **__b;

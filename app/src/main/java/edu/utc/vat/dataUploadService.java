@@ -30,7 +30,7 @@ public class dataUploadService extends IntentService {
     private static final String SESSIONID = "sessionId";
     private static final String USERINPUT = "userInput";
     private static Context context = BlueMixApplication.getAppContext();
-    private static final String EXT = "txt";
+    private static final String EXT = "csv";
     private static JSONObject session_json;
     private static int num = 1;
 
@@ -58,12 +58,19 @@ public class dataUploadService extends IntentService {
         String dataString = workIntent.getDataString();
         // Do work here, based on the contents of dataString
 
-        if(num  != 0 ) {
-            getSensorData();
-          //  num = 0;
-            Log.i("UPLOAD", "NUM: " + num);
-
+        //Check if network is available
+        if (!BaseActivity.getisNetwork()) {
+            Toast.makeText(BlueMixApplication.getAppContext(), "No internet connection found", Toast.LENGTH_LONG).show();
+            return; //return if no internet connection
         }
+        //Check if C++ is still writing to file
+        if(CallNative.CheckData() == false){
+            Toast.makeText(BlueMixApplication.getAppContext(), "Unable to upload, still writing to file", Toast.LENGTH_LONG).show();
+            return; //quit is a file is being written to
+        }
+
+
+            getSensorData();
 
     }
 
@@ -87,18 +94,7 @@ public class dataUploadService extends IntentService {
 
         //TODO: Change code to see each file as a unique exercise to upload. Line 1 will contain data provided from user. Line 2 will contain mapping for the following lines. The following lines will contain sensor data in the order shown by line 2.
 
-        //Check if network is available
-        if (!BaseActivity.getisNetwork()) {
-            //Display Toast to warn user there is no detected internet connection
-            Toast.makeText(BlueMixApplication.getAppContext(), "No internet connection found", Toast.LENGTH_LONG).show();
 
-            return; //return if no internet connection
-        }
-        //Check if C++ is still writing to file
-        if(CallNative.CheckData() == false){
-            Toast.makeText(BlueMixApplication.getAppContext(), "Unable to upload, still writing to file", Toast.LENGTH_LONG).show();
-           return; //quit is a file is being written to
-        }
 
         ArrayList<String> dataFileNames = new ArrayList<String>();
         int numColumns = 0;
