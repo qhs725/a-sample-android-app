@@ -35,7 +35,7 @@ public class dataUploadService extends IntentService {
     private static int num = 1;
 
     // private static final String SERVER_IP ="http://192.168.0.105:3000/upload";
-    private static final String SERVER_IP = "http://utc-vat.mybluemix.net/upload";
+    private static final String SERVER_IP = "http://utc-vat.mybluemix.net/uploadcloudant";
     private static Socket mSocket = null;
 
 
