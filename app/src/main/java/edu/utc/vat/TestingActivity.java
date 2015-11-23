@@ -6,43 +6,35 @@
 package edu.utc.vat;
 
 import android.app.DialogFragment;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v4.app.FragmentManager;
-
 import android.content.Context;
 import android.content.Intent;
-
-import android.view.MenuItem;
 import android.view.View;
-import android.view.Menu;
 import android.view.inputmethod.InputMethodManager;
-import android.view.Gravity;
-
 import android.os.Bundle;
-
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Toast;
-
 import android.util.Log;
-
-import android.os.StrictMode;
-
 import com.ibm.mobile.services.core.IBMBluemix;
 import com.ibm.mobile.services.core.IBMCurrentUser;
-import com.ibm.mobile.services.data.IBMDataObject;
 import com.ibm.mobile.services.push.IBMPush;
-
 import java.util.HashMap;
-
-import java.lang.Object;
 import java.util.UUID;
 
 import bolts.Continuation;
 import bolts.Task;
+
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentManager;
+import android.os.StrictMode;
+import java.lang.Object;
+import java.util.UUID;
 
 
 //TODO: Add fragments for displaying timer and Exercise instructions.
@@ -99,13 +91,11 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        /*
-        if (android.os.Build.VERSION.SDK_INT > 9) {
+        //DEPRECATED ... -->
+        /*if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
-        }
-        */
+        }*/
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testing);
@@ -135,12 +125,13 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         timer.setTestingTime(DEFAULT_TESTING_TIME);
         timer.initTimer();
 
+        UUID uuid = UUID.randomUUID();
+        sessionID = uuid.toString();
+        UserAccount.setSessionID(sessionID);
+
         //use application class to maintain global state
         blApplication = (BlueMixApplication) getApplication();
         initServices(); //Initialize Bluemix connection
-
-        UUID uuid = UUID.randomUUID();
-        sessionID = uuid.toString();
 
     }
 
@@ -159,10 +150,10 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                     break;
                 } else {
                     userInfo = getUserInfo.getText().toString().trim();
+                    UserAccount.setSessionInfo(userInfo);//add user input to UserAccount
+
                     Toast.makeText(this, userInfo, Toast.LENGTH_SHORT).show();
 
-                    //Pass UserID, SessionID, and User Input to C++ then start timer
-                    CallNative.PassID(uUserID + ","+ sessionID+ "," + userInfo); //TODO: Handle commas and quotations in userInfo
                     timer.countDown(); //TODO: RETURN BOOLEAN, TRUE --> UPLOAD PROMPT?
                 }
                 status = READY;
@@ -213,7 +204,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
      */
     public void onPause() {
         super.onPause();
-
     }
 
 
@@ -222,7 +212,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
      */
     public void onResume() {
         super.onResume();
-
     }
 
 
@@ -231,7 +220,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
      */
     public void onDestroy() {
         super.onDestroy();
-
     }
 
     /**
@@ -243,16 +231,8 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         testStatus.setText(statusUpdate);
 
         if (status == STOPPED) {
-            //check if network connection is available
-            if (isNetworkAvailable()) {
-                // Session.getSensorData(); //Create Session Object and upload
-                this.startService(new Intent(this, dataUploadService.class)); //Start background service to upload
-            } else {
-                concurrentToast = Toast.makeText(this, "No internet connection found", Toast.LENGTH_LONG);
-                concurrentToast.show();
-                return;
-            }
-            Upload();
+           // Upload();
+            //TODO: why is reset commented out??
             //resetButton.performClick();
         }
     }
@@ -334,7 +314,9 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     }
 
 
-    public void initServices() {
+
+
+    public  void initServices(){
         if (UserAccount.getIdToken() != null) {
 
             // set ID TOKEN so that all subsequent Service calls
@@ -387,14 +369,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                                     Log.i(CLASS_NAME, "Registering device with the IBM Push service.");
                                     // register the device with the IBM Push service
 
-                                    //Check if there are stored session data files and upload them if there are
-                                    if (isDataFiles()) {
-                                        //***
-                                        //TODO: add call to recursive-ish session object-creating function based on files present in directory
-                                        //TODO: Create method call to Session class to check for files, add data from files present to json objects, send json obect to node server
-                                        // TODO: Call method here during bluemix initialization and after data collection
-                                        //***
-                                    }
 
                                     return push.register(deviceAlias, consumerID);
                                 }

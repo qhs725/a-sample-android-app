@@ -60,8 +60,9 @@ public class Session {
 
         //TODO: Change code to see each file as a unique exercise to upload. Line 1 will contain data provided from user. Line 2 will contain mapping for the following lines. The following lines will contain sensor data in the order shown by line 2.
 
+
         //Check if network is available
-        if (!BaseActivity.getisNetwork()) {
+        if (!BaseActivity.getisNetwork() || CallNative.CheckData() == false) {
             //Display Toast to warn user there is no detected internet connection
             Toast.makeText(BlueMixApplication.getAppContext(), "No internet connection found", Toast.LENGTH_LONG).show();
 
@@ -77,10 +78,18 @@ public class Session {
         int numColumns = 0;
         String[] userInfo = null;
         InputStream file = null;
-
+        File fileList[] = null;
         //Get files directory and get names of all files within
         File fileFinder = new File(context.getFilesDir() + "/");
-        File fileList[] = fileFinder.listFiles();
+        try {
+            if(fileFinder.listFiles() == null){
+            return;
+            }
+            fileList = fileFinder.listFiles();
+
+        } catch (Exception err) {
+            Log.e("UPLOAD", "ERROR: " + err.getMessage());
+        }
         Log.i("Files", "Size: " + fileList.length);
 
         //Look at each file in the directory

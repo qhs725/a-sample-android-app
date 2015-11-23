@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Context;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.AsyncTask;
 
@@ -39,9 +40,17 @@ public class UploadDataDialogFragment extends DialogFragment {
         builder.setMessage(R.string.dialog_upload_exercise_data)
                 .setPositiveButton(R.string.dialog_upload, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Log.i("UPLOAD","Calling PackageData");
-                        new UpdateTask().execute();
-                        Toast.makeText(context, "Uploading...", Toast.LENGTH_LONG);
+                        if (TestingActivity.getisNetwork()) {
+                            Log.i("UPLOAD", "Calling PackageData");
+
+                            //Start background service to upload
+                            getActivity().startService(new Intent(getActivity(), dataUploadService.class));
+
+                            new UpdateTask().execute();
+                            Toast.makeText(context, "Uploading...", Toast.LENGTH_LONG);
+                        } else {
+                            Toast.makeText(context, "No network connection available", Toast.LENGTH_LONG).show();
+                        }
                     }
                 })
                 .setNegativeButton(R.string.dialog_discard, new DialogInterface.OnClickListener() {
@@ -61,7 +70,8 @@ public class UploadDataDialogFragment extends DialogFragment {
 
         @Override
         protected Boolean doInBackground(Void... v) {
-             CallNative.PackageData();
+            String x = "1000";
+             CallNative.PackageData(x);
             return true;
         }
 

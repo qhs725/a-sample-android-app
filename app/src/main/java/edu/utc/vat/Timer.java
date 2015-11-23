@@ -94,7 +94,7 @@ public class Timer {
 
     //TODO: have reset kill timer
     public void countDown() {
-        CallNative.PassID("TESTING,TESTING,..,.."); //Should contain all values in .csv format...
+        CallNative.PassID(UserAccount.getSessionID() + "," + UserAccount.getuUserID() + "," + UserAccount.getSessionInfo());//TODO: Handle commas and quotations in userInfo //Should contain all values in .csv format...
         //TODO: if files are off, cut files on or read previous files first?
         CallNative.StartSensors();
 
@@ -181,6 +181,8 @@ public class Timer {
                 CallNative.WriteOff();
                 CallNative.StopSensors();
                 CallNative.CloseFiles();
+
+                ((TestingActivity)appContext).Upload();
             }
         }.start();
 
