@@ -1,5 +1,9 @@
 package edu.utc.vat;
 
+import android.util.Log;
+
+import java.io.UnsupportedEncodingException;
+
 public class UserAccount {
 
 	private static String idToken = null;
@@ -8,6 +12,8 @@ public class UserAccount {
 	private static String userPicture = null;
 	private static String accessToken = null;
 	private static String uUserID = null;
+	private static String sessionID = null;
+	private static String sessionInfo = null;
 	
 	public static String getPicture() {
 		return userPicture;
@@ -45,5 +51,22 @@ public class UserAccount {
 	public static void setuUserID(String uUserID) {
 		UserAccount.uUserID = uUserID;
 	}
+	public static String getSessionID() {
+		return sessionID;
+	}
+	public static void setSessionID(String sessionID) {
+		UserAccount.sessionID = sessionID;
+	}
+    public static String getSessionInfo() {
+        return sessionInfo;
+    }
+    public static void setSessionInfo(String sessionInfo) {
+        try {
+            UserAccount.sessionInfo = java.net.URLEncoder.encode(sessionInfo, "UTF-8");
+        }
+        catch(UnsupportedEncodingException err){
+            Log.d("USERACCOUNT", "Unsupported Encoding Exception thrown");
+        }
+    }
 
 }

@@ -6,42 +6,35 @@
 package edu.utc.vat;
 
 import android.app.DialogFragment;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v4.app.FragmentManager;
-
 import android.content.Context;
 import android.content.Intent;
-
-import android.view.MenuItem;
 import android.view.View;
-import android.view.Menu;
 import android.view.inputmethod.InputMethodManager;
-import android.view.Gravity;
-
 import android.os.Bundle;
-
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Toast;
-
 import android.util.Log;
-
-import android.os.StrictMode;
-
 import com.ibm.mobile.services.core.IBMBluemix;
 import com.ibm.mobile.services.core.IBMCurrentUser;
-import com.ibm.mobile.services.data.IBMDataObject;
 import com.ibm.mobile.services.push.IBMPush;
-
 import java.util.HashMap;
-
-import java.lang.Object;
+import java.util.UUID;
 
 import bolts.Continuation;
 import bolts.Task;
+
+import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentManager;
+import android.os.StrictMode;
+import java.lang.Object;
+import java.util.UUID;
 
 
 //TODO: Add fragments for displaying timer and Exercise instructions.
@@ -88,6 +81,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     public BlueMixApplication blApplication = null;
     private static final String CLASS_NAME = "LoginActivity";
     private String uUserID = null;
+    private String sessionID = null;
 
 
     //TODO: create break for testing timer w/ jump test, i.e. if balanced prior to max/default time
@@ -97,13 +91,11 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        /*
-        if (android.os.Build.VERSION.SDK_INT > 9) {
+        //DEPRECATED ... -->
+        /*if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
-        }
-        */
+        }*/
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testing);
@@ -133,6 +125,10 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         timer.setTestingTime(DEFAULT_TESTING_TIME);
         timer.initTimer();
 
+        UUID uuid = UUID.randomUUID();
+        sessionID = uuid.toString();
+        UserAccount.setSessionID(sessionID);
+
         //use application class to maintain global state
         blApplication = (BlueMixApplication) getApplication();
         initServices(); //Initialize Bluemix connection
@@ -149,12 +145,15 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                 }
                 if (status != READY) {
                     Toast.makeText(this, "Please enter your NAME, etc...",
-                        Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_SHORT).show();
                     resetButton.performClick();
                     break;
                 } else {
                     userInfo = getUserInfo.getText().toString().trim();
+                    UserAccount.setSessionInfo(userInfo);//add user input to UserAccount
+
                     Toast.makeText(this, userInfo, Toast.LENGTH_SHORT).show();
+
                     timer.countDown(); //TODO: RETURN BOOLEAN, TRUE --> UPLOAD PROMPT?
                 }
                 status = READY;
@@ -170,14 +169,14 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                 //TODO: kill timer if running
                 getUserInfo.setText("");
                 getUserInfo.setOnClickListener(new View.OnClickListener() {
-                       public void onClick(View view) {
-                           getUserInfo.requestFocus();
-                           InputMethodManager inputManager = (InputMethodManager)
-                                   getSystemService(Context.INPUT_METHOD_SERVICE);
-                           inputManager.showSoftInput(getUserInfo,
-                                   InputMethodManager.SHOW_IMPLICIT);
-                       }
-                   }
+                                                   public void onClick(View view) {
+                                                       getUserInfo.requestFocus();
+                                                       InputMethodManager inputManager = (InputMethodManager)
+                                                               getSystemService(Context.INPUT_METHOD_SERVICE);
+                                                       inputManager.showSoftInput(getUserInfo,
+                                                               InputMethodManager.SHOW_IMPLICIT);
+                                                   }
+                                               }
                 );
                 break;
             }
@@ -192,7 +191,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                 getUserInfo.setText("");
                 getUserInfo.requestFocus();
                 InputMethodManager inputManager = (InputMethodManager)
-                    getSystemService(Context.INPUT_METHOD_SERVICE);
+                        getSystemService(Context.INPUT_METHOD_SERVICE);
                 inputManager.showSoftInput(getUserInfo, InputMethodManager.SHOW_IMPLICIT);
                 break;
             }
@@ -205,7 +204,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
      */
     public void onPause() {
         super.onPause();
-
     }
 
 
@@ -214,7 +212,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
      */
     public void onResume() {
         super.onResume();
-
     }
 
 
@@ -223,37 +220,28 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
      */
     public void onDestroy() {
         super.onDestroy();
-
     }
 
     /**
      * Methods for updating UI with time and status from timer
-     *
      */
     public void statusUpdate(int status) {
         Log.i("update", "statusUpdate");
-        String statusUpdate  = statusList.get(status);
+        String statusUpdate = statusList.get(status);
         testStatus.setText(statusUpdate);
 
-        if(status == STOPPED) {
-            //check if network connection is available
-            if(isNetworkAvailable()){
-                createSession(); //Create Session Object and upload
-            }
-            else{
-                concurrentToast = Toast.makeText(this, "No internet connection found", Toast.LENGTH_LONG);
-                concurrentToast.show();
-                return;
-            }
-            Upload();
+        if (status == STOPPED) {
+           // Upload();
+            //TODO: why is reset commented out??
             //resetButton.performClick();
         }
     }
+
     public void timerUpdate(long time) {
-        Log.i("update","timerUpdate");
-        time = time/1000;
-        timerTime = (int)time;
-        if (time <= 60);
+        Log.i("update", "timerUpdate");
+        time = time / 1000;
+        timerTime = (int) time;
+        if (time <= 60) ;
         else {
             //TODO: add support for times > 60s
         }
@@ -277,11 +265,12 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     /**
      * Fill hash maps with strings for view corresponding to constant ints
      */
-    public void completeExerciseList () {
+    public void completeExerciseList() {
         exerciseList.put(1, "One Leg Squat Hold Test");
         exerciseList.put(2, "One Leg Jump Balance Test");
     }
-    public void completeStatusList () {
+
+    public void completeStatusList() {
         statusList.put(-1, "Enter NAME, etc...");
         statusList.put(3, "Press START to begin...");
         statusList.put(2, "Countdown to test...");
@@ -293,7 +282,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
     /**
      * Intent creation also passes exercise
-     * */
+     */
     public static Intent createIntent(Context context, int e) {
         exercise = e;
         return new Intent(context, TestingActivity.class);
@@ -316,9 +305,8 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     }
 
 
-
     void showToast(String message) {
-        if(concurrentToast != null) {
+        if (concurrentToast != null) {
             concurrentToast.cancel();
         }
         concurrentToast = Toast.makeText(this, message, Toast.LENGTH_LONG);
@@ -327,12 +315,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
 
 
-
-    public void createSession() {
-        //Call to upload session data files if any exist
-        Session.getSensorData();
-
-    }
 
     public  void initServices(){
         if (UserAccount.getIdToken() != null) {
@@ -380,21 +362,13 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                                     Log.i(CLASS_NAME, "Done refreshing Session list.");
 
                                     // retrieve instance of the IBM Push service
-                                    if(push == null) {
+                                    if (push == null) {
                                         push = IBMPush.getService();
                                     }
 
                                     Log.i(CLASS_NAME, "Registering device with the IBM Push service.");
                                     // register the device with the IBM Push service
 
-                                    //Check if there are stored session data files and upload them if there are
-                                    if(isDataFiles()){
-                                        //***
-                                        //TODO: add call to recursive-ish session object-creating function based on files present in directory
-                                        //TODO: Create method call to Session class to check for files, add data from files present to json objects, send json obect to node server
-                                        // TODO: Call method here during bluemix initialization and after data collection
-                                        //***
-                                    }
 
                                     return push.register(deviceAlias, consumerID);
                                 }

@@ -91,7 +91,9 @@ public class IBMDataTest extends BaseActivity {
         });
 
             //Call to uppload session data files
-            Session.getSensorData();
+          //  Session.getSensorData();
+
+        this.startService(new Intent(this, dataUploadService.class)); //Start background service to upload
 
     }
 
