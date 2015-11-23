@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import edu.utc.vat.util.GoogleTokenManager;
 
@@ -39,7 +40,9 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener{
 	    mStatus = (TextView) findViewById(R.id.connection_msg);
 	    statusWindow = (TextView) findViewById(R.id.status_msg);
 
-	    
+
+        String dirPath = getFilesDir().toString();
+       // Toast.makeText(this, dirPath, Toast.LENGTH_LONG).show();
 	}
 
 	protected void onActivityResult(final int requestCode, final int resultCode,
