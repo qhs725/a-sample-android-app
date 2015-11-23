@@ -11,6 +11,8 @@
  */
 
 
+#include <cassert>
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -32,6 +34,18 @@ extern "C" {
 /*
  * SENSORS HANDLER
  */
+namespace o {
+    const float ALPHA = 0.1f; //ALPHA FOR FILTERING
+
+    struct _ad {
+        double x;
+        double y;
+        double z;
+    };
+
+    _ad _f;
+}
+
 namespace sh {
 
     /*
@@ -53,14 +67,18 @@ namespace sh {
 
     /*
      * THIS IS THE SENSOR 'CALLBACK' LOOP EQUIVALENT
-     * TODO: TRY AGAIN ON SEPARATE THREAD
+     * TODO: TRY AGAIN ON SEPARATE THREAD -- EVENTUALLY (IS IT ON SEPARATE THREAD BY DEFAULT .. ??)
      */
     static int _o(int fd, int _e, void *_) {
         ASensorEvent __e;
+        float a = o::ALPHA;
         while (ASensorEventQueue_getEvents(sh_::sh__().sEq, &__e, 1) > 0) {
             if (wti::wti_::wti__()._w_) {
                 if (__e.type == ASENSOR_TYPE_ACCELEROMETER) {
-                    wti::wti_::wti__()._wti(__e);
+                    o::_f.x = a * __e.acceleration.x + (1.f - a) * o::_f.x;
+                    o::_f.y = a * __e.acceleration.y + (1.f - a) * o::_f.y;
+                    o::_f.z = a * __e.acceleration.z + (1.f - a) * o::_f.z;
+                    wti::wti_::wti__()._wti(__e); //TODO: NEEDS TO TAKE STRUCT w/ FILTERED VALS, TOO
                     sh_::sh__()._0_++;
                 }
                 else if (__e.type == ASENSOR_TYPE_GYROSCOPE) {
@@ -82,42 +100,52 @@ namespace sh {
      * THEY'RE UNECESSARY
      */
     void sh_::_o_() {
-
-        _0_ = 0;
-        _1__ = 0;
-        _2___ = 0;
-
         wti::wti_::wti__()._fopen();
 
         sh_::sh__().lpr = ALooper_forThread();
 
         if (sh_::sh__().lpr == NULL)
             sh_::sh__().lpr = ALooper_prepare(ALOOPER_PREPARE_ALLOW_NON_CALLBACKS);
+        assert(sh_::sh__().lpr != NULL); //TODO: DEBUG CRASH WHEN ATTEMPTING 2nd TEST -- BUG .. ??
 
         sh_::sh__().sMg = ASensorManager_getInstance();
+        assert(sh_::sh__().sMg != NULL);
 
         sh_::sh__().aIn = ASensorManager_getDefaultSensor(
                 sh_::sh__().sMg, ASENSOR_TYPE_ACCELEROMETER);
+        assert(sh_::sh__().aIn != NULL);
         sh_::sh__().gIn = ASensorManager_getDefaultSensor(
                 sh_::sh__().sMg, ASENSOR_TYPE_GYROSCOPE);
+        assert(sh_::sh__().gIn != NULL);
         sh_::sh__().cIn = ASensorManager_getDefaultSensor(
                 sh_::sh__().sMg, ASENSOR_TYPE_MAGNETIC_FIELD);
+        assert(sh_::sh__().cIn != NULL);
 
         sh_::sh__().sEq = ASensorManager_createEventQueue(
                 sh_::sh__().sMg, sh_::sh__().lpr, 3, _o, _);
+        assert(sh_::sh__().sEq != NULL);
     }
 
     /*
      * THIS ENABLES THE SENSORS AND SETS THE SAMPLING RATE
      */
     void sh_::_o__() {
+        _0_ = 0;
+        _1__ = 0;
+        _2___ = 0;
         ASensorEventQueue_enableSensor(sh_::sh__().sEq, sh_::sh__().aIn);
+        assert(sh_::sh__().sEq >= 0);
         ASensorEventQueue_enableSensor(sh_::sh__().sEq, sh_::sh__().gIn);
+        assert(sh_::sh__().sEq >= 0);
         ASensorEventQueue_enableSensor(sh_::sh__().sEq, sh_::sh__().cIn);
+        assert(sh_::sh__().sEq >= 0);
         st_ = true;
         ASensorEventQueue_setEventRate(sh_::sh__().sEq, sh_::sh__().gIn, sh_::sh__().SAMPLING_RATE);
         ASensorEventQueue_setEventRate(sh_::sh__().sEq, sh_::sh__().cIn, sh_::sh__().SAMPLING_RATE);
         ASensorEventQueue_setEventRate(sh_::sh__().sEq, sh_::sh__().aIn, sh_::sh__().SAMPLING_RATE);
+        o::_f.x = 0.f;
+        o::_f.y = 0.f;
+        o::_f.z = 0.f;
     }
 
     /*
@@ -126,11 +154,12 @@ namespace sh {
      * SENSORS NEED TO BE DISABLED.  IT'S BEST TO JUST CUT THEM ON FOR THE TEST THEN OFF AGAIN.
      */
     void sh_::_o___() {
+        //TODO: CHECK IF NEED TO RE-INIT SENSORS AFTER DISABLE
         ASensorEventQueue_disableSensor(sh_::sh__().sEq, sh_::sh__().cIn);
         ASensorEventQueue_disableSensor(sh_::sh__().sEq, sh_::sh__().gIn);
         ASensorEventQueue_disableSensor(sh_::sh__().sEq, sh_::sh__().aIn);
         st_ = false;
-        LOGI("NO VALUES WRITTEN FOR -> a: %d  g: %d  c: %d \n",_0_,_1__,_2___);
+        LOGI("NUMBER OF VALUES WRITTEN FOR -> a: %d  g: %d  c: %d \n",_0_,_1__,_2___);
     }
 
     /*
@@ -217,21 +246,21 @@ namespace wti {
         } catch(...) {
             LOGI("FLIE PATH ERROR OPENING FILE a.dat");
         }
-        //fprintf(fa___,"accelx,accely,accelz,acceltimestamp\n");
+        fprintf(fa___,"accelx,accely,accelz,acceltimestamp\n");
         //OPEN COMPASS
         try {
             fc_ = fopen("/data/data/edu.utc.vat/files/c.dat", "w");
         } catch(...) {
             LOGI("FLIE PATH ERROR OPENING c.dat");
         }
-        //fprintf(fc_,"magx,magy,magz,magtimestamp\n");
+        fprintf(fc_,"magx,magy,magz,magtimestamp\n");
         //OPEN GYROSCOPE
         try {
             fg__ = fopen("/data/data/edu.utc.vat/files/g.dat", "w");
         } catch(...){
             LOGI("FILE PATH ERROR OPENING g.dat");
         }
-        //fprintf(fg__,"gyrox,gyroy,gyroz,gyrotimestamp\n");
+        fprintf(fg__,"gyrox,gyroy,gyroz,gyrotimestamp\n");
     }
 
     /*

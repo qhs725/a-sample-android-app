@@ -32,6 +32,19 @@ namespace p {
 extern "C" {
 #endif
 
+namespace o {
+    std::string fs(int no) {
+        std::string i = std::to_string(no);
+        const char *s = i.c_str();
+        const char *e = ".csv";
+        const char *p = "/data/data/edu.utc.vat/files/";
+        char fs[strlen(p)+strlen(s)+strlen(e)+1];
+        snprintf(fs,sizeof(fs),"%s%s%s",p,s,e);
+        std::string f(fs);
+        return f;
+    }
+}
+
 
 namespace pd {
 
@@ -64,8 +77,16 @@ namespace pd {
     }
 
     void *pd_::rw_(void *__A) {
+        int c = 0;
+        try {
+            std::fstream f("/data/data/edu.utc.vat/files/filecount.dat", std::ios_base::in);
+            f >> c;
+            f.close();
+        } catch (...) {
+            LOGI("CREATING NEW COUNT FILE -- NO SESSION FILES IN FILES DIR");
+        }
         const char *_s = ((_ *)__A)->_s;
-        const char *_s2 = ((_ *)__A)->_s2;
+        //const char *_s2 = ((_ *)__A)->_s2;
         LOGI("PACKAGING into first line .csv: %s", _s);
         int _c0 = sh::sh_::sh__()._0_;
         int _c1 = sh::sh_::sh__()._1__;
@@ -78,12 +99,18 @@ namespace pd {
         std::ifstream __i1 ("/data/data/edu.utc.vat/files/g.dat", std::ifstream::in);
         std::ifstream __i2 ("/data/data/edu.utc.vat/files/c.dat", std::ifstream::in);
         //std::ofstream __o ("/data/data/edu.utc.vat/files/data.csv", std::ofstream::out);
-        const char *e = ".csv";
+        std::string cc = o::fs(c);
+        const char *fs = cc.c_str();
+        /*const char *e = ".csv";
         const char *p = "/data/data/edu.utc.vat/files/";
         char fs[strlen(p)+strlen(_s2)+strlen(e)+1];
-        snprintf(fs,sizeof(fs),"%s%s%s",p,_s2,e);
+        snprintf(fs,sizeof(fs),"%s%s%s",p,_s2,e);*/
         std::ofstream __o (fs,std::ofstream::out);
-        LOGI("THIS IS FILE PATH: %s", fs);
+        FILE *ff;
+        ff = fopen("/data/data/edu.utc.vat/files/filecount.dat","w");
+        fprintf(ff,"%d",c);
+        fclose(ff);
+        //LOGI("THIS IS FILE PATH: %s", fs);
         __o << _s << "\n"; //this writes the UUIDs and personal info
         int _cc = 0;
         _c++;
