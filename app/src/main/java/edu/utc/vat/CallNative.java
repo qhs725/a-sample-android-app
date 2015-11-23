@@ -33,13 +33,13 @@ public class CallNative {
     public static native double PassFilePath(String path); //pass internal dir --> deprecated?
 
     @SuppressWarnings("JniMissingFunction")
-    public static native boolean SensorState(); //check sensors on/off --> deprecated?
+    public static native boolean SensorState(); //check sensors on/off
 
     @SuppressWarnings("JniMissingFunction")
-    public static native boolean FilesOpen(); //checks files open --> deprecated?
+    public static native boolean FilesOpen(); //checks files open
 
     @SuppressWarnings("JniMissingFunction")
-    public static native int WriteOn(); //starts writing to files in sensor loop --> deprecated?
+    public static native int WriteOn(); //starts writing to files in sensor loop
 
     @SuppressWarnings("JniMissingFunction")
     public static native int WriteOff(); //stops writing to files in sensor loop

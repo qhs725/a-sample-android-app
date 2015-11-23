@@ -30,7 +30,7 @@ namespace pd {
 
         char **__b;
         int _c_;
-        bool _pd;
+        bool _pd = true;
 
     private:
         static void *rw_(void *);

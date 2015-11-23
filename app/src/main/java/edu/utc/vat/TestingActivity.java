@@ -1,6 +1,8 @@
 /**
  * UTC Virtual Athletic Trainer v0.000
  * rg 9/9/15
+ *
+ * TODO: Add fragments for displaying timer and Exercise instructions.
  */
 
 package edu.utc.vat;
@@ -33,9 +35,6 @@ import android.support.v4.app.FragmentManager;
 import android.os.StrictMode;
 import java.lang.Object;
 import java.util.UUID;
-
-
-//TODO: Add fragments for displaying timer and Exercise instructions.
 
 
 public class TestingActivity extends BaseActivity implements View.OnClickListener {
@@ -80,19 +79,11 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     private static final String CLASS_NAME = "LoginActivity";
     private String uUserID = null;
 
-
-    //TODO: create break for testing timer w/ jump test, i.e. if balanced prior to max/default time
-
     private Timer timer;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        //DEPRECATED ... -->
-        /*if (android.os.Build.VERSION.SDK_INT > 9) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }*/
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testing);
@@ -134,8 +125,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         switch (view.getId()) {
             case R.id.TestingStartButton: {
                 if (getUserInfo.getText().toString().trim().length() > 0) {
-                    //timer.passUserInfo(userInfo); //TODO: pass to native
-
                     status = READY;
                 }
                 if (status != READY) {
@@ -144,22 +133,23 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                     resetButton.performClick();
                     break;
                 } else {
-                    userInfo = getUserInfo.getText().toString().trim();
-                    Toast.makeText(this, userInfo, Toast.LENGTH_SHORT).show();
-                    CallNative.PassID(UserAccount.getSessionID() + "," + uUserID + "," + userInfo);
-                    timer.countDown(); //TODO: RETURN BOOLEAN, TRUE --> UPLOAD PROMPT?
+                    if (status != COUNTDOWN && status != TESTING) {
+                        userInfo = getUserInfo.getText().toString().trim();
+                        CallNative.PassID(UserAccount.getSessionID() + "," + uUserID + "," + userInfo);
+                        timer.countDown();
+                        status = COUNTDOWN;
+                        break;
+                    } else {
+                        showToast("TEST IN PROGRESS, PLEASE RESET TO START NEW TEST");
+                        break;
+                    }
                 }
-                status = READY;
-                break;
             }
             case R.id.TestingResetButton: {
                 timer.stopTimer();
-                //timer.delete();
                 timerUpdate(0);
                 status = VOID;
                 statusUpdate(status);
-                //Toast.makeText(this, "Reseting..", Toast.LENGTH_LONG).show();
-                //TODO: kill timer if running
                 getUserInfo.setText("");
                 getUserInfo.setOnClickListener(new View.OnClickListener() {
                        public void onClick(View view) {
@@ -174,7 +164,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                 break;
             }
             case R.id.TestingInstructionsButton: {
-                //TODO: Something to play concurrent Toasts for instructions w/ hash map
                 showToast("ENTER EXERCISE INSTRUCTIONS HERE... \n INSTRUCTION 1..\n " +
                         "INSTRUCTION 2..\n INSTRUCTION 3..\n INSTRUCTION 4..\n" +
                         " ...\n INSTRUCTION N");
@@ -196,6 +185,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
      * onPause()
      */
     public void onPause() {
+        resetButton.performClick();
         super.onPause();
     }
 
@@ -204,6 +194,8 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
      * onResume()
      */
     public void onResume() {
+        if (status != VOID)
+            resetButton.performClick();
         super.onResume();
     }
 
@@ -212,6 +204,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
      * onDestroy()
      */
     public void onDestroy() {
+        resetButton.performClick();
         super.onDestroy();
     }
 
@@ -226,17 +219,13 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
         if(status == STOPPED) {
             //check if network connection is available
-            if(isNetworkAvailable()){
+            if (isNetworkAvailable()) {
                 createSession(); //Create Session Object and upload
-            }
-            else{
+            } else {
                 concurrentToast = Toast.makeText(this, "No internet connection found", Toast.LENGTH_LONG);
                 concurrentToast.show();
                 return;
             }
-           // Upload();
-            //TODO: why is reset commented out??
-            //resetButton.performClick();
         }
     }
     public void timerUpdate(long time) {
@@ -245,21 +234,18 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         timerTime = (int)time;
         if (time <= 60);
         else {
-            //TODO: add support for times > 60s
+            showToast("Currently there is no support for tests over 60 seconds.");
         }
         timerString = timerToString(timerTime);
         timerClock.setText(timerString);
     }
-
-
     public int Upload() {
-        status = UPLOADING;
+        status = READY;
         String statusUpdate = statusList.get(status);
         testStatus.setText(statusUpdate);
-        Log.i("TESTING", "Upload method call");
         DialogFragment uploadData = new UploadDataDialogFragment();
         uploadData.show(getFragmentManager(), "uploadData");
-        Log.i("TESTING", "Upload method return");
+        statusUpdate(status);
         return 0;
     }
 
@@ -306,7 +292,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     }
 
 
-
     void showToast(String message) {
         if(concurrentToast != null) {
             concurrentToast.cancel();
@@ -316,13 +301,12 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     }
 
 
-
-
+    //TODO: is this deprecated?
     public void createSession() {
         //Call to upload session data files if any exist
       //  Session.getSensorData();
-
     }
+
 
     public  void initServices(){
         if (UserAccount.getIdToken() != null) {

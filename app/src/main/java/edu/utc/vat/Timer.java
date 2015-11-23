@@ -14,6 +14,7 @@ import android.media.RingtoneManager;
 import android.media.Ringtone;
 
 import android.net.Uri;
+import android.telecom.Call;
 import android.util.Log;
 
 import java.lang.Exception;
@@ -32,7 +33,7 @@ public class Timer {
     private long testingTime = 0;
     private long countDownTimeConvert;
     private long testingTimeConvert;
-    private boolean upload;
+    private boolean timeron;
 
     public static final int STOPPED = 0;
     public static final int COUNTDOWN = 2;
@@ -41,9 +42,10 @@ public class Timer {
     public int state;
 
     /**
-     * This accepts time in seconds or milliseconds, so,
+     * Overloaded to accept time in seconds or milliseconds, so,
      * later, if we want to run tests for an arbitrary time,
-     * to be set by the user, we can do so
+     * to be set by the user, we can do so.  Naturally, it is assumed
+     * that any test time is less than 1000s.
      */
     public void setCountDownTime(long time) { if (time >= 1000) time = time/1000;
         countDownTime = time; }
@@ -54,41 +56,57 @@ public class Timer {
     public void setTestingTime(int time) { if (time >= 1000) time = time/1000;
         testingTime = (long)time; }
 
-
     public Timer(Context context) {
         appContext = context;
     }
 
-
     public void initTimer() {
         state = READY;
-    }
-
-    //TODO: pass to native
-    public void passUserInfo (String info) {
     }
 
     public void stopTimer() {
         if (state == TESTING) {
             testingTimer.cancel();
             CallNative.WriteOff();
-            CallNative.StopSensors();
-            CallNative.CloseFiles();
-        } else {
+            if (CallNative.SensorState())
+                CallNative.StopSensors();
+            if (CallNative.CheckData())
+                CallNative.CloseFiles();
+            timeron = false;
+            state = READY;
+        } else if (state == COUNTDOWN) {
             countDownTimer.cancel();
-            CallNative.CloseFiles();
+            Log.i("timer","TRIED KILLING COUNTDOWN TIMER");
+            if(CallNative.FilesOpen())
+                CallNative.CloseFiles();
+            timeron = false;
+            state = READY;
         }
-        CallNative.OpenFiles();
     }
 
-    //TODO: have reset kill timer
     public void countDown() {
-        CallNative.PassID("TESTING,TESTING,..,.."); //Should contain all values in .csv format...
-        //TODO: if files are off, cut files on or read previous files first?
+        if (state != TESTING)
+            state = COUNTDOWN;
+        if (timeron) {
+            stopTimer();
+            ((TestingActivity)appContext).showToast("RESTARTING TEST\nCOUNTDOWN ...");
+        }
+        timeron = true;
+        state = COUNTDOWN;
+
+        //if files aren't open, open for current test
+        if (!CallNative.FilesOpen()) {
+            if (CallNative.CheckData())
+                CallNative.OpenFiles();
+            else {
+                Log.e("timer", "ERROR OPENING FILES");
+                return;
+            }
+        }
+        CallNative.PassID("ENTER,APPROPRIATE,DATA,IN,COUNTDOWN,TIMER,CallNative.PassID() ..");
         CallNative.StartSensors();
 
-        if (state != STOPPED) {;}
-            //TODO: reset/continue?
+        if (state != STOPPED) {Log.i("timer","ERROR, INCORRECT STATE IN COUNTDOWN TIMER");}
 
         if (countDownTime > 0)
             countDownTimeConvert = countDownTime * 1000 + 100;
@@ -98,16 +116,14 @@ public class Timer {
             @Override
             public void onTick(long timeRemaining) {
 
-                state = COUNTDOWN;
+                //state = COUNTDOWN;
+                ((TestingActivity) appContext).statusUpdate(state);
                 try {
                     ((TestingActivity) appContext).timerUpdate(timeRemaining);
-                    ((TestingActivity) appContext).statusUpdate(state);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.e("timer","running countdown error");
                 }
-
-                Log.i("timer","running countdown");
 
                 try {
                     Ringtone playSound = RingtoneManager.getRingtone(appContext, sound);
@@ -123,19 +139,13 @@ public class Timer {
                 state = TESTING;
                 testing();
             }
-
         }.start();
-
     }
 
-
-    //TODO: have reset kill timer
     public void testing() {
-
+        state = TESTING;
         CallNative.WriteOn();
 
-        if (state != TESTING) {;}
-            //TODO: reset/continue?
 
         if (testingTime > 0)
             testingTimeConvert = testingTime * 1000 + 100;
@@ -144,13 +154,13 @@ public class Timer {
 
             @Override
             public void onTick(long timeRemaining) {
+                state = TESTING;
                 ((TestingActivity)appContext).timerUpdate(timeRemaining);
                 ((TestingActivity)appContext).statusUpdate(state);
             }
 
             @Override
             public void onFinish() {
-
                 try {
                     Ringtone playSound = RingtoneManager.getRingtone(appContext, sound);
                     playSound.play();
@@ -159,18 +169,21 @@ public class Timer {
                 }
 
                 state = STOPPED;
-
                 ((TestingActivity)appContext).timerUpdate(0);
                 ((TestingActivity)appContext).statusUpdate(state);
-
                 CallNative.WriteOff();
                 CallNative.StopSensors();
                 CallNative.CloseFiles();
-
                 ((TestingActivity)appContext).Upload();
+
+                //Open files for next test -- if packing not finished, open at new countdown timer
+                if(CallNative.CheckData())
+                    CallNative.OpenFiles();
+                else
+                    Log.i("timer","CANNOT OPEN NEW FILES PRIOR TO PACKAGING");
+                timeron = false;
             }
         }.start();
-
     }
 
 }

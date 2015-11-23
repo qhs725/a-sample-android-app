@@ -43,8 +43,7 @@ namespace o {
         std::string f(fs);
         return f;
     }
-}
-
+} // namespace o
 
 namespace pd {
 
@@ -86,31 +85,25 @@ namespace pd {
             LOGI("CREATING NEW COUNT FILE -- NO SESSION FILES IN FILES DIR");
         }
         const char *_s = ((_ *)__A)->_s;
-        //const char *_s2 = ((_ *)__A)->_s2;
         LOGI("PACKAGING into first line .csv: %s", _s);
         int _c0 = sh::sh_::sh__()._0_;
         int _c1 = sh::sh_::sh__()._1__;
         int _c2 = sh::sh_::sh__()._2___;
         int _c = std::min(std::min(_c0, _c1), _c2);
-        pd_::pd__().__b = new char*[_c]; //TODO: CLEAN THIS  (SEE BELOW .. )
+        pd_::pd__().__b = new char*[_c];
         std::string _l, _l0, _l1, _l2;
         //TODO: FIND ALTERNATIVE TO HARDCODING PATH -- EVENTUALLY
         std::ifstream __i0 ("/data/data/edu.utc.vat/files/a.dat", std::ifstream::in);
         std::ifstream __i1 ("/data/data/edu.utc.vat/files/g.dat", std::ifstream::in);
         std::ifstream __i2 ("/data/data/edu.utc.vat/files/c.dat", std::ifstream::in);
-        //std::ofstream __o ("/data/data/edu.utc.vat/files/data.csv", std::ofstream::out);
         std::string cc = o::fs(c);
         const char *fs = cc.c_str();
-        /*const char *e = ".csv";
-        const char *p = "/data/data/edu.utc.vat/files/";
-        char fs[strlen(p)+strlen(_s2)+strlen(e)+1];
-        snprintf(fs,sizeof(fs),"%s%s%s",p,_s2,e);*/
         std::ofstream __o (fs,std::ofstream::out);
         FILE *ff;
         ff = fopen("/data/data/edu.utc.vat/files/filecount.dat","w");
         fprintf(ff,"%d",c);
         fclose(ff);
-        //LOGI("THIS IS FILE PATH: %s", fs);
+        LOGI("THE NEW FILE IS: %s", fs);
         __o << _s << "\n"; //this writes the UUIDs and personal info
         int _cc = 0;
         _c++;
@@ -123,14 +116,14 @@ namespace pd {
             strcpy(pd_::pd__().__b[_cc], _l.c_str());
             __o << _l << "\n";
         }
-        LOGI("FINISHED PACKAGING");
+        LOGI("FINISHED PACKAGING, %d LINES IN NEW FILE",_cc);
         __i0.close();
         __i1.close();
         __i2.close();
         __o.close();
         pd_::pd__()._c_ = _c;
         pd_::pd__()._pd = true;
-        delete[] pd_::pd__().__b; //TODO: VERIFY MEM CLEANED
+        delete[] pd_::pd__().__b;
     }
 
     bool pd_::pk_() {
