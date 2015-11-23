@@ -53,7 +53,6 @@ public class CallNative {
     @SuppressWarnings("JniMissingFunction")
     public static native boolean PackageData(String x); //groups accel, gyro, comp data
 
-
     @SuppressWarnings("JniMissingFunction")
     public static native int Render(int o, int oo); //gl renderer
 

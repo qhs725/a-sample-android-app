@@ -14,6 +14,7 @@ public class UserAccount {
 	private static String uUserID = null;
 	private static String sessionID = null;
 	private static String sessionInfo = null;
+
 	
 	public static String getPicture() {
 		return userPicture;
@@ -68,5 +69,4 @@ public class UserAccount {
             Log.d("USERACCOUNT", "Unsupported Encoding Exception thrown");
         }
     }
-
 }
