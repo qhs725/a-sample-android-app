@@ -1,6 +1,9 @@
 /**
  * UTC Virtual Athletic Trainer v0.00
  * 10/16/15
+ * TODO: SET FLANKER PACE AND FRAME RATE IN MENU
+ * TODO: SET ALL FLANKER VARS IN MENU
+ * TODO: GET FLANKER DEFAULT VARS FROM SERVER
  */
 
 package edu.utc.vat.flanker;
@@ -19,8 +22,7 @@ import edu.utc.vat.CallNative;
 public class FlankerRenderer implements GLSurfaceView.Renderer {
 
     private Context me;
-    private float pace = 0.9f;
-    private int sprite = 0;
+    private int sprite = 0; //0 demo flanker, 1 demo animation, TODO: 2-Good Flanker
     private int loop;
     private int slide;
 
@@ -32,42 +34,12 @@ public class FlankerRenderer implements GLSurfaceView.Renderer {
     }
 
     private Flanker test = new Flanker(me);
+    private float pace = 0.9f; //TODO: get pace from Flanker: test.getPace()
 
     public void onDrawFrame(GL10 gl) {
-        //long sTime, eTime, dT; sTime = SystemClock.uptimeMillis() % 1000;
-        if (sleepy == true) {
-            try {
-                Thread.sleep((int)(pace*1000));
-                sleepy = false;
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        if (loop == 300)
-            loop = 0;
-        if (loop >= 60 && loop < 66) {
-            slide = 0;
-        } else if (loop >= 120 && loop < 132) {
-            slide = 1;
-        } else if (loop >= 180 && loop < 198) {
-            slide = 2;
-        } else if (loop >= 240 && loop < 264) {
-            slide = 3;
-        } else {
-            slide = 4;
-        }
+        slide = test.getSlide();
+        assert(slide > -1);
         CallNative.Render(slide, 0);
-        loop++;
-        /*
-        eTime = SystemClock.uptimeMillis() % 1000;
-        dT = (sTime - eTime);
-        if (dT < 25) {
-            try {
-                Thread.sleep(25 - dT);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }*/
     }
 
     public void onSurfaceChanged(GL10 gl, int w, int h) {
@@ -89,5 +61,7 @@ public class FlankerRenderer implements GLSurfaceView.Renderer {
         sprite = test.currentSprite();
         CallNative.Load(sprite);
         CallNative.Render(0, 0);
+        slide = 4;
+        test.startFlanker();
     }
 }

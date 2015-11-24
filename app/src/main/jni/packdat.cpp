@@ -123,7 +123,7 @@ namespace pd {
         __o.close();
         pd_::pd__()._c_ = _c;
         pd_::pd__()._pd = true;
-        delete[] pd_::pd__().__b;
+        delete pd_::pd__().__b; //or delete[]
     }
 
     bool pd_::pk_() {
