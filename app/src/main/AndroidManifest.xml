@@ -64,6 +64,15 @@
                 android:value="edu.utc.vat.TestingActivity" />
         </activity>
 
+        <activity
+            android:name="edu.utc.vat.bluetooth.BtActivity"
+            android:label="@string/title_testing_activity"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.utc.vat.TestingActivity" />
+        </activity>
+
         <activity android:name=".ExerciseListActivity" />
 
         <activity
@@ -103,10 +112,6 @@
         </activity>
 
         <!-- Push Settings Start -->
-
-        <!-- Add GCM Intent Service and intent-filters for RECEIVE and REGISTRATION of notifications
-         <activity android:name="com.ibm.mobile.services.push.IBMUIActivity" />
-         -->
 
         <service android:name="com.ibm.mobile.services.push.IBMPushIntentService" />
 

@@ -1,5 +1,5 @@
 /**
- * UTC Virtual Athletic Trainer v0.000
+ * UTC Virtual Athletic Trainer v0.01.1 (12/3/15)
  * rg 09.08.15
  * TODO: once InternalData is deprecated apache .jar should be removed
  */
@@ -32,6 +32,7 @@ import java.util.List;
 import bolts.Continuation;
 import bolts.Task;
 
+import edu.utc.vat.bluetooth.BtActivity;
 import edu.utc.vat.util.GoogleTokenManager;
 import edu.utc.vat.flanker.FlankerActivity;
 
@@ -56,11 +57,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Intent intent = getIntent();
-
-
-
 
         findViewById(R.id.MainMenuButton1).setOnClickListener(new OnClickListener() {
             @Override
@@ -85,21 +82,24 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        findViewById(R.id.MainMenuButton4).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startBluetooth();
+            }
+        });
 
-        /*
-        findViewById(R.id.MainMenuButton3).setOnClickListener(new OnClickListener() {
+      /*findViewById(R.id.MainMenuButton3).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                // exercise = 0;
                 startActivity(ExerciseListActivity.createIntent(self));
                  startActivity(ExerciseListActivity.createIntent(self));
             }
-        });
-        */
+        });*/
 
         CallNative.InstantiateSensorsHandler();
         CallNative.IO();
-
     }
 
 
@@ -131,6 +131,10 @@ public class MainActivity extends BaseActivity {
 
     private void startFlanker() {
         startActivity(new Intent(this, FlankerActivity.class));
+    }
+
+    private void startBluetooth() {
+        startActivity(new Intent(this, BtActivity.class));
     }
 
 }
