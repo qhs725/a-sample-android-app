@@ -115,6 +115,10 @@
             </intent-filter>
         </receiver>
         <!-- Push Settings End -->
+
+        <service
+            android:name=".dataUploadService"
+            android:exported="false"/>
     </application>
 
 </manifest>

@@ -47,14 +47,25 @@ public class Timer {
      * to be set by the user, we can do so.  Naturally, it is assumed
      * that any test time is less than 1000s.
      */
-    public void setCountDownTime(long time) { if (time >= 1000) time = time/1000;
-        countDownTime = time; }
-    public void setCountDownTime(int time) { if (time >= 1000) time = time/1000;
-        countDownTime = (long)time; }
-    public void setTestingTime(long time) { if (time >= 1000) time = time/1000;
-        testingTime = time; }
-    public void setTestingTime(int time) { if (time >= 1000) time = time/1000;
-        testingTime = (long)time; }
+    public void setCountDownTime(long time) {
+        if (time >= 1000) time = time / 1000;
+        countDownTime = time;
+    }
+
+    public void setCountDownTime(int time) {
+        if (time >= 1000) time = time / 1000;
+        countDownTime = (long) time;
+    }
+
+    public void setTestingTime(long time) {
+        if (time >= 1000) time = time / 1000;
+        testingTime = time;
+    }
+
+    public void setTestingTime(int time) {
+        if (time >= 1000) time = time / 1000;
+        testingTime = (long) time;
+    }
 
     public Timer(Context context) {
         appContext = context;
@@ -103,10 +114,10 @@ public class Timer {
                 return;
             }
         }
-        CallNative.PassID("ENTER,APPROPRIATE,DATA,IN,COUNTDOWN,TIMER,CallNative.PassID() ..");
         CallNative.StartSensors();
 
         if (state != STOPPED) {Log.i("timer","ERROR, INCORRECT STATE IN COUNTDOWN TIMER");}
+
 
         if (countDownTime > 0)
             countDownTimeConvert = countDownTime * 1000 + 100;
@@ -122,7 +133,7 @@ public class Timer {
                     ((TestingActivity) appContext).timerUpdate(timeRemaining);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.e("timer","running countdown error");
+                    Log.e("timer", "running countdown error");
                 }
 
                 try {
@@ -145,7 +156,6 @@ public class Timer {
     public void testing() {
         state = TESTING;
         CallNative.WriteOn();
-
 
         if (testingTime > 0)
             testingTimeConvert = testingTime * 1000 + 100;
@@ -171,6 +181,7 @@ public class Timer {
                 state = STOPPED;
                 ((TestingActivity)appContext).timerUpdate(0);
                 ((TestingActivity)appContext).statusUpdate(state);
+
                 CallNative.WriteOff();
                 CallNative.StopSensors();
                 CallNative.CloseFiles();

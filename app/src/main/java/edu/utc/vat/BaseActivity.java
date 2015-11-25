@@ -128,7 +128,7 @@ public class BaseActivity extends AppCompatActivity {
             String extension = filenameArray[filenameArray.length-1];
 
             //Check if file extension matches data file
-            if(extension.equals("txt")){
+            if(extension.equals("csv")){
                 Log.i(CLASS_NAME, "Session Files found");
                 return true; //some file exists that has data file extension, return true
             }

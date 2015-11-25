@@ -60,8 +60,6 @@ public class MainActivity extends BaseActivity {
         Intent intent = getIntent();
 
 
-
-
         findViewById(R.id.MainMenuButton1).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,7 +106,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         IBMBluemix.clearSecurityToken().continueWith(
@@ -126,7 +124,7 @@ public class MainActivity extends BaseActivity {
                 });
         Log.i(CLASS_NAME, "Finishing Main Activity. Returning to Login Screen.");
         finish();
-            super.onBackPressed();
+        super.onBackPressed();
     }
 
     private void startFlanker() {

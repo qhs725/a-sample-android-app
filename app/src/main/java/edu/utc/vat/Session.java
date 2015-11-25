@@ -60,15 +60,22 @@ public class Session {
 
         //TODO: Change code to see each file as a unique exercise to upload. Line 1 will contain data provided from user. Line 2 will contain mapping for the following lines. The following lines will contain sensor data in the order shown by line 2.
 
+
         if (!BaseActivity.getisNetwork() || CallNative.CheckData() == false) {
             //Display Toast to warn user there is no detected internet connection
             Toast.makeText(BlueMixApplication.getAppContext(), "No internet connection found", Toast.LENGTH_LONG).show();
 
             return; //return if no internet connection
         }
+        //Check if C++ is still writing to file
+        if(!CallNative.CheckData()){
+            Toast.makeText(BlueMixApplication.getAppContext(), "Unable to upload, still writing to file", Toast.LENGTH_LONG).show();
+            return; //quit is a file is being written to
+        }
 
         ArrayList<String> dataFileNames = new ArrayList<String>();
         int numColumns = 0;
+        String[] userInfo = null;
         InputStream file = null;
         File fileList[] = null;
         //Get files directory and get names of all files within
@@ -120,13 +127,22 @@ public class Session {
                     BufferedReader reader = new BufferedReader(stream);
                     String lineRow = "";
 
-                    //Get first line to determine key names to add to current Session object
+                    //Get first line to retrieve user/session based info to add to the Session Object.
+                    if ((lineRow = reader.readLine()) != null) {
+                        userInfo = lineRow.split(","); // format of first line should be '{userId},{sessionId},{userInput}'
+
+                        //Add info from first line to Session Object
+                        session_json.put("USERID", (userInfo[0] != null) ? userInfo[0] : "null");
+                        session_json.put("SESSIONID", (userInfo[1] != null) ? userInfo[1] : "null");
+                        session_json.put("USERINPUT", (userInfo[2] != null) ? userInfo[2] : "null");
+                    }
+                    //Get second line to determine key names to sort data before adding it to the Session Object.
                     if ((lineRow = reader.readLine()) != null) {
                         keyNames = lineRow.split(",");
                         numColumns = keyNames.length;
                     }
 
-                    //Create list of lists to dynamically load file data
+                    //Create list of lists to dynamically load file's sensor data
                     List<List<String>> group = new ArrayList<List<String>>();
                     for (int u = 0; u < numColumns; u++) {
                         List<String> tempList = new ArrayList<String>();
@@ -156,7 +172,7 @@ public class Session {
                         List data = group.get(t);
                         session_json.put(keyNames[t].toUpperCase(), (data != null) ? data : "");
                     }
-                    group.clear();
+                    group.clear(); //reset for next file
                 }
             } catch (FileNotFoundException e) {
                 Log.e("login activity", "File not found: " + e.toString());
@@ -167,11 +183,11 @@ public class Session {
             }
 
             //Call to upload file (INDIVIDUAL)
-            // sessionUpload(session_json);
+            sessionUpload(session_json);
         }
 
         //Call to Upload all file fields together
-        sessionUpload(session_json);
+        //sessionUpload(session_json);
 
         //mSocket.disconnect();
         if (file != null) {
@@ -185,3 +201,5 @@ public class Session {
         }
     }
 }
+
+
