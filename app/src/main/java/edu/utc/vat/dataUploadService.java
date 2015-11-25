@@ -3,6 +3,7 @@ package edu.utc.vat;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -35,7 +36,7 @@ public class dataUploadService extends IntentService {
     private static int num = 1;
 
     // private static final String SERVER_IP ="http://192.168.0.105:3000/upload";
-    private static final String SERVER_IP = "http://utc-vat.mybluemix.net/upload";
+    private static final String SERVER_IP = "http://utc-vat.mybluemix.net/uploadcloudant";
     private static Socket mSocket = null;
 
 
@@ -54,18 +55,36 @@ public class dataUploadService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent workIntent) {
+        Handler mHandler = new Handler(getMainLooper());
+        // create a handler to post messages to the main thread
+
+
         // Gets data from the incoming Intent
         String dataString = workIntent.getDataString();
         // Do work here, based on the contents of dataString
 
         //Check if network is available
         if (!BaseActivity.getisNetwork()) {
-            Toast.makeText(BlueMixApplication.getAppContext(), "No internet connection found", Toast.LENGTH_LONG).show();
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(BlueMixApplication.getAppContext(), "No internet connection found", Toast.LENGTH_LONG).show();
+                }
+            });
+
             return; //return if no internet connection
         }
         //Check if C++ is still writing to file
         if(CallNative.CheckData() == false){
-            Toast.makeText(BlueMixApplication.getAppContext(), "Unable to upload, still writing to file", Toast.LENGTH_LONG).show();
+
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(BlueMixApplication.getAppContext(), "Unable to upload, still writing to file", Toast.LENGTH_LONG).show();
+                }
+            });
+
+
             return; //quit is a file is being written to
         }
 

@@ -129,10 +129,10 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         sessionID = uuid.toString();
         UserAccount.setSessionID(sessionID);
 
+
         //use application class to maintain global state
         blApplication = (BlueMixApplication) getApplication();
         initServices(); //Initialize Bluemix connection
-
     }
 
     public void onClick(View view) {
@@ -153,7 +153,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                     UserAccount.setSessionInfo(userInfo);//add user input to UserAccount
 
                     Toast.makeText(this, userInfo, Toast.LENGTH_SHORT).show();
-
                     timer.countDown(); //TODO: RETURN BOOLEAN, TRUE --> UPLOAD PROMPT?
                 }
                 status = READY;
@@ -312,6 +311,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         concurrentToast = Toast.makeText(this, message, Toast.LENGTH_LONG);
         concurrentToast.show();
     }
+
 
 
 
