@@ -36,7 +36,7 @@ public class dataUploadService extends IntentService {
     private static int num = 1;
 
     // private static final String SERVER_IP ="http://192.168.0.105:3000/upload";
-    private static final String SERVER_IP = "http://utc-vat.mybluemix.net/uploadcloudant";
+    private static final String SERVER_IP = "http://utc-vat.mybluemix.net/uploadsql";
     private static Socket mSocket = null;
 
 
@@ -75,6 +75,7 @@ public class dataUploadService extends IntentService {
             return; //return if no internet connection
         }
         //Check if C++ is still writing to file
+        /*
         if(CallNative.CheckData() == false){
 
             mHandler.post(new Runnable() {
@@ -84,11 +85,11 @@ public class dataUploadService extends IntentService {
                 }
             });
 
-
             return; //quit is a file is being written to
         }
+        */
 
-
+    while(CallNative.CheckData() == false){}
             getSensorData();
 
     }
