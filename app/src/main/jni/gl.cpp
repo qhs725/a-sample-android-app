@@ -116,7 +116,8 @@ namespace gl {
         int dt = (int)o::t::dt__/1000000;
         o::t::TM__ = o::t::tc__;
         int t = 1000/o::t::FR__;
-        LOGI("__r__() ... %d  %d", dt, t);
+        LOGI("__r__() ... %d  %d", o, oo);
+        //TODO: figure out what dt and t are doing with FrameRate, etc .. do we need to control FR ?
         gl_::gl__().__ra(o, oo);
     }
 
