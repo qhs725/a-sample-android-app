@@ -187,11 +187,13 @@ public class Timer {
                 CallNative.CloseFiles();
                 ((TestingActivity)appContext).Upload();
 
+                /*
                 //Open files for next test -- if packing not finished, open at new countdown timer
                 if(CallNative.CheckData())
                     CallNative.OpenFiles();
                 else
                     Log.i("timer","CANNOT OPEN NEW FILES PRIOR TO PACKAGING");
+                    */
                 timeron = false;
             }
         }.start();

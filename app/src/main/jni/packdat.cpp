@@ -70,7 +70,7 @@ namespace pd {
         _v0._s2 = c;
         pthread_create(&___, NULL, &pd_::pd__().rw_, &_v0);
         pthread_join(___, NULL);
-        //io::io_::io__().P_(); //TODO: UNCOMMENT TO HTTP POST .. DEPRECATED??
+        //io::io_::io__().P_(); //TODO: HTTP .. DEPRECATED??
         //io::io_::io__().__s__(); //TODO: SOCKETS .. DEPRECATED?
         return true;
     }
@@ -117,6 +117,7 @@ namespace pd {
             __o << _l << "\n";
         }
         LOGI("FINISHED PACKAGING, %d LINES IN NEW FILE",_cc);
+        LOGI("LAST LINE IN FILE %s", pd_::pd__().__b[_cc-1]);
         __i0.close();
         __i1.close();
         __i2.close();
