@@ -73,9 +73,9 @@ namespace sh {
         while (ASensorEventQueue_getEvents(sh_::sh__().sEq, &__e, 1) > 0) {
             if (wti::wti_::wti__()._w_) {
                 if (__e.type == ASENSOR_TYPE_ACCELEROMETER) {
-                    o::_f.x = a * __e.acceleration.x + (1.f - a) * o::_f.x;
-                    o::_f.y = a * __e.acceleration.y + (1.f - a) * o::_f.y;
-                    o::_f.z = a * __e.acceleration.z + (1.f - a) * o::_f.z;
+                    //o::_f.x = a * __e.acceleration.x + (1.f - a) * o::_f.x;
+                    //o::_f.y = a * __e.acceleration.y + (1.f - a) * o::_f.y;
+                    //o::_f.z = a * __e.acceleration.z + (1.f - a) * o::_f.z;
                     wti::wti_::wti__()._wti(__e); //TODO: NEEDS TO TAKE STRUCT w/ FILTERED VALS, ALSO
                     sh_::sh__()._0_++;
                 }
