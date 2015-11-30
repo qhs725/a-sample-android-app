@@ -66,6 +66,7 @@ namespace sh {
     /*
      * THIS IS THE SENSOR 'CALLBACK' LOOP EQUIVALENT
      * TODO: TRY AGAIN ON SEPARATE THREAD -- EVENTUALLY (IS IT ON SEPARATE THREAD BY DEFAULT .. ??)
+     * TODO: ALT CALLBACK FOR FLANKER OR ADD FLANKER FUNCTIONALITY WITH A FLANKER FLAG
      */
     static int _o(int fd, int _e, void *_) {
         ASensorEvent __e;
@@ -243,6 +244,7 @@ namespace wti {
      * RETURNS TRUE IF ALL FILES ARE OPEN
      * RETURNS FALSE IF ANY OR ALL FILES ARE CLOSED AND CLOSES OPEN FILES
      * IF ANY OTHERS ARE ALREADY CLOSED
+     * TODO: FIX TO NOT NULLIFY FILES IF CLOSED
      */
     bool wti_::_f() {
         if (fa___ != NULL && fg__ != NULL && fc_ != NULL) {

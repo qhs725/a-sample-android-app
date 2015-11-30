@@ -29,9 +29,8 @@
         android:textStyle="bold"
         android:foreground="@color/abc_search_url_text_normal"
         android:layout_alignBottom="@+id/imageView"
-        android:layout_alignEnd="@+id/MainMenuButton1"
-        android:layout_alignRight="@+id/MainMenuButton1"
-        />
+        android:layout_alignRight="@+id/BtMenuButton1"
+        android:layout_alignEnd="@+id/BtMenuButton1" />
 
     <Button
         android:paddingTop="6dp"
@@ -39,7 +38,7 @@
         android:layout_height="36dip"
         android:textSize="24sp"
         android:text="@string/test1_main_menu"
-        android:id="@+id/MainMenuButton1"
+        android:id="@+id/BtMenuButton1"
         android:gravity="center"
         android:textStyle="bold"
         android:textAlignment="gravity"
@@ -51,24 +50,6 @@
         android:layout_alignParentRight="true"
         android:textColor="@color/text_color" />
 
-    <Button
-        android:paddingTop="6dp"
-        android:layout_width="450dip"
-        android:layout_height="36dip"
-        android:textSize="24sp"
-        android:text="@string/test2_main_menu"
-        android:id="@+id/MainMenuButton2"
-        android:textStyle="bold"
-        android:textAlignment="gravity"
-        android:background="#ddb9a826"
-        android:layout_below="@+id/MainMenuButton1"
-        android:layout_alignStart="@+id/MainMenuButton1"
-        android:layout_alignLeft="@+id/MainMenuButton1"
-        android:layout_marginTop="33dp"
-        android:layout_alignEnd="@+id/MainMenuButton1"
-        android:layout_alignRight="@+id/MainMenuButton1"
-        android:textColor="@color/text_color"
-        />
 
     <Button
         android:paddingTop="6dp"
@@ -76,12 +57,12 @@
         android:layout_height="36dip"
         android:textSize="24sp"
         android:text="FLANKER"
-        android:id="@+id/MainMenuButton3"
+        android:id="@+id/BtMenuButton2"
         android:textStyle="bold"
         android:textAlignment="gravity"
         android:background="#ddb9a826"
         android:layout_marginTop="31dp"
-        android:layout_below="@+id/MainMenuButton2"
+        android:layout_below="@+id/BtMenuButton1"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -90,14 +71,14 @@
         android:layout_width="450dip"
         android:layout_height="36dip"
         android:textSize="24sp"
-        android:text="Bluetooth"
-        android:id="@+id/MainMenuButton4"
+        android:text="pair devices"
+        android:id="@+id/BtMenuButton3"
         android:textStyle="bold"
         android:textAlignment="gravity"
         android:background="#ddb9a826"
-        android:layout_below="@+id/MainMenuButton3"
+        android:layout_marginTop="31dp"
+        android:layout_below="@+id/BtMenuButton2"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="31dp" />
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

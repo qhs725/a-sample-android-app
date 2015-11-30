@@ -39,7 +39,7 @@ public class Flanker {
     private int clueNumber = 0;
     private int gapNumber = 0;
 
-    //instantiate scheulde object
+    //instantiate schedule object
     public FlankerSchedule schedule;
 
     public Flanker(Context context) {
@@ -215,7 +215,7 @@ public class Flanker {
         //TODO: onResume()
 
         private void createSchedule() {
-            Log.i("flanker","pre while loop");
+            Log.i("flanker","preparing to order stimuli");
             int a = 0;
             int b = 0;
             int c = 0;
@@ -236,19 +236,15 @@ public class Flanker {
                 int v = Math.abs(rand.nextInt(i+1));
                 slides[i] = (int)(slideVector.elementAt(v));
                 slideVector.removeElementAt(v);
-                Log.i("flanker","for loop");
+                Log.i("flanker","creating random order for stimuli");
                 if (i == 0) {
                     Log.i("flanker","i == 0");
                 }
             }
-            if (a == totalEachClue && b == totalEachClue && c == totalEachClue && d == totalEachClue && e == gapNumber)
-                Log.i("flanker","worked -- random assignment");
-            //}
-        Log.i("flanker","actually exited while loop");
         }
 
         public int currentSlide() {
-            Log.i("flanker","actually calling currentSlide");
+            //Log.i("flanker","actually calling currentSlide");
             int nextSlide;
             if (count % step == 0) {
                 displayFlag = true;
@@ -273,7 +269,7 @@ public class Flanker {
     /**
      * This is a flanker task demo
      * Endless loop of varying times
-     * Deprecated it seems
+     * Deprecated
      */
     public int demo(int loop) {
         int slideno = 0;
