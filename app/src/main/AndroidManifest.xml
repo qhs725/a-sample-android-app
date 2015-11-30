@@ -12,14 +12,21 @@
         android:name="android.hardware.sensor.compass"
         android:required="true" />
 
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <uses-permission android:name="com.ibm.bluelist.permission.C2D_MESSAGE" />
+
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
@@ -50,6 +57,15 @@
 
         <activity
             android:name=".TestingActivity"
+            android:label="@string/title_testing_activity"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.utc.vat.TestingActivity" />
+        </activity>
+
+        <activity
+            android:name="edu.utc.vat.bluetooth.BtActivity"
             android:label="@string/title_testing_activity"
             android:parentActivityName=".MainActivity" >
             <meta-data
@@ -96,10 +112,6 @@
         </activity>
 
         <!-- Push Settings Start -->
-
-        <!-- Add GCM Intent Service and intent-filters for RECEIVE and REGISTRATION of notifications
-         <activity android:name="com.ibm.mobile.services.push.IBMUIActivity" />
-         -->
 
         <service android:name="com.ibm.mobile.services.push.IBMPushIntentService" />
 

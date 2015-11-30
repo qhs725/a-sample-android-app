@@ -19,6 +19,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 import edu.utc.vat.CallNative;
 
+
 public class FlankerRenderer implements GLSurfaceView.Renderer {
 
     private Context me;
@@ -34,11 +35,12 @@ public class FlankerRenderer implements GLSurfaceView.Renderer {
     }
 
     private Flanker test = new Flanker(me);
-    private float pace = 0.9f; //TODO: get pace from Flanker: test.getPace()
 
     public void onDrawFrame(GL10 gl) {
         slide = test.getSlide();
         assert(slide > -1);
+        if (slide == -1)
+            ((FlankerActivity)me).onEnd();
         CallNative.Render(slide, 0);
     }
 
