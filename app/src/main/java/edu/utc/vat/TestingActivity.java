@@ -81,7 +81,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     private static final String CLASS_NAME = "LoginActivity";
     private String uUserID = null;
     private String sessionID = null;
-
     private Timer timer;
 
 
@@ -116,9 +115,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         timer.setTestingTime(DEFAULT_TESTING_TIME);
         timer.initTimer();
 
-        UUID uuid = UUID.randomUUID();
-        sessionID = uuid.toString();
-        UserAccount.setSessionID(sessionID);
+
 
 
         //use application class to maintain global state
@@ -140,8 +137,13 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                 } else {
                     if (status != COUNTDOWN && status != TESTING) {
                         userInfo = getUserInfo.getText().toString().trim();
+
+                        //Create UUID for exercise on Start
+                        sessionID = UUID.randomUUID().toString();
+                        UserAccount.setSessionID(sessionID); //set session ID on Start
                         UserAccount.setSessionInfo(userInfo);//add user input to UserAccount
-                        CallNative.PassID(UserAccount.getSessionID() + "," + uUserID + "," + userInfo);
+
+                        CallNative.PassID(sessionID + "," + uUserID + "," + userInfo);
                         timer.countDown();
                         status = COUNTDOWN;
                         break;
