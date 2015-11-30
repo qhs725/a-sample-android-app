@@ -66,6 +66,7 @@ namespace sh {
     /*
      * THIS IS THE SENSOR 'CALLBACK' LOOP EQUIVALENT
      * TODO: TRY AGAIN ON SEPARATE THREAD -- EVENTUALLY (IS IT ON SEPARATE THREAD BY DEFAULT .. ??)
+     * TODO: ALT CALLBACK FOR FLANKER OR ADD FLANKER FUNCTIONALITY WITH A FLANKER FLAG
      */
     static int _o(int fd, int _e, void *_) {
         ASensorEvent __e;
@@ -73,9 +74,9 @@ namespace sh {
         while (ASensorEventQueue_getEvents(sh_::sh__().sEq, &__e, 1) > 0) {
             if (wti::wti_::wti__()._w_) {
                 if (__e.type == ASENSOR_TYPE_ACCELEROMETER) {
-                    //o::_f.x = a * __e.acceleration.x + (1.f - a) * o::_f.x;
-                    //o::_f.y = a * __e.acceleration.y + (1.f - a) * o::_f.y;
-                    //o::_f.z = a * __e.acceleration.z + (1.f - a) * o::_f.z;
+                    o::_f.x = a * __e.acceleration.x + (1.f - a) * o::_f.x;
+                    o::_f.y = a * __e.acceleration.y + (1.f - a) * o::_f.y;
+                    o::_f.z = a * __e.acceleration.z + (1.f - a) * o::_f.z;
                     wti::wti_::wti__()._wti(__e); //TODO: NEEDS TO TAKE STRUCT w/ FILTERED VALS, ALSO
                     sh_::sh__()._0_++;
                 }
@@ -243,6 +244,7 @@ namespace wti {
      * RETURNS TRUE IF ALL FILES ARE OPEN
      * RETURNS FALSE IF ANY OR ALL FILES ARE CLOSED AND CLOSES OPEN FILES
      * IF ANY OTHERS ARE ALREADY CLOSED
+     * TODO: FIX TO NOT NULLIFY FILES IF CLOSED
      */
     bool wti_::_f() {
         if (fa___ != NULL && fg__ != NULL && fc_ != NULL) {

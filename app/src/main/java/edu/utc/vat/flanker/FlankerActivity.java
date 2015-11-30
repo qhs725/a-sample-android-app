@@ -6,8 +6,11 @@
 package edu.utc.vat.flanker;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
+
+import edu.utc.vat.MainActivity;
 
 public class FlankerActivity extends Activity {
 
@@ -28,11 +31,21 @@ public class FlankerActivity extends Activity {
 
     @Override protected void onPause() {
         super.onPause();
-        fox.onPause();
     }
 
     @Override protected void onResume() {
         super.onResume();
         fox.onResume();
+    }
+
+    @Override protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    public void onEnd() {
+        finish();
+        //startActivity(new Intent(this, MainActivity.class));
+        //fox.onPause();
+        //onPause();
     }
 }

@@ -89,7 +89,7 @@ namespace pd {
         int _c0 = sh::sh_::sh__()._0_;
         int _c1 = sh::sh_::sh__()._1__;
         int _c2 = sh::sh_::sh__()._2___;
-        int _c = std::min(std::min(_c0, _c1), _c2);
+        int _c = std::max(std::max(_c0, _c1), _c2);
         pd_::pd__().__b = new char*[_c];
         std::string _l, _l0, _l1, _l2;
         //TODO: FIND ALTERNATIVE TO HARDCODING PATH -- EVENTUALLY
@@ -124,7 +124,7 @@ namespace pd {
         __o.close();
         pd_::pd__()._c_ = _c;
         pd_::pd__()._pd = true;
-        delete pd_::pd__().__b; //or delete[]
+        //delete pd_::pd__().__b; //clean small memory allocation
     }
 
     bool pd_::pk_() {
