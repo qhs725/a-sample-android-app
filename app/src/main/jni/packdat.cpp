@@ -71,8 +71,6 @@ namespace pd {
         _v0._s2 = c;
         pthread_create(&___, NULL, &pd_::pd__().rw_, &_v0);
         pthread_join(___, NULL);
-        //io::io_::io__().P_(); //TODO: HTTP .. DEPRECATED??
-        //io::io_::io__().__s__(); //TODO: SOCKETS .. DEPRECATED?
         return true;
     }
 
@@ -109,9 +107,21 @@ namespace pd {
         int _cc = 0;
         _c++;
         while (_cc++ < _c) {
-            std::getline(__i0, _l0);
-            std::getline(__i1, _l1);
-            std::getline(__i2, _l2);
+            if (_cc <= sh::sh_::sh__()._0_) {
+                std::getline(__i0, _l0);
+            } else {
+                _l0 = "0.f,0.f,0.f,0.f";
+            }
+            if (_cc <= sh::sh_::sh__()._1__) {
+                std::getline(__i1, _l1);
+            } else {
+                _l1 = "0.f,0.f,0.f,0.f";
+            }
+            if (_cc <= sh::sh_::sh__()._2___) {
+                std::getline(__i2, _l2);
+            } else {
+                _l2 = "0.f,0.f,0.f,0.f";
+            }
             _l = _l0 + ',' + _l1 + ',' + _l2;
             pd_::pd__().__b[_cc] = new char[_l.length()+1];
             strcpy(pd_::pd__().__b[_cc], _l.c_str());
