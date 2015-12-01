@@ -1,5 +1,5 @@
 /**
- * UTC Virtual Athletic Trainer v0.000
+ * UTC Virtual Athletic Trainer v0.01.1 (12/3/15)
  * rg 9/8/15
  * TODO: quit instantiating internalData once deprecated
  */

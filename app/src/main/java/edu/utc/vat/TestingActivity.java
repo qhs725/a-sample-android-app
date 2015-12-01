@@ -2,7 +2,8 @@
  * UTC Virtual Athletic Trainer v0.01.1 (12/3/15)
  * rg 9/9/15
  *
- * TODO: Add fragments for displaying timer and Exercise instructions.
+ * TODO: Add fragments for displaying timer and Exercise instructions
+ * TODO: Move FLAG_KEEP_SCREEN_ON to timer fragment, so, screen only remains on during testing
  */
 
 package edu.utc.vat;
@@ -11,6 +12,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.os.Bundle;
 import android.widget.EditText;
@@ -51,7 +53,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     public static final int TESTING = 1;
     public static final int READY = 3;
     public static final int VOID = -1;
-    public static final int UPLOADING = 4;
     public int status;
     private TextView testStatus;
     private String statusMessage;
@@ -59,7 +60,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
     private TextView currentExercise;
     private String exerciseName;
-    private HashMap<Integer, String> exerciseList = new HashMap<Integer, String>();
+    private HashMap<Integer, String> exerciseList = new HashMap <Integer, String>();
 
     private TextView timerClock;
     private int timerTime;
@@ -73,7 +74,9 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     private Button instructionsButton;
 
     private final long DEFAULT_COUNTDOWN_TIME = 5;
-    private final long DEFAULT_TESTING_TIME = 20;
+    private final long DEFAULT_TESTING_TIME = 30;
+    private final long JUMP_TESTING_TIME = 10;
+    private final long LEG_BALANCE_TESTING_TIME = 30;
 
     private Toast concurrentToast;
 
@@ -86,9 +89,13 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
+
+        getWindow().addFlags(
+                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+        );
         setContentView(R.layout.activity_testing);
+
         status = VOID;
         completeExerciseList();
         completeStatusList();
@@ -115,8 +122,16 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         timer.setTestingTime(DEFAULT_TESTING_TIME);
         timer.initTimer();
 
-
-
+        switch (exercise) {
+            case ONE_LEG_SQUAT_HOLD: {
+                timer.setTestingTime(LEG_BALANCE_TESTING_TIME);
+                break;
+            }
+            case ONE_LEG_JUMP_BALANCE: {
+                timer.setTestingTime(JUMP_TESTING_TIME);
+                break;
+            }
+        }
 
         //use application class to maintain global state
         blApplication = (BlueMixApplication) getApplication();

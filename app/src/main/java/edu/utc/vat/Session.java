@@ -36,7 +36,7 @@ public class Session {
     private static JSONObject session_json;
 
     // private static final String SERVER_IP ="http://192.168.0.105:3000/upload";
-    private static final String SERVER_IP = "http://utc-vat.mybluemix.net/upload";
+    private static final String SERVER_IP = "http://utc-vat.mybluemix.net/uploadsql";
     private static Socket mSocket = null;
 
 
@@ -56,8 +56,7 @@ public class Session {
 
 
     public static void getSensorData() {
-        //TODO: Create Asynck task/service for uploading files and to to periodically check for internet and to upload as soon as possible. Possibly add in WIFI only option in settings.
-
+        //TODO: Create Async task/service for uploading files and to to periodically check for internet and to upload as soon as possible. Possibly add in WIFI only option in settings.
         //TODO: Change code to see each file as a unique exercise to upload. Line 1 will contain data provided from user. Line 2 will contain mapping for the following lines. The following lines will contain sensor data in the order shown by line 2.
 
 
