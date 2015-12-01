@@ -1,5 +1,6 @@
 /**
- * UTC Virtual Athletic Trainer v0.01.1 (12/3/15)
+ * UTC Virtual Athletic Trainer
+ * v0.01.1 (12/3/15)
  * 10/16/15
  * TODO: Call upload data from onEnd ..
  */

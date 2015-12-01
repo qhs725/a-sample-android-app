@@ -1,5 +1,6 @@
 /*
- * UTC Virtual Athletic Trainer v0.01.1 (12/3/15)
+ * UTC Virtual Athletic Trainer
+ * v0.01.1 (12/3/15)
  * rg 9.7.15
  * TODO: DATE IS IN TIMESTAMP .. ?? -- IS TEST ID STORED .. ??
  * TODO: THE STORED TESTS WILL BE MARKED AS UPLOADED OR NOT UPLOADED .. ??
@@ -17,8 +18,8 @@
 #include <android/sensor.h>
 #include <android/looper.h>
 
-#include "comm.h"
 #include "sensors.h"
+#include "comm.h"
 
 #define LOG_TAG "sh"
 #define LOGI(...) ((void)__android_log_print(ANDROID_LOG_INFO,LOG_TAG, __VA_ARGS__))

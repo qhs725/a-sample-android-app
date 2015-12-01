@@ -1,5 +1,6 @@
 /**
- * UTC Virtual Athletic Trainer v0.01.1 (12/3/15)
+ * UTC Virtual Athletic Trainer
+ * v0.01.1 (12/3/15)
  * rg 9/8/15
  */
 

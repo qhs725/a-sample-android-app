@@ -1,7 +1,8 @@
 package edu.utc.vat;
 /**
- * UTC Virtual Athletic Trainer v0.000
- * 9/7/15
+ * UTC Virtual Athletic Trainer
+ * v0.01.1 (12/03/15)
+ * rg 9/7/15
  */
 import android.util.Log;
 
@@ -46,9 +47,6 @@ public class CallNative {
 
     @SuppressWarnings("JniMissingFunction")
     public static native int WriteOff(); //stops writing to files in sensor loop
-
-    @SuppressWarnings("JniMissingFunction")
-    public static native int IO(); //pass files to server
 
     @SuppressWarnings("JniMissingFunction")
     public static native boolean PackageData(String x); //groups accel, gyro, comp data
