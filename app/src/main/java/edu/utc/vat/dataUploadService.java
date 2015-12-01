@@ -14,8 +14,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -36,7 +38,7 @@ public class dataUploadService extends IntentService {
     private static int num = 1;
 
     // private static final String SERVER_IP ="http://192.168.0.105:3000/upload";
-    private static final String SERVER_IP = "http://utc-vat.mybluemix.net/uploadsql";
+    private static final String SERVER_IP = "http://utc-vat.mybluemix.net/upload";
     private static Socket mSocket = null;
 
 
@@ -89,9 +91,10 @@ public class dataUploadService extends IntentService {
         }
         */
 
-    while(CallNative.CheckData() == false){}
+    while(CallNative.CheckData() == false){
+        Log.d(LOG_NAME, " File is still being written to");
+    }
             getSensorData();
-
     }
 
 
@@ -109,7 +112,7 @@ public class dataUploadService extends IntentService {
         mSocket.emit("data", sessJSON);
     }
 
-    public static void getSensorData() {
+    public static void getSensorData(){
         //TODO: Create Asynck task/service for uploading files and to to periodically check for internet and to upload as soon as possible. Possibly add in WIFI only option in settings.
 
         //TODO: Change code to see each file as a unique exercise to upload. Line 1 will contain data provided from user. Line 2 will contain mapping for the following lines. The following lines will contain sensor data in the order shown by line 2.
@@ -175,6 +178,10 @@ public class dataUploadService extends IntentService {
                     if ((lineRow = reader.readLine()) != null) {
                         keyNames = lineRow.split(",");
                         numColumns = keyNames.length;
+
+                        for(int t = 0; t < keyNames.length; t++) {
+                            Log.d(LOG_NAME, "Keynames: " + keyNames[t]);
+                        }
                     }
 
                     //Create list of lists to dynamically load file's sensor data
@@ -191,11 +198,16 @@ public class dataUploadService extends IntentService {
                         //Add value in each 'column' of the file to the respective ArrayList in the group List
                         for (int y = 0; y < numColumns; y++) {
                             try {
-                                if (RowData[y] == "" || RowData[y] == null) {
-                                    RowData[y] = "null";
+                                if(y >= RowData.length){
+
                                 }
-                                group.get(y).add(RowData[y]);
-                                Log.i(LOG_NAME, "Added Data: " + RowData[y] + " to position " + y);
+                                else {
+                                    if (RowData[y] == "" || RowData[y] == null) {
+                                        RowData[y] = "null";
+                                    }
+                                    group.get(y).add(RowData[y]);
+                                    Log.i(LOG_NAME, "Added Data: " + RowData[y] + " to position " + y);
+                                }
                             } catch (Exception e) {
                                 Log.e(LOG_NAME, "ERROR: " + e.getMessage());
                             }
@@ -219,7 +231,10 @@ public class dataUploadService extends IntentService {
 
             //Call to upload file (INDIVIDUAL)
             sessionUpload(session_json);
+            //Write to file
+            // writeLocal(session_json);
         }
+
 
         //Call to Upload all file fields together
         //sessionUpload(session_json);
@@ -236,5 +251,19 @@ public class dataUploadService extends IntentService {
         }
     }
 
+    public static void writeLocal(JSONObject sessJSON){
 
+        String content = sessJSON.toString();
+        try {
+            File file1 = new File(context.getFilesDir() + "/", "session_json.txt");
+
+            FileWriter fw = new FileWriter(context.getFilesDir() + "/session_json.txt");
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(content);
+            bw.close();
+        }
+        catch(Exception err){
+            Log.e("Writer", "FILE Write ERROR: " + err.toString());
+        }
+    }
 }
