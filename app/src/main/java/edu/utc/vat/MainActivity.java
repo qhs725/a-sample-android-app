@@ -1,33 +1,24 @@
 /**
- * UTC Virtual Athletic Trainer v0.01.1 (12/3/15)
+ * UTC Virtual Athletic Trainer
+ * v0.01.1 (12/3/15)
  * rg 09.08.15
- * TODO: once InternalData is deprecated apache .jar should be removed
  */
 
 package edu.utc.vat;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
 
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+
 import android.view.View;
 import android.view.View.OnClickListener;
 
 import android.content.Context;
 
-import com.ibm.mobile.services.cloudcode.IBMCloudCode;
 import com.ibm.mobile.services.core.IBMBluemix;
 import com.ibm.mobile.services.core.IBMCurrentUser;
-import com.ibm.mobile.services.data.IBMData;
-import com.ibm.mobile.services.data.IBMDataException;
-import com.ibm.mobile.services.data.IBMQuery;
-import com.ibm.mobile.services.push.IBMPush;
-
-import java.util.List;
 
 import bolts.Continuation;
 import bolts.Task;
@@ -36,7 +27,6 @@ import edu.utc.vat.bluetooth.BtActivity;
 import edu.utc.vat.util.GoogleTokenManager;
 import edu.utc.vat.flanker.FlankerActivity;
 
-//TODO: Exercise list needs to be generated from list that can easily be changed from outside the app by. Possibly unique list depending on person using app.
 
 public class MainActivity extends BaseActivity {
 
@@ -89,17 +79,8 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-      /*findViewById(R.id.MainMenuButton3).setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               // exercise = 0;
-                startActivity(ExerciseListActivity.createIntent(self));
-                 startActivity(ExerciseListActivity.createIntent(self));
-            }
-        });*/
-
         CallNative.InstantiateSensorsHandler();
-        CallNative.IO();
+        //CallNative.IO();
     }
 
 

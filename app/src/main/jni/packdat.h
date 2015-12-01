@@ -1,5 +1,5 @@
 /*
- * UTC Virtual Athletic Assistant v0.000
+ * UTC Virtual Athletic Assistant v0.01.1 (12/3/15)
  * rg 9.10.15
  */
 

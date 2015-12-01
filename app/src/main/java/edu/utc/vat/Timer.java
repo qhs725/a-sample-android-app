@@ -1,7 +1,7 @@
 /**
- * UTC Virtual Athletic Trainer v0.000
+ * UTC Virtual Athletic Trainer
+ * v0.01.1 (12/3/15)
  * rg 9/8/15
- * TODO: quit instantiating internalData once deprecated
  */
 
 package edu.utc.vat;
@@ -51,17 +51,14 @@ public class Timer {
         if (time >= 1000) time = time / 1000;
         countDownTime = time;
     }
-
     public void setCountDownTime(int time) {
         if (time >= 1000) time = time / 1000;
         countDownTime = (long) time;
     }
-
     public void setTestingTime(long time) {
         if (time >= 1000) time = time / 1000;
         testingTime = time;
     }
-
     public void setTestingTime(int time) {
         if (time >= 1000) time = time / 1000;
         testingTime = (long) time;

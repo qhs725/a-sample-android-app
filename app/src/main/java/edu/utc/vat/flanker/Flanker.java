@@ -28,6 +28,9 @@ public class Flanker {
     public static final int TESTING = 1;
     public static final int READY = 3;
 
+    private int ctr = 0;
+    private int cslide = 14;
+
     public int state;
 
     /*
@@ -38,6 +41,8 @@ public class Flanker {
     private float clueTime = 0.0f;
     private int clueNumber = 0;
     private int gapNumber = 0;
+
+    private boolean cdown = true;
 
     //instantiate schedule object
     public FlankerSchedule schedule;
@@ -206,6 +211,7 @@ public class Flanker {
             for (int i = 0; i < 60; i++) {
                 slides[i] = 4;
             }
+            cdown = true;
             createSchedule();
             Log.i("flanker","flanker created");
         }
@@ -221,6 +227,8 @@ public class Flanker {
             int c = 0;
             int d = 0;
             int e = 0;
+            ctr = 0;
+            cslide = 14;
             //while (building == false) {
                 //get time
             long time = System.currentTimeMillis();
@@ -244,24 +252,34 @@ public class Flanker {
         }
 
         public int currentSlide() {
-            //Log.i("flanker","actually calling currentSlide");
-            int nextSlide;
-            if (count % step == 0) {
-                displayFlag = true;
-            }
-            if (displayFlag == true) {
-                nextSlide = slides[count/step];
-                displayCount += 1;
-                if (displayCount == clueStep) {
-                    displayFlag = false;
-                    displayCount = 0;
+            int nextSlide = 4;
+            if (cdown == true) {
+                if (ctr > 0 && ctr%60 == 0) {
+                    cslide -= 1;
                 }
-            } else {
-                nextSlide = 4;
+                ctr++;
+                if (cslide == 9)
+                    cdown = false;
+                nextSlide = cslide;
             }
-            count += 1;
-            if (count == maxcount)
-                nextSlide = -1;
+            if (cdown == false) {
+                if (count % step == 0) {
+                    displayFlag = true;
+                }
+                if (displayFlag == true) {
+                    nextSlide = slides[count / step];
+                    displayCount += 1;
+                    if (displayCount == clueStep) {
+                        displayFlag = false;
+                        displayCount = 0;
+                    }
+                } else {
+                    nextSlide = 4;
+                }
+                count += 1;
+                if (count == maxcount)
+                    nextSlide = -1; //OR nextSlide = 4 FOR BLANK SCREEN FOLLOWING TEST
+            }
             return nextSlide;
         }
     }

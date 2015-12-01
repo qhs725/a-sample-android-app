@@ -1,6 +1,7 @@
 //
-// UTC Virtual Athletic Trainer v0.000
-// Created by rg on 9/7/15.
+// UTC Virtual Athletic Trainer
+// v0.01.1 (12/3/15)
+// rg 9/7/15.
 //
 
 #include <jni.h>
@@ -12,9 +13,9 @@
 #include <android/log.h>
 
 #include "sensors.h"
-#include "comm.h"
 #include "packdat.h"
 #include "gl.h"
+#include "comm.h"
 
 #define JNIEXPORT __attribute__ ((visibility ("default")))
 
@@ -103,12 +104,6 @@ return 0;
 JNIEXPORT jint JNICALL
 Java_edu_utc_vat_CallNative_WriteOff(JNIEnv *, jobject) {
 wti::wti_::wti__().w_();
-return 0;
-}
-
-JNIEXPORT jint JNICALL
-Java_edu_utc_vat_CallNative_IO(JNIEnv *, jobject) {
-io::io_::io__().__init();
 return 0;
 }
 
