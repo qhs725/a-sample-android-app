@@ -1,7 +1,6 @@
 /**
  * UTC Virtual Athletic Trainer v0.01.1 (12/3/15)
  * rg 09.08.15
- * TODO: once InternalData is deprecated apache .jar should be removed
  */
 
 package edu.utc.vat;
