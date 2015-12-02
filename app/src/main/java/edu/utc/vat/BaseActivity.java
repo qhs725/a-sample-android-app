@@ -1,42 +1,38 @@
+/**
+ * UTC Virt Athletic Trainer (aka Sports Injury Prevention Screening -- SIPS)
+ * v0.01.1 (12.3.15)
+ */
+
+
 package edu.utc.vat;
 
-import android.app.Activity;
+
 import android.content.Context;
 import android.content.Intent;
+
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+
 import android.os.Bundle;
+
 import android.support.v7.app.AppCompatActivity;
+
 import android.util.Log;
+
 import android.view.Menu;
+
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
 
 import com.ibm.mobile.services.cloudcode.IBMCloudCode;
 import com.ibm.mobile.services.core.IBMBluemix;
 import com.ibm.mobile.services.core.IBMCurrentUser;
-import com.ibm.mobile.services.core.http.IBMHttpResponse;
-import com.ibm.mobile.services.data.IBMData;
-import com.ibm.mobile.services.data.IBMDataException;
-import com.ibm.mobile.services.data.IBMDataObject;
-import com.ibm.mobile.services.data.IBMQuery;
 import com.ibm.mobile.services.push.IBMPush;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 import bolts.Continuation;
 import bolts.Task;
+
 
 public class BaseActivity extends AppCompatActivity {
 

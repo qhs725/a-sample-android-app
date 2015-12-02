@@ -71,4 +71,13 @@ public class CallNative {
 
     @SuppressWarnings("JniMissingFunction")
     public static native void SetFlankerFlag(boolean flag); //sets flanker flag
+
+    @SuppressWarnings("JniMissingFunction")
+    public static native int CountAccel();
+
+    @SuppressWarnings("JniMissingFunction")
+    public static native int CountGyro();
+
+    @SuppressWarnings("JniMissingFunction")
+    public static native int CountCompass();
 }

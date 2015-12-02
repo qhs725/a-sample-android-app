@@ -258,7 +258,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         status = READY;
         String statusUpdate = statusList.get(status);
         testStatus.setText(statusUpdate);
-        DialogFragment uploadData = new UploadDataDialogFragment();
+        DialogFragment uploadData = new edu.utc.vat.post.test.UploadDataDialogFragment();
         uploadData.show(getFragmentManager(), "uploadData");
         statusUpdate(status);
         return 0;

@@ -171,7 +171,26 @@ sh::sh_::sh__()._sff_(b);
 return b;
 }
 
+JNIEXPORT jint JNICALL
+Java_edu_utc_vat_CallNative_CountAccel(JNIEnv *, jobject) {
+int a;
+a = sh::sh_::sh__()._0_;
+return a;
+}
 
+JNIEXPORT jint JNICALL
+Java_edu_utc_vat_CallNative_CountGyro(JNIEnv *, jobject) {
+int g;
+g = sh::sh_::sh__()._1__;
+return g;
+}
+
+JNIEXPORT jint JNICALL
+Java_edu_utc_vat_CallNative_CountCompass(JNIEnv *, jobject) {
+int c;
+c = sh::sh_::sh__()._2___;
+return c;
+}
 
 #ifdef __cplusplus
 }

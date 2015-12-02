@@ -1,29 +1,25 @@
-/**
- * UTC Virtual Athletic Trainer (aka Sports Injury Prevention Screening -- SIPS)
- * v0.01.1 (12/3/15)
- * rg 9/11/15
- */
+package edu.utc.vat.post.test;
 
-
-package edu.utc.vat;
-
-import android.app.DialogFragment;
-import android.app.Dialog;
-import android.app.AlertDialog;
 import android.app.Activity;
-
-import android.content.DialogInterface;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Context;
-
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Bundle;
 import android.os.AsyncTask;
-
+import android.os.Bundle;
 import android.util.Log;
-
 import android.widget.Toast;
 
+import edu.utc.vat.CallNative;
+import edu.utc.vat.R;
+import edu.utc.vat.TestingActivity;
+import edu.utc.vat.dataUploadService;
 
+/**
+ * Created by kristof on 12/2/15.
+ */
 public class UploadDataDialogFragment extends DialogFragment {
 
     Context context;
@@ -72,7 +68,7 @@ public class UploadDataDialogFragment extends DialogFragment {
         protected Boolean doInBackground(Void... v) {
 
             String x = "1000";
-             CallNative.PackageData(x);
+            CallNative.PackageData(x);
             return true;
         }
 
@@ -81,4 +77,5 @@ public class UploadDataDialogFragment extends DialogFragment {
 
         }
     }
+
 }
