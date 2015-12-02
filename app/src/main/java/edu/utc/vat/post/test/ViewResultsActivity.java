@@ -292,7 +292,7 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
         multiRender.setZoomButtonsVisible(true);
         float axisTextSize = multiRender.getAxisTitleTextSize();
         multiRender.setAxisTitleTextSize(32.f);
-        
+
         multiRender.addSeriesRenderer(xRender);
         multiRender.addSeriesRenderer(yRender);
         multiRender.addSeriesRenderer(zRender);

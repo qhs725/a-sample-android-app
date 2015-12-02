@@ -165,6 +165,7 @@
     <orderEntry type="library" exported="" name="play-services-appindexing-8.1.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-nearby-8.1.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-wallet-8.1.0" level="project" />
+    <orderEntry type="library" exported="" name="achartengine-1.0.0" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-23.1.0" level="project" />
     <orderEntry type="library" exported="" name="socket.io-client-0.6.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-ads-8.1.0" level="project" />
