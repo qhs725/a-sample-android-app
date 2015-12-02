@@ -10,36 +10,35 @@
 package edu.utc.vat;
 
 import android.app.DialogFragment;
+
 import android.content.Context;
 import android.content.Intent;
+
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+
 import android.os.Bundle;
+
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Toast;
+
 import android.util.Log;
+
 import com.ibm.mobile.services.core.IBMBluemix;
 import com.ibm.mobile.services.core.IBMCurrentUser;
 import com.ibm.mobile.services.push.IBMPush;
+
 import java.util.HashMap;
 import java.util.UUID;
 
 import bolts.Continuation;
 import bolts.Task;
 
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v4.app.FragmentManager;
-import android.os.StrictMode;
-import java.lang.Object;
-import java.util.UUID;
+import edu.utc.vat.post.test.ViewDialogFragment;
+import edu.utc.vat.post.test.ViewResultsActivity;
 
 
 public class TestingActivity extends BaseActivity implements View.OnClickListener {
@@ -264,6 +263,11 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         statusUpdate(status);
         return 0;
     }
+    public int Viewer() {
+        DialogFragment viewResults = new ViewDialogFragment();
+        viewResults.show(getFragmentManager(), "viewResults");
+        return 0;
+    }
 
 
     /**
@@ -273,7 +277,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         exerciseList.put(1, "One Leg Squat Hold Test");
         exerciseList.put(2, "One Leg Jump Balance Test");
     }
-
     public void completeStatusList() {
         statusList.put(-1, "Enter NAME, etc...");
         statusList.put(3, "Press START to begin...");
@@ -290,6 +293,10 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     public static Intent createIntent(Context context, int e) {
         exercise = e;
         return new Intent(context, TestingActivity.class);
+    }
+
+    public void launchViewer() {
+        startActivity(new Intent(this, ViewResultsActivity.class));
     }
 
 
@@ -320,15 +327,12 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
     public  void initServices(){
         if (UserAccount.getIdToken() != null) {
-
             // set ID TOKEN so that all subsequent Service calls
             // will contain the ID TOKEN in the header
             Log.d(CLASS_NAME, "Setting the Google ID token: \n"
                     + UserAccount.getIdToken());
-
             Log.d(CLASS_NAME, "Setting the Google Access token for all future IBM Bluemix Mobile Cloud Service calls: \n"
                     + UserAccount.getAccessToken());
-
             // set the access token so that all subsequent calls to IBM Bluemix Mobile Cloud Services
             // will contain the access token in the header
             // Note: Kicking off a Bolts Asynchronous task to initialize services, chained with
@@ -346,32 +350,23 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                                         // clear the security token
                                         return null;
                                     }
-
                                     // if setting the security token succeeds...
                                     Log.i(CLASS_NAME, "Set the Google security token successfully. Retrieved IBMCurrentUser: "
                                             + user.getResult().getUuid());
-
                                     // Save the IBMCurrentUser unique User Id
                                     uUserID = user.getResult().getUuid();
-
                                     //Add uUserID to User Account
                                     UserAccount.setuUserID(uUserID);
-
                                     // initialize IBM Bluemix Mobile Cloud Services
                                     blApplication.initializeBluemixServices();
                                     Log.i(CLASS_NAME, "Done initializing IBM Bluemix Services");
-
                                     Log.i(CLASS_NAME, "Done refreshing Session list.");
-
                                     // retrieve instance of the IBM Push service
                                     if (push == null) {
                                         push = IBMPush.getService();
                                     }
-
                                     Log.i(CLASS_NAME, "Registering device with the IBM Push service.");
                                     // register the device with the IBM Push service
-
-
                                     return push.register(deviceAlias, consumerID);
                                 }
 
@@ -383,10 +378,8 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                         deviceIdTask.getError().printStackTrace();
                         return null;
                     }
-
                     Log.i(CLASS_NAME, "Device registered with IBM Push service successfully. Device Id: "
                             + deviceIdTask.getResult());
-
                     return null;
                 }
             });

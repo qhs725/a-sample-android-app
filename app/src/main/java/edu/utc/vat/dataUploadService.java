@@ -1,3 +1,8 @@
+/**
+ * UTC Virtual Athletic Trainer (aka Sports Injury Prevention Screening -- SIPS)
+ * v0.01.1 (12.3.15)
+ */
+
 package edu.utc.vat;
 
 import android.app.IntentService;

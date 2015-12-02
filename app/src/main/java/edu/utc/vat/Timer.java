@@ -182,7 +182,9 @@ public class Timer {
                 CallNative.WriteOff();
                 CallNative.StopSensors();
                 CallNative.CloseFiles();
-                ((TestingActivity)appContext).Upload();
+                //((TestingActivity)appContext).Upload();
+                ((TestingActivity) appContext).Viewer();
+                //((TestingActivity) appContext).launchViewer();
 
                 timeron = false;
             }
