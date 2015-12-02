@@ -235,10 +235,6 @@ public class dataUploadService extends IntentService {
             // writeLocal(session_json);
         }
 
-
-        //Call to Upload all file fields together
-        //sessionUpload(session_json);
-
         //mSocket.disconnect();
         if (file != null) {
             try {

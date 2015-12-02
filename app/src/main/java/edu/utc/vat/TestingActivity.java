@@ -27,18 +27,6 @@ import java.util.UUID;
 import bolts.Continuation;
 import bolts.Task;
 
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v4.app.FragmentManager;
-import android.os.StrictMode;
-import java.lang.Object;
-import java.util.UUID;
-
-
 public class TestingActivity extends BaseActivity implements View.OnClickListener {
 
     private static final int NO_EXERCISE_SELECTED = 0;

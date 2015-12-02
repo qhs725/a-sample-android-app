@@ -66,12 +66,13 @@ public class BaseActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //respond to menu item selection
-        switch (item.getItemId()) {
+        switch (id) {
             case R.id.action_settings:
                 return true;
             case R.id.action_exercise:
-                intent = new Intent(this, IBMDataTest.class);
+                intent = new Intent(this, ExerciseListActivity.class);
                 startActivity(intent);
+
                 return true;
             case R.id.logout:
                 intent = new Intent(this, LoginActivity.class);
