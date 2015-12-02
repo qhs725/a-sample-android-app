@@ -75,7 +75,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
     private final long DEFAULT_COUNTDOWN_TIME = 5;
     private final long DEFAULT_TESTING_TIME = 30;
-    private final long JUMP_TESTING_TIME = 10;
+    private final long JUMP_TESTING_TIME = 5;
     private final long LEG_BALANCE_TESTING_TIME = 30;
 
     private Toast concurrentToast;

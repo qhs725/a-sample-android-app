@@ -44,6 +44,7 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
 
     private int aCount, gCount, cCount;
     private int tMax;
+    private float T = 0.f;
 
     private XYSeries axSeries = new XYSeries("X");
     private XYSeries aySeries = new XYSeries("Y");
@@ -77,7 +78,7 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
         if (!loadFlag)
             Log.e("ViewResults","Couldn't load files to view");
 
-        //openChart();
+        openChart();
 
         //DialogFragment uploadData = new edu.utc.vat.post.test.UploadDataDialogFragment();
         //uploadData.show(getFragmentManager(), "uploadData");
@@ -99,14 +100,17 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
         switch (v.getId()) {
             case R.id.accel:
                 STATE = ACCELERATION;
+                layout.removeAllViews();
                 openChart();
                 break;
             case R.id.gyro:
                 STATE = ROTATION;
+                layout.removeAllViews();
                 openChart();
                 break;
             case R.id.compass:
                 STATE = MAGNETIC;
+                layout.removeAllViews();
                 openChart();
                 break;
         }
@@ -129,8 +133,7 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
             Scanner scanLine;
             scanLine = new Scanner(scanAccel.next());
             scanLine.useDelimiter(",");
-            float x, y, z, t, T;
-            T = 0.f;
+            float x, y, z, t;
             // a.dat -- ignoring first line; header
             if (ct > 0) {
                 x = Float.parseFloat(scanLine.next());
@@ -166,8 +169,7 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
             Scanner scanLine;
             scanLine = new Scanner(scanGyro.next());
             scanLine.useDelimiter(",");
-            float x, y, z, t, T;
-            T = 0.f;
+            float x, y, z, t;
             // g.dat -- ignoring first line; header
             if (ct > 0) {
                 x = Float.parseFloat(scanLine.next());
@@ -203,7 +205,7 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
             Scanner scanLine;
             scanLine = new Scanner(scanCompass.next());
             scanLine.useDelimiter(",");
-            float x, y, z, t = 0.f, T = 0.f;
+            float x, y, z, t = 0.f;
             // c.dat -- ignoring first line; header
             if (ct > 0) {
                 x = Float.parseFloat(scanLine.next());
@@ -288,30 +290,9 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
         multiRender.setXTitle("Time");
         multiRender.setYTitle("Sensor Values");
         multiRender.setZoomButtonsVisible(true);
-        /*
-        int yMin = 0, yMax = 0, xMax = 0;
-        xMax = tMax;
-        for (int i = 0; i < xMax; i++) {
-            multiRender.addXTextLabel(i+1, "" + i);
-        }
-        switch (STATE) {
-            case ACCELERATION:
-                yMin = -15;
-                yMax = 15;
-                break;
-            case ROTATION:
-                yMin = -10;
-                yMax = 10;
-                break;
-            case MAGNETIC:
-                yMin = -100;
-                yMax = 250;
-                break;
-        }
-        for (int i = yMin; i < yMax; i++) {
-            multiRender.addYTextLabel(i + 1 + yMin, "" + i);
-        }
-        */
+        float axisTextSize = multiRender.getAxisTitleTextSize();
+        multiRender.setAxisTitleTextSize(32.f);
+        
         multiRender.addSeriesRenderer(xRender);
         multiRender.addSeriesRenderer(yRender);
         multiRender.addSeriesRenderer(zRender);
