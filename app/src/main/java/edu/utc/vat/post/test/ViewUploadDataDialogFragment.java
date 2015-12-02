@@ -27,8 +27,7 @@ import edu.utc.vat.R;
 import edu.utc.vat.TestingActivity;
 import edu.utc.vat.dataUploadService;
 
-
-public class UploadDataDialogFragment extends DialogFragment {
+public class ViewUploadDataDialogFragment extends DialogFragment {
 
     Context context;
 
@@ -46,20 +45,20 @@ public class UploadDataDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         if (TestingActivity.getisNetwork()) {
                             Log.i("UPLOAD", "Calling PackageData");
-
                             //Start background service to upload
                             getActivity().startService(new Intent(getActivity(), dataUploadService.class));
-
                             new UpdateTask().execute();
                             Toast.makeText(context, "Uploading...", Toast.LENGTH_LONG);
+                            ((ViewResultsActivity) context).finish();
                         } else {
                             Toast.makeText(context, "No network connection available", Toast.LENGTH_LONG).show();
+                            ((ViewResultsActivity) context).finish();
                         }
                     }
                 })
                 .setNegativeButton(R.string.dialog_discard, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        //TODO: nothing
+                        ((ViewResultsActivity) context).finish();
                     }
                 });
         return builder.create();
@@ -68,22 +67,20 @@ public class UploadDataDialogFragment extends DialogFragment {
     private class UpdateTask extends AsyncTask<Void, Void, Boolean> {
 
         protected Void onPreExecute(Void v) {
-
             return null;
         }
 
         @Override
         protected Boolean doInBackground(Void... v) {
-
-            String x = "1000";
+            String x = "1000";  //TODO: Does PackageData() still require an argument?
             CallNative.PackageData(x);
             return true;
         }
 
         protected void onPostExecute(Boolean b) {
-            //TODO: something that will work if TestingActivity has been destroyed?
-
+            //TODO: nothing
         }
     }
+
 
 }

@@ -1,12 +1,10 @@
 /**
  * UTC Virt Athletic Assistant (aka Sports Injury Prevention Screening -- SIPS)
- * v0.01.1 (12/3/15)
+ * v0.01.1a (12/3/15)
  * rg 12/2/15.
  */
 
-
 package edu.utc.vat.post.test;
-
 
 import android.app.DialogFragment;
 
@@ -43,8 +41,11 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
     private static int STATE = DEFAULT;
 
     private int aCount, gCount, cCount;
-    private int tMax;
+    private int jumpCount = 0, jumpMax = 0;
     private float T = 0.f;
+    private double yaMax = 0., yaMin = 0.;
+    private double yrMax = 0., yrMin = 0.;
+    private double ymMax = 0., ymMin = 0.;
 
     private XYSeries axSeries = new XYSeries("X");
     private XYSeries aySeries = new XYSeries("Y");
@@ -92,6 +93,12 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onBackPressed() {
+        DialogFragment uploadData = new ViewUploadDataDialogFragment();
+        uploadData.show(getFragmentManager(), "uploadData");
     }
 
 
@@ -148,6 +155,9 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
                 axSeries.add(t/1000.f, x);
                 aySeries.add(t/1000.f, y);
                 azSeries.add(t/1000.f, z);
+                jumpHeight(x, y, z);
+                yaMax = Math.max(yaMax, getMax(x, y, z));
+                yaMin = Math.min(yaMin, getMin(x, y, z));
             }
             ct++;
         }
@@ -184,6 +194,8 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
                 rxSeries.add(t/1000.f, x);
                 rySeries.add(t/1000.f, y);
                 rzSeries.add(t/1000.f, z);
+                yrMax = Math.max(yrMax, getMax(x, y, z));
+                yrMin = Math.min(yrMin, getMin(x, y, z));
             }
             ct++;
         }
@@ -220,8 +232,9 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
                 mxSeries.add(t/1000.f, x);
                 mySeries.add(t/1000.f, y);
                 mzSeries.add(t/1000.f, z);
+                ymMax = Math.max(ymMax, getMax(x, y, z));
+                ymMin = Math.min(ymMin, getMin(x, y, z));
             }
-            tMax = (int) t;
             ct++;
         }
         Log.i("ViewResults","Compass data lines count %d" + cCount);
@@ -275,23 +288,46 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
 
         XYMultipleSeriesRenderer multiRender = new XYMultipleSeriesRenderer();
         multiRender.setXLabels(0);
-        multiRender.setLabelsColor(Color.RED);
+        multiRender.setLabelsColor(Color.WHITE);
         switch (STATE) {
             case ACCELERATION:
-                multiRender.setChartTitle("Acceleration vs Time");
+                if (exercise == SINGLE_LEG_JUMP) {
+                    int inches = (int) getJumpHeight(aCount, JUMP_TESTING_TIME);
+                    multiRender.setChartTitle(exerciseName + "\n" + Integer.toString(inches) + " inch vertical jump" + "\n\nAcceleration vs Time");
+                } else
+                    multiRender.setChartTitle("\n" + exerciseName + ":\n\nAcceleration vs Time");
                 break;
             case ROTATION:
-                multiRender.setChartTitle("Gyroscopic Rotation vs Time");
+                multiRender.setChartTitle("\n" + exerciseName + ":\n\nGyroscopic Rotation vs Time");
                 break;
             case MAGNETIC:
-                multiRender.setChartTitle("Magnetic Field vs Time");
+                multiRender.setChartTitle("\n" + exerciseName + ":\n\nMagnetic Field vs Time");
                 break;
         }
         multiRender.setXTitle("Time");
         multiRender.setYTitle("Sensor Values");
-        multiRender.setZoomButtonsVisible(true);
         float axisTextSize = multiRender.getAxisTitleTextSize();
-        multiRender.setAxisTitleTextSize(32.f);
+        multiRender.setAxisTitleTextSize(48.f);
+        multiRender.setChartTitleTextSize(48.f);
+        multiRender.setLabelsTextSize(32.f);
+        multiRender.setLegendTextSize(40.f);
+        int[] margins = new int[] {230, 90, 70, 90};
+        multiRender.setMargins(margins);
+
+        switch (STATE) {
+            case ACCELERATION:
+                multiRender.setYAxisMin(yaMin-2.);
+                multiRender.setYAxisMax(yaMax+2.);
+                break;
+            case ROTATION:
+                multiRender.setYAxisMin(yrMin-2.);
+                multiRender.setYAxisMax(yrMax+2.);
+                break;
+            case MAGNETIC:
+                multiRender.setYAxisMin(ymMin-2.);
+                multiRender.setYAxisMax(ymMax+2.);
+                break;
+        }
 
         multiRender.addSeriesRenderer(xRender);
         multiRender.addSeriesRenderer(yRender);
@@ -300,6 +336,44 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
         currentChart = ChartFactory.getLineChartView(getBaseContext(), data, multiRender);
 
         layout.addView(currentChart);
+    }
+
+
+    private void jumpHeight(float x, float y, float z) {
+        double accelMag;
+        double xd = (double) x;
+        double yd = (double) y;
+        double zd = (double) z;
+        accelMag = Math.sqrt(xd*xd+yd*yd+zd*zd);
+        if (accelMag < 9.0) {
+            jumpCount++;
+            if (jumpCount > jumpMax)
+                jumpMax = jumpCount;
+        } else {
+            jumpCount = 0;
+        }
+    }
+
+    private float getJumpHeight(int totalCount, float testTime) {
+        double h;
+        float dt = testTime / ((float) totalCount);
+        float t = dt * (float) jumpMax;
+        h = 6.*(32.174*((t/2.)*(t/2.)));
+        return (float) h; // height in inches
+    }
+
+    private double getMax(float x, float y, float z) {
+        double xd = (double) x;
+        double yd = (double) y;
+        double zd = (double) z;
+        return Math.max(xd, Math.max(yd, zd));
+    }
+
+    private double getMin(float x, float y, float z) {
+        double xd = (double) x;
+        double yd = (double) y;
+        double zd = (double) z;
+        return Math.min(xd, Math.min(yd, zd));
     }
 
 }

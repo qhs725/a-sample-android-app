@@ -1,6 +1,6 @@
 /**
- * UTC Virtual Athletic Trainer (aka Sports Injury Prevention Screening -- SIPS)
- * v0.01.1 (12.3.15)
+ * Sports Injury Prevention Screening -- SIPS
+ * v0.01.1a (12.3.15)
  */
 
 package edu.utc.vat;

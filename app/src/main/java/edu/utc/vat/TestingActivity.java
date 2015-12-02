@@ -1,7 +1,9 @@
 /**
- * UTC Virtual Athletic Trainer
- * v0.01.1 (12/3/15)
+ * UTC Virtual Athletic Trainer (aka Sports Injury Prevention Screening -- SIPS)
+ * v0.01.1a (12/3/15)
  * rg 9/9/15
+ *
+ * TODO: Get status updating appropriately
  *
  * TODO: Add fragments for displaying timer and Exercise instructions
  * TODO: Move FLAG_KEEP_SCREEN_ON to timer fragment, so, screen only remains on during testing
@@ -45,8 +47,8 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
     private static final int NO_EXERCISE_SELECTED = 0;
     private static final int ONE_LEG_SQUAT_HOLD = 1;
-    private static final int ONE_LEG_JUMP_BALANCE = 2;
-    private static int exercise = NO_EXERCISE_SELECTED;
+    public static final int SINGLE_LEG_JUMP = 2;
+    public static int exercise = NO_EXERCISE_SELECTED;
 
     public static final int STOPPED = 0;
     public static final int COUNTDOWN = 2;
@@ -59,7 +61,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     private HashMap<Integer, String> statusList = new HashMap<Integer, String>();
 
     private TextView currentExercise;
-    private String exerciseName;
+    public String exerciseName;
     private HashMap<Integer, String> exerciseList = new HashMap <Integer, String>();
 
     private TextView timerClock;
@@ -75,7 +77,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
     private final long DEFAULT_COUNTDOWN_TIME = 5;
     private final long DEFAULT_TESTING_TIME = 30;
-    private final long JUMP_TESTING_TIME = 5;
+    public final long JUMP_TESTING_TIME = 5;
     private final long LEG_BALANCE_TESTING_TIME = 30;
 
     private Toast concurrentToast;
@@ -127,7 +129,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                 timer.setTestingTime(LEG_BALANCE_TESTING_TIME);
                 break;
             }
-            case ONE_LEG_JUMP_BALANCE: {
+            case SINGLE_LEG_JUMP: {
                 timer.setTestingTime(JUMP_TESTING_TIME);
                 break;
             }
@@ -274,8 +276,8 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
      * Fill hash maps with strings for view corresponding to constant ints
      */
     public void completeExerciseList() {
-        exerciseList.put(1, "One Leg Squat Hold Test");
-        exerciseList.put(2, "One Leg Jump Balance Test");
+        exerciseList.put(1, "SINGLE LEG BALANCE TEST");
+        exerciseList.put(2, "SINGLE LEG JUMP TEST");
     }
     public void completeStatusList() {
         statusList.put(-1, "Enter NAME, etc...");
@@ -316,6 +318,10 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     }
 
 
+    /**
+     * showToast method for simplifying Toasts to one line of code
+     * TODO: Could move to BaseActivity
+     */
     void showToast(String message) {
         if (concurrentToast != null) {
             concurrentToast.cancel();

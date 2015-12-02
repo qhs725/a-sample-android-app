@@ -1,6 +1,6 @@
 /*
- * UTC Virtual Athletic Assistant
- * v0.01.1 (12/03/15)
+ * UTC Virtual Athletic Assistant (aka Sports Injury Prevention Screening -- SIPS)
+ * v0.01.1a (12/03/15)
  * rg 9.10.15
  */
 
