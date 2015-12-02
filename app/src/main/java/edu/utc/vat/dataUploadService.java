@@ -1,3 +1,8 @@
+/**
+ * UTC Virtual Athletic Trainer (aka Sports Injury Prevention Screening -- SIPS)
+ * v0.01.1 (12.3.15)
+ */
+
 package edu.utc.vat;
 
 import android.app.IntentService;
@@ -37,29 +42,22 @@ public class dataUploadService extends IntentService {
     private static JSONObject session_json;
     private static int num = 1;
 
-    // private static final String SERVER_IP ="http://192.168.0.105:3000/upload";
     private static final String SERVER_IP = "http://utc-vat.mybluemix.net/upload";
     private static Socket mSocket = null;
-
 
     //default constructor
     public dataUploadService() {
         super("dataUploadService");
     }
-    /**
-     * Creates an IntentService.  Invoked by your subclass's constructor.
-     *
-     * @param name Used to name the worker thread, important only for debugging.
-     */
+
     public dataUploadService(String name) {
         super(name);
     }
 
     @Override
     protected void onHandleIntent(Intent workIntent) {
-        Handler mHandler = new Handler(getMainLooper());
         // create a handler to post messages to the main thread
-
+        Handler mHandler = new Handler(getMainLooper());
 
         // Gets data from the incoming Intent
         String dataString = workIntent.getDataString();
@@ -73,33 +71,18 @@ public class dataUploadService extends IntentService {
                     Toast.makeText(BlueMixApplication.getAppContext(), "No internet connection found", Toast.LENGTH_LONG).show();
                 }
             });
-
             return; //return if no internet connection
         }
-        //Check if C++ is still writing to file
-        /*
-        if(CallNative.CheckData() == false){
 
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(BlueMixApplication.getAppContext(), "Unable to upload, still writing to file", Toast.LENGTH_LONG).show();
-                }
-            });
-
-            return; //quit is a file is being written to
+        while(CallNative.CheckData() == false){
+            Log.d(LOG_NAME, " File is still being written to");
         }
-        */
 
-    while(CallNative.CheckData() == false){
-        Log.d(LOG_NAME, " File is still being written to");
-    }
-            getSensorData();
+        getSensorData();
     }
 
 
     public static void sessionUpload(JSONObject sessJSON) {//Send Session to NodeServer
-
         //Attempt to connect to server
         try {
             mSocket = IO.socket(SERVER_IP);
@@ -107,18 +90,12 @@ public class dataUploadService extends IntentService {
         } catch (URISyntaxException e) {
         }
 
-
         //Send Session json object
         mSocket.emit("data", sessJSON);
     }
 
+
     public static void getSensorData(){
-        //TODO: Create Asynck task/service for uploading files and to to periodically check for internet and to upload as soon as possible. Possibly add in WIFI only option in settings.
-
-        //TODO: Change code to see each file as a unique exercise to upload. Line 1 will contain data provided from user. Line 2 will contain mapping for the following lines. The following lines will contain sensor data in the order shown by line 2.
-
-
-
         ArrayList<String> dataFileNames = new ArrayList<String>();
         int numColumns = 0;
         String[] userInfo = null;
@@ -127,11 +104,11 @@ public class dataUploadService extends IntentService {
         //Get files directory and get names of all files within
         File fileFinder = new File(context.getFilesDir() + "/");
         File fileList[] = fileFinder.listFiles();
-        Log.i("Files", "Size: " + fileList.length);
+        Log.i("dataUpload", "Size: " + fileList.length);
 
         //Look at each file in the directory
         for (int i = 0; i < fileList.length - 1; i++) {
-            Log.i("Files", "FileName:" + fileList[i].getName());
+            Log.i("dataUpload", "FileName:" + fileList[i].getName());
             String filenameArray[] = fileList[i].getName().split("\\.");
             String extension = filenameArray[filenameArray.length - 1];
 
@@ -139,18 +116,15 @@ public class dataUploadService extends IntentService {
             if (extension.equals(EXT)) {
                 //dataFileNames[num] = fileList[i].getName();
                 dataFileNames.add(fileList[i].getName());
-                Log.i("Files", "Found Data file:" + fileList[i].getName());
+                Log.i("dataUpload", "Found Data file:" + fileList[i].getName());
             }
         }
 
         //Data files should be in dataFileNames[] at this point
-
         session_json = new JSONObject(); //Single object upload for multiple files
 
         //Go through each data file, create object keys, add data values
         for (int i = 0; i < dataFileNames.size(); i++) {
-
-            //  session_json = new JSONObject(); //INDIVIDUAL FILE
 
             try {
                 //Get current file in dataFileNames
@@ -178,7 +152,6 @@ public class dataUploadService extends IntentService {
                     if ((lineRow = reader.readLine()) != null) {
                         keyNames = lineRow.split(",");
                         numColumns = keyNames.length;
-
                         for(int t = 0; t < keyNames.length; t++) {
                             Log.d(LOG_NAME, "Keynames: " + keyNames[t]);
                         }
@@ -199,14 +172,13 @@ public class dataUploadService extends IntentService {
                         for (int y = 0; y < numColumns; y++) {
                             try {
                                 if(y >= RowData.length){
-
                                 }
                                 else {
                                     if (RowData[y] == "" || RowData[y] == null) {
                                         RowData[y] = "null";
                                     }
                                     group.get(y).add(RowData[y]);
-                                    Log.i(LOG_NAME, "Added Data: " + RowData[y] + " to position " + y);
+                                    //Log.i(LOG_NAME, "Added Data: " + RowData[y] + " to position " + y);
                                 }
                             } catch (Exception e) {
                                 Log.e(LOG_NAME, "ERROR: " + e.getMessage());
@@ -222,48 +194,27 @@ public class dataUploadService extends IntentService {
                     group.clear(); //reset for next file
                 }
             } catch (FileNotFoundException e) {
-                Log.e("login activity", "File not found: " + e.toString());
+                Log.e("dataUpload", "File not found: " + e.toString());
             } catch (IOException e) {
-                Log.e("login activity", "Can not read file: " + e.toString());
+                Log.e("dataUpload", "Can not read file: " + e.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             //Call to upload file (INDIVIDUAL)
             sessionUpload(session_json);
-            //Write to file
-            // writeLocal(session_json);
         }
 
-
-        //Call to Upload all file fields together
-        //sessionUpload(session_json);
-
-        //mSocket.disconnect();
         if (file != null) {
             try {
                 file.close(); //close file once done
             } catch (FileNotFoundException e) {
-                Log.e("login activity", "File not found: " + e.toString());
+                Log.e("dataUpload", "File not found: " + e.toString());
             } catch (IOException e) {
-                Log.e("login activity", "Can not read file: " + e.toString());
+                Log.e("dataUpload", "Can not read file: " + e.toString());
             }
         }
+
+        Log.i("dataUpload","Data upload complete");
     }
 
-    public static void writeLocal(JSONObject sessJSON){
-
-        String content = sessJSON.toString();
-        try {
-            File file1 = new File(context.getFilesDir() + "/", "session_json.txt");
-
-            FileWriter fw = new FileWriter(context.getFilesDir() + "/session_json.txt");
-            BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(content);
-            bw.close();
-        }
-        catch(Exception err){
-            Log.e("Writer", "FILE Write ERROR: " + err.toString());
-        }
-    }
 }

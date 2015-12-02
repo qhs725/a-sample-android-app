@@ -1,42 +1,44 @@
 /**
- * UTC Virtual Athletic Trainer v0.01.1 (12/3/15)
+ * UTC Virtual Athletic Trainer
+ * v0.01.1 (12/3/15)
  * rg 9/9/15
  *
- * TODO: Add fragments for displaying timer and Exercise instructions.
+ * TODO: Add fragments for displaying timer and Exercise instructions
+ * TODO: Move FLAG_KEEP_SCREEN_ON to timer fragment, so, screen only remains on during testing
  */
 
 package edu.utc.vat;
 
 import android.app.DialogFragment;
+
 import android.content.Context;
 import android.content.Intent;
+
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+
 import android.os.Bundle;
+
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Toast;
+
 import android.util.Log;
+
 import com.ibm.mobile.services.core.IBMBluemix;
 import com.ibm.mobile.services.core.IBMCurrentUser;
 import com.ibm.mobile.services.push.IBMPush;
+
 import java.util.HashMap;
 import java.util.UUID;
 
 import bolts.Continuation;
 import bolts.Task;
 
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v4.app.FragmentManager;
-import android.os.StrictMode;
-import java.lang.Object;
-import java.util.UUID;
+import edu.utc.vat.post.test.ViewDialogFragment;
+import edu.utc.vat.post.test.ViewResultsActivity;
 
 
 public class TestingActivity extends BaseActivity implements View.OnClickListener {
@@ -51,7 +53,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     public static final int TESTING = 1;
     public static final int READY = 3;
     public static final int VOID = -1;
-    public static final int UPLOADING = 4;
     public int status;
     private TextView testStatus;
     private String statusMessage;
@@ -59,7 +60,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
     private TextView currentExercise;
     private String exerciseName;
-    private HashMap<Integer, String> exerciseList = new HashMap<Integer, String>();
+    private HashMap<Integer, String> exerciseList = new HashMap <Integer, String>();
 
     private TextView timerClock;
     private int timerTime;
@@ -73,7 +74,9 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     private Button instructionsButton;
 
     private final long DEFAULT_COUNTDOWN_TIME = 5;
-    private final long DEFAULT_TESTING_TIME = 20;
+    private final long DEFAULT_TESTING_TIME = 30;
+    private final long JUMP_TESTING_TIME = 5;
+    private final long LEG_BALANCE_TESTING_TIME = 30;
 
     private Toast concurrentToast;
 
@@ -86,9 +89,13 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
+
+        getWindow().addFlags(
+                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+        );
         setContentView(R.layout.activity_testing);
+
         status = VOID;
         completeExerciseList();
         completeStatusList();
@@ -115,8 +122,16 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         timer.setTestingTime(DEFAULT_TESTING_TIME);
         timer.initTimer();
 
-
-
+        switch (exercise) {
+            case ONE_LEG_SQUAT_HOLD: {
+                timer.setTestingTime(LEG_BALANCE_TESTING_TIME);
+                break;
+            }
+            case ONE_LEG_JUMP_BALANCE: {
+                timer.setTestingTime(JUMP_TESTING_TIME);
+                break;
+            }
+        }
 
         //use application class to maintain global state
         blApplication = (BlueMixApplication) getApplication();
@@ -243,9 +258,14 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         status = READY;
         String statusUpdate = statusList.get(status);
         testStatus.setText(statusUpdate);
-        DialogFragment uploadData = new UploadDataDialogFragment();
+        DialogFragment uploadData = new edu.utc.vat.post.test.UploadDataDialogFragment();
         uploadData.show(getFragmentManager(), "uploadData");
         statusUpdate(status);
+        return 0;
+    }
+    public int Viewer() {
+        DialogFragment viewResults = new ViewDialogFragment();
+        viewResults.show(getFragmentManager(), "viewResults");
         return 0;
     }
 
@@ -257,7 +277,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         exerciseList.put(1, "One Leg Squat Hold Test");
         exerciseList.put(2, "One Leg Jump Balance Test");
     }
-
     public void completeStatusList() {
         statusList.put(-1, "Enter NAME, etc...");
         statusList.put(3, "Press START to begin...");
@@ -274,6 +293,10 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     public static Intent createIntent(Context context, int e) {
         exercise = e;
         return new Intent(context, TestingActivity.class);
+    }
+
+    public void launchViewer() {
+        startActivity(new Intent(this, ViewResultsActivity.class));
     }
 
 
@@ -304,15 +327,12 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
     public  void initServices(){
         if (UserAccount.getIdToken() != null) {
-
             // set ID TOKEN so that all subsequent Service calls
             // will contain the ID TOKEN in the header
             Log.d(CLASS_NAME, "Setting the Google ID token: \n"
                     + UserAccount.getIdToken());
-
             Log.d(CLASS_NAME, "Setting the Google Access token for all future IBM Bluemix Mobile Cloud Service calls: \n"
                     + UserAccount.getAccessToken());
-
             // set the access token so that all subsequent calls to IBM Bluemix Mobile Cloud Services
             // will contain the access token in the header
             // Note: Kicking off a Bolts Asynchronous task to initialize services, chained with
@@ -330,32 +350,23 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                                         // clear the security token
                                         return null;
                                     }
-
                                     // if setting the security token succeeds...
                                     Log.i(CLASS_NAME, "Set the Google security token successfully. Retrieved IBMCurrentUser: "
                                             + user.getResult().getUuid());
-
                                     // Save the IBMCurrentUser unique User Id
                                     uUserID = user.getResult().getUuid();
-
                                     //Add uUserID to User Account
                                     UserAccount.setuUserID(uUserID);
-
                                     // initialize IBM Bluemix Mobile Cloud Services
                                     blApplication.initializeBluemixServices();
                                     Log.i(CLASS_NAME, "Done initializing IBM Bluemix Services");
-
                                     Log.i(CLASS_NAME, "Done refreshing Session list.");
-
                                     // retrieve instance of the IBM Push service
                                     if (push == null) {
                                         push = IBMPush.getService();
                                     }
-
                                     Log.i(CLASS_NAME, "Registering device with the IBM Push service.");
                                     // register the device with the IBM Push service
-
-
                                     return push.register(deviceAlias, consumerID);
                                 }
 
@@ -367,10 +378,8 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                         deviceIdTask.getError().printStackTrace();
                         return null;
                     }
-
                     Log.i(CLASS_NAME, "Device registered with IBM Push service successfully. Device Id: "
                             + deviceIdTask.getResult());
-
                     return null;
                 }
             });

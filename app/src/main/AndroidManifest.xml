@@ -73,24 +73,13 @@
                 android:value="edu.utc.vat.TestingActivity" />
         </activity>
 
-        <activity android:name=".ExerciseListActivity" />
-
         <activity
-            android:name=".ExercisePrepActivity"
-            android:label="@string/title_activity_exercise_prep"
-            android:parentActivityName=".ExerciseListActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="edu.utc.vat.ExerciseListActivity" />
-        </activity>
-
-        <activity
-            android:name=".ExerciseActivity"
+            android:name=".post.test.ViewResultsActivity"
             android:label="@string/title_testing_activity"
-            android:parentActivityName=".ExercisePrepActivity" >
+            android:parentActivityName=".TestingActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="edu.utc.vat.ExerciseActivity" />
+                android:value="edu.utc.vat.post.test.ViewResultsActivity" />
         </activity>
 
         <activity android:name=".util.GoogleTokenManager" >
