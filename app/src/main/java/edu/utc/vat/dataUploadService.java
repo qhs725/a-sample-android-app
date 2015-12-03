@@ -1,15 +1,21 @@
 /**
  * Sports Injury Prevention Screening -- SIPS
- * v0.01.1a (12.3.15)
+ * v0.01.1b (12.3.15)
+ * TODO: Clean all commented code
+ * TODO: Clean unnecessary inline comments and appropriately comment methods
  */
 
 package edu.utc.vat;
 
 import android.app.IntentService;
+
 import android.content.Context;
 import android.content.Intent;
+
 import android.os.Handler;
+
 import android.util.Log;
+
 import android.widget.Toast;
 
 import com.github.nkzawa.socketio.client.IO;
@@ -19,28 +25,30 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
+//import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
+//import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
 import java.net.URISyntaxException;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class dataUploadService extends IntentService {
 
     public static final String LOG_NAME = "Session";
-    private static final String NAME = "name";
-    private static final String USERID = "userId";
-    private static final String SESSIONID = "sessionId";
-    private static final String USERINPUT = "userInput";
+    //private static final String NAME = "name";
+    //private static final String USERID = "userId";
+    //private static final String SESSIONID = "sessionId";
+    //private static final String USERINPUT = "userInput";
     private static Context context = BlueMixApplication.getAppContext();
     private static final String EXT = "csv";
     private static JSONObject session_json;
-    private static int num = 1;
+    //private static int num = 1;
 
     private static final String SERVER_IP = "http://utc-vat.mybluemix.net/upload";
     private static Socket mSocket = null;
@@ -60,7 +68,7 @@ public class dataUploadService extends IntentService {
         Handler mHandler = new Handler(getMainLooper());
 
         // Gets data from the incoming Intent
-        String dataString = workIntent.getDataString();
+        //String dataString = workIntent.getDataString();
         // Do work here, based on the contents of dataString
 
         //Check if network is available
@@ -73,11 +81,9 @@ public class dataUploadService extends IntentService {
             });
             return; //return if no internet connection
         }
-
         while(CallNative.CheckData() == false){
             Log.d(LOG_NAME, " File is still being written to");
         }
-
         getSensorData();
     }
 
@@ -89,7 +95,6 @@ public class dataUploadService extends IntentService {
             mSocket.connect();
         } catch (URISyntaxException e) {
         }
-
         //Send Session json object
         mSocket.emit("data", sessJSON);
     }
@@ -213,7 +218,6 @@ public class dataUploadService extends IntentService {
                 Log.e("dataUpload", "Can not read file: " + e.toString());
             }
         }
-
         Log.i("dataUpload","Data upload complete");
     }
 

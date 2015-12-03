@@ -86,12 +86,6 @@
         </activity>
 
         <activity
-            android:name=".IBMDataTest"
-            android:label="@string/title_activity_ibmdata_test"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
-
-        <activity
             android:name=".flanker.FlankerActivity"
             android:label="title_flanker_activity"
             android:parentActivityName=".MainActivity" >

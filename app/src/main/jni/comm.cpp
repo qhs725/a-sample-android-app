@@ -18,13 +18,27 @@ extern "C" {
 
 namespace io {
 
-    io_::io_() : o(true) {}
+    io_::io_() : o(true) {
+        io_::io__().__ff__ = false;
+    }
     io_::~io_() {
         o = false;
     };
 
     void io_::id_(const char *_) {
         io_::io__().__id = _;
+    }
+
+    bool io_::__fc__() {
+        if (io_::io__().__ff__) {
+            io_::io__().__ff__ = false;
+            return true;
+        } else
+            return false;
+    }
+
+    void io_::__fo__() {
+        io_::io__().__ff__ = true;
     }
 
 }  //  namespace io

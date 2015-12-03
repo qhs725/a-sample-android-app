@@ -1,6 +1,5 @@
-# utcvat v0.01.1 (12/3/15)
-# rg 09/02/15
-# makefile for UTC-VAT native code
+#
+# C++ Android makefile
 #
 
 LOCAL_PATH := $(call my-dir)

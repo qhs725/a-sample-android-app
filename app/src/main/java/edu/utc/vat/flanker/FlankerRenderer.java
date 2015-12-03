@@ -38,7 +38,7 @@ public class FlankerRenderer implements GLSurfaceView.Renderer {
 
     public void onDrawFrame(GL10 gl) {
         slide = test.getSlide();
-        assert(slide > -1);
+        //assert(slide > -1);
         if (slide == -1)
             ((FlankerActivity)me).onEnd();
         CallNative.Render(slide, 0);
@@ -65,5 +65,15 @@ public class FlankerRenderer implements GLSurfaceView.Renderer {
         CallNative.Render(0, 0);
         slide = 4;
         test.startFlanker();
+        sensorsStart();
     }
+
+    private void sensorsStart() {
+        if (!CallNative.FilesOpen())
+            if (CallNative.CheckData())
+                CallNative.OpenFiles();
+        CallNative.StartSensors();
+    }
+
+
 }

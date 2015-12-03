@@ -70,9 +70,9 @@
             android:gravity="center"
             android:textStyle="bold"
             android:background="#ff0000"
-            android:layout_alignTop="@+id/TestingStartButton"
-            android:layout_alignParentStart="true"
-            />
+            android:layout_above="@+id/SessionInfo"
+            android:layout_alignLeft="@+id/SessionInfo"
+            android:layout_alignStart="@+id/SessionInfo" />
 
         <Button
             android:paddingTop="6dp"
@@ -84,16 +84,14 @@
             android:gravity="center"
             android:textStyle="bold"
             android:background="#ddb9a826"
-            android:layout_marginTop="130dp"
-            android:layout_gravity="right"
-            android:layout_below="@+id/imageView"
-            android:layout_alignParentEnd="true"
-            />
+            android:layout_below="@+id/testing_status"
+            android:layout_alignRight="@+id/SessionInfo"
+            android:layout_alignEnd="@+id/SessionInfo" />
         <EditText
             android:id="@+id/SessionInfo"
-            android:layout_width="wrap_content"
+            android:layout_width="320dp"
             android:layout_height="86dp"
-            android:hint="ENTER: NAME, AGE, SEX, WEIGHT, and HEIGHT"
+            android:hint="ENTER: NAME"
             android:textSize="28sp"
             android:background="#d1000000"
             android:textColor="#ffffff"
@@ -102,7 +100,8 @@
             android:textColorHint="#ffffff"
             android:gravity="center_vertical|center_horizontal"
             android:layout_above="@+id/TestingInstructionsButton"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="false"
+            android:layout_centerHorizontal="true" />
 
         <Button
             android:paddingTop="6dp"

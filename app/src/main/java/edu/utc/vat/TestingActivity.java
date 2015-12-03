@@ -1,6 +1,6 @@
 /**
- * UTC Virtual Athletic Trainer (aka Sports Injury Prevention Screening -- SIPS)
- * v0.01.1a (12/3/15)
+ * Sports Injury Prevention Screening -- SIPS
+ * v0.01.1b (12/3/15)
  * rg 9/9/15
  *
  * TODO: Get status updating appropriately
@@ -39,6 +39,7 @@ import java.util.UUID;
 import bolts.Continuation;
 import bolts.Task;
 
+import edu.utc.vat.flanker.FlankerActivity;
 import edu.utc.vat.post.test.ViewDialogFragment;
 import edu.utc.vat.post.test.ViewResultsActivity;
 
@@ -48,6 +49,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     private static final int NO_EXERCISE_SELECTED = 0;
     private static final int ONE_LEG_SQUAT_HOLD = 1;
     public static final int SINGLE_LEG_JUMP = 2;
+    public static final int FLANKER = 3;
     public static int exercise = NO_EXERCISE_SELECTED;
 
     public static final int STOPPED = 0;
@@ -138,6 +140,8 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         //use application class to maintain global state
         blApplication = (BlueMixApplication) getApplication();
         initServices(); //Initialize Bluemix connection
+        if (exercise == FLANKER)
+            startFlanker();
     }
 
     public void onClick(View view) {
@@ -147,7 +151,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                     status = READY;
                 }
                 if (status != READY) {
-                    Toast.makeText(this, "Please enter your NAME, etc...",
+                    Toast.makeText(this, "Please enter your NAME...",
                             Toast.LENGTH_SHORT).show();
                     resetButton.performClick();
                     break;
@@ -177,21 +181,20 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                 statusUpdate(status);
                 getUserInfo.setText("");
                 getUserInfo.setOnClickListener(new View.OnClickListener() {
-                                                   public void onClick(View view) {
-                                                       getUserInfo.requestFocus();
-                                                       InputMethodManager inputManager = (InputMethodManager)
-                                                               getSystemService(Context.INPUT_METHOD_SERVICE);
-                                                       inputManager.showSoftInput(getUserInfo,
-                                                               InputMethodManager.SHOW_IMPLICIT);
-                                                   }
-                                               }
+                   public void onClick(View view) {
+                       getUserInfo.requestFocus();
+                       InputMethodManager inputManager = (InputMethodManager)
+                               getSystemService(Context.INPUT_METHOD_SERVICE);
+                       inputManager.showSoftInput(getUserInfo,
+                               InputMethodManager.SHOW_IMPLICIT);
+                       }
+                   }
                 );
                 break;
             }
             case R.id.TestingInstructionsButton: {
-                showToast("ENTER EXERCISE INSTRUCTIONS HERE... \n INSTRUCTION 1..\n " +
-                        "INSTRUCTION 2..\n INSTRUCTION 3..\n INSTRUCTION 4..\n" +
-                        " ...\n INSTRUCTION N");
+                //TODO: Activity or fragment with instructions
+                showToast("Exercise instructions are under development.");
                 break;
             }
             case R.id.SessionInfo: {
@@ -221,6 +224,8 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     public void onResume() {
         if (status != VOID)
             resetButton.performClick();
+        //if (CallNative.FlankerCheck())
+        //    launchViewer();
         super.onResume();
     }
 
@@ -278,9 +283,10 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     public void completeExerciseList() {
         exerciseList.put(1, "SINGLE LEG BALANCE TEST");
         exerciseList.put(2, "SINGLE LEG JUMP TEST");
+        exerciseList.put(3, "FLANKER");
     }
     public void completeStatusList() {
-        statusList.put(-1, "Enter NAME, etc...");
+        statusList.put(-1, "Enter NAME...");
         statusList.put(3, "Press START to begin...");
         statusList.put(2, "Countdown to test...");
         statusList.put(1, "Testing...");
@@ -301,6 +307,9 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         startActivity(new Intent(this, ViewResultsActivity.class));
     }
 
+    private void startFlanker() {
+        startActivity(new Intent(this, FlankerActivity.class));
+    }
 
     private String timerToString(int time) {
         String string = new String();
@@ -315,19 +324,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
             string = stringBuilder.toString();
         }
         return string;
-    }
-
-
-    /**
-     * showToast method for simplifying Toasts to one line of code
-     * TODO: Could move to BaseActivity
-     */
-    void showToast(String message) {
-        if (concurrentToast != null) {
-            concurrentToast.cancel();
-        }
-        concurrentToast = Toast.makeText(this, message, Toast.LENGTH_LONG);
-        concurrentToast.show();
     }
 
 

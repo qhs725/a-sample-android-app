@@ -13,10 +13,6 @@
         android:title="@string/action_change_test"
         android:orderInCategory="300"
         app:showAsAction="never" />
-    <item android:id="@+id/action_exercise"
-        android:title="IBM Session Test"
-        android:orderInCategory="300"
-        app:showAsAction="never" />
     <item android:id="@+id/logout"
         android:title="@string/action_logout"
         android:orderInCategory="400"

@@ -1,9 +1,11 @@
-package edu.utc.vat;
 /**
- * UTC Virtual Athletic Trainer
- * v0.01.1 (12/03/15)
+ * Sports Injury Prevention Screening -- SIPS
+ * v0.01.1b (12/03/15)
  * rg 9/7/15
  */
+
+package edu.utc.vat;
+
 import android.util.Log;
 
 public class CallNative {
@@ -80,4 +82,10 @@ public class CallNative {
 
     @SuppressWarnings("JniMissingFunction")
     public static native int CountCompass();
+
+    @SuppressWarnings("JniMissingFunction")
+    public static native int FlankerOn();
+
+    @SuppressWarnings("JniMissingFunction")
+    public static native boolean FlankerCheck();
 }

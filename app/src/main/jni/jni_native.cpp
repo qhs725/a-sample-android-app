@@ -1,6 +1,6 @@
 //
 // Sports Injury Prevention Screening -- SIPS
-// v0.01.1a (12/3/15)
+// v0.01.1b (12/3/15)
 // rg 9/7/15.
 //
 
@@ -190,6 +190,19 @@ Java_edu_utc_vat_CallNative_CountCompass(JNIEnv *, jobject) {
 int c;
 c = sh::sh_::sh__()._2___;
 return c;
+}
+
+JNIEXPORT jint JNICALL
+Java_edu_utc_vat_CallNative_FlankerOn(JNIEnv *, jobject) {
+io::io_::io__().__fo__();
+return 0;
+}
+
+JNIEXPORT jboolean JNICALL
+Java_edu_utc_vat_CallNative_FlankerCheck(JNIEnv *, jobject) {
+bool b;
+b = io::io_::io__().__fc__();
+return b;
 }
 
 #ifdef __cplusplus

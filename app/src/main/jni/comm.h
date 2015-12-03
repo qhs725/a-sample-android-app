@@ -30,6 +30,11 @@ namespace io {
 
         const char * __id;
 
+        bool __ff__;
+
+        void __fo__();
+        bool __fc__();
+
     private:
         bool o;
 

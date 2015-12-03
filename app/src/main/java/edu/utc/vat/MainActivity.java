@@ -1,6 +1,6 @@
 /**
- * UTC Virtual Athletic Trainer
- * v0.01.1 (12/3/15)
+ * Sports Injury Prevention Screening
+ * v0.01.1b (12/3/15)
  * rg 09.08.15
  */
 
@@ -24,22 +24,22 @@ import bolts.Continuation;
 import bolts.Task;
 
 import edu.utc.vat.bluetooth.BtActivity;
-import edu.utc.vat.util.GoogleTokenManager;
+import edu.utc.vat.util.GoogleTokenManager; //TODO: DEPRECATED ??
 import edu.utc.vat.flanker.FlankerActivity;
 
 
 public class MainActivity extends BaseActivity {
 
-    private com.google.android.gms.common.SignInButton mGetGoogleTokenButton;
+    private com.google.android.gms.common.SignInButton mGetGoogleTokenButton; //TODO: DEPRECATED ??
 
     final MainActivity self = this;
 
     private static final int NO_EXERCISE_SELECTED = 0;
     private static final int ONE_LEG_SQUAT_HOLD = 1;
     private static final int ONE_LEG_JUMP_BALANCE = 2;
+    private static final int FLANKER = 3;
     private static int exercise = NO_EXERCISE_SELECTED;
     private Intent intent;
-
 
     public static final String CLASS_NAME = "MainActivity";
 
@@ -65,24 +65,26 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        //--LAUNCHING TESTING ACTIVITY DIRECTLY FOLLOWED BY FLANKER ACTIVITY--
         findViewById(R.id.MainMenuButton3).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                startFlanker();
+                exercise = FLANKER;
+                startActivity(TestingActivity.createIntent(self, exercise));
+                //startFlanker();
             }
         });
 
         findViewById(R.id.MainMenuButton4).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                startBluetooth();
+                showToast("Bluetooth pairing tests are currently under development.");
+                //startBluetooth();
             }
         });
 
         CallNative.InstantiateSensorsHandler();
-        //CallNative.IO();
     }
-
 
     public static Intent createIntent(Context context) {
         return new Intent(context, MainActivity.class);
