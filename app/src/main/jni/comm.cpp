@@ -15,12 +15,14 @@
 extern "C" {
 #endif
 
-
+/**
+ * This is inappropriately the IO class.  It's initial purposes have been deprecated,
+ * currently it's just being used to handle some flags.
+ * TODO: Move all flags and vars being handled/passed from Java into this class
+ */
 namespace io {
 
-    io_::io_() : o(true) {
-        io_::io__().__ff__ = false;
-    }
+    io_::io_() : o(true) {}
     io_::~io_() {
         o = false;
     };
@@ -29,6 +31,7 @@ namespace io {
         io_::io__().__id = _;
     }
 
+    /*
     bool io_::__fc__() {
         if (io_::io__().__ff__) {
             io_::io__().__ff__ = false;
@@ -40,6 +43,7 @@ namespace io {
     void io_::__fo__() {
         io_::io__().__ff__ = true;
     }
+     */
 
 }  //  namespace io
 

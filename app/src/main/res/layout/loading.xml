@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:background="#d6155d15"
+    android:background="#d64177a5"
     android:layout_height="match_parent"
     android:gravity="center_vertical">
     <TextView android:text="LOADING SIPS..."
@@ -13,7 +13,7 @@
         android:typeface="sans"
         android:visibility="visible"
         android:textStyle="bold"
-        android:foreground="@color/abc_search_url_text_normal"
+        android:foreground="#d64177a5"
         android:layout_gravity="center"
         android:gravity="center|center_vertical|center_horizontal" />
 

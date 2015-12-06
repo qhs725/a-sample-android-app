@@ -366,7 +366,8 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
         double xd = (double) x;
         double yd = (double) y;
         double zd = (double) z;
-        return Math.max(xd, Math.max(yd, zd));
+        double mx = Math.max(xd, zd);
+        return Math.max(yd, mx);
     }
 
     private double getMin(float x, float y, float z) {

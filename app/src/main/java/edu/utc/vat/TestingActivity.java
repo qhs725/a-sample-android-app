@@ -158,14 +158,16 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                 } else {
                     if (status != COUNTDOWN && status != TESTING) {
                         userInfo = getUserInfo.getText().toString().trim();
-
                         //Create UUID for exercise on Start
                         sessionID = UUID.randomUUID().toString();
                         UserAccount.setSessionID(sessionID); //set session ID on Start
                         UserAccount.setSessionInfo(userInfo);//add user input to UserAccount
-
+                        //Log.i("Testing", "Good--1");
+                        //Log.i("Testing",sessionID + "," + uUserID + "," + userInfo);
                         CallNative.PassID(sessionID + "," + uUserID + "," + userInfo);
+                        //Log.i("Testing", "Good--2");
                         timer.countDown();
+                        //Log.i("Testing", "Good--3");
                         status = COUNTDOWN;
                         break;
                     } else {
@@ -327,6 +329,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     }
 
 
+    //TODO: Move to BaseActivity
     public  void initServices(){
         if (UserAccount.getIdToken() != null) {
             // set ID TOKEN so that all subsequent Service calls

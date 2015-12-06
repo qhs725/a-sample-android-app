@@ -3,7 +3,6 @@
  * v0.01.1b (12.3.15)
  */
 
-
 package edu.utc.vat.util;
 
 import android.accounts.AccountManager;
@@ -56,25 +55,25 @@ public class GoogleTokenManager extends LoadingActivity {
 	// Bearer Tokens from Google Actions will always specify this issuer.
 	static String GOOGLE_ISSUER = "accounts.google.com";
 
-	/*
+	/**
 	 * This is the key for the "Android Application Client ID" for a given Android Client, whose value is found 
 	 * in the Google Developers Console.
 	 */
 	private static final String GOOGLE_ANDROID_APP_CLIENT_ID_KEY = "androidAppClientID";
 
-	/*
+	/**
 	 * This is the key for the "Web Application Client ID" field for a given Web Application Client, whose value 
 	 * is found in the Google Developers Console.
 	 */
 	private static final String GOOGLE_WEB_APP_CLIENT_ID_KEY = "webAppClientID";
 
-	/*
+	/**
 	 * This is the "Android Application Client ID" field for a given Android Client, whose value is found 
 	 * in the Google Developers Console.
 	 */
 	private String androidAppClientIdValue = "";
 
-	/*
+	/**
 	 * This is the "Web Application Client ID" field for a given Web Application Client, whose value is found
 	 * in the Google Developers Console.
 	 */

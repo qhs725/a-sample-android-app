@@ -115,6 +115,8 @@ public class BaseActivity extends AppCompatActivity {
         newToast = Toast.makeText(this, message, Toast.LENGTH_LONG);
         newToast.show();
     }
+
+
 }
 
 

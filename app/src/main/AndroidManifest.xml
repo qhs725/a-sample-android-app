@@ -95,7 +95,6 @@
         </activity>
 
         <!-- Push Settings Start -->
-
         <service android:name="com.ibm.mobile.services.push.IBMPushIntentService" />
 
         <receiver android:name="com.ibm.mobile.services.push.IBMPushBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND">

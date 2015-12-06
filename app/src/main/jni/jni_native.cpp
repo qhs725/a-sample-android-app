@@ -192,6 +192,7 @@ c = sh::sh_::sh__()._2___;
 return c;
 }
 
+/*
 JNIEXPORT jint JNICALL
 Java_edu_utc_vat_CallNative_FlankerOn(JNIEnv *, jobject) {
 io::io_::io__().__fo__();
@@ -204,6 +205,7 @@ bool b;
 b = io::io_::io__().__fc__();
 return b;
 }
+ */
 
 #ifdef __cplusplus
 }
