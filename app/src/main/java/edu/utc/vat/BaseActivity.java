@@ -1,6 +1,6 @@
 /**
  * Sports Injury Prevention Screening -- SIPS
- * v0.01.1b (12.3.15)
+ * v0.01.1b (12.?.15)
  */
 
 package edu.utc.vat;
@@ -41,6 +41,7 @@ public class BaseActivity extends AppCompatActivity {
 
     private Toast newToast;
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -49,12 +50,12 @@ public class BaseActivity extends AppCompatActivity {
         return true;
     }
 
+
+    /**
+     * This is for handling the action bar menu items
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        //int id = item.getItemId();
 
         //respond to menu item selection
         switch (item.getItemId()) {
@@ -84,6 +85,7 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,8 +93,11 @@ public class BaseActivity extends AppCompatActivity {
         isNetworkAvailable();
     }
 
-    //TODO: Are both of these necessary -- get rid of one if possible
-    //Check if network is available
+
+    /**
+     * Checks network availability
+     * TODO: CHECK -- Are both of these necessary??
+     */
     public boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

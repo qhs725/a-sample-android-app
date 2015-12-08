@@ -1,6 +1,6 @@
 /**
  * Sports Injury Prevention Screening -- SIPS
- * v0.01.1b (12.3.15)
+ * v0.01.1b (12.?.15)
  * rg 12/2/15.
  */
 
@@ -39,6 +39,7 @@ public class ViewUploadDataDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        setCancelable(false);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.dialog_upload_exercise_data)
                 .setPositiveButton(R.string.dialog_upload, new DialogInterface.OnClickListener() {
