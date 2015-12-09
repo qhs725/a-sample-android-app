@@ -33,8 +33,8 @@ namespace o {
     char o[2][35] = {"assets/ani/0sprite_demo.png", "assets/ani/1animation_demo.png"};
 
     const GLfloat _v_[] = {
-            -1.0f, 0.5f, 0.1f, 0.5f,
-            0.1f, -0.5f, -1.0f, -0.5f, };
+            -1.0f, 0.5f, 1.0f, 0.5f,
+            1.0f, -0.5f, -1.0f, -0.5f, };
 
     float _v__[] = {
             0.0f, 0.0f, 0.0f, 1.0f,
@@ -126,8 +126,8 @@ namespace gl {
         gl_::gl__().__pl_(o::o[o]);
     }
 
-    void gl_::__oc__() {
-        gl_::gl__().__ig(o::O, o::OO);
+    void gl_::__oc__(int o, int oo) {
+        gl_::gl__().__ig(o, oo);
     }
 
     GLushort i[] = {0, 2, 1, 0, 3, 2};

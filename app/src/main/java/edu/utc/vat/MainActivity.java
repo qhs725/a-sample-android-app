@@ -71,7 +71,6 @@ public class MainActivity extends BaseActivity {
             public void onClick(View view) {
                 exercise = FLANKER;
                 startActivity(TestingActivity.createIntent(self, exercise));
-                //startFlanker();
             }
         });
 
@@ -110,10 +109,6 @@ public class MainActivity extends BaseActivity {
         Log.i(CLASS_NAME, "Finishing Main Activity. Returning to Login Screen.");
         finish();
         super.onBackPressed();
-    }
-
-    private void startFlanker() {
-        startActivity(new Intent(this, FlankerActivity.class));
     }
 
     private void startBluetooth() {

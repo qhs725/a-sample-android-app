@@ -45,7 +45,7 @@ public class FlankerRenderer implements GLSurfaceView.Renderer {
     }
 
     public void onSurfaceChanged(GL10 gl, int w, int h) {
-        CallNative.OnChanged();
+        CallNative.OnChanged(w, h);
     }
 
     public void onSurfaceCreated(GL10 gl, EGLConfig c) {

@@ -57,7 +57,7 @@ public class CallNative {
     public static native int Render(int o, int oo); //gl renderer
 
     @SuppressWarnings("JniMissingFunction")
-    public static native int OnChanged(); //gl onSurfaceChanged
+    public static native int OnChanged(int w, int h); //gl onSurfaceChanged
 
     @SuppressWarnings("JniMissingFunction")
     public static native int InitializeGL(String assets); //setup gl graphics

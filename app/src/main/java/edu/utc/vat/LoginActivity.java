@@ -10,11 +10,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-//import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
-//import android.widget.Toast;
 
 import edu.utc.vat.util.GoogleTokenManager;
 
@@ -65,7 +63,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener{
 		
 			case R.id.get_google_token_button:
 			    intent = new Intent(context, GoogleTokenManager.class);
-	            startActivity(intent); 
+	            startActivity(intent);
 	            finish();
 				break;
 			default:

@@ -133,8 +133,8 @@ return 0;
 }
 
 JNIEXPORT jint JNICALL
-Java_edu_utc_vat_CallNative_OnChanged(JNIEnv *, jobject) {
-gl::gl_::gl__().__oc__();
+Java_edu_utc_vat_CallNative_OnChanged(JNIEnv *env, jobject jobj, jint w, jint h) {
+gl::gl_::gl__().__oc__(w, h);
 return 0;
 }
 
