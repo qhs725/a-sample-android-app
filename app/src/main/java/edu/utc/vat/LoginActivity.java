@@ -71,6 +71,12 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener{
                 intent.putExtra("GOOGLE_NAME", "null");
                 intent.putExtra("IS_GUEST", true);
                 Log.i("LoginActivity", "Opening Main Activity as GUEST");
+
+                UserAccount.setAccessToken("guest");
+                UserAccount.setIdToken("guest");
+                UserAccount.setName("Guest");
+                UserAccount.setEmail("guest@guest.guest");
+                UserAccount.setuUserID("guest");
                 startActivity(intent);
 				finish();
                 break;
