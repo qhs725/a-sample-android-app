@@ -157,8 +157,9 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                         sessionID = UUID.randomUUID().toString();
                         UserAccount.setSessionID(sessionID); //set session ID on Start
                         UserAccount.setSessionInfo(userInfo);//add user input to UserAccount
+                        String id = UserAccount.getGoogleUserID();
 
-                        CallNative.PassID(sessionID + "," + uUserID + "," + userInfo);
+                        CallNative.PassID(sessionID + "," + id + "," + userInfo);
                         timer.countDown();
                         status = COUNTDOWN;
                         break;

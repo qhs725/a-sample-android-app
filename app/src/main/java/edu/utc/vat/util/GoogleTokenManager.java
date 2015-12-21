@@ -87,6 +87,7 @@ public class GoogleTokenManager extends Activity
 	private String lastName = null;
 	private String email = null;
 	private String picture = null;
+    private String id = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -419,6 +420,12 @@ public class GoogleTokenManager extends Activity
 					lastName = (String)jO.get("family_name");
 					email = (String)jO.get("email");
 					picture = (String)jO.get("picture");
+                    id = (String)jO.get("id");
+
+					Log.i(CLASS_NAME, "Account received is: " + email);
+					Log.i(CLASS_NAME, "First Name: " + firstName);
+					Log.i(CLASS_NAME, "Last Name: " + lastName);
+					Log.i(CLASS_NAME, "ID:  " + id);
 				}
 
 
@@ -438,13 +445,13 @@ public class GoogleTokenManager extends Activity
 			Log.i(CLASS_NAME, "token is: " + token);
 			Log.i(CLASS_NAME, "idToken is: " + idToken);
 			Log.i(CLASS_NAME, "access token is: " + googleAccessToken);
-			startMainActivity(null, idToken, googleAccessToken);
+			startMainActivity(idToken, googleAccessToken);
 
 		}
 
 	}// GetToken class
 
-	private void startMainActivity(String wlAccessToken, String googleIdToken, String googleAccessToken)
+	private void startMainActivity(String googleIdToken, String googleAccessToken)
 	{
 		if( googleIdToken != null && !googleIdToken.isEmpty() )
 		{
@@ -463,9 +470,10 @@ public class GoogleTokenManager extends Activity
             if (googleIdToken != null) {
                 UserAccount.setIdToken(googleIdToken);
                 UserAccount.setAccessToken(googleAccessToken);
-                UserAccount.setName(firstName+" "+lastName);
+                UserAccount.setName(firstName + " " + lastName);
                 UserAccount.setEmail(email);
                 UserAccount.setPicture(picture);
+                UserAccount.setGoogleUserID(id);
             }
 			final Context context = thisActivity;
 			Intent intent = new Intent(context, MainActivity.class);

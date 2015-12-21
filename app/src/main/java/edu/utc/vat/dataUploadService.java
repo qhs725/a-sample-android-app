@@ -141,11 +141,11 @@ public class dataUploadService extends IntentService {
 
                     //Get first line to retrieve user/session based info to add to the Session Object.
                     if ((lineRow = reader.readLine()) != null) {
-                        userInfo = lineRow.split(","); // format of first line should be '{userId},{sessionId},{userInput}'
+                        userInfo = lineRow.split(","); // format of first line should be '{sessionId},{userId},{userInput}'
 
                         //Add info from first line to Session Object
-                        session_json.put("USERID", (userInfo[1] != null) ? userInfo[0] : "null");
-                        session_json.put("SESSIONID", (userInfo[0] != null) ? userInfo[1] : "null");
+                        session_json.put("SESSIONID", (userInfo[0] != null) ? userInfo[0] : "null");
+                        session_json.put("USERID", (userInfo[1] != null) ? userInfo[1] : "null");
                         session_json.put("USERINPUT", (userInfo[2] != null) ? userInfo[2] : "null");
                     }
                     //Get second line to determine key names to sort data before adding it to the Session Object.
