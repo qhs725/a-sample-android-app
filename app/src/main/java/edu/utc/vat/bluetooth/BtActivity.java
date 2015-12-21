@@ -1,5 +1,6 @@
 /**
- * UTC Virt Athletic Trainer v0.01.1 (12/3/15)
+ * UTC Virt Athletic Trainer
+ * v0.01.1 (12/3/15)
  * rg 11/24/15
  */
 
@@ -23,7 +24,7 @@ public class BtActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(edu.utc.vat.R.layout.activity_testing);
+        setContentView(edu.utc.vat.R.layout.bluetooth_activity);
 
         balanceButton = (Button) findViewById(R.id.BtMenuButton1);
         flankerButton = (Button) findViewById(R.id.BtMenuButton2);

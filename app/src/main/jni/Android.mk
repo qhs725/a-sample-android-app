@@ -1,5 +1,6 @@
-# utcaa v0.000 -- 09/02/15
-# makefile for UTC Athletic Assistant native code
+# utcvat v0.01.1 (12/3/15)
+# rg 09/02/15
+# makefile for UTC-VAT native code
 #
 
 LOCAL_PATH := $(call my-dir)
@@ -20,7 +21,6 @@ LOCAL_SRC_FILES := jni_native.cpp \
                    sensors.cpp \
                    comm.cpp \
                    packdat.cpp \
-                   sk.cpp \
                    gl.cpp
 
 LOCAL_LDLIBS    := -llog -landroid -lGLESv2 -L$(SYSROOT)/usr/lib -lz

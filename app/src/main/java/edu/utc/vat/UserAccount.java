@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 public class UserAccount {
 
 	private static String idToken = null;
+	private static String GoogleUserID = null;
 	private static String userName = null;
 	private static String userEmail = null;
 	private static String userPicture = null;
@@ -51,6 +52,12 @@ public class UserAccount {
 	}
 	public static void setuUserID(String uUserID) {
 		UserAccount.uUserID = uUserID;
+	}
+	public static String getGoogleUserID() {
+		return GoogleUserID;
+	}
+	public static void setGoogleUserID(String GoogleUserID) {
+		UserAccount.GoogleUserID = GoogleUserID;
 	}
 	public static String getSessionID() {
 		return sessionID;

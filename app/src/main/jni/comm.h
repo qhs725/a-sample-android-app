@@ -1,19 +1,10 @@
 //
-// UTC Virtual Athletic Trainer v0.000
-// Created by rg on 9/7/15.
+// UTC Virtual Athletic Trainer
+// v0.01.1 (12/3/15)
+// rg 9/7/15.
 //
 
 
-#include "Poco/Net/HTTPClientSession.h"
-#include "Poco/Net/HTTPRequest.h"
-#include "Poco/Net/HTTPResponse.h"
-
-#include "Poco/Net/StreamSocket.h"
-#include "Poco/Net/SocketStream.h"
-#include "Poco/Net/SocketAddress.h"
-#include "Poco/Exception.h"
-
-#include <android/sensor.h>
 #include <android/log.h>
 
 #ifndef UTC_VIRTUAL_ATHLETIC_TRAINER_COMM_H
@@ -35,26 +26,12 @@ namespace io {
         io_();
         ~io_();
 
-        void __init();
-
-        void P_();
-
-        bool _f_;
-
-        void __s__();
-
         void id_(const char *);
 
         const char * __id;
 
     private:
         bool o;
-
-        Poco::Net::HTTPClientSession pss;
-        Poco::Net::HTTPRequest prq;
-        Poco::Net::HTTPResponse prsp;
-
-        static void *_0(void *);
 
     };
 
