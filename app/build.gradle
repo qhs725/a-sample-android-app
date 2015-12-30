@@ -59,8 +59,9 @@ task ndkBuild(type: Exec) {
     Properties properties = new Properties()
     properties.load(project.rootProject.file('local.properties').newDataInputStream())
     def ndkbuild = properties.getProperty('ndk.dir', null) + "/ndk-build"
+    def ndkbuildwin = properties.getProperty('ndk.dir', null) + "\\ndk-build.cmd"
     if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-        commandLine '\\Documents\\Android\\NDK\\ndk-build.cmd', '-C', file('src/main/jni').absolutePath
+        commandLine ndkbuildwin, '-C', file('src/main/jni').absolutePath
     } else {
         commandLine ndkbuild, '-C', file('src/main/jni').absolutePath
     }

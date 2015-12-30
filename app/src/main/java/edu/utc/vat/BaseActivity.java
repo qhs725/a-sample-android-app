@@ -32,6 +32,7 @@ import java.io.File;
 
 import bolts.Continuation;
 import bolts.Task;
+import edu.utc.vat.forms.SportInjuryForm;
 
 
 public class BaseActivity extends AppCompatActivity {
@@ -66,7 +67,7 @@ public class BaseActivity extends AppCompatActivity {
             case R.id.action_settings:
                 return true;
             case R.id.action_exercise:
-                intent = new Intent(this, MainActivity.class);//remove/update to new activity
+                intent = new Intent(this, SportInjuryForm.class);//Temporary position
                 startActivity(intent);
 
                 return true;
