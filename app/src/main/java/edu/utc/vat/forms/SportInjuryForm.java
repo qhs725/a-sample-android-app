@@ -1,5 +1,6 @@
 package edu.utc.vat.forms;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,12 +15,17 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import edu.utc.vat.BlueMixApplication;
 import edu.utc.vat.R;
 import edu.utc.vat.TestingActivity;
+import edu.utc.vat.UserAccount;
+import edu.utc.vat.dataUploadService;
 
 public class SportInjuryForm extends AppCompatActivity {
 
@@ -32,6 +38,7 @@ public class SportInjuryForm extends AppCompatActivity {
     private View radioButton;
     private Button formNextBtn;
     private int newInjury = 13;
+    private static JSONObject form_json = new JSONObject();;
 
     //TODO: add one to the next two arrays at selected position when uploading to get value that matches Nodejs version.
     private String[] qSetAnswerText1 = {"Never", "Rare", "Infrequent", "Occasional", "Frequent", "Persistent"}; // 1
@@ -47,6 +54,13 @@ public class SportInjuryForm extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sports_form);
+
+        try {
+            form_json.put("type", "Sports Fitness & Injury Form");
+            form_json.put("id", UserAccount.getGoogleUserID());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         //Part 1, questions 1-11 - static
         qArr.add("Over the past several years, how often have moderate-to-severe muscle and/or joint injuries limited your ability to participate fully in sports-related activities?");
@@ -80,6 +94,13 @@ public class SportInjuryForm extends AppCompatActivity {
                 //TODO: add function(s) for switching between the dynamic injury questions
                 //TODO: handle custom injury type in separate array or in the same?
 
+                if (formNextBtn.getText().toString().equals("Submit")) {
+                    Intent upload = new Intent(getApplication(), dataUploadService.class);
+                    upload.putExtra("jsonObject", form_json.toString());
+
+                    getApplication().startService(upload);
+                    Toast.makeText(BlueMixApplication.getAppContext(), "(mock) Submitting...", Toast.LENGTH_LONG).show();
+                }
                 if (formNextBtn.getText().toString().equals("Next")) {
                     if (rGroup.getCheckedRadioButtonId() == -1) {
                         Toast.makeText(BlueMixApplication.getAppContext(), "Please select an answer", Toast.LENGTH_LONG).show();
@@ -91,6 +112,12 @@ public class SportInjuryForm extends AppCompatActivity {
 
                             int ans = rGroup.indexOfChild(radioButton);
                             //get index of answer to store in database (can change to text if necessary)
+
+                            try {
+                                form_json.put("arr[" + (index+1) + "]", ans);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                             answers.add(ans);
 
                             index++;
@@ -98,12 +125,11 @@ public class SportInjuryForm extends AppCompatActivity {
                                 changeToQuestion(index);
                             } else {
                                 currentPart = 2;
-                                index++;
                                 rGroup.clearCheck();
                                 isInjury();
                             }
 
-                            Toast.makeText(BlueMixApplication.getAppContext(), "Position: " + ans, Toast.LENGTH_LONG).show();
+                          //  Toast.makeText(BlueMixApplication.getAppContext(), "Position: " + ans, Toast.LENGTH_LONG).show();
                         } else if (currentPart == 2) {//Switches to dynamic injury questions
                             setTitle("Sports Fitness and Injury Form - Part 2");
                             radioButtonID = rGroup.getCheckedRadioButtonId();
@@ -127,10 +153,6 @@ public class SportInjuryForm extends AppCompatActivity {
 
                                 //isInjury(); //Ask if there is another injury
                             }
-                        }
-                        if (formNextBtn.getText().toString().equals("Submit")) {
-                            //TODO: Send answers to be submitted from dataUploadService
-                            Toast.makeText(BlueMixApplication.getAppContext(), "(mock) Submitting...", Toast.LENGTH_LONG).show();
                         }
                     }
                 }
@@ -197,7 +219,7 @@ public class SportInjuryForm extends AppCompatActivity {
     //Displays question that asks is there is an/another injury to be added
     private void isInjury() {
         Toast.makeText(BlueMixApplication.getAppContext(), "Switch to Part 2 at " + index, Toast.LENGTH_LONG).show();
-
+        index++;
         rGroup.clearCheck();
         formQuestion.setText("Did you sustain a musculoskeletal injury over the past 12 months?/during the past season?");
 

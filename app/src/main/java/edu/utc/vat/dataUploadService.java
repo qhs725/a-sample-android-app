@@ -40,6 +40,7 @@ public class dataUploadService extends IntentService {
     private static Context context = BlueMixApplication.getAppContext();
     private static final String EXT = "csv";
     private static JSONObject session_json;
+    private static JSONObject obj;
     private static int num = 1;
 
     private static final String SERVER_IP = "http://utc-vat.mybluemix.net/upload";
@@ -74,6 +75,33 @@ public class dataUploadService extends IntentService {
             return; //return if no internet connection
         }
 
+        //Check if intent was passed an extra like form answers
+        if(workIntent.hasExtra("jsonObject")){
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(BlueMixApplication.getAppContext(), "Extra Exists", Toast.LENGTH_LONG).show();
+                }
+            });
+            try {
+                obj = new JSONObject(workIntent.getStringExtra("jsonObject"));
+
+
+            if(obj.has("type")){
+                String type = obj.getString("type");
+                if(type.equals("Sports Fitness & Injury Form")){
+                    upload_json(obj, "http://utc-vat.mybluemix.net/upload/form");
+                }
+            }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+
+            return; //End service after uploading form answers
+        }
         while(CallNative.CheckData() == false){
             Log.d(LOG_NAME, " File is still being written to");
         }
@@ -94,6 +122,20 @@ public class dataUploadService extends IntentService {
         mSocket.emit("data", sessJSON);
     }
 
+    public static void upload_json(JSONObject json, String destination) {
+        Log.e(LOG_NAME, "FORM: " + obj.toString());
+        Log.e(LOG_NAME, "Destination: " + destination);
+
+        try {
+            mSocket = IO.socket(destination);
+            mSocket.connect();
+        } catch (URISyntaxException e) {
+        }
+
+        //Send json object
+        mSocket.emit("data", json);
+
+    }
 
     public static void getSensorData(){
         ArrayList<String> dataFileNames = new ArrayList<String>();
