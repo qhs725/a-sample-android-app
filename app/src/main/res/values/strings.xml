@@ -32,4 +32,6 @@
     <string name="title_other_devices">Other Available Devices</string>
     <string name="button_scan">Scan for devices</string>
     <string name="title_activity_sport_injury_form">SportInjuryForm</string>
+    <string name="submit_text">Submit</string>
+    <string name="nextbtn_text">Next</string>
 </resources>

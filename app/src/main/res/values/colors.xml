@@ -9,5 +9,6 @@
     <color name="white">#fff</color>
     <color name="background_color">#F0FF00</color>
     <color name="background_color_main">#d62f7bad</color>
+    <color name="abc_search_url_text_normal">#71909e</color>
 
 </resources>

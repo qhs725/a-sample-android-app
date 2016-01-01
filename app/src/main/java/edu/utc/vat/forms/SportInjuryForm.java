@@ -30,6 +30,10 @@ import edu.utc.vat.TestingActivity;
 import edu.utc.vat.UserAccount;
 import edu.utc.vat.dataUploadService;
 
+//TODO: remove extra toasts that are commented out.
+
+//Builds form with 12 static questions and a loop of 4 Injury questions
+//Outputs JSON similar to webapp version of form
 public class SportInjuryForm extends AppCompatActivity {
 
     private Intent intent;
@@ -143,8 +147,6 @@ public class SportInjuryForm extends AppCompatActivity {
                                 rGroup.clearCheck();
                                 isInjury(0);
                             }
-
-                            //  Toast.makeText(BlueMixApplication.getAppContext(), "Position: " + ans, Toast.LENGTH_LONG).show();
                         } else if (currentPart == 2) {//Switches to dynamic injury questions
                             setTitle("Sports Fitness and Injury Form - Part 2");
                             radioButtonID = rGroup.getCheckedRadioButtonId();
@@ -173,15 +175,15 @@ public class SportInjuryForm extends AppCompatActivity {
                             }
 
                             if (index == newInjury) {
-                                Toast.makeText(BlueMixApplication.getAppContext(), "New Injury: " + index, Toast.LENGTH_LONG).show();
+                                //Toast.makeText(BlueMixApplication.getAppContext(), "New Injury: " + index, Toast.LENGTH_LONG).show();
 
                                 injuryCount++;
                                 changeToLocation();
                             } else if (index == newInjury + 1) { //On Location
-                                Toast.makeText(BlueMixApplication.getAppContext(), "Location: " + index, Toast.LENGTH_LONG).show();
+                               //Toast.makeText(BlueMixApplication.getAppContext(), "Location: " + index, Toast.LENGTH_LONG).show();
                                 changeToType();
                             } else if (index == newInjury + 2) {//On Injury Type
-                                Toast.makeText(BlueMixApplication.getAppContext(), "Type: " + index, Toast.LENGTH_LONG).show();
+                                //Toast.makeText(BlueMixApplication.getAppContext(), "Type: " + index, Toast.LENGTH_LONG).show();
                                 String custom_ans;
                                 try {
                                     if (ans == 6) {
@@ -200,7 +202,7 @@ public class SportInjuryForm extends AppCompatActivity {
 
                                 changeToTimeLost();
                             } else if (index == newInjury + 3) {//On Time Lost
-                                Toast.makeText(BlueMixApplication.getAppContext(), "Time: " + index, Toast.LENGTH_LONG).show();
+                                //Toast.makeText(BlueMixApplication.getAppContext(), "Time: " + index, Toast.LENGTH_LONG).show();
                                 newInjury = newInjury + 4;//update index for next injury
                                 isInjury(1); //Ask if there is another injury
                             }
@@ -221,14 +223,14 @@ public class SportInjuryForm extends AppCompatActivity {
                 int ans = rGroup.indexOfChild(radioButton);
                 if (index == newInjury) {
                     if (ans == 0) {
-                        formNextBtn.setText("Submit");
+                        formNextBtn.setText(R.string.submit_text);
                     } else if (ans == 1) {
-                        formNextBtn.setText("Next");
+                        formNextBtn.setText(R.string.nextbtn_text);
                     }
                 } else if (index == newInjury + 2) {
                     if (ans == 8) {
                         custom_injury.setVisibility(View.VISIBLE);
-                    } else if (ans != 8) {
+                    } else if (ans != 8) { //if can be false on Injury Type question
                         custom_injury.setVisibility(View.INVISIBLE);
                     }
 
@@ -270,9 +272,7 @@ public class SportInjuryForm extends AppCompatActivity {
                     ((RadioButton) rGroup.getChildAt(i)).setVisibility(View.INVISIBLE);
                 }
             }
-
         }
-
     }
 
     //Displays question that asks is there is an/another injury to be added
@@ -282,10 +282,8 @@ public class SportInjuryForm extends AppCompatActivity {
         } else {
             formQuestion.setText("Did you sustain any another musculoskeletal injuries over the past 12 months?/during the past season?");
         }
-
         index++;
         rGroup.clearCheck();
-
 
         for (int i = 0; i < rGroup.getChildCount(); i++) {
             if (i < 2) {
@@ -357,14 +355,11 @@ public class SportInjuryForm extends AppCompatActivity {
         formQuestion.setText("Was there any time lost as a result of this injury?");
 
         RadioButton button;
-
         for (int i = 0; i <= 1; i++) {
             button = new RadioButton(this);
             button.setText(qSetAnswerText3[i]);
             rGroup.addView(button);
         }
-
-
     }
 
     //Inflates overflow menu for form
