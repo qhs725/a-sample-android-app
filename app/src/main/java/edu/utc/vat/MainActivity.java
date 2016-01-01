@@ -24,6 +24,7 @@ import bolts.Continuation;
 import bolts.Task;
 
 import edu.utc.vat.bluetooth.BtActivity;
+import edu.utc.vat.forms.SportInjuryForm;
 import edu.utc.vat.util.GoogleTokenManager;
 import edu.utc.vat.flanker.FlankerActivity;
 
@@ -76,6 +77,14 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 startBluetooth();
+            }
+        });
+
+
+        findViewById(R.id.MainMenuButton5).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(SportInjuryForm.createIntent(self));
             }
         });
 
