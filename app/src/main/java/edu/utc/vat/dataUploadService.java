@@ -42,6 +42,9 @@ public class dataUploadService extends IntentService {
     private static JSONObject session_json;
     private static JSONObject obj;
     private static int num = 1;
+    // create a handler to post messages to the main thread
+    private Handler mHandler = new Handler(getMainLooper());
+
 
     private static final String SERVER_IP = "http://utc-vat.mybluemix.net/upload";
     private static Socket mSocket = null;
@@ -57,12 +60,6 @@ public class dataUploadService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent workIntent) {
-        // create a handler to post messages to the main thread
-        Handler mHandler = new Handler(getMainLooper());
-
-        // Gets data from the incoming Intent
-        String dataString = workIntent.getDataString();
-        // Do work here, based on the contents of dataString
 
         //Check if network is available
         if (!BaseActivity.getisNetwork()) {
@@ -77,12 +74,7 @@ public class dataUploadService extends IntentService {
 
         //Check if intent was passed an extra like form answers
         if(workIntent.hasExtra("jsonObject")){
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                  //  Toast.makeText(BlueMixApplication.getAppContext(), "Extra Exists", Toast.LENGTH_LONG).show();
-                }
-            });
+
             try {
                 obj = new JSONObject(workIntent.getStringExtra("jsonObject"));
 
@@ -105,7 +97,6 @@ public class dataUploadService extends IntentService {
         while(CallNative.CheckData() == false){
             Log.d(LOG_NAME, " File is still being written to");
         }
-
         getSensorData();
     }
 
@@ -122,9 +113,9 @@ public class dataUploadService extends IntentService {
         mSocket.emit("data", sessJSON);
     }
 
-    public static void upload_json(JSONObject json, String destination) {
-        Log.e(LOG_NAME, "FORM: " + obj.toString());
-        Log.e(LOG_NAME, "Destination: " + destination);
+    public void upload_json(JSONObject json, String destination) {
+        Log.d(LOG_NAME, "FORM: " + obj.toString());
+        Log.d(LOG_NAME, "Destination: " + destination);
 
 
         try {
@@ -135,6 +126,13 @@ public class dataUploadService extends IntentService {
 
         //Send json object
         mSocket.emit("data", json);
+
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(BlueMixApplication.getAppContext(), "Submission complete", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     public static void getSensorData(){

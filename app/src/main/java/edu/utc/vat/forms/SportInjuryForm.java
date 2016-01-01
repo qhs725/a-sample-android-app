@@ -1,5 +1,6 @@
 package edu.utc.vat.forms;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +24,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import edu.utc.vat.BlueMixApplication;
+import edu.utc.vat.MainActivity;
 import edu.utc.vat.R;
 import edu.utc.vat.TestingActivity;
 import edu.utc.vat.UserAccount;
@@ -29,6 +32,8 @@ import edu.utc.vat.dataUploadService;
 
 public class SportInjuryForm extends AppCompatActivity {
 
+    private Intent intent;
+    private static final String CLASS_NAME = "SportInjuryForm";
     private RadioGroup rGroup;
     private TextView formQuestion;
     private ArrayList<String> qArr = new ArrayList<>();
@@ -42,7 +47,6 @@ public class SportInjuryForm extends AppCompatActivity {
     private static JSONObject form_json = new JSONObject();
     private EditText custom_injury;
 
-    //TODO: add one to the next two arrays at selected position when uploading to get value that matches Nodejs version.
     private String[] qSetAnswerText1 = {"Never", "Rare", "Infrequent", "Occasional", "Frequent", "Persistent"}; // 1
     private String[] qSetAnswerText2 = {"Not at all", "Insignificant", "Marginal", "Moderate", "Substantial", "Severe"};// 2
     private String[] qSetAnswerText3 = {"No", "Yes"};// 3
@@ -50,8 +54,6 @@ public class SportInjuryForm extends AppCompatActivity {
 
 
     private int[] qSetAnswerVersion = {1, 1, 2, 2, 2, 2, 1, 1, 2, 1, 2, 3};// Sets text of questions based on position. questions 1-12 only
-
-    private ArrayList<Integer> answers = new ArrayList<>();
 
 
     @Override
@@ -62,6 +64,7 @@ public class SportInjuryForm extends AppCompatActivity {
         try {
             form_json.put("type", "Sports Fitness & Injury Form");
             form_json.put("id", UserAccount.getGoogleUserID());
+            form_json.put("arr[null]", 0); //forces keys from being in an array format.
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -96,14 +99,23 @@ public class SportInjuryForm extends AppCompatActivity {
         findViewById(R.id.formNextBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO: add function(s) for switching between the dynamic injury questions
-
                 if (formNextBtn.getText().toString().equals("Submit")) {
+
+                    try {
+                        form_json.put("arr[" + index + "]", "0");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
                     Intent upload = new Intent(getApplication(), dataUploadService.class);
                     upload.putExtra("jsonObject", form_json.toString());
 
+
                     getApplication().startService(upload);
-                    Toast.makeText(BlueMixApplication.getAppContext(), "(mock) Submitting...", Toast.LENGTH_LONG).show();
+                    Toast.makeText(BlueMixApplication.getAppContext(), "Submitting...", Toast.LENGTH_LONG).show();
+
+                    intent = new Intent(getApplication(), MainActivity.class);
+                    startActivity(intent);
                 }
                 if (formNextBtn.getText().toString().equals("Next")) {
                     if (rGroup.getCheckedRadioButtonId() == -1) {
@@ -118,11 +130,10 @@ public class SportInjuryForm extends AppCompatActivity {
                             //get index of answer to store in database (can change to text if necessary)
 
                             try {
-                                    form_json.put("arr[" + (index + 1) + "]", ans);
+                                form_json.put("arr[" + (index + 1) + "]", ans + "");
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            answers.add(ans);
 
                             index++;
                             if (index < qArr.size()) {
@@ -139,18 +150,15 @@ public class SportInjuryForm extends AppCompatActivity {
                             radioButtonID = rGroup.getCheckedRadioButtonId();
                             radioButton = rGroup.findViewById(radioButtonID);
                             int ans = rGroup.indexOfChild(radioButton);
-                            answers.add(ans);
 
                             try {
                                 if (index != newInjury + 2) {
-                                    if(index == newInjury+1){
-                                        form_json.put("arr[" + (index + 1) + "]", ans+1);
+                                    if (index == newInjury + 1) {
+                                        form_json.put("arr[" + index + "]", (ans + 1) + "");
+                                    } else {
+                                        form_json.put("arr[" + index + "]", ans + "");
                                     }
-                                    else{
-                                        form_json.put("arr[" + (index + 1) + "]", ans);
-                                    }
-                                }
-                                else { //Handles TextViews added to Injury Type question
+                                } else { //Handles TextViews added to Injury Type question
                                     if (ans <= 4) {
                                     } else if (ans > 4 && ans < 7) {
                                         ans = ans - 1;
@@ -158,7 +166,7 @@ public class SportInjuryForm extends AppCompatActivity {
                                         ans = ans - 2;
                                     }
 
-                                    form_json.put("arr[" + (index + 1) + "]", ans);
+                                    form_json.put("arr[" + (index) + "]", ans + "");
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -174,15 +182,20 @@ public class SportInjuryForm extends AppCompatActivity {
                                 changeToType();
                             } else if (index == newInjury + 2) {//On Injury Type
                                 Toast.makeText(BlueMixApplication.getAppContext(), "Type: " + index, Toast.LENGTH_LONG).show();
-                                String custom_ans = "";
-                                if (ans == 6) {
-                                    custom_ans = custom_injury.getText().toString();
-                                    try {
+                                String custom_ans;
+                                try {
+                                    if (ans == 6) {
+                                        custom_ans = custom_injury.getText().toString();
+
                                         form_json.put("arr_1[" + (injuryCount) + "]", custom_ans);
                                         custom_injury.setVisibility(View.INVISIBLE);
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
+                                        custom_injury.setText("");
+
+                                    } else {
+                                        form_json.put("arr_1[" + (injuryCount) + "]", "");
                                     }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
 
                                 changeToTimeLost();
@@ -215,8 +228,7 @@ public class SportInjuryForm extends AppCompatActivity {
                 } else if (index == newInjury + 2) {
                     if (ans == 8) {
                         custom_injury.setVisibility(View.VISIBLE);
-                    }
-                    else if (ans != 8){
+                    } else if (ans != 8) {
                         custom_injury.setVisibility(View.INVISIBLE);
                     }
 
@@ -265,10 +277,9 @@ public class SportInjuryForm extends AppCompatActivity {
 
     //Displays question that asks is there is an/another injury to be added
     private void isInjury(int whichV) {
-        if(whichV == 0){
+        if (whichV == 0) {
             formQuestion.setText("Did you sustain a musculoskeletal injury over the past 12 months?/during the past season?");
-        }
-        else{
+        } else {
             formQuestion.setText("Did you sustain any another musculoskeletal injuries over the past 12 months?/during the past season?");
         }
 
@@ -293,12 +304,12 @@ public class SportInjuryForm extends AppCompatActivity {
         formQuestion.setText("Where was the injury located?");
 
         //Add radio for question
-            RadioButton button;
-            for (int i=0; i < 11; i++) {
-                button = new RadioButton(this);
-                button.setText(qSetATLocation[i]);
-                rGroup.addView(button);
-            }
+        RadioButton button;
+        for (int i = 0; i < 11; i++) {
+            button = new RadioButton(this);
+            button.setText(qSetATLocation[i]);
+            rGroup.addView(button);
+        }
     }
 
     //Generates Injury Type question.
@@ -361,5 +372,22 @@ public class SportInjuryForm extends AppCompatActivity {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_sport_injury_form, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_exit_form:
+                intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public static Intent createIntent(Context context) {
+        return new Intent(context, SportInjuryForm.class);
     }
 }
