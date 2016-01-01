@@ -110,7 +110,7 @@
         android:textStyle="bold"
         android:textAlignment="gravity"
         android:background="#ddb9a826"
-        android:layout_below="@+id/MainMenuButton4"
+        android:layout_below="@+id/MainMenuButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="31dp" />
