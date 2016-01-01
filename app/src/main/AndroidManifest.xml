@@ -72,10 +72,7 @@
                 android:value="edu.utc.vat.post.test.ViewResultsActivity" />
         </activity>
         <activity android:name=".util.GoogleTokenManager"></activity>
-        <activity
-            android:name=".IBMDataTest"
-            android:label="@string/title_activity_ibmdata_test"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+
         <activity
             android:name=".flanker.FlankerActivity"
             android:label="title_flanker_activity"

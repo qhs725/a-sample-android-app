@@ -33,7 +33,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener{
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-	    	    	    
+
 	    mGetGoogleTokenButton = (com.google.android.gms.common.SignInButton) findViewById(R.id.get_google_token_button);
 	    mGetGoogleTokenButton.setOnClickListener(this);
 
