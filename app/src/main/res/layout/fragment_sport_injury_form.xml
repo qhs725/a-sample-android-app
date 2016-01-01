@@ -5,9 +5,18 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
+    android:background="@color/background_color_main"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".forms.SportInjuryFormFragment"
     tools:showIn="@layout/activity_sports_form">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/container"
+        android:background="@drawable/shape"
+        android:padding="10dp">
 
     <TextView
         android:layout_width="fill_parent"
@@ -73,10 +82,6 @@
         android:hint="Please specify here"
         android:visibility="invisible" />
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
     </RelativeLayout>
 
@@ -87,7 +92,7 @@
         android:layout_weight="1"
         android:onClick="onSubmit"
         android:text="Next"
-        android:layout_below="@+id/custom_text"
+        android:layout_below="@+id/container"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

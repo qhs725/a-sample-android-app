@@ -6,6 +6,7 @@
     <color name="translucent_orange">#80FF8800</color>
     <color name="text_color">#000</color>
     <color name="text_color_light">#fff</color>
+    <color name="white">#fff</color>
     <color name="background_color">#F0FF00</color>
     <color name="background_color_main">#d62f7bad</color>
 
