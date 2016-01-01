@@ -80,7 +80,7 @@ public class dataUploadService extends IntentService {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(BlueMixApplication.getAppContext(), "Extra Exists", Toast.LENGTH_LONG).show();
+                  //  Toast.makeText(BlueMixApplication.getAppContext(), "Extra Exists", Toast.LENGTH_LONG).show();
                 }
             });
             try {
@@ -126,6 +126,7 @@ public class dataUploadService extends IntentService {
         Log.e(LOG_NAME, "FORM: " + obj.toString());
         Log.e(LOG_NAME, "Destination: " + destination);
 
+
         try {
             mSocket = IO.socket(destination);
             mSocket.connect();
@@ -134,7 +135,6 @@ public class dataUploadService extends IntentService {
 
         //Send json object
         mSocket.emit("data", json);
-
     }
 
     public static void getSensorData(){

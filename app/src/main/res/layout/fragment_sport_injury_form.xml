@@ -62,7 +62,16 @@
             android:layout_height="wrap_content"
             android:text="Persistent" />
 
+
+
     </RadioGroup>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/custom_text"
+        android:layout_below="@+id/formRadioGroup"
+        android:hint="Please specify here"
+        android:visibility="invisible" />
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -78,7 +87,7 @@
         android:layout_weight="1"
         android:onClick="onSubmit"
         android:text="Next"
-        android:layout_below="@+id/formRadioGroup"
+        android:layout_below="@+id/custom_text"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

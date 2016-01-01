@@ -39,7 +39,8 @@ public class SportInjuryForm extends AppCompatActivity {
     private Button formNextBtn;
     private int newInjury = 13;
     private int injuryCount = 0;
-    private static JSONObject form_json = new JSONObject();;
+    private static JSONObject form_json = new JSONObject();
+    private EditText custom_injury;
 
     //TODO: add one to the next two arrays at selected position when uploading to get value that matches Nodejs version.
     private String[] qSetAnswerText1 = {"Never", "Rare", "Infrequent", "Occasional", "Frequent", "Persistent"}; // 1
@@ -85,9 +86,10 @@ public class SportInjuryForm extends AppCompatActivity {
         setSupportActionBar(toolbar);
         rGroup = (RadioGroup) findViewById(R.id.formRadioGroup);
         formQuestion = (TextView) findViewById(R.id.textView_sport_form);
+        custom_injury = (EditText) findViewById(R.id.custom_text);
         formQuestion.setText(qArr.get(0));
 
-        formNextBtn = (Button)findViewById(R.id.formNextBtn);
+        formNextBtn = (Button) findViewById(R.id.formNextBtn);
 
         setTitle("Sports Fitness and Injury Form - Part 1");
 
@@ -116,7 +118,7 @@ public class SportInjuryForm extends AppCompatActivity {
                             //get index of answer to store in database (can change to text if necessary)
 
                             try {
-                                form_json.put("arr[" + (index+1) + "]", ans);
+                                    form_json.put("arr[" + (index + 1) + "]", ans);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -128,10 +130,10 @@ public class SportInjuryForm extends AppCompatActivity {
                             } else {
                                 currentPart = 2;
                                 rGroup.clearCheck();
-                                isInjury();
+                                isInjury(0);
                             }
 
-                          //  Toast.makeText(BlueMixApplication.getAppContext(), "Position: " + ans, Toast.LENGTH_LONG).show();
+                            //  Toast.makeText(BlueMixApplication.getAppContext(), "Position: " + ans, Toast.LENGTH_LONG).show();
                         } else if (currentPart == 2) {//Switches to dynamic injury questions
                             setTitle("Sports Fitness and Injury Form - Part 2");
                             radioButtonID = rGroup.getCheckedRadioButtonId();
@@ -140,25 +142,44 @@ public class SportInjuryForm extends AppCompatActivity {
                             answers.add(ans);
 
                             try {
-                                form_json.put("arr[" + (index + 1) + "]", ans);
+                                if (index != newInjury + 2) {
+                                    if(index == newInjury+1){
+                                        form_json.put("arr[" + (index + 1) + "]", ans+1);
+                                    }
+                                    else{
+                                        form_json.put("arr[" + (index + 1) + "]", ans);
+                                    }
+                                }
+                                else { //Handles TextViews added to Injury Type question
+                                    if (ans <= 4) {
+                                    } else if (ans > 4 && ans < 7) {
+                                        ans = ans - 1;
+                                    } else {
+                                        ans = ans - 2;
+                                    }
+
+                                    form_json.put("arr[" + (index + 1) + "]", ans);
+                                }
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
 
                             if (index == newInjury) {
-                                Toast.makeText(BlueMixApplication.getAppContext(), "Position: " + ans, Toast.LENGTH_LONG).show();
+                                Toast.makeText(BlueMixApplication.getAppContext(), "New Injury: " + index, Toast.LENGTH_LONG).show();
 
                                 injuryCount++;
                                 changeToLocation();
                             } else if (index == newInjury + 1) { //On Location
-
+                                Toast.makeText(BlueMixApplication.getAppContext(), "Location: " + index, Toast.LENGTH_LONG).show();
                                 changeToType();
                             } else if (index == newInjury + 2) {//On Injury Type
-
+                                Toast.makeText(BlueMixApplication.getAppContext(), "Type: " + index, Toast.LENGTH_LONG).show();
                                 String custom_ans = "";
-                                if(ans == 6) {
+                                if (ans == 6) {
+                                    custom_ans = custom_injury.getText().toString();
                                     try {
                                         form_json.put("arr_1[" + (injuryCount) + "]", custom_ans);
+                                        custom_injury.setVisibility(View.INVISIBLE);
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
@@ -166,9 +187,9 @@ public class SportInjuryForm extends AppCompatActivity {
 
                                 changeToTimeLost();
                             } else if (index == newInjury + 3) {//On Time Lost
-
+                                Toast.makeText(BlueMixApplication.getAppContext(), "Time: " + index, Toast.LENGTH_LONG).show();
                                 newInjury = newInjury + 4;//update index for next injury
-                                //isInjury(); //Ask if there is another injury
+                                isInjury(1); //Ask if there is another injury
                             }
                         }
                     }
@@ -177,6 +198,7 @@ public class SportInjuryForm extends AppCompatActivity {
             }
         });
 
+        //Changes Next button to Submit, hides/shows custom TextEdit for Injury Type
         rGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -190,6 +212,14 @@ public class SportInjuryForm extends AppCompatActivity {
                     } else if (ans == 1) {
                         formNextBtn.setText("Next");
                     }
+                } else if (index == newInjury + 2) {
+                    if (ans == 8) {
+                        custom_injury.setVisibility(View.VISIBLE);
+                    }
+                    else if (ans != 8){
+                        custom_injury.setVisibility(View.INVISIBLE);
+                    }
+
                 }
             }
         });
@@ -204,7 +234,7 @@ public class SportInjuryForm extends AppCompatActivity {
         });
     }
 
-    //Changes displayed question to the one at the given index.
+    //Changes displayed part 1 question to the one at the given index.
     private void changeToQuestion(int pos) {
         rGroup.clearCheck();
         formQuestion.setText(qArr.get(pos));
@@ -234,11 +264,17 @@ public class SportInjuryForm extends AppCompatActivity {
     }
 
     //Displays question that asks is there is an/another injury to be added
-    private void isInjury() {
-        Toast.makeText(BlueMixApplication.getAppContext(), "Switch to Part 2 at " + index, Toast.LENGTH_LONG).show();
+    private void isInjury(int whichV) {
+        if(whichV == 0){
+            formQuestion.setText("Did you sustain a musculoskeletal injury over the past 12 months?/during the past season?");
+        }
+        else{
+            formQuestion.setText("Did you sustain any another musculoskeletal injuries over the past 12 months?/during the past season?");
+        }
+
         index++;
         rGroup.clearCheck();
-        formQuestion.setText("Did you sustain a musculoskeletal injury over the past 12 months?/during the past season?");
+
 
         for (int i = 0; i < rGroup.getChildCount(); i++) {
             if (i < 2) {
@@ -250,46 +286,73 @@ public class SportInjuryForm extends AppCompatActivity {
     }
 
     //Removes prior questions and generates Location question.
-    private void changeToLocation(){
+    private void changeToLocation() {
         index++;
         rGroup.clearCheck();
+        rGroup.removeAllViews();
         formQuestion.setText("Where was the injury located?");
 
-        for (int i = 0; i < rGroup.getChildCount(); i++) {
-                ((RadioButton) rGroup.getChildAt(i)).setVisibility(View.VISIBLE);
-        }
-
-        //Add 6 more radio
-        if(rGroup.getChildCount() < 11){
+        //Add radio for question
             RadioButton button;
-            for(int i = 1; i <= 5; i++) {
+            for (int i=0; i < 11; i++) {
                 button = new RadioButton(this);
-                button.setText("Button " + i);
+                button.setText(qSetATLocation[i]);
                 rGroup.addView(button);
             }
-        }
-
-        for (int i = 0; i < rGroup.getChildCount(); i++) {
-                ((RadioButton) rGroup.getChildAt(i)).setText(qSetATLocation[i]);
-        }
-
     }
 
-    //TODO:Generates Type question and reveals custom entry when Other is selected.
-    private  void changeToType(){
+    //Generates Injury Type question.
+    private void changeToType() {
         index++;
+        rGroup.removeAllViews();
+        formQuestion.setText("What type of Injury did you sustain? (pick one)");
 
-        for (int i=0; i< rGroup.getChildCount(); i++){
-            if(i<=5){}
-            else {
-                rGroup.removeViewAt(i);
-            }
-        }
+        TextView header1 = new TextView(this);
+        RadioButton rad1 = new RadioButton(this);
+        RadioButton rad2 = new RadioButton(this);
+        RadioButton rad3 = new RadioButton(this);
+        TextView header2 = new TextView(this);
+        RadioButton rad4 = new RadioButton(this);
+        RadioButton rad5 = new RadioButton(this);
+        TextView header3 = new TextView(this);
+        RadioButton rad6 = new RadioButton(this);
+
+        header1.setText("Sudden Event (Acute - Traumatic)\n");
+        rad1.setText("Joint Strain");
+        rad2.setText("Muscle Strain");
+        rad3.setText("Fracture");
+        header2.setText("Gradual Onset (Chronic - Overuse)\n");
+        rad4.setText("Muscle/Tendon Disorder");
+        rad5.setText("Stress Fracture");
+        header3.setText("Other\n");
+        rad6.setText("Custom");
+
+        rGroup.addView(header1);
+        rGroup.addView(rad1);
+        rGroup.addView(rad2);
+        rGroup.addView(rad3);
+        rGroup.addView(header2);
+        rGroup.addView(rad4);
+        rGroup.addView(rad5);
+        rGroup.addView(header3);
+        rGroup.addView(rad6);
     }
 
-    //TODO:Generates Time Lost question
-    private void changeToTimeLost(){
+    //Generates Time Lost question
+    private void changeToTimeLost() {
         index++;
+        custom_injury.setVisibility(View.INVISIBLE);
+        rGroup.removeAllViews();
+        formQuestion.setText("Was there any time lost as a result of this injury?");
+
+        RadioButton button;
+
+        for (int i = 0; i <= 1; i++) {
+            button = new RadioButton(this);
+            button.setText(qSetAnswerText3[i]);
+            rGroup.addView(button);
+        }
+
 
     }
 
