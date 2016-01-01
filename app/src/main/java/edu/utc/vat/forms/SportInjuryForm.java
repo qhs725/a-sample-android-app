@@ -38,12 +38,15 @@ public class SportInjuryForm extends AppCompatActivity {
     private View radioButton;
     private Button formNextBtn;
     private int newInjury = 13;
+    private int injuryCount = 0;
     private static JSONObject form_json = new JSONObject();;
 
     //TODO: add one to the next two arrays at selected position when uploading to get value that matches Nodejs version.
     private String[] qSetAnswerText1 = {"Never", "Rare", "Infrequent", "Occasional", "Frequent", "Persistent"}; // 1
     private String[] qSetAnswerText2 = {"Not at all", "Insignificant", "Marginal", "Moderate", "Substantial", "Severe"};// 2
     private String[] qSetAnswerText3 = {"No", "Yes"};// 3
+    private String[] qSetATLocation = {"Foot/Toe", "Ankle", "Lower Leg", "Knee", "Thigh/Groin/Hip", "Pelvis/Abdomen/Low Back", "Ribs/Chest", "Neck/Upper Back", "Shoulder/Upper Arm", "Elbow/Forearm", "Wrist/Hand/Finger"};
+
 
     private int[] qSetAnswerVersion = {1, 1, 2, 2, 2, 2, 1, 1, 2, 1, 2, 3};// Sets text of questions based on position. questions 1-12 only
 
@@ -92,7 +95,6 @@ public class SportInjuryForm extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //TODO: add function(s) for switching between the dynamic injury questions
-                //TODO: handle custom injury type in separate array or in the same?
 
                 if (formNextBtn.getText().toString().equals("Submit")) {
                     Intent upload = new Intent(getApplication(), dataUploadService.class);
@@ -137,20 +139,35 @@ public class SportInjuryForm extends AppCompatActivity {
                             int ans = rGroup.indexOfChild(radioButton);
                             answers.add(ans);
 
+                            try {
+                                form_json.put("arr[" + (index + 1) + "]", ans);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
 
                             if (index == newInjury) {
                                 Toast.makeText(BlueMixApplication.getAppContext(), "Position: " + ans, Toast.LENGTH_LONG).show();
 
-                                //changeToLocation();
-                                newInjury = newInjury + 4;//update index for next injury
+                                injuryCount++;
+                                changeToLocation();
                             } else if (index == newInjury + 1) { //On Location
 
-                                //changeToType();
+                                changeToType();
                             } else if (index == newInjury + 2) {//On Injury Type
 
-                                //changeToTimeLost();
+                                String custom_ans = "";
+                                if(ans == 6) {
+                                    try {
+                                        form_json.put("arr_1[" + (injuryCount) + "]", custom_ans);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+
+                                changeToTimeLost();
                             } else if (index == newInjury + 3) {//On Time Lost
 
+                                newInjury = newInjury + 4;//update index for next injury
                                 //isInjury(); //Ask if there is another injury
                             }
                         }
@@ -230,6 +247,50 @@ public class SportInjuryForm extends AppCompatActivity {
                 ((RadioButton) rGroup.getChildAt(i)).setVisibility(View.INVISIBLE);
             }
         }
+    }
+
+    //Removes prior questions and generates Location question.
+    private void changeToLocation(){
+        index++;
+        rGroup.clearCheck();
+        formQuestion.setText("Where was the injury located?");
+
+        for (int i = 0; i < rGroup.getChildCount(); i++) {
+                ((RadioButton) rGroup.getChildAt(i)).setVisibility(View.VISIBLE);
+        }
+
+        //Add 6 more radio
+        if(rGroup.getChildCount() < 11){
+            RadioButton button;
+            for(int i = 1; i <= 5; i++) {
+                button = new RadioButton(this);
+                button.setText("Button " + i);
+                rGroup.addView(button);
+            }
+        }
+
+        for (int i = 0; i < rGroup.getChildCount(); i++) {
+                ((RadioButton) rGroup.getChildAt(i)).setText(qSetATLocation[i]);
+        }
+
+    }
+
+    //TODO:Generates Type question and reveals custom entry when Other is selected.
+    private  void changeToType(){
+        index++;
+
+        for (int i=0; i< rGroup.getChildCount(); i++){
+            if(i<=5){}
+            else {
+                rGroup.removeViewAt(i);
+            }
+        }
+    }
+
+    //TODO:Generates Time Lost question
+    private void changeToTimeLost(){
+        index++;
+
     }
 
     //Inflates overflow menu for form
