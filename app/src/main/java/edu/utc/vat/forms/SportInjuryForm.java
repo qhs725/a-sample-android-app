@@ -46,7 +46,7 @@ public class SportInjuryForm extends AppCompatActivity {
     private int radioButtonID;
     private View radioButton;
     private Button formNextBtn;
-    private int newInjury = 13;
+    private int newInjury;
     private int injuryCount = 0;
     private static JSONObject form_json = new JSONObject();
     private EditText custom_injury;
@@ -277,13 +277,15 @@ public class SportInjuryForm extends AppCompatActivity {
 
     //Displays question that asks is there is an/another injury to be added
     private void isInjury(int whichV) {
+        index++;
+        rGroup.clearCheck();
         if (whichV == 0) {
+            newInjury = index;
             formQuestion.setText("Did you sustain a musculoskeletal injury over the past 12 months?/during the past season?");
         } else {
             formQuestion.setText("Did you sustain any another musculoskeletal injuries over the past 12 months?/during the past season?");
         }
-        index++;
-        rGroup.clearCheck();
+
 
         for (int i = 0; i < rGroup.getChildCount(); i++) {
             if (i < 2) {

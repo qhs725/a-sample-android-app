@@ -43,7 +43,7 @@ public class dataUploadService extends IntentService {
     private static JSONObject obj;
     private static int num = 1;
     // create a handler to post messages to the main thread
-    private Handler mHandler = new Handler(getMainLooper());
+    private Handler mHandler;
 
 
     private static final String SERVER_IP = "http://utc-vat.mybluemix.net/upload";
@@ -60,6 +60,8 @@ public class dataUploadService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent workIntent) {
+
+        mHandler = new Handler(getMainLooper());
 
         //Check if network is available
         if (!BaseActivity.getisNetwork()) {
@@ -82,7 +84,7 @@ public class dataUploadService extends IntentService {
             if(obj.has("type")){
                 String type = obj.getString("type");
                 if(type.equals("Sports Fitness & Injury Form")){
-                    upload_json(obj, "http://utc-vat.mybluemix.net/upload/form");
+                    upload_json(obj, "http://utc-vat.mybluemix.net/upload/form", mHandler);
                 }
             }
 
@@ -113,7 +115,7 @@ public class dataUploadService extends IntentService {
         mSocket.emit("data", sessJSON);
     }
 
-    public void upload_json(JSONObject json, String destination) {
+    public void upload_json(JSONObject json, String destination, Handler mHandler) {
         Log.d(LOG_NAME, "FORM: " + obj.toString());
         Log.d(LOG_NAME, "Destination: " + destination);
 
