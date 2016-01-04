@@ -142,6 +142,9 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         initServices(); //Initialize Bluemix connection
         if (exercise == FLANKER)
             startFlanker();
+        if (CallNative.FlankerCheck() == true) {
+            Log.i("TESTING","GO TO FLANKER RESULTS DIALOG");
+        }
     }
 
     public void onClick(View view) {

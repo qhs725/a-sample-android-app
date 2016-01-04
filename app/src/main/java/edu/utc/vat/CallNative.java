@@ -84,7 +84,7 @@ public class CallNative {
     public static native int CountCompass();
 
     @SuppressWarnings("JniMissingFunction")
-    public static native int FlankerOn();
+    public static native int FlankerInit();
 
     @SuppressWarnings("JniMissingFunction")
     public static native boolean FlankerCheck();

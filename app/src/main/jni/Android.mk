@@ -20,7 +20,8 @@ LOCAL_SRC_FILES := jni_native.cpp \
                    sensors.cpp \
                    comm.cpp \
                    packdat.cpp \
-                   gl.cpp
+                   gl.cpp \
+                   f.cpp
 
 LOCAL_LDLIBS    := -llog -landroid -lGLESv2 -L$(SYSROOT)/usr/lib -lz
 

@@ -16,6 +16,7 @@
 #include "packdat.h"
 #include "gl.h"
 #include "comm.h"
+#include "f.h"
 
 #define JNIEXPORT __attribute__ ((visibility ("default")))
 
@@ -192,20 +193,22 @@ c = sh::sh_::sh__()._2___;
 return c;
 }
 
-/*
+
 JNIEXPORT jint JNICALL
-Java_edu_utc_vat_CallNative_FlankerOn(JNIEnv *, jobject) {
-io::io_::io__().__fo__();
+Java_edu_utc_vat_CallNative_FlankerInit(JNIEnv *, jobject) {
+f::f_::f__().__i__();
 return 0;
 }
 
 JNIEXPORT jboolean JNICALL
 Java_edu_utc_vat_CallNative_FlankerCheck(JNIEnv *, jobject) {
 bool b;
-b = io::io_::io__().__fc__();
+b = f::f_::f__().__r__();
 return b;
 }
- */
+
+
+
 
 #ifdef __cplusplus
 }

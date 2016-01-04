@@ -18,6 +18,8 @@
 
 #include <zip.h>
 
+#include "f.h"
+
 #define LOG_TAG "glc"
 #define LOGI(...) __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 #define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
@@ -112,6 +114,8 @@ namespace gl {
     }
 
     void gl_::__r__(int o, int oo) {
+        int __o = o;
+        if(__o >= 0 && __o <=4) f::f_::f__().__f__((double)(o::t::__t()),__o);
         o::t::tc__ = o::t::__t();
         o::t::dt__ = o::t::tc__ - o::t::TM__;
         int dt = (int)o::t::dt__/1000000;

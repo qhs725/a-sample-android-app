@@ -41,6 +41,7 @@ public class Flanker {
     private float clueTime = 0.0f;
     private int clueNumber = 0;
     private int gapNumber = 0;
+    private boolean sensorFlag = false;
 
     private boolean cdown = true;
 
@@ -87,6 +88,7 @@ public class Flanker {
         clueTime = 0.1f;
         clueNumber = 16;
         gapNumber = 4;
+        sensorFlag = false;
     }
 
     public int getSlide() {
@@ -203,40 +205,22 @@ public class Flanker {
                 if (count == maxcount)
                     nextSlide = -1; //OR nextSlide = 4 FOR BLANK SCREEN FOLLOWING TEST
             }
+            if(sensorFlag == false) {
+                if(nextSlide < 4) {
+                    edu.utc.vat.CallNative.StartSensors();
+                    edu.utc.vat.CallNative.WriteOn();
+                    sensorFlag = true;
+                }
+            } else if(sensorFlag == true) {
+                if(nextSlide == -1) {
+                    edu.utc.vat.CallNative.WriteOff();
+                    edu.utc.vat.CallNative.StopSensors();
+                    sensorFlag = false;
+                }
+            }
             return nextSlide;
         }
     }
 
-    /**
-     * This is a flanker task demo
-     * Endless loop of varying times
-     * Deprecated
-     */
-    public int demo(int loop) {
-        int slideno = 0;
-        //long sTime, eTime, dT; sTime = SystemClock.uptimeMillis() % 1000;
-        /*if (sleepy == true) {
-            try {
-                Thread.sleep((int)(pace*1000));
-                sleepy = false;
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-        if (loop == 300)
-            loop = 0;
-        if (loop >= 60 && loop < 66) {
-            slideno = 0;
-        } else if (loop >= 120 && loop < 132) {
-            slideno = 1;
-        } else if (loop >= 180 && loop < 198) {
-            slideno = 2;
-        } else if (loop >= 240 && loop < 264) {
-            slideno = 3;
-        } else {
-            slideno = 4;
-        }*/
-        return slideno;
-    }
 }
 

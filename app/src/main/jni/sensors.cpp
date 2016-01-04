@@ -19,6 +19,7 @@
 #include <android/looper.h>
 
 #include "sensors.h"
+#include "f.h"
 #include "comm.h"
 
 #define LOG_TAG "sh"
@@ -86,6 +87,7 @@ namespace sh {
                         if (sh_::sh__()._r == true) {
                             if (__e.vector.x > sh_::sh__().FT) {
                                 LOGI("CORRECT --> CALL SOMETHING && RECORD RESULT");
+                                f::f_::f__().__s__((double)(__e.timestamp));
                                 sh_::sh__()._r = false;
                             } else if (__e.vector.x < -sh_::sh__().FT) {
                                 LOGI("INCORRECT --> CALL SOMETHING && RECORD RESULT");

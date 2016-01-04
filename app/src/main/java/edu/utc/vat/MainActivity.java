@@ -83,6 +83,10 @@ public class MainActivity extends BaseActivity {
         });
 
         CallNative.InstantiateSensorsHandler();
+        CallNative.FlankerInit();
+        if (CallNative.FlankerCheck() == true) {
+            Log.i("MAIN","GO TO FLANKER RESULTS DIALOG");
+        }
     }
 
     public static Intent createIntent(Context context) {
