@@ -1,9 +1,11 @@
-package edu.utc.vat;
 /**
- * UTC Virtual Athletic Trainer
- * v0.01.1 (12/03/15)
+ * Sports Injury Prevention Screening -- SIPS
+ * v0.01.1b (12/03/15)
  * rg 9/7/15
  */
+
+package edu.utc.vat;
+
 import android.util.Log;
 
 public class CallNative {
@@ -55,7 +57,7 @@ public class CallNative {
     public static native int Render(int o, int oo); //gl renderer
 
     @SuppressWarnings("JniMissingFunction")
-    public static native int OnChanged(); //gl onSurfaceChanged
+    public static native int OnChanged(int w, int h); //gl onSurfaceChanged
 
     @SuppressWarnings("JniMissingFunction")
     public static native int InitializeGL(String assets); //setup gl graphics
@@ -80,4 +82,10 @@ public class CallNative {
 
     @SuppressWarnings("JniMissingFunction")
     public static native int CountCompass();
+
+    @SuppressWarnings("JniMissingFunction")
+    public static native int FlankerInit();
+
+    @SuppressWarnings("JniMissingFunction")
+    public static native boolean FlankerCheck();
 }

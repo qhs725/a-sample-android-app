@@ -1,22 +1,23 @@
-package edu.utc.vat;
+/**
+ * Sports Injury Prevention Screening -- SIPS
+ * v0.01.1b (12.3.15)
+ */
 
+package edu.utc.vat;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import edu.utc.vat.util.GoogleTokenManager;
 
 
 public class LoginActivity extends AppCompatActivity implements OnClickListener{
-
 
 	private Activity thisActivity = this;
 	
@@ -36,13 +37,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener{
 
 	    mGetGoogleTokenButton = (com.google.android.gms.common.SignInButton) findViewById(R.id.get_google_token_button);
 	    mGetGoogleTokenButton.setOnClickListener(this);
-
-	    mStatus = (TextView) findViewById(R.id.connection_msg);
-	    statusWindow = (TextView) findViewById(R.id.status_msg);
-
-
-        String dirPath = getFilesDir().toString();
-       // Toast.makeText(this, dirPath, Toast.LENGTH_LONG).show();
+        //String dirPath = getFilesDir().toString();
 	}
 
 	protected void onActivityResult(final int requestCode, final int resultCode,
@@ -65,24 +60,10 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener{
 		Intent intent = null;
 
 		switch (v.getId()) {
-		
-			case R.id.guestbtn:
-				intent = new Intent(context, MainActivity.class);
-                intent.putExtra("GOOGLE_NAME", "null");
-                intent.putExtra("IS_GUEST", true);
-                Log.i("LoginActivity", "Opening Main Activity as GUEST");
 
-                UserAccount.setAccessToken("guest");
-                UserAccount.setIdToken("guest");
-                UserAccount.setName("Guest");
-                UserAccount.setEmail("guest@guest.guest");
-                UserAccount.setuUserID("guest");
-                startActivity(intent);
-				finish();
-                break;
 			case R.id.get_google_token_button:
 			    intent = new Intent(context, GoogleTokenManager.class);
-	            startActivity(intent); 
+	            startActivity(intent);
 	            finish();
 				break;
 			default:

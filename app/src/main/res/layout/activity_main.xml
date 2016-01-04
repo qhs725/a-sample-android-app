@@ -1,20 +1,21 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     style="@style/AppTheme"
     android:background="@color/background_color_main"
+
     android:clickable="false"
-    android:textAlignment="gravity">
+    android:textAlignment="gravity"
+    android:paddingTop="50dp"
+    android:padding="25dp"
+    android:gravity="center_horizontal">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_launcher"
+        android:paddingRight="10dp"
         android:id="@+id/imageView"
         />
 
@@ -27,11 +28,16 @@
         android:typeface="sans"
         android:visibility="visible"
         android:textStyle="bold"
-        android:foreground="@color/abc_search_url_text_normal"
+        android:foreground="#d64177a5"
+        android:textAlignment="center"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp"
         android:layout_alignBottom="@+id/imageView"
-        android:layout_alignEnd="@+id/MainMenuButton1"
         android:layout_alignRight="@+id/MainMenuButton1"
-        />
+        android:layout_alignEnd="@+id/MainMenuButton1"
+        android:layout_alignTop="@+id/imageView"
+        android:layout_toEndOf="@+id/imageView"
+        android:layout_toRightOf="@+id/imageView" />
 
     <Button
         android:paddingTop="6dp"
@@ -45,10 +51,8 @@
         android:textAlignment="gravity"
         android:foregroundGravity="center"
         android:background="#ddb9a826"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="33dp"
         android:layout_below="@+id/text"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:textColor="@color/text_color" />
 
     <Button
@@ -80,8 +84,12 @@
         android:textStyle="bold"
         android:textAlignment="gravity"
         android:background="#ddb9a826"
-        android:layout_marginTop="31dp"
         android:layout_below="@+id/MainMenuButton2"
+        android:layout_alignStart="@+id/MainMenuButton2"
+        android:layout_alignLeft="@+id/MainMenuButton2"
+        android:layout_marginTop="33dp"
+        android:layout_alignEnd="@+id/MainMenuButton2"
+        android:layout_alignRight="@+id/MainMenuButton2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -96,9 +104,13 @@
         android:textAlignment="gravity"
         android:background="#ddb9a826"
         android:layout_below="@+id/MainMenuButton3"
+        android:layout_alignStart="@+id/MainMenuButton3"
+        android:layout_alignLeft="@+id/MainMenuButton3"
+        android:layout_marginTop="33dp"
+        android:layout_alignEnd="@+id/MainMenuButton3"
+        android:layout_alignRight="@+id/MainMenuButton3"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="31dp" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:paddingTop="6dp"
