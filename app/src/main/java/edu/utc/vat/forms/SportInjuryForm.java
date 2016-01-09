@@ -37,7 +37,6 @@ import edu.utc.vat.dataUploadService;
 public class SportInjuryForm extends AppCompatActivity {
 
     private Intent intent;
-    private static final String CLASS_NAME = "SportInjuryForm";
     private RadioGroup rGroup;
     private TextView formQuestion;
     private ArrayList<String> qArr = new ArrayList<>();

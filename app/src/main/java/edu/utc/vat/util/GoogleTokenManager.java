@@ -23,26 +23,35 @@ import com.google.api.client.http.apache.ApacheHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson.JacksonFactory;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.Properties;
 
+import edu.utc.vat.BaseActivity;
 import edu.utc.vat.BlueMixApplication;
 import edu.utc.vat.LoginActivity;
 import edu.utc.vat.LoadingActivity;
 import edu.utc.vat.MainActivity;
 import edu.utc.vat.UserAccount;
+import edu.utc.vat.forms.RegistrationForm;
 
 
 public class GoogleTokenManager extends LoadingActivity {
@@ -92,6 +101,7 @@ public class GoogleTokenManager extends LoadingActivity {
 	private String email = null;
 	private String picture = null;
     private String id = null;
+    private boolean newUser;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -328,6 +338,10 @@ public class GoogleTokenManager extends LoadingActivity {
 			} catch (GeneralSecurityException e) {
 				e.printStackTrace();
 			}
+            if(BaseActivity.getisNetwork()) {
+                newUser = userExistsCheck(details);
+                Log.e(CLASS_NAME, "NEW USER CHECK: " + newUser);
+            }
 			return details;
 		}
 
@@ -362,6 +376,7 @@ public class GoogleTokenManager extends LoadingActivity {
 			} catch (URISyntaxException e) {
 				System.out.println(e.toString());
 			}
+
 			return details;
 		}
 
@@ -434,16 +449,59 @@ public class GoogleTokenManager extends LoadingActivity {
 
 		@Override
 		protected void onPostExecute(String token) {
+
 			Log.i(CLASS_NAME, "token is: " + token);
 			Log.i(CLASS_NAME, "idToken is: " + idToken);
 			Log.i(CLASS_NAME, "access token is: " + googleAccessToken);
-			startMainActivity(idToken, googleAccessToken);
+			startNextActivity(idToken, googleAccessToken);
 
+		}
+
+		private boolean userExistsCheck(String token){
+            HttpResponse httpresponse;
+            boolean userExists = false;
+            JSONObject body;
+
+            try {
+			DefaultHttpClient httpclient = new DefaultHttpClient();
+			HttpPost post = new HttpPost("http://utc-vat.mybluemix.net/users/check");
+
+
+                StringEntity se = new StringEntity(token.toString());
+                se.setContentType("application/json;charset=UTF-8");
+                se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json;charset=UTF-8"));
+
+                post.setEntity(se);
+
+                 httpresponse = httpclient.execute(post);
+
+                InputStreamReader isr = new InputStreamReader(
+                        httpresponse.getEntity().getContent());
+                //read in the data from input stream, this can be done a variety of ways
+                BufferedReader reader = new BufferedReader(isr);
+                StringBuilder sb = new StringBuilder();
+                String line = "";
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line + "\n");
+                }
+                //get the string version of the response data
+                body = new JSONObject(sb.toString());
+                userExists = body.getInt("check") == 0 ? true : false;
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            } catch (ClientProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return userExists;
 		}
 
 	}// GetToken class
 
-	private void startMainActivity(String googleIdToken, String googleAccessToken)
+	private void startNextActivity(String googleIdToken, String googleAccessToken)
 	{
 
 		if( googleIdToken != null && !googleIdToken.isEmpty() )
@@ -469,7 +527,13 @@ public class GoogleTokenManager extends LoadingActivity {
                 UserAccount.setGoogleUserID(id);
             }
 			final Context context = thisActivity;
-			Intent intent = new Intent(context, MainActivity.class);
+            Intent intent;
+            if(newUser) {
+                 intent = new Intent(context, MainActivity.class);
+            }
+            else{
+                 intent = new Intent(context, RegistrationForm.class);
+            }
 
 			Log.i(CLASS_NAME, "Opening Main Activity and passing Google ID Token:\n"+googleIdToken);
 			startActivity(intent);
