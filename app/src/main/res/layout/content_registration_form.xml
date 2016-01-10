@@ -26,14 +26,15 @@
             android:layout_height="wrap_content"
             android:text="Welcome"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/textView_form" />
+            android:id="@+id/textView_form"/>
 
         <RadioGroup
             android:id="@+id/formRadioGroup"
-            android:layout_width="fill_parent"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
+            android:layout_weight=".5"
             android:orientation="vertical"
-            android:layout_below="@+id/textView_form"
+            android:layout_below="@+id/custom_1"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginTop="36dp">
@@ -43,14 +44,12 @@
         </RadioGroup>
     <RadioGroup
         android:id="@+id/formRadioGroup2"
-        android:layout_width="fill_parent"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
+        android:layout_weight=".5"
         android:orientation="vertical"
-        android:layout_below="@+id/textView_form"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="36dp"
-        android:visibility="gone">
+        android:layout_below="@+id/custom_1"
+        android:layout_toRightOf="@id/formRadioGroup">
 
 
 

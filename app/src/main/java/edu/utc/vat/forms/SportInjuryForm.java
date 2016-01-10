@@ -110,14 +110,14 @@ public class SportInjuryForm extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    Intent upload = new Intent(getApplication(), dataUploadService.class);
+                    Intent upload = new Intent(BlueMixApplication.getAppContext(), dataUploadService.class);
                     upload.putExtra("jsonObject", form_json.toString());
 
 
-                    getApplication().startService(upload);
+                    BlueMixApplication.getAppContext().startService(upload);
                     Toast.makeText(BlueMixApplication.getAppContext(), "Submitting...", Toast.LENGTH_LONG).show();
 
-                    intent = new Intent(getApplication(), MainActivity.class);
+                    intent = new Intent(BlueMixApplication.getAppContext(), MainActivity.class);
                     startActivity(intent);
                 }
                 if (formNextBtn.getText().toString().equals("Next")) {

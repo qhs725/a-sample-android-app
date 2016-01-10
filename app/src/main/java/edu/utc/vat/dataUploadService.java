@@ -12,6 +12,8 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Handler;
 
 import android.util.Log;
@@ -73,7 +75,11 @@ public class dataUploadService extends IntentService {
 
 
         //Check if network is available
-        if (!BaseActivity.getisNetwork()) {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        boolean isNetwork = activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        if (!isNetwork) {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -85,36 +91,34 @@ public class dataUploadService extends IntentService {
 
 
         //Check if intent was passed an extra like form answers
-        if(workIntent.hasExtra("jsonObject")){
+        if (workIntent.hasExtra("jsonObject")) {
 
             try {
                 obj = new JSONObject(workIntent.getStringExtra("jsonObject"));
 
 
-            if(obj.has("type")){
-                String type = obj.getString("type");
-                if(type.equals("Sports Fitness & Injury Form")){
-                    upload_json(obj, "http://utc-vat.mybluemix.net/upload/form", mHandler);
+                if (obj.has("type")) {
+                    String type = obj.getString("type");
+                    if (type.equals("Sports Fitness & Injury Form") || type.equals("form")) {
+                        Log.d("FORM", obj.toString());
+                        upload_json(obj, "http://utc-vat.mybluemix.net/upload/form", mHandler);
+                    }
                 }
-            }
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-
-
-            return; //End service after uploading form answers
+            return; //End service after uploading
         }
 
-        while(CallNative.CheckData() == false){
+        while (CallNative.CheckData() == false) {
             Log.d(LOG_NAME, " File is still being written to");
         }
         getSensorData();
     }
 
 
-    public static void sessionUpload(JSONObject sessJSON) {//Send Session to NodeServer
+    public static void sessionUpload(JSONObject sessJSON) {//Send Session to Server
         //Attempt to connect to server
         try {
             mSocket = IO.socket(SERVER_IP);
@@ -147,7 +151,7 @@ public class dataUploadService extends IntentService {
         });
     }
 
-    public static void getSensorData(){
+    public static void getSensorData() {
         ArrayList<String> dataFileNames = new ArrayList<String>();
         int numColumns = 0;
         String[] userInfo = null;
@@ -204,7 +208,7 @@ public class dataUploadService extends IntentService {
                     if ((lineRow = reader.readLine()) != null) {
                         keyNames = lineRow.split(",");
                         numColumns = keyNames.length;
-                        for(int t = 0; t < keyNames.length; t++) {
+                        for (int t = 0; t < keyNames.length; t++) {
                             Log.d(LOG_NAME, "Keynames: " + keyNames[t]);
                         }
                     }
@@ -223,9 +227,8 @@ public class dataUploadService extends IntentService {
                         //Add value in each 'column' of the file to the respective ArrayList in the group List
                         for (int y = 0; y < numColumns; y++) {
                             try {
-                                if(y >= RowData.length){
-                                }
-                                else {
+                                if (y >= RowData.length) {
+                                } else {
                                     if (RowData[y] == "" || RowData[y] == null) {
                                         RowData[y] = "null";
                                     }
@@ -267,7 +270,7 @@ public class dataUploadService extends IntentService {
                 Log.e("dataUpload", "Can not read file: " + e.toString());
             }
         }
-        Log.i("dataUpload","Data upload complete");
+        Log.i("dataUpload", "Data upload complete");
     }
 
 }
