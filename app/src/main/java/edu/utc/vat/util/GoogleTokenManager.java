@@ -9,6 +9,8 @@ import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -338,7 +340,13 @@ public class GoogleTokenManager extends LoadingActivity {
 			} catch (GeneralSecurityException e) {
 				e.printStackTrace();
 			}
-            if(BaseActivity.getisNetwork()) {
+
+			ConnectivityManager connectivityManager
+					= (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+			NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+			boolean isNetwork = activeNetworkInfo != null && activeNetworkInfo.isConnected();
+
+            if(isNetwork) {
                 newUser = userExistsCheck(details);
                 Log.e(CLASS_NAME, "NEW USER CHECK: " + newUser);
             }
@@ -486,7 +494,8 @@ public class GoogleTokenManager extends LoadingActivity {
                 }
                 //get the string version of the response data
                 body = new JSONObject(sb.toString());
-                userExists = body.getInt("check") == 0 ? true : false;
+                userExists = body.getInt("check") == 1 ? true : false;
+                Log.e("CHECK: ", body.getInt("check") + "");
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             } catch (ClientProtocolException e) {
@@ -528,6 +537,8 @@ public class GoogleTokenManager extends LoadingActivity {
             }
 			final Context context = thisActivity;
             Intent intent;
+
+            Log.e("CHECK2: ", newUser + "");
             if(newUser) {
                  intent = new Intent(context, MainActivity.class);
             }

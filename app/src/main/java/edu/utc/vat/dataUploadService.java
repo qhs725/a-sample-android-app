@@ -23,6 +23,13 @@ import android.widget.Toast;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.protocol.HTTP;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,6 +42,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 
 import java.util.ArrayList;
@@ -91,21 +99,17 @@ public class dataUploadService extends IntentService {
             try {
                 obj = new JSONObject(workIntent.getStringExtra("jsonObject"));
 
-
                 if (obj.has("type")) {
                     String type = obj.getString("type");
-                    if (type.equals("Sports Fitness & Injury Form") || type.equals("form")) {
-                        Log.d("FORM", obj.toString());
+                    if (type.equals("form")) {
                         upload_json(obj, "http://utc-vat.mybluemix.net/upload/form", mHandler);
                     }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             return; //End service after uploading
         }
-
         while (CallNative.CheckData() == false) {
             Log.d(LOG_NAME, " File is still being written to");
         }
@@ -113,6 +117,7 @@ public class dataUploadService extends IntentService {
     }
 
 
+    //Uploads session data via Socket.io //TODO: deprecated, using upload_json instead
     public static void sessionUpload(JSONObject sessJSON) {//Send Session to Server
         //Attempt to connect to server
         try {
@@ -124,10 +129,10 @@ public class dataUploadService extends IntentService {
         mSocket.emit("data", sessJSON);
     }
 
+    //Uploads json via Socket.io ti specified destination
     public void upload_json(JSONObject json, String destination, Handler mHandler) {
-        Log.d(LOG_NAME, "FORM: " + obj.toString());
-        Log.d(LOG_NAME, "Destination: " + destination);
-
+        // Log.d(LOG_NAME, "FORM: " + obj.toString());
+        // Log.d(LOG_NAME, "Destination: " + destination);
 
         try {
             mSocket = IO.socket(destination);
@@ -138,15 +143,69 @@ public class dataUploadService extends IntentService {
         //Send json object
         mSocket.emit("data", json);
 
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(BlueMixApplication.getAppContext(), "Submission complete", Toast.LENGTH_LONG).show();
+        if (mHandler != null) {
+            try {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(BlueMixApplication.getAppContext(), "Submission complete", Toast.LENGTH_LONG).show();
+                    }
+                });
+            } catch (NullPointerException e) {
             }
-        });
+        }
     }
 
-    public static void getSensorData() {
+
+    //Uploads json via post request to specified destination. Alternate upload for non-sensor data
+    public void upload_json_post(JSONObject json, String destination, Handler mHandler) {
+        HttpResponse httpresponse;
+        DefaultHttpClient httpclient = new DefaultHttpClient();
+        HttpPost post = new HttpPost(destination);
+        StringEntity se = null;
+        String line = "";
+
+        try {
+            //convert json to string and add to post request
+            se = new StringEntity(json.toString());
+            se.setContentType("application/json;charset=UTF-8");
+            se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json;charset=UTF-8"));
+            post.setEntity(se);
+
+            //send post request
+            httpresponse = httpclient.execute(post);
+
+            //read response
+            InputStreamReader isr = new InputStreamReader(httpresponse.getEntity().getContent());
+            BufferedReader reader = new BufferedReader(isr);
+            StringBuilder sb = new StringBuilder();
+
+            while ((line = reader.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+
+            if (mHandler != null) {
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(BlueMixApplication.getAppContext(), "Submission complete", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+        }
+
+
+    }
+
+    private void getSensorData() {
         ArrayList<String> dataFileNames = new ArrayList<String>();
         int numColumns = 0;
         String[] userInfo = null;
@@ -251,7 +310,7 @@ public class dataUploadService extends IntentService {
                 e.printStackTrace();
             }
             //Call to upload file (INDIVIDUAL)
-            sessionUpload(session_json);
+            upload_json(session_json, SERVER_IP, null);
         }
 
         //mSocket.disconnect();

@@ -30,8 +30,6 @@ import edu.utc.vat.TestingActivity;
 import edu.utc.vat.UserAccount;
 import edu.utc.vat.dataUploadService;
 
-//TODO: remove extra toasts that are commented out.
-
 //Builds form with 12 static questions and a loop of 4 Injury questions
 //Outputs JSON similar to webapp version of form
 public class SportInjuryForm extends AppCompatActivity {
@@ -65,7 +63,8 @@ public class SportInjuryForm extends AppCompatActivity {
         setContentView(R.layout.activity_sports_form);
 
         try {
-            form_json.put("type", "Sports Fitness & Injury Form");
+            form_json.put("type", "form");
+            form_json.put("form_id", "SPORTSFITNESSINJURY");
             form_json.put("id", UserAccount.getGoogleUserID());
             form_json.put("arr[null]", 0); //forces keys from being in an array format.
         } catch (JSONException e) {
@@ -99,6 +98,7 @@ public class SportInjuryForm extends AppCompatActivity {
 
         setTitle("Sports Fitness and Injury Form - Part 1");
 
+        //handles next and submit button click, gathers answers in json, and calls function to change to next question
         findViewById(R.id.formNextBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -174,15 +174,11 @@ public class SportInjuryForm extends AppCompatActivity {
                             }
 
                             if (index == newInjury) {
-                                //Toast.makeText(BlueMixApplication.getAppContext(), "New Injury: " + index, Toast.LENGTH_LONG).show();
-
                                 injuryCount++;
                                 changeToLocation();
                             } else if (index == newInjury + 1) { //On Location
-                               //Toast.makeText(BlueMixApplication.getAppContext(), "Location: " + index, Toast.LENGTH_LONG).show();
                                 changeToType();
                             } else if (index == newInjury + 2) {//On Injury Type
-                                //Toast.makeText(BlueMixApplication.getAppContext(), "Type: " + index, Toast.LENGTH_LONG).show();
                                 String custom_ans;
                                 try {
                                     if (ans == 6) {
@@ -201,7 +197,6 @@ public class SportInjuryForm extends AppCompatActivity {
 
                                 changeToTimeLost();
                             } else if (index == newInjury + 3) {//On Time Lost
-                                //Toast.makeText(BlueMixApplication.getAppContext(), "Time: " + index, Toast.LENGTH_LONG).show();
                                 newInjury = newInjury + 4;//update index for next injury
                                 isInjury(1); //Ask if there is another injury
                             }
