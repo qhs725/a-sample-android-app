@@ -43,15 +43,10 @@ import java.util.List;
 public class dataUploadService extends IntentService {
 
     public static final String LOG_NAME = "Session";
-    //private static final String NAME = "name";
-    //private static final String USERID = "userId";
-    //private static final String SESSIONID = "sessionId";
-    //private static final String USERINPUT = "userInput";
     private static Context context = BlueMixApplication.getAppContext();
     private static final String EXT = "csv";
     private static JSONObject session_json;
     private static JSONObject obj;
-    private static int num = 1;
     // create a handler to post messages to the main thread
     private Handler mHandler;
 

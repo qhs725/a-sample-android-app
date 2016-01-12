@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -36,11 +37,25 @@ public class RegistrationForm extends AppCompatActivity {
     private RadioGroup rGroup2;
     private int qIndex = 0;
     private TextView formQuestion;
-    private View radioButton;
     private Button formNextBtn;
     private static JSONObject form_json = new JSONObject();
     private EditText custom_1;
     private EditText custom_2;
+    //variables for sports question
+    private RadioGroup rLayout;
+    private CheckBox isOther;
+    private CheckBox soccer;
+    private CheckBox volleyball;
+    private CheckBox football;
+    private CheckBox baseball;
+    private CheckBox basketball;
+    private CheckBox golf;
+    private CheckBox tennis;
+    private CheckBox track_cross_country;
+    private CheckBox softball;
+    private CheckBox wrestling;
+    private CheckBox lacrosse;
+    private EditText other;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +65,45 @@ public class RegistrationForm extends AppCompatActivity {
         setSupportActionBar(toolbar);
         rGroup = (RadioGroup) findViewById(R.id.formRadioGroup);
         rGroup2 = (RadioGroup) findViewById(R.id.formRadioGroup2);
+        rLayout = (RadioGroup) findViewById(R.id.container2);
         formQuestion = (TextView) findViewById(R.id.textView_form);
         formNextBtn = (Button) findViewById(R.id.formNextBtn);
         custom_1 = (EditText) findViewById(R.id.custom_1);
         custom_2 = (EditText) findViewById(R.id.custom_2);
+
+        soccer = (CheckBox) findViewById(R.id.soccer);
+        volleyball = (CheckBox) findViewById(R.id.volleyball);
+        football = (CheckBox) findViewById(R.id.football);
+        baseball = (CheckBox) findViewById(R.id.baseball);
+        basketball = (CheckBox) findViewById(R.id.basketball);
+        golf = (CheckBox) findViewById(R.id.golf);
+        tennis = (CheckBox) findViewById(R.id.tennis);
+        track_cross_country = (CheckBox) findViewById(R.id.track_cross_country);
+        softball = (CheckBox) findViewById(R.id.softball);
+        wrestling = (CheckBox) findViewById(R.id.wrestling);
+        lacrosse = (CheckBox) findViewById(R.id.lacrosse);
+        other = (EditText) findViewById(R.id.other);
+        isOther = (CheckBox) findViewById(R.id.isOther);
+
+        isOther.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("CHECKED: ", v.getId() + "");
+                switch (v.getId()) {
+                    case R.id.isOther:
+                        Log.e("CHECKED: ", v.getId() + "");
+                        CheckBox checkBox = (CheckBox) v;
+                        if (checkBox.isChecked()) {
+                            findViewById(R.id.other).setVisibility(View.VISIBLE);
+                        } else {
+                            findViewById(R.id.other).setVisibility(View.GONE);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
 
         put_json("form_id", "registrationform"); //set form ID for server usage
         put_json("type", "form"); //type of upload
@@ -73,21 +123,16 @@ public class RegistrationForm extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Please select a choice to continue", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    put_json("sport", ((RadioButton) findViewById(rGroup.getCheckedRadioButtonId())).getText().toString());
-                    Intent upload = new Intent(getApplication(), dataUploadService.class);
-                    upload.putExtra("jsonObject", form_json.toString());
 
-                    getApplication().startService(upload);
-                    Toast.makeText(BlueMixApplication.getAppContext(), "Submitting...", Toast.LENGTH_LONG).show();
-
-                    intent = new Intent(getApplication(), MainActivity.class);
-                    startActivity(intent);
+                    if(getSportsAnswers()) {
+                        submitForm();
+                    }
                 }
                 if (formNextBtn.getText().toString().equals("Next")) {
 
                     switch (qIndex) {
                         case 0:
-                            if(isEmpty(custom_1) || isEmpty(custom_2)){
+                            if (isEmpty(custom_1) || isEmpty(custom_2)) {
                                 Toast.makeText(getApplicationContext(), "Both fields are required", Toast.LENGTH_SHORT).show();
                                 break;
                             }
@@ -97,7 +142,7 @@ public class RegistrationForm extends AppCompatActivity {
                             changeToAge();
                             break;
                         case 1:
-                            if(isEmpty(custom_1)){
+                            if (isEmpty(custom_1)) {
                                 Toast.makeText(getApplicationContext(), "Please enter age", Toast.LENGTH_SHORT).show();
                                 break;
                             }
@@ -115,7 +160,7 @@ public class RegistrationForm extends AppCompatActivity {
                             changeToWeight();
                             break;
                         case 3:
-                            if(isEmpty(custom_1)){
+                            if (isEmpty(custom_1)) {
                                 Toast.makeText(getApplicationContext(), "Please enter weight", Toast.LENGTH_SHORT).show();
                                 break;
                             }
@@ -151,7 +196,6 @@ public class RegistrationForm extends AppCompatActivity {
             }
         });
     }
-
 
     //Inflates overflow menu for form
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -204,7 +248,6 @@ public class RegistrationForm extends AppCompatActivity {
 
     //Changes view to gender question
     private void changeToGender() {
-        // rGroup.removeAllViews();
         custom_1.setVisibility(View.GONE);
         formQuestion.setText("What is your gender?");
 
@@ -326,41 +369,75 @@ public class RegistrationForm extends AppCompatActivity {
     private void changeToSport() {
         rGroup.removeAllViews();
         rGroup2.setVisibility(View.GONE);
+        rGroup.setVisibility(View.GONE);
         formQuestion.setText("What sport are you in?");
         formNextBtn.setText(R.string.submit_text);
 
 
-        RadioButton rad1 = new RadioButton(this);
-        RadioButton rad2 = new RadioButton(this);
-        RadioButton rad3 = new RadioButton(this);
-        RadioButton rad4 = new RadioButton(this);
-        RadioButton rad5 = new RadioButton(this);
-        RadioButton rad6 = new RadioButton(this);
-        RadioButton rad7 = new RadioButton(this);
-        RadioButton rad8 = new RadioButton(this);
-        RadioButton rad9 = new RadioButton(this);
+        rLayout.setVisibility(View.VISIBLE);
+    }
 
-        rad1.setText("Soccer");
-        rad2.setText("Volleyball");
-        rad3.setText("Basketball");
-        rad4.setText("Tennis");
-        rad5.setText("Golf");
-        rad6.setText("Cross-Country");
-        rad7.setText("Softball");
-        rad8.setText("Wrestling");
-        rad9.setText("Other");
+    //Adds sport to json if checked, leaves out if doesn't exist to mimic how a web form handles post requests
+    private boolean getSportsAnswers(){
 
-        rGroup.addView(rad1);
-        rGroup.addView(rad2);
-        rGroup.addView(rad3);
-        rGroup.addView(rad4);
-        rGroup.addView(rad5);
-        rGroup.addView(rad6);
-        rGroup.addView(rad7);
-        rGroup.addView(rad8);
-        rGroup.addView(rad9);
+        if(soccer.isChecked())
+            put_json("sport_soccer", "Soccer");
+
+        if(volleyball.isChecked())
+            put_json("sport_volleyball", "Volleyball");
+
+        if(football.isChecked())
+            put_json("sport_football", "Football");
+
+        if(volleyball.isChecked())
+            put_json("sport_baseball", "Baseball");
+
+        if(baseball.isChecked())
+            put_json("sport_basketball", "Basketball");
+
+        if(golf.isChecked())
+            put_json("sport_golf", "Golf");
+
+        if(tennis.isChecked())
+            put_json("sport_tennis", "Tennis");
+
+        if(track_cross_country.isChecked())
+            put_json("sport_track_cross", "Track/Cross-Country");
+
+        if(softball.isChecked())
+            put_json("sport_softball", "Softball");
+
+        if(wrestling.isChecked())
+            put_json("sport_wrestling", "Wrestling");
+
+        if(lacrosse.isChecked())
+            put_json("sport_lacrosse", "Lacrosse");
+
+        if(isOther.isChecked()) {
+            if(other.getText().toString() != "") {
+                put_json("sport_other", other.getText().toString());
+            }
+            else{
+                Toast.makeText(this, "Please enter sport in text field", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+        }
 
 
+        return true;
+    }
+
+    //Sends all data to be uploaded to server
+    private void submitForm(){
+        Intent upload = new Intent(getApplication(), dataUploadService.class);
+        upload.putExtra("jsonObject", form_json.toString());
+
+        getApplication().startService(upload);
+        Toast.makeText(BlueMixApplication.getAppContext(), "Submitting...", Toast.LENGTH_LONG).show();
+
+        intent = new Intent(getApplication(), MainActivity.class);
+        startActivity(intent);
     }
 
 }
