@@ -41,7 +41,7 @@ public class SportInjuryForm extends AppCompatActivity {
     private int radioButtonID;
     private View radioButton;
     private Button formNextBtn;
-    private int newInjury;
+    private int newInjury = 13;
     private int injuryCount = 0;
     private static JSONObject form_json = new JSONObject();
     private EditText custom_injury;
