@@ -50,6 +50,7 @@ import java.util.List;
 
 import edu.utc.vat.BlueMixApplication;
 import edu.utc.vat.CallNative;
+import edu.utc.vat.UserAccount;
 
 public class dataUploadService extends IntentService {
 
@@ -58,6 +59,7 @@ public class dataUploadService extends IntentService {
     private static final String EXT = "csv";
     private static JSONObject session_json;
     private static JSONObject obj;
+    private static JSONObject user_json;
     // create a handler to post messages to the main thread
     private Handler mHandler;
 
@@ -100,10 +102,26 @@ public class dataUploadService extends IntentService {
         if (workIntent.hasExtra("jsonObject")) {
 
             try {
-                obj = new JSONObject(workIntent.getStringExtra("jsonObject"));
+                JSONObject temp = new JSONObject(workIntent.getStringExtra("jsonObject"));
+                JSONObject name = new JSONObject();
+                user_json = new JSONObject();
+                obj = new JSONObject();
 
-                if (obj.has("type")) {
-                    String type = obj.getString("type");
+                //Processing JSON
+                String given_name =  UserAccount.getGivenName() != null ? UserAccount.getGivenName() : "null";
+                String family_name =  UserAccount.getFamilyName() != null ? UserAccount.getFamilyName() : "null";
+                name.put("given_name", given_name);
+                name.put("family_name", family_name);
+                user_json.put("id", UserAccount.getGoogleUserID());
+                user_json.put("idToken", UserAccount.getIdToken());
+                user_json.put("accessToken", UserAccount.getAccessToken());
+                user_json.put("name", name);
+                obj.put("user", user_json);
+                obj.put("body", temp );
+
+                Log.e("JSON: ", obj.toString());//temp testing only
+                if (temp.has("type")) {
+                    String type = temp.getString("type");
                     if (type.equals("form")) {
                         upload_json(obj, "http://utc-vat.mybluemix.net/upload/form", mHandler);
                     }
