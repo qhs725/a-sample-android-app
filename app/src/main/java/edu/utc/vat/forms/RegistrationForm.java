@@ -29,7 +29,7 @@ import edu.utc.vat.LoginActivity;
 import edu.utc.vat.MainActivity;
 import edu.utc.vat.R;
 import edu.utc.vat.UserAccount;
-import edu.utc.vat.dataUploadService;
+import edu.utc.vat.util.dataUploadService;
 
 public class RegistrationForm extends AppCompatActivity {
     private Intent intent;

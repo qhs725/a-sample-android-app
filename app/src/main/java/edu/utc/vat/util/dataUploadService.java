@@ -5,7 +5,7 @@
  * TODO: Clean unnecessary inline comments and appropriately comment methods
  */
 
-package edu.utc.vat;
+package edu.utc.vat.util;
 
 import android.app.IntentService;
 
@@ -47,6 +47,9 @@ import java.net.URISyntaxException;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import edu.utc.vat.BlueMixApplication;
+import edu.utc.vat.CallNative;
 
 public class dataUploadService extends IntentService {
 

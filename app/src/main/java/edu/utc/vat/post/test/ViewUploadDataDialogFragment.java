@@ -25,7 +25,7 @@ import android.widget.Toast;
 import edu.utc.vat.CallNative;
 import edu.utc.vat.R;
 import edu.utc.vat.TestingActivity;
-import edu.utc.vat.dataUploadService;
+import edu.utc.vat.util.dataUploadService;
 
 public class ViewUploadDataDialogFragment extends DialogFragment {
 

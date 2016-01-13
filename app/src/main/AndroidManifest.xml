@@ -107,7 +107,7 @@
         <!-- Push Settings End -->
 
         <service
-            android:name=".dataUploadService"
+            android:name=".util.dataUploadService"
             android:exported="false" />
 
         <activity
@@ -117,7 +117,7 @@
         <activity
             android:name=".forms.RegistrationForm"
             android:label="@string/title_activity_registration_form"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

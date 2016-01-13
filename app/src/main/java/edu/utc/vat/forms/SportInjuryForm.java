@@ -20,15 +20,13 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import edu.utc.vat.BlueMixApplication;
 import edu.utc.vat.MainActivity;
 import edu.utc.vat.R;
-import edu.utc.vat.TestingActivity;
 import edu.utc.vat.UserAccount;
-import edu.utc.vat.dataUploadService;
+import edu.utc.vat.util.dataUploadService;
 
 //Builds form with 12 static questions and a loop of 4 Injury questions
 //Outputs JSON similar to webapp version of form
