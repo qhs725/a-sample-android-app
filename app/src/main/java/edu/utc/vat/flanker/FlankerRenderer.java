@@ -13,6 +13,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.opengl.GLSurfaceView;
+import android.util.Log;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -39,8 +40,12 @@ public class FlankerRenderer implements GLSurfaceView.Renderer {
     public void onDrawFrame(GL10 gl) {
         slide = test.getSlide();
         //assert(slide > -1);
-        if (slide == -1)
+        if (slide == -1) {
+            Log.i("RENDERER","pressing onEnd");
             ((FlankerActivity)me).onEnd();
+            Log.i("RENDERER","onEnd");
+        }
+
         CallNative.Render(slide, 0);
     }
 

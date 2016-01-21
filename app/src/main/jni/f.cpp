@@ -44,13 +44,16 @@ namespace f {
         }
     }
 
+    /**
+     * __i__() --> INITIALIZE FLANKER VARIABLES
+     */
     void f_::__i__() {
         f_::__o = 0;
         f_::___o = 0;
         f_::__f = false;
-        f_::__t = new double[60];
-        f_::__s = new double[60];
-        f_::__ = new int[60];
+        f_::__t = new double[600]; //TODO: ONLY SHOULD NEED 60
+        f_::__s = new double[600];
+        f_::__ = new int[600];
     }
 
     void f_::__w__() {
