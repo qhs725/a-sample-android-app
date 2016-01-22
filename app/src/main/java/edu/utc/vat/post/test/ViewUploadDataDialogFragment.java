@@ -83,5 +83,4 @@ public class ViewUploadDataDialogFragment extends DialogFragment {
         }
     }
 
-
 }

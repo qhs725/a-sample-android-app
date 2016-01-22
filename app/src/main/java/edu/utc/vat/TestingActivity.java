@@ -140,10 +140,12 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         //use application class to maintain global state
         blApplication = (BlueMixApplication) getApplication();
         initServices(); //Initialize Bluemix connection
-        if (exercise == FLANKER)
-            startFlanker();
+
         if (CallNative.FlankerCheck() == true) {
             Log.i("TESTING","GO TO FLANKER RESULTS DIALOG");
+            //Upload(); //TODO: Create alternate Flanker upload dialog fragment
+        } else if (exercise == FLANKER) {
+            startFlanker();
         }
     }
 

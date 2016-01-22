@@ -42,6 +42,8 @@ namespace f {
         } else if (f_::__o == 0 && f_::___o == 0) {
             return false;
         }
+        LOGI("FLANKER native error @ __r__()");
+        return false;
     }
 
     /**
@@ -82,9 +84,9 @@ namespace f {
 
     void f_::__c__() {
         LOGI("FLANKER; CLOSING C++ SIDE\n");
-        delete f_::__t;
-        delete f_::__s;
-        delete f_::__;
+        //delete f_::__t; //TODO: Manage memory
+        //delete f_::__s;
+        //delete f_::__;
     }
 
     void f_::_____(double _, int _0) {
@@ -92,7 +94,7 @@ namespace f {
             f_::__s[f_::___o++] = _;
         } else if (f_::__f == false) {
             f_::__[f_::__o] = _0;
-            f_::__t[f_::__o++] = _;
+            f_::__t[f_::___o++] = _; //Switched from __o++ to ___o++
         }
     }
 

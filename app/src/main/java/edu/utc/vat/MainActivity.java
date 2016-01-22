@@ -25,6 +25,7 @@ import bolts.Task;
 
 import edu.utc.vat.bluetooth.BtActivity;
 import edu.utc.vat.forms.SportInjuryForm;
+import edu.utc.vat.post.test.ViewResultsActivity;
 
 
 public class MainActivity extends BaseActivity {
@@ -98,6 +99,15 @@ public class MainActivity extends BaseActivity {
         return new Intent(context, MainActivity.class);
     }
 
+    /**
+     * onResume()
+     */
+    public void onResume() {
+        //if (CallNative.FlankerCheck())
+        //    launchViewer();
+        super.onResume();
+    }
+
     @Override
     public void onBackPressed() {
         intent = new Intent(this, LoginActivity.class);
@@ -122,6 +132,10 @@ public class MainActivity extends BaseActivity {
 
     private void startBluetooth() {
         startActivity(new Intent(this, BtActivity.class));
+    }
+
+    public void launchViewer() {
+        startActivity(new Intent(this, ViewResultsActivity.class));
     }
 
 }

@@ -10,6 +10,7 @@ package edu.utc.vat.flanker;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.WindowManager;
@@ -18,6 +19,7 @@ import android.util.Log;
 import edu.utc.vat.CallNative;
 import edu.utc.vat.MainActivity;
 import edu.utc.vat.TestingActivity;
+import edu.utc.vat.post.test.ViewResultsActivity;
 
 public class FlankerActivity extends Activity {
 
@@ -52,14 +54,20 @@ public class FlankerActivity extends Activity {
     }
 
     public void onEnd() {
-        Log.i("FLANKER","onEnd -- 1 exiting ...");
+        Log.i("FLANKER", "onEnd -- 1 exiting ...");
         CallNative.WriteOff();
         CallNative.StopSensors();
         CallNative.CloseFiles();
-        //CallNative.FlankerOn();
-        Log.i("FLANKER","onEnd -- 2 exiting ...");
+        Log.i("FLANKER", "onEnd -- 2 exiting ...");
         NavUtils.navigateUpFromSameTask(this);
-        Log.i("FLANKER","onEnd -- 3 exiting ...");
-        //onDestroy();
+        Log.i("FLANKER", "onEnd -- 3 exiting ...");
+        if (CallNative.FlankerCheck() == true) {
+            launchViewer();
+        }
     }
+
+    public void launchViewer() {
+        startActivity(new Intent(this, ViewResultsActivity.class));
+    }
+
 }
