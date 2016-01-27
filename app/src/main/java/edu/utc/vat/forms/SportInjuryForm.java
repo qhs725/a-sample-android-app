@@ -127,7 +127,7 @@ public class SportInjuryForm extends AppCompatActivity {
                             radioButtonID = rGroup.getCheckedRadioButtonId();
                             radioButton = rGroup.findViewById(radioButtonID);
 
-                            int ans = rGroup.indexOfChild(radioButton);
+                            int ans = index+1 == 12 ?rGroup.indexOfChild(radioButton) : rGroup.indexOfChild(radioButton) + 1;
                             //get index of answer to store in database (can change to text if necessary)
 
                             try {

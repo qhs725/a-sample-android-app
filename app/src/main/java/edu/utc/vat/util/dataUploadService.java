@@ -123,7 +123,7 @@ public class dataUploadService extends IntentService {
                 if (temp.has("type")) {
                     String type = temp.getString("type");
                     if (type.equals("form")) {
-                        upload_json(obj, "http://utc-vat.mybluemix.net/upload/form", mHandler);
+                        upload_json_post(obj, "http://utc-vat.mybluemix.net/upload/form", mHandler);
                     }
                 }
             } catch (JSONException e) {
@@ -222,8 +222,6 @@ public class dataUploadService extends IntentService {
             e.printStackTrace();
         } catch (NullPointerException e) {
         }
-
-
     }
 
     private void getSensorData() {
