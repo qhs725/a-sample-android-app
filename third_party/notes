@@ -1,1 +1,16 @@
-socket.io-poco-master.zip is a more extensive socket io to use later if necessary
+Some of these are deprecated.  They haven't been deleted in case they become necessary for SSL later.
+Getting them to compile is tricky, so, be certain they aren't necessary before removing them from this directory.
+
+-libpng is required for sprite sheet animation.
+
+-libzip is required for efficient sprite sheet animation.
+
+-poco-foundation is required for native HTTP or sockets (supports SSL).
+
+-poco-net is required for native HTTP or sockets (supports SSL).
+
+-socket.io-poco-master.zip contains a more extensive socket io to use later if necessary.
+
+-plotscsvdata.py is a python script for generating plots from uniquely named a.dat, g.dat, c.dat.
+
+-UTC-VATstm.js is one of the initial node servers.

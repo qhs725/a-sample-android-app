@@ -7,7 +7,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     style="@style/AppTheme"
-    android:background="#d6155d15"
+    android:background="@color/background_color_main"
     android:clickable="false"
     android:textAlignment="gravity"
     android:weightSum="1">
@@ -32,7 +32,8 @@
             android:lines="2"
             android:layout_alignParentTop="true"
             android:textStyle="bold"
-            android:layout_toEndOf="@+id/TestingResetButton" />
+            android:layout_toEndOf="@+id/TestingResetButton"
+            android:layout_toRightOf="@+id/TestingResetButton"/>
 
         <TextView
             android:paddingLeft="5dip"
@@ -54,7 +55,9 @@
             android:layout_width="wrap_content"
             android:layout_above="@+id/TestingResetButton"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:layout_below="@+id/timer"
             android:textSize="28sp"
             android:textStyle="bold"
@@ -70,9 +73,9 @@
             android:gravity="center"
             android:textStyle="bold"
             android:background="#ff0000"
-            android:layout_alignTop="@+id/TestingStartButton"
-            android:layout_alignParentStart="true"
-            />
+            android:layout_above="@+id/SessionInfo"
+            android:layout_alignLeft="@+id/SessionInfo"
+            android:layout_alignStart="@+id/SessionInfo" />
 
         <Button
             android:paddingTop="6dp"
@@ -84,16 +87,14 @@
             android:gravity="center"
             android:textStyle="bold"
             android:background="#ddb9a826"
-            android:layout_marginTop="130dp"
-            android:layout_gravity="right"
-            android:layout_below="@+id/imageView"
-            android:layout_alignParentEnd="true"
-            />
+            android:layout_below="@+id/testing_status"
+            android:layout_alignRight="@+id/SessionInfo"
+            android:layout_alignEnd="@+id/SessionInfo" />
         <EditText
             android:id="@+id/SessionInfo"
-            android:layout_width="wrap_content"
+            android:layout_width="320dp"
             android:layout_height="86dp"
-            android:hint="ENTER: NAME, AGE, SEX, WEIGHT, and HEIGHT"
+            android:hint="ENTER: NAME"
             android:textSize="28sp"
             android:background="#d1000000"
             android:textColor="#ffffff"
@@ -102,7 +103,9 @@
             android:textColorHint="#ffffff"
             android:gravity="center_vertical|center_horizontal"
             android:layout_above="@+id/TestingInstructionsButton"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="false"
+            android:layout_alignParentLeft="false"
+            android:layout_centerHorizontal="true" />
 
         <Button
             android:paddingTop="6dp"

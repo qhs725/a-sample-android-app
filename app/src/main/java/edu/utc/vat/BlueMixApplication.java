@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+
 package edu.utc.vat;
 
 import android.app.Activity;
@@ -27,21 +29,21 @@ import android.util.Log;
 
 import com.ibm.mobile.services.cloudcode.IBMCloudCode;
 import com.ibm.mobile.services.core.IBMBluemix;
-import com.ibm.mobile.services.core.IBMCurrentUser;
+//import com.ibm.mobile.services.core.IBMCurrentUser;
 import com.ibm.mobile.services.core.internal.IBMLogger;
-import com.ibm.mobile.services.data.IBMData;
+//import com.ibm.mobile.services.data.IBMData;
 import com.ibm.mobile.services.push.IBMPush;
 import com.ibm.mobile.services.push.IBMPushNotificationListener;
 import com.ibm.mobile.services.push.IBMSimplePushNotification;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+//import java.util.ArrayList;
+//import java.util.List;
 import java.util.Properties;
 
-import bolts.Continuation;
-import bolts.Task;
+//import bolts.Continuation;
+//import bolts.Task;
 
 public final class BlueMixApplication extends Application {
 	public static IBMPush push = null;
@@ -82,9 +84,6 @@ public final class BlueMixApplication extends Application {
                                 if (actClass == MainActivity.class) {
                                     // Update data
 
-
-
-
                                     Log.e(CLASS_NAME, "Notification message received: " + message.toString());
                                     //present the message when sent from Push notification console.
                                     if (!message.getAlert().contains("SessionList was updated")) {
@@ -98,8 +97,7 @@ public final class BlueMixApplication extends Application {
                                                             @Override
                                                             public void onClick(DialogInterface dialog, int whichButton) {
                                                             }
-                                                        })
-                                                        .show();
+                                                        }).show();
                                             }
                                         });
                                     }
@@ -182,8 +180,6 @@ public final class BlueMixApplication extends Application {
 		IBMLogger.addLogCategory("DEBUG", "TRACE");
 		// initialize the IBM core backend-as-a-service
 		IBMBluemix.initialize(this, appProperties.getProperty(APP_ID), appProperties.getProperty(APP_SECRET), appProperties.getProperty(APP_ROUTE));
-
-
 	}
 
     @Override
@@ -192,12 +188,9 @@ public final class BlueMixApplication extends Application {
         MultiDex.install(this);
     }
 
-
-
 	public Properties getApplicationSettings() {
 		return appProperties;
 	}
-
 
     public void initializeBluemixServices() {
         Log.d(CLASS_NAME, "Entering initializeBluemixServices() method.");

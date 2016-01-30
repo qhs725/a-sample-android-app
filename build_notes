@@ -1,0 +1,22 @@
+BUG 1:
+***The following error is reported along with a ~'SIPS has failed' message when the app has been running in the background, unused, for 30-60 minutes.***
+12-06 14:42:40.910  21853-21861/edu.utc.vat W/art﹕ Suspending all threads took: 22.889ms
+12-06 14:42:40.960  21853-12513/edu.utc.vat D/com.ibm.mobile.services.push.IBMPush﹕ Sending all the stats
+12-06 14:42:40.960  21853-12513/edu.utc.vat D/com.ibm.mobile.services.push.IBMPush﹕ applcationId is :0a27a50e-8c7f-487d-9135-5b360732abbf
+12-06 14:42:40.990  21853-12513/edu.utc.vat D/statsService﹕ deviceId: 56424e645f43e08a81dca197
+12-06 14:42:40.990  21853-12513/edu.utc.vat D/MetricsManager﹕ Trying to send metrics
+12-06 14:42:41.040  21853-12513/edu.utc.vat D/MetricsManager﹕ Metric Url : http://sdk.api.xtify.com/2.0/metrics/user/56424e645f43e08a81dca197
+12-06 14:42:41.050  21853-12513/edu.utc.vat I/MetricsManager﹕ Sending the following metrics json: {"appKey":"0a27a50e-8c7f-487d-9135-5b360732abbf","events":[{"action":"ONE","value":"2015-12-06T12:46:16-0500","timeStamp":"2015-12-06T12:46:16-0500"},{"action":"ONE","value":"2015-12-06T12:46:18-0500","timeStamp":"2015-12-06T12:46:18-0500"},{"action":"ONE","value":"2015-12-06T12:46:20-0500","timeStamp":"2015-12-06T12:46:20-0500"},{"action":"ONE","value":"2015-12-06T12:47:06-0500","timeStamp":"2015-12-06T12:47:06-0500"}]}
+12-06 14:42:41.050  21853-12513/edu.utc.vat E/AndroidRuntime﹕ FATAL EXCEPTION: IntentService[IBMPushIntentService]
+    Process: edu.utc.vat, PID: 21853
+    java.lang.RuntimeException: IBMPush was never initialized.  First call IBMPush.initializeService().
+            at com.ibm.mobile.services.push.IBMPush.getService(IBMPush.java:276)
+            at com.ibm.mobile.services.push.internal.IBMPushInvoker.<init>(IBMPushInvoker.java:48)
+            at com.ibm.mobile.services.push.internal.IBMPushInvoker.newInstance(IBMPushInvoker.java:52)
+            at com.ibm.mobile.services.push.internal.metrics.Manager.sendAllStats(Manager.java:59)
+            at com.ibm.mobile.services.push.IBMPushIntentService.onHandleIntent(IBMPushIntentService.java:218)
+            at android.app.IntentService$ServiceHandler.handleMessage(IntentService.java:65)
+            at android.os.Handler.dispatchMessage(Handler.java:102)
+            at android.os.Looper.loop(Looper.java:145)
+            at android.os.HandlerThread.run(HandlerThread.java:61)
+12-06 14:42:42.510  21853-12513/edu.utc.vat I/Process﹕ Sending signal. PID: 21853 SIG: 9

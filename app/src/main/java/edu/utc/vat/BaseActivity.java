@@ -1,11 +1,9 @@
 /**
- * UTC Virt Athletic Trainer (aka Sports Injury Prevention Screening -- SIPS)
- * v0.01.1 (12.3.15)
+ * Sports Injury Prevention Screening -- SIPS
+ * v0.01.1b (12.?.15)
  */
 
-
 package edu.utc.vat;
-
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,16 +20,15 @@ import android.util.Log;
 import android.view.Menu;
 
 import android.view.MenuItem;
+import android.widget.Toast;
 
-import com.ibm.mobile.services.cloudcode.IBMCloudCode;
 import com.ibm.mobile.services.core.IBMBluemix;
 import com.ibm.mobile.services.core.IBMCurrentUser;
 import com.ibm.mobile.services.push.IBMPush;
 
-import java.io.File;
-
 import bolts.Continuation;
 import bolts.Task;
+import edu.utc.vat.forms.SportInjuryForm;
 
 
 public class BaseActivity extends AppCompatActivity {
@@ -39,12 +36,12 @@ public class BaseActivity extends AppCompatActivity {
     private Intent intent;
     private static final String CLASS_NAME = "LoginActivity";
     public IBMPush push;
-    public IBMCloudCode myCloudCodeService;
     public String deviceAlias = "VAT_user_device";
     public String consumerID = "utc-vat-app";
-    private String uUserID = null;
-    private Context context;
     private static boolean isNetwork;
+
+    private Toast newToast;
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -54,21 +51,23 @@ public class BaseActivity extends AppCompatActivity {
         return true;
     }
 
+
+    /**
+     * This is for handling the action bar menu items
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //respond to menu item selection
-        switch (item.getItemId()) {
+        switch (id) {
             case R.id.action_settings:
                 return true;
             case R.id.action_exercise:
-                intent = new Intent(this, IBMDataTest.class);
+                intent = new Intent(this, SportInjuryForm.class);//Temporary position
                 startActivity(intent);
+
                 return true;
+
             case R.id.logout:
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
@@ -93,47 +92,20 @@ public class BaseActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //setContentView(R.layout.activity_testing);
         setContentView(R.layout.activity_main);
-
         isNetworkAvailable();
-
-    }
-    //Check if session data files exist
-    public Boolean isDataFiles() {
-        Context context = BlueMixApplication.getAppContext();
-        File fileList[] = null;
-        Log.i(CLASS_NAME, "Checking for Session data files...");
-
-        //Get files directory and get names of all files
-        try {
-            fileList = (new File(context.getFilesDir() + "/")).listFiles();
-        }
-        catch(Exception err){
-            Log.e(CLASS_NAME, "ERROR: " + err.getMessage());
-        }
-
-
-        //Look at each file in the directory
-        for (int i=0; i < fileList.length -1; i++)
-        {
-            Log.i("Files", "FileName:" + fileList[i].getName());
-            String filenameArray[] = fileList[i].getName().split("\\.");
-            String extension = filenameArray[filenameArray.length-1];
-
-            //Check if file extension matches data file
-            if(extension.equals("csv")){
-                Log.i(CLASS_NAME, "Session Files found");
-                return true; //some file exists that has data file extension, return true
-            }
-        }
-        Log.i(CLASS_NAME, "No Session Files found stored in memory.");
-        return false; //false if no files found that matches extension
     }
 
-    //Check if network is available
+
+    /**
+     * Checks network availability
+     * TODO: CHECK -- Are both of these necessary??
+     */
     public boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -144,6 +116,19 @@ public class BaseActivity extends AppCompatActivity {
     public static boolean getisNetwork() {
         return BaseActivity.isNetwork;
     }
+
+
+    /**
+     * showToast method for simplifying Toasts to one line of code
+     */
+    void showToast(String message) {
+        if (newToast != null) {
+            newToast.cancel();
+        }
+        newToast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+        newToast.show();
+    }
+
 
 }
 

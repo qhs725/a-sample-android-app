@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="#d64177a5"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical">
+    <TextView android:text="LOADING SIPS..."
+        android:layout_width="331dp"
+        android:layout_height="150sp"
+        android:id="@+id/text"
+        android:textSize="48sp"
+        android:textColor="#d3000000"
+        android:typeface="sans"
+        android:visibility="visible"
+        android:textStyle="bold"
+        android:foreground="#d64177a5"
+        android:layout_gravity="center"
+        android:gravity="center|center_vertical|center_horizontal" />
+
+</LinearLayout>

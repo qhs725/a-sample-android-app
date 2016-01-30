@@ -30,10 +30,12 @@ namespace gl {
         void __i__(const char *o);
         void __r__(int o, int oo);
         void __l__(int o);
-        void __oc__();
+        void __oc__(int o, int oo);
 
     private:
         bool o;
+
+        int __o;
 
         void __lapk(const char *o);
         void __ra(int o, int oo);

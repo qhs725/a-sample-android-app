@@ -1,3 +1,8 @@
+/**
+ * Sports Injury Prevention Screening -- SIPS
+ * v0.01.1b (12.3.15)
+ */
+
 package edu.utc.vat.util;
 
 import android.accounts.AccountManager;
@@ -35,13 +40,12 @@ import java.util.Properties;
 
 import edu.utc.vat.BlueMixApplication;
 import edu.utc.vat.LoginActivity;
+import edu.utc.vat.LoadingActivity;
 import edu.utc.vat.MainActivity;
 import edu.utc.vat.UserAccount;
 
 
-public class GoogleTokenManager extends Activity
-{
-
+public class GoogleTokenManager extends LoadingActivity {
 	private Activity thisActivity = this;
 
 	private static final String CLASS_NAME = GoogleTokenManager.class.getName();
@@ -51,25 +55,25 @@ public class GoogleTokenManager extends Activity
 	// Bearer Tokens from Google Actions will always specify this issuer.
 	static String GOOGLE_ISSUER = "accounts.google.com";
 
-	/*
+	/**
 	 * This is the key for the "Android Application Client ID" for a given Android Client, whose value is found 
 	 * in the Google Developers Console.
 	 */
 	private static final String GOOGLE_ANDROID_APP_CLIENT_ID_KEY = "androidAppClientID";
 
-	/*
+	/**
 	 * This is the key for the "Web Application Client ID" field for a given Web Application Client, whose value 
 	 * is found in the Google Developers Console.
 	 */
 	private static final String GOOGLE_WEB_APP_CLIENT_ID_KEY = "webAppClientID";
 
-	/*
+	/**
 	 * This is the "Android Application Client ID" field for a given Android Client, whose value is found 
 	 * in the Google Developers Console.
 	 */
 	private String androidAppClientIdValue = "";
 
-	/*
+	/**
 	 * This is the "Web Application Client ID" field for a given Web Application Client, whose value is found
 	 * in the Google Developers Console.
 	 */
@@ -87,10 +91,10 @@ public class GoogleTokenManager extends Activity
 	private String lastName = null;
 	private String email = null;
 	private String picture = null;
+    private String id = null;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
+	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		try {
 			BlueMixApplication blApplication = (BlueMixApplication) getApplication();
@@ -147,8 +151,7 @@ public class GoogleTokenManager extends Activity
 		this.accountId = accountId;
 	}
 
-	public void login()
-	{
+	public void login() {
 		Intent intent = AccountPicker.newChooseAccountIntent(null, null, new String[]{"com.google"},
 				false, null, null, null, null);
 
@@ -161,7 +164,6 @@ public class GoogleTokenManager extends Activity
 
 	protected void onActivityResult(final int requestCode, final int resultCode,
 									final Intent data) {
-
 		System.out.println("Verifying Google User Credentials...");
 		if (requestCode == ACCOUNT_PICKER_REQUEST_CODE && resultCode == RESULT_OK)
 		{
@@ -182,8 +184,8 @@ public class GoogleTokenManager extends Activity
 				startActivity(intent);
 			}
 		}
-
 	}
+
 
 	/**
 	 * An async task for getting the ID token. It is needed because GoogleAuthUtil.getToken cannot be
@@ -252,8 +254,7 @@ public class GoogleTokenManager extends Activity
 			return idToken;
 		}
 
-		private boolean validateToken(String token, boolean production)
-		{
+		private boolean validateToken(String token, boolean production) {
 			String details = null;
 
 			if(token == null)
@@ -273,8 +274,7 @@ public class GoogleTokenManager extends Activity
 		// It does not make much sense to perform this check client side.
 		// This same logic will need to be applied server side.
 		// location for valid google public certs - https://www.googleapis.com/oauth2/v1/certs
-		private String validateTokenForProduction(String token)
-		{
+		private String validateTokenForProduction(String token) {
 
 			String details = null;
 
@@ -333,15 +333,12 @@ public class GoogleTokenManager extends Activity
 
 		// Google recommends this form of validation for development purposes only
 		// but might be good enough for client side verification of ACCESS_TOKEN or ID_TOKEN
-		private String validateTokenForTesting(String token)
-		{
+		private String validateTokenForTesting(String token) {
 			String details = token;
 
 			try {
-
 				// use this url to get details from  id_token
 				URL url = new URL("https://www.googleapis.com/oauth2/v1/tokeninfo?alt=json&id_token="+token);
-
 
 				HttpClient httpClient = new DefaultHttpClient();
 				HttpGet pageGet = new HttpGet(url.toURI());
@@ -365,15 +362,12 @@ public class GoogleTokenManager extends Activity
 			} catch (URISyntaxException e) {
 				System.out.println(e.toString());
 			}
-
-
 			return details;
 		}
 
 		// Google recommends this form of validation for development purposes only
 		// but might be good enough for client side verification of ACCESS_TOKEN or ID_TOKEN
-		private String getAccountDetails(String accessToken)
-		{
+		private String getAccountDetails(String accessToken) {
 			String details = accessToken;
 
 			try {
@@ -419,8 +413,13 @@ public class GoogleTokenManager extends Activity
 					lastName = (String)jO.get("family_name");
 					email = (String)jO.get("email");
 					picture = (String)jO.get("picture");
-				}
+                    id = (String)jO.get("id");
 
+					Log.i(CLASS_NAME, "Account received is: " + email);
+					Log.i(CLASS_NAME, "First Name: " + firstName);
+					Log.i(CLASS_NAME, "Last Name: " + lastName);
+					Log.i(CLASS_NAME, "ID:  " + id);
+				}
 
 			} catch (IOException e) {
 				System.out.println(e.toString());
@@ -438,14 +437,15 @@ public class GoogleTokenManager extends Activity
 			Log.i(CLASS_NAME, "token is: " + token);
 			Log.i(CLASS_NAME, "idToken is: " + idToken);
 			Log.i(CLASS_NAME, "access token is: " + googleAccessToken);
-			startMainActivity(null, idToken, googleAccessToken);
+			startMainActivity(idToken, googleAccessToken);
 
 		}
 
 	}// GetToken class
 
-	private void startMainActivity(String wlAccessToken, String googleIdToken, String googleAccessToken)
+	private void startMainActivity(String googleIdToken, String googleAccessToken)
 	{
+
 		if( googleIdToken != null && !googleIdToken.isEmpty() )
 		{
 			// if user has not been signed in then don't go onto MainActivity.
@@ -463,9 +463,10 @@ public class GoogleTokenManager extends Activity
             if (googleIdToken != null) {
                 UserAccount.setIdToken(googleIdToken);
                 UserAccount.setAccessToken(googleAccessToken);
-                UserAccount.setName(firstName+" "+lastName);
+                UserAccount.setName(firstName + " " + lastName);
                 UserAccount.setEmail(email);
                 UserAccount.setPicture(picture);
+                UserAccount.setGoogleUserID(id);
             }
 			final Context context = thisActivity;
 			Intent intent = new Intent(context, MainActivity.class);

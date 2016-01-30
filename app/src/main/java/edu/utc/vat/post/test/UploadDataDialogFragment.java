@@ -1,15 +1,25 @@
+/**
+ * Sports Injury Prevention Screening -- SIPS
+ * v0.01.1b (12.3.15)
+ * rg 12/2/15.
+ */
+
 package edu.utc.vat.post.test;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+
 import android.os.AsyncTask;
 import android.os.Bundle;
+
 import android.util.Log;
+
 import android.widget.Toast;
 
 import edu.utc.vat.CallNative;
@@ -17,9 +27,7 @@ import edu.utc.vat.R;
 import edu.utc.vat.TestingActivity;
 import edu.utc.vat.dataUploadService;
 
-/**
- * Created by kristof on 12/2/15.
- */
+
 public class UploadDataDialogFragment extends DialogFragment {
 
     Context context;

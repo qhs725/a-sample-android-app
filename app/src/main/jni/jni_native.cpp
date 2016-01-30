@@ -1,6 +1,6 @@
 //
-// UTC Virtual Athletic Trainer
-// v0.01.1 (12/3/15)
+// Spots Injury Prevention Screening -- SIPS
+// v0.01.1b (12/?/15)
 // rg 9/7/15.
 //
 
@@ -16,6 +16,7 @@
 #include "packdat.h"
 #include "gl.h"
 #include "comm.h"
+#include "f.h"
 
 #define JNIEXPORT __attribute__ ((visibility ("default")))
 
@@ -133,8 +134,8 @@ return 0;
 }
 
 JNIEXPORT jint JNICALL
-Java_edu_utc_vat_CallNative_OnChanged(JNIEnv *, jobject) {
-gl::gl_::gl__().__oc__();
+Java_edu_utc_vat_CallNative_OnChanged(JNIEnv *env, jobject jobj, jint w, jint h) {
+gl::gl_::gl__().__oc__(w, h);
 return 0;
 }
 
@@ -191,6 +192,23 @@ int c;
 c = sh::sh_::sh__()._2___;
 return c;
 }
+
+
+JNIEXPORT jint JNICALL
+Java_edu_utc_vat_CallNative_FlankerInit(JNIEnv *, jobject) {
+f::f_::f__().__i__();
+return 0;
+}
+
+JNIEXPORT jboolean JNICALL
+Java_edu_utc_vat_CallNative_FlankerCheck(JNIEnv *, jobject) {
+bool b;
+b = f::f_::f__().__r__();
+return b;
+}
+
+
+
 
 #ifdef __cplusplus
 }
