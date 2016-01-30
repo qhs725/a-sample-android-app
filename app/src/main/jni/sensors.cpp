@@ -84,22 +84,40 @@ namespace sh {
                 }
                 else if (__e.type == ASENSOR_TYPE_GYROSCOPE) {
                     if (wti::wti_::wti__()._f_) {
+                        //THIS WRITES THE NEXT SENSOR TIMESTAMP AFTER THE FLANKER STIMULI CHANGES
+                        //RESETS TIMESTAMP FLAG TO FALSE, WAITS FOR NEXT STIMULI CHANGE
+                        if (sh_::sh__()._ts == true) {
+                            sh_::sh__()._ts = false;
+                            f::f_::f__()._ts((double)(__e.timestamp));
+                        }
+                        //IF RIGHT STIMULI AND NO RECORDED RESPONSE:
                         if (sh_::sh__()._r == true) {
+                            //LOGI("sh_::sh__()._r == true");
                             if (__e.vector.x > sh_::sh__().FT) {
-                                LOGI("CORRECT --> CALL SOMETHING && RECORD RESULT");
-                                f::f_::f__().__s__((double)(__e.timestamp));
+                                //LOGI("CORRECT --> CALL SOMETHING && RECORD RESULT");
+                                //f::f_::f__().__s__((double)(__e.timestamp));
+                                f::f_::f__().___dt[f::f_::f__().__sc-1] = (double)(__e.timestamp)-f::f_::f__().__it;
+                                f::f_::f__().___r[f::f_::f__().__sc-1] = 1;
                                 sh_::sh__()._r = false;
                             } else if (__e.vector.x < -sh_::sh__().FT) {
-                                LOGI("INCORRECT --> CALL SOMETHING && RECORD RESULT");
+                                //LOGI("INCORRECT --> CALL SOMETHING && RECORD RESULT");
+                                f::f_::f__().___dt[f::f_::f__().__sc-1] = (double)(__e.timestamp)-f::f_::f__().__it;
+                                f::f_::f__().___r[f::f_::f__().__sc-1] = -1;
                                 sh_::sh__()._r = false;
                             }
                         }
+                        //IF LEFT STIMULI AND NO RECORDED RESPONSE:
                         if (sh_::sh__()._l == true) {
+                            //LOGI("sh_::sh__()._l == true");
                             if (__e.vector.x < -sh_::sh__().FT) {
-                                LOGI("CORRECT --> CALL SOMETHING && RECORD RESULT");
+                                //LOGI("CORRECT --> CALL SOMETHING && RECORD RESULT");
+                                f::f_::f__().___dt[f::f_::f__().__sc-1] = (double)(__e.timestamp)-f::f_::f__().__it;
+                                f::f_::f__().___r[f::f_::f__().__sc-1] = 1;
                                 sh_::sh__()._l = false;
                             } else if (__e.vector.x > sh_::sh__().FT) {
-                                LOGI("INCORRECT --> CALL SOMETHING && RECORD RESULT");
+                                //LOGI("INCORRECT --> CALL SOMETHING && RECORD RESULT");
+                                f::f_::f__().___dt[f::f_::f__().__sc-1] = (double)(__e.timestamp)-f::f_::f__().__it;
+                                f::f_::f__().___r[f::f_::f__().__sc-1] = -1;
                                 sh_::sh__()._l = false;
                             }
                         }
@@ -146,6 +164,10 @@ namespace sh {
         sh_::sh__().sEq = ASensorManager_createEventQueue(
                 sh_::sh__().sMg, sh_::sh__().lpr, 3, _o, _);
         assert(sh_::sh__().sEq != NULL);
+        sh_::sh__()._l = false;
+        sh_::sh__()._r = false;
+        sh_::sh__()._ts = false;
+        wti::wti_::wti__()._f_ = false;
     }
 
     /*
@@ -200,7 +222,7 @@ namespace sh {
         ASensorEventQueue_disableSensor(sh_::sh__().sEq, sh_::sh__().gIn);
         ASensorEventQueue_disableSensor(sh_::sh__().sEq, sh_::sh__().aIn);
         st_ = false;
-        wti::wti_::wti__()._f_ = false;
+        //wti::wti_::wti__()._f_ = false;
         LOGI("NUMBER OF VALUES WRITTEN FOR -> a: %d  g: %d  c: %d \n",_0_,_1__,_2___);
     }
 
@@ -208,14 +230,15 @@ namespace sh {
      * THIS SETS FLANKER FLAGS FOR ACTIVE EVALUATION
      */
     void sh_::_sff_(bool _sf) {
-        if (wti::wti_::wti__()._f_) {
+        wti::wti_::wti__()._f_ = _sf;
+        /*if (wti::wti_::wti__()._f_) {
             sh_::sh__()._r = false;
             sh_::sh__()._l = false;
             if (_sf)
                 sh_::sh__()._r = true;
             else
                 sh_::sh__()._l = true;
-        }
+        }*/
     }
 
     /*

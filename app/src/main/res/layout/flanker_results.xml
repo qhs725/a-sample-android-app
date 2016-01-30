@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+    android:background="#d64177a5">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/buttons" >
+
+    <Button
+        android:id="@+id/pf1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Results"
+        android:background="#ddb9a826" />
+
+    <Button
+        android:id="@+id/pf2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Gyroscope"
+        android:background="#ddb9a826" />
+
+</LinearLayout>
+
+<LinearLayout
+    android:id="@+id/flanker_container"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/buttons" >
+</LinearLayout>
+
+
+</RelativeLayout>

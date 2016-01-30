@@ -35,6 +35,8 @@ namespace gl {
     private:
         bool o;
 
+        int __o;
+
         void __lapk(const char *o);
         void __ra(int o, int oo);
 

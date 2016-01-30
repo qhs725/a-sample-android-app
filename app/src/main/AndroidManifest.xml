@@ -76,7 +76,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.utc.vat.post.test.ViewResultsActivity" />
         </activity>
-        <activity android:name=".util.GoogleTokenManager" />
+        <activity android:name=".util.GoogleTokenManager"></activity>
+
         <activity
             android:name=".flanker.FlankerActivity"
             android:label="title_flanker_activity"
@@ -85,6 +86,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.utc.vat.flanker.FlankerActivity" />
+        </activity>
+        <activity
+            android:name=".flanker.FlankerResultsActivity"
+            android:label="@string/title_testing_activity"
+            android:parentActivityName=".TestingActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.utc.vat.flanker.FlankerResultsActivity" />
         </activity>
 
         <!-- Push Settings Start -->

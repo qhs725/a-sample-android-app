@@ -4,7 +4,7 @@
  * rg 12/2/15.
  */
 
-package edu.utc.vat.post.test;
+package edu.utc.vat.flanker;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -25,9 +25,9 @@ import android.widget.Toast;
 import edu.utc.vat.CallNative;
 import edu.utc.vat.R;
 import edu.utc.vat.TestingActivity;
-import edu.utc.vat.util.dataUploadService;
+import edu.utc.vat.dataUploadService;
 
-public class ViewUploadDataDialogFragment extends DialogFragment {
+public class UploadFlankerDialogFragment extends DialogFragment {
 
     Context context;
 
@@ -50,16 +50,16 @@ public class ViewUploadDataDialogFragment extends DialogFragment {
                             getActivity().startService(new Intent(getActivity(), dataUploadService.class));
                             new UpdateTask().execute();
                             Toast.makeText(context, "Uploading...", Toast.LENGTH_LONG);
-                            ((ViewResultsActivity) context).finish();
+                            ((FlankerResultsActivity) context).finish();
                         } else {
                             Toast.makeText(context, "No network connection available", Toast.LENGTH_LONG).show();
-                            ((ViewResultsActivity) context).finish();
+                            ((FlankerResultsActivity) context).finish();
                         }
                     }
                 })
                 .setNegativeButton(R.string.dialog_discard, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        ((ViewResultsActivity) context).finish();
+                        ((FlankerResultsActivity) context).finish();
                     }
                 });
         return builder.create();

@@ -1,5 +1,5 @@
 //
-// Sports Injury Prevention Screening -- SIPS
+// Spots Injury Prevention Screening -- SIPS
 // v0.01.1b (12/?/15)
 // rg 9/7/15.
 //

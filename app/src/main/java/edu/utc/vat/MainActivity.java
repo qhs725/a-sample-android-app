@@ -25,6 +25,7 @@ import bolts.Task;
 
 import edu.utc.vat.bluetooth.BtActivity;
 import edu.utc.vat.forms.SportInjuryForm;
+import edu.utc.vat.post.test.ViewResultsActivity;
 
 
 public class MainActivity extends BaseActivity {
@@ -87,15 +88,23 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        CallNative.InstantiateSensorsHandler();
-        CallNative.FlankerInit();
-        if (CallNative.FlankerCheck() == true) {
-            Log.i("MAIN","GO TO FLANKER RESULTS DIALOG");
+        if (CallNative.FlankerCheck() == false) {
+            CallNative.InstantiateSensorsHandler();
+            CallNative.FlankerInit(); //TODO: WHAT DOES THIS DO ... WHEN TO CALL 2nd TIME ...
         }
     }
 
     public static Intent createIntent(Context context) {
         return new Intent(context, MainActivity.class);
+    }
+
+    /**
+     * onResume()
+     */
+    public void onResume() {
+        //if (CallNative.FlankerCheck())
+        //    launchViewer();
+        super.onResume();
     }
 
     @Override
@@ -122,6 +131,10 @@ public class MainActivity extends BaseActivity {
 
     private void startBluetooth() {
         startActivity(new Intent(this, BtActivity.class));
+    }
+
+    public void launchViewer() {
+        startActivity(new Intent(this, ViewResultsActivity.class));
     }
 
 }

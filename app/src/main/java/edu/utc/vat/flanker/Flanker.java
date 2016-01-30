@@ -94,7 +94,7 @@ public class Flanker {
     public int getSlide() {
         int slide;
         slide = schedule.currentSlide();
-        Log.i("flanker","calling getSlide");
+        //Log.i("flanker","calling getSlide");
         return slide;
     }
 
@@ -207,14 +207,15 @@ public class Flanker {
             }
             if(sensorFlag == false) {
                 if(nextSlide < 4) {
-                    edu.utc.vat.CallNative.StartSensors();
+                    edu.utc.vat.CallNative.StartSensorsF(true);
                     edu.utc.vat.CallNative.WriteOn();
                     sensorFlag = true;
+                    Log.i("FLANKER","WTI ON");
                 }
             } else if(sensorFlag == true) {
                 if(nextSlide == -1) {
-                    edu.utc.vat.CallNative.WriteOff();
-                    edu.utc.vat.CallNative.StopSensors();
+                    //edu.utc.vat.CallNative.WriteOff();
+                    //edu.utc.vat.CallNative.StopSensors();
                     sensorFlag = false;
                 }
             }
