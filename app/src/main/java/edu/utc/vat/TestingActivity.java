@@ -137,9 +137,8 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
             }
         }
 
-        //use application class to maintain global state
-        blApplication = (BlueMixApplication) getApplication();
-        initServices(); //Initialize Bluemix connection
+
+        //initServices(); //Initialize Bluemix connection
         if (exercise == FLANKER)
             startFlanker();
         if (CallNative.FlankerCheck() == true) {
@@ -367,7 +366,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                                     //Add uUserID to User Account
                                     UserAccount.setuUserID(uUserID);
                                     // initialize IBM Bluemix Mobile Cloud Services
-                                    blApplication.initializeBluemixServices();
+                                   // blApplication.initializeBluemixServices();
                                     Log.i(CLASS_NAME, "Done initializing IBM Bluemix Services");
                                     Log.i(CLASS_NAME, "Done refreshing Session list.");
                                     // retrieve instance of the IBM Push service

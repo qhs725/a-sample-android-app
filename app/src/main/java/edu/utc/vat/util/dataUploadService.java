@@ -137,19 +137,6 @@ public class dataUploadService extends IntentService {
         getSensorData();
     }
 
-
-    //Uploads session data via Socket.io //TODO: deprecated, using upload_json instead
-    public static void sessionUpload(JSONObject sessJSON) {//Send Session to Server
-        //Attempt to connect to server
-        try {
-            mSocket = IO.socket(SERVER_IP);
-            mSocket.connect();
-        } catch (URISyntaxException e) {
-        }
-        //Send Session json object
-        mSocket.emit("data", sessJSON);
-    }
-
     //Uploads json via Socket.io ti specified destination
     public void upload_json(JSONObject json, String destination, Handler mHandler) {
         // Log.d(LOG_NAME, "FORM: " + obj.toString());
