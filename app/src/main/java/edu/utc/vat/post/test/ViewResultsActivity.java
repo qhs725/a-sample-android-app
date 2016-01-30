@@ -80,9 +80,6 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
             Log.e("ViewResults","Couldn't load files to view");
 
         openChart();
-
-        //DialogFragment uploadData = new edu.utc.vat.post.test.UploadDataDialogFragment();
-        //uploadData.show(getFragmentManager(), "uploadData");
     }
 
     @Override
@@ -126,17 +123,17 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
 
     private boolean loadResults() {
         // First, scan a.dat for accelerometer data
+        int ct = 0;
         Scanner scanAccel;
         try {
             scanAccel = new Scanner(new File("/data/data/edu.utc.vat/files/a.dat"));
         } catch (FileNotFoundException e) {
-            Log.e("ViewResults","a.dat not accessible");
+            Log.e("ViewResults", "a.dat not accessible");
             return false;
         }
         aCount = CallNative.CountAccel();
         scanAccel.useDelimiter("\n");
-        int ct = 0;
-        while(scanAccel.hasNext()) {
+        while (scanAccel.hasNext()) {
             Scanner scanLine;
             scanLine = new Scanner(scanAccel.next());
             scanLine.useDelimiter(",");
@@ -148,21 +145,21 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
                 z = Float.parseFloat(scanLine.next());
                 if (ct == 1) {
                     T = Float.parseFloat(scanLine.next()) - 1000000.f;
-                    t = T-T;
+                    t = T - T;
                 } else {
                     t = Float.parseFloat(scanLine.next()) - 1000000.f - T;
                 }
-                axSeries.add(t/1000.f, x);
-                aySeries.add(t/1000.f, y);
-                azSeries.add(t/1000.f, z);
+                axSeries.add(t / 1000.f, x);
+                aySeries.add(t / 1000.f, y);
+                azSeries.add(t / 1000.f, z);
                 jumpHeight(x, y, z);
                 yaMax = Math.max(yaMax, getMax(x, y, z));
                 yaMin = Math.min(yaMin, getMin(x, y, z));
             }
             ct++;
         }
-        Log.i("ViewResults","Accel data lines count %d" + aCount);
-        Log.i("ViewResults","Accel values count %d" + ct);
+        Log.i("ViewResults", "Accel data lines count %d" + aCount);
+        Log.i("ViewResults", "Accel values count %d" + ct);
 
         // Second, scan g.dat for gyroscope data
         Scanner scanGyro;
@@ -207,13 +204,13 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
         try {
             scanCompass = new Scanner(new File("/data/data/edu.utc.vat/files/c.dat"));
         } catch (FileNotFoundException e) {
-            Log.e("ViewResults","c.dat not accessible");
+            Log.e("ViewResults", "c.dat not accessible");
             return false;
         }
         cCount = CallNative.CountCompass();
         scanCompass.useDelimiter("\n");
         ct = 0;
-        while(scanCompass.hasNext()) {
+        while (scanCompass.hasNext()) {
             Scanner scanLine;
             scanLine = new Scanner(scanCompass.next());
             scanLine.useDelimiter(",");
@@ -225,20 +222,20 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
                 z = Float.parseFloat(scanLine.next());
                 if (ct == 1) {
                     T = Float.parseFloat(scanLine.next()) - 1000000.f;
-                    t = T-T;
+                    t = T - T;
                 } else {
                     t = Float.parseFloat(scanLine.next()) - 1000000.f - T;
                 }
-                mxSeries.add(t/1000.f, x);
-                mySeries.add(t/1000.f, y);
-                mzSeries.add(t/1000.f, z);
+                mxSeries.add(t / 1000.f, x);
+                mySeries.add(t / 1000.f, y);
+                mzSeries.add(t / 1000.f, z);
                 ymMax = Math.max(ymMax, getMax(x, y, z));
                 ymMin = Math.min(ymMin, getMin(x, y, z));
             }
             ct++;
         }
-        Log.i("ViewResults","Compass data lines count %d" + cCount);
-        Log.i("ViewResults","Compass values count %d" + ct);
+        Log.i("ViewResults", "Compass data lines count %d" + cCount);
+        Log.i("ViewResults", "Compass values count %d" + ct);
 
         Log.i("ViewResults","loadResults complete");
         return true;
@@ -336,6 +333,11 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
         currentChart = ChartFactory.getLineChartView(getBaseContext(), data, multiRender);
 
         layout.addView(currentChart);
+    }
+
+
+    private void openFlankerChart() {
+        
     }
 
 

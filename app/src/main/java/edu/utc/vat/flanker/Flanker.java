@@ -207,7 +207,7 @@ public class Flanker {
             }
             if(sensorFlag == false) {
                 if(nextSlide < 4) {
-                    //edu.utc.vat.CallNative.StartSensors();
+                    edu.utc.vat.CallNative.StartSensorsF(true);
                     edu.utc.vat.CallNative.WriteOn();
                     sensorFlag = true;
                     Log.i("FLANKER","WTI ON");

@@ -38,6 +38,15 @@ namespace f {
 
             void _____(double _, int _0);
 
+            void _ts(double _);
+
+            int *___s;
+            int *___r;
+            double *___dt;
+
+            double __it;
+            int __sc = -1;
+
             FILE *f;
 
         private:
@@ -47,9 +56,12 @@ namespace f {
             int ___o;
 
             bool __f;
+            bool __fo;
 
             double *__s;
             double *__t;
+
+            double __dt;
 
             int *__;
 

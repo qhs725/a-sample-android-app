@@ -28,6 +28,7 @@ public class FlankerActivity extends Activity {
 
     @Override protected void onCreate(Bundle penguin) {
         super.onCreate(penguin);
+        System.gc();
         getWindow().setFlags(
                 WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN
@@ -61,9 +62,9 @@ public class FlankerActivity extends Activity {
         Log.i("FLANKER", "onEnd -- 2 exiting ...");
         NavUtils.navigateUpFromSameTask(this);
         Log.i("FLANKER", "onEnd -- 3 exiting ...");
-        if (CallNative.FlankerCheck() == true) {
+        /* if (CallNative.FlankerCheck() == true) {
             launchViewer();
-        }
+        } */
     }
 
     public void launchViewer() {

@@ -40,6 +40,7 @@ import bolts.Continuation;
 import bolts.Task;
 
 import edu.utc.vat.flanker.FlankerActivity;
+import edu.utc.vat.flanker.FlankerResultsActivity;
 import edu.utc.vat.post.test.ViewDialogFragment;
 import edu.utc.vat.post.test.ViewResultsActivity;
 
@@ -138,11 +139,11 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         }
 
         //use application class to maintain global state
-        blApplication = (BlueMixApplication) getApplication();
-        initServices(); //Initialize Bluemix connection
+        //blApplication = (BlueMixApplication) getApplication();
+        //initServices(); //Initialize Bluemix connection
 
         if (CallNative.FlankerCheck() == true) {
-            Log.i("TESTING","GO TO FLANKER RESULTS DIALOG");
+            Log.i("TESTING","GO TO FLANKER RESULTS DIALOG .. NO .. ??");
             //Upload(); //TODO: Create alternate Flanker upload dialog fragment
         } else if (exercise == FLANKER) {
             startFlanker();
@@ -243,6 +244,8 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
      */
     public void onDestroy() {
         resetButton.performClick();
+        if (CallNative.FlankerCheck())
+            launchViewer();
         super.onDestroy();
     }
 
@@ -312,7 +315,9 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     }
 
     public void launchViewer() {
-        startActivity(new Intent(this, ViewResultsActivity.class));
+        Log.i("TESTING","launching viewer activity");
+        startActivity(new Intent(this, FlankerResultsActivity.class));
+        Log.i("TESTING","launched viewer activity");
     }
 
     private void startFlanker() {
