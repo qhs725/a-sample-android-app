@@ -22,6 +22,7 @@ import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.multidex.MultiDex;
@@ -41,6 +42,8 @@ import java.io.IOException;
 //import java.util.ArrayList;
 //import java.util.List;
 import java.util.Properties;
+
+import edu.utc.vat.util.dataUploadService;
 
 //import bolts.Continuation;
 //import bolts.Task;
@@ -223,8 +226,8 @@ public final class BlueMixApplication extends Application {
         Log.d(CLASS_NAME, "Exiting initializeBluemixServices() method.");
     }
 
+    //Returns Application's Context
     public static Context getAppContext() {
         return BlueMixApplication.context;
     }
-
 }

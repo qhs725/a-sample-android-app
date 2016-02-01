@@ -29,7 +29,6 @@ import java.util.Scanner;
 import edu.utc.vat.CallNative;
 import edu.utc.vat.R;
 import edu.utc.vat.TestingActivity;
-import edu.utc.vat.post.test.ViewUploadDataDialogFragment;
 
 public class FlankerResultsActivity extends TestingActivity implements View.OnClickListener {
 

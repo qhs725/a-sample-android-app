@@ -1,4 +1,4 @@
-//Displays Registration/Basic User Info form and packages up the answers into a JSONObject to be passed to dataUploadService
+//Displays Registration form and packages up the answers into a JSONObject to be passed to dataUploadService
 package edu.utc.vat.forms;
 
 import android.content.Context;
@@ -112,7 +112,7 @@ public class RegistrationForm extends AppCompatActivity {
         formQuestion.setText("What is your name?");
 
 
-        //TODO: add form field validation
+
         //Adds answers to a json object and calls method for the next question
         findViewById(R.id.formNextBtn).setOnClickListener(new View.OnClickListener() {
             @Override

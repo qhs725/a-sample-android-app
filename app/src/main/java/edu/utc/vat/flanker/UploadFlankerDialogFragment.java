@@ -22,10 +22,15 @@ import android.util.Log;
 
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import edu.utc.vat.BlueMixApplication;
 import edu.utc.vat.CallNative;
 import edu.utc.vat.R;
 import edu.utc.vat.TestingActivity;
-import edu.utc.vat.dataUploadService;
+import edu.utc.vat.UserAccount;
+import edu.utc.vat.util.dataUploadService;
 
 public class UploadFlankerDialogFragment extends DialogFragment {
 
@@ -46,10 +51,21 @@ public class UploadFlankerDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         if (TestingActivity.getisNetwork()) {
                             Log.i("UPLOAD", "Calling PackageData");
-                            //Start background service to upload
-                            getActivity().startService(new Intent(getActivity(), dataUploadService.class));
+
+                            //Start upload service
+                            JSONObject temp_json = new JSONObject();
+                            try {
+                                temp_json.put("accessToken", UserAccount.getAccessToken());
+                                temp_json.put("id", UserAccount.getGoogleUserID());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            Intent upload = new Intent(BlueMixApplication.getAppContext(), dataUploadService.class);
+                            upload.putExtra("flanker_json", temp_json.toString());
+                            BlueMixApplication.getAppContext().startService(upload);
+
                             new UpdateTask().execute();
-                            Toast.makeText(context, "Uploading...", Toast.LENGTH_LONG);
+                            Toast.makeText(context.getApplicationContext(), "Uploading...", Toast.LENGTH_LONG);
                             ((FlankerResultsActivity) context).finish();
                         } else {
                             Toast.makeText(context, "No network connection available", Toast.LENGTH_LONG).show();

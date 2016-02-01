@@ -46,7 +46,7 @@ public class UserAccount {
 	public static String getFamilyName() {
 		return familyName;
 	}
-	public static void setFamilyName(String familyNameName) {
+	public static void setFamilyName(String familyName) {
 		UserAccount.familyName = familyName;
 	}
 	public static String getEmail() {

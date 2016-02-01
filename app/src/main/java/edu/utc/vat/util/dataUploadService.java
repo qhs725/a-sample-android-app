@@ -78,7 +78,7 @@ public class dataUploadService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent workIntent) {
-
+        android.os.Debug.waitForDebugger();
         mHandler = new Handler(getMainLooper());
 
 
@@ -97,19 +97,20 @@ public class dataUploadService extends IntentService {
             return; //return if no internet connection
         }
 
+        user_json = new JSONObject();
+        obj = new JSONObject();
 
         //Check if intent was passed an extra like form answers
-        if (workIntent.hasExtra("jsonObject")) {
-
-            try {
+        try {
+            if (workIntent.hasExtra("jsonObject")) {
                 JSONObject temp = new JSONObject(workIntent.getStringExtra("jsonObject"));
+
                 JSONObject name = new JSONObject();
-                user_json = new JSONObject();
-                obj = new JSONObject();
+
 
                 //Processing JSON
-                String given_name =  UserAccount.getGivenName() != null ? UserAccount.getGivenName() : "null";
-                String family_name =  UserAccount.getFamilyName() != null ? UserAccount.getFamilyName() : "null";
+                String given_name = UserAccount.getGivenName() != null ? UserAccount.getGivenName() : "null";
+                String family_name = UserAccount.getFamilyName() != null ? UserAccount.getFamilyName() : "null";
                 name.put("given_name", given_name);
                 name.put("family_name", family_name);
                 user_json.put("id", UserAccount.getGoogleUserID());
@@ -117,19 +118,25 @@ public class dataUploadService extends IntentService {
                 user_json.put("accessToken", UserAccount.getAccessToken());
                 user_json.put("name", name);
                 obj.put("user", user_json);
-                obj.put("body", temp );
+                obj.put("body", temp);
 
-                Log.e("JSON: ", obj.toString());//temp testing only
+                Log.d("JSON: ", obj.toString());
                 if (temp.has("type")) {
                     String type = temp.getString("type");
                     if (type.equals("form")) {
                         upload_json_post(obj, "http://utc-vat.mybluemix.net/upload/form", mHandler);
                     }
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
+
+                return; //End service after uploading
+            } else if (workIntent.hasExtra("flanker_json")) {
+                user_json = new JSONObject(workIntent.getStringExtra("flanker_json"));
+                Log.d("JSON_FLANKER: ", user_json.toString());
+
             }
-            return; //End service after uploading
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
         while (CallNative.CheckData() == false) {
             Log.d(LOG_NAME, " File is still being written to");
@@ -139,7 +146,7 @@ public class dataUploadService extends IntentService {
 
     //Uploads json via Socket.io ti specified destination
     public void upload_json(JSONObject json, String destination, Handler mHandler) {
-        // Log.d(LOG_NAME, "FORM: " + obj.toString());
+        Log.d(LOG_NAME, "JSON: " + json.toString());
         // Log.d(LOG_NAME, "Destination: " + destination);
 
         try {
@@ -233,6 +240,9 @@ public class dataUploadService extends IntentService {
                 //dataFileNames[num] = fileList[i].getName();
                 dataFileNames.add(fileList[i].getName());
                 Log.i("dataUpload", "Found Data file:" + fileList[i].getName());
+            } else if (fileList[i].getName().equals("f.dat")) {
+                dataFileNames.add(fileList[i].getName());
+                Log.i("dataUpload", "Found Flanker Data file:" + fileList[i].getName());
             }
         }
 
@@ -255,14 +265,20 @@ public class dataUploadService extends IntentService {
                     BufferedReader reader = new BufferedReader(stream);
                     String lineRow = "";
 
-                    //Get first line to retrieve user/session based info to add to the Session Object.
-                    if ((lineRow = reader.readLine()) != null) {
-                        userInfo = lineRow.split(","); // format of first line should be '{sessionId},{userId},{userInput}'
 
-                        //Add info from first line to Session Object
-                        session_json.put("SESSIONID", (userInfo[0] != null) ? userInfo[0] : "null");
-                        session_json.put("USERID", (userInfo[1] != null) ? userInfo[1] : "null");
-                        session_json.put("USERINPUT", (userInfo[2] != null) ? userInfo[2] : "null");
+                    //Get first line to retrieve user/session based info to add to the Session Object.
+                    //Skip for Flanker
+                    if (dataFileNames.get(i).equals("f.dat")) {
+                    } else {
+                        if ((lineRow = reader.readLine()) != null) {
+                            userInfo = lineRow.split(",");
+
+                            //Add info from first line to Session Object
+                            session_json.put("SESSIONID", (userInfo[0] != null) ? userInfo[0] : "null");
+                            session_json.put("USERID", (userInfo[1] != null) ? userInfo[1] : "null");
+                            session_json.put("USERINPUT", (userInfo[2] != null) ? userInfo[2] : "null");
+                            session_json.put("type", "appsensor");
+                        }
                     }
                     //Get second line to determine key names to sort data before adding it to the Session Object.
                     if ((lineRow = reader.readLine()) != null) {
@@ -308,15 +324,28 @@ public class dataUploadService extends IntentService {
                     }
                     group.clear(); //reset for next file
                 }
+
+
+                //Call to upload file (INDIVIDUAL)
+                if (dataFileNames.get(i).equals("f.dat")) {
+                    obj.put("type", "flanker");
+
+                    obj.put("user", user_json);
+                    obj.put("body", session_json);
+                    upload_json(obj, SERVER_IP, null);
+                } else {
+                    upload_json(session_json, SERVER_IP, null);
+                }
             } catch (FileNotFoundException e) {
                 Log.e("dataUpload", "File not found: " + e.toString());
             } catch (IOException e) {
                 Log.e("dataUpload", "Can not read file: " + e.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
+            } catch (NullPointerException e) {
+                e.printStackTrace();
             }
-            //Call to upload file (INDIVIDUAL)
-            upload_json(session_json, SERVER_IP, null);
+
         }
 
         //mSocket.disconnect();
