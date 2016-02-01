@@ -60,7 +60,7 @@ public class UploadFlankerDialogFragment extends DialogFragment {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            Intent upload = new Intent(BlueMixApplication.getAppContext(), dataUploadService.class);
+                            Intent upload = new Intent(context.getApplicationContext(), dataUploadService.class);
                             upload.putExtra("flanker_json", temp_json.toString());
                             BlueMixApplication.getAppContext().startService(upload);
 

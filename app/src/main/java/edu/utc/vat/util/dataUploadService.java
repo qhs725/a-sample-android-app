@@ -78,7 +78,7 @@ public class dataUploadService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent workIntent) {
-        android.os.Debug.waitForDebugger();
+      //  android.os.Debug.waitForDebugger(); //For debugging only
         mHandler = new Handler(getMainLooper());
 
 
