@@ -78,7 +78,7 @@ public class dataUploadService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent workIntent) {
-      //  android.os.Debug.waitForDebugger(); //For debugging only
+        //  android.os.Debug.waitForDebugger(); //For debugging only
         mHandler = new Handler(getMainLooper());
 
 
@@ -230,7 +230,7 @@ public class dataUploadService extends IntentService {
         Log.i("dataUpload", "Size: " + fileList.length);
 
         //Look at each file in the directory
-        for (int i = 0; i < fileList.length - 1; i++) {
+        for (int i = 0; i < fileList.length; i++) {
             Log.i("dataUpload", "FileName:" + fileList[i].getName());
             String filenameArray[] = fileList[i].getName().split("\\.");
             String extension = filenameArray[filenameArray.length - 1];

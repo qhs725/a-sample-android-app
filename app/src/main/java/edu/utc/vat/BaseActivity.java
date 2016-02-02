@@ -113,6 +113,7 @@ public class BaseActivity extends AppCompatActivity {
         isNetwork = activeNetworkInfo != null && activeNetworkInfo.isConnected();
         return isNetwork;
     }
+
     //Allows retrieval of isNetwork from other classes
     public static boolean getisNetwork() {
         return BaseActivity.isNetwork;

@@ -90,7 +90,7 @@ public class UploadFlankerDialogFragment extends DialogFragment {
         @Override
         protected Boolean doInBackground(Void... v) {
             String x = "1000";  //TODO: Does PackageData() still require an argument?
-            CallNative.PackageData(x);
+           // CallNative.PackageData(x);
             return true;
         }
 
