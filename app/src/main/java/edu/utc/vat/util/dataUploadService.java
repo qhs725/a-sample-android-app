@@ -78,7 +78,7 @@ public class dataUploadService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent workIntent) {
-        //  android.os.Debug.waitForDebugger(); //For debugging only
+      //  android.os.Debug.waitForDebugger(); //For debugging only
         mHandler = new Handler(getMainLooper());
 
 
@@ -335,6 +335,11 @@ public class dataUploadService extends IntentService {
                     upload_json(obj, SERVER_IP, null);
                 } else {
                     upload_json(session_json, SERVER_IP, null);
+
+
+                    //TODO: Delete file after receiving response from server?
+                    this.deleteFile(dataFileNames.get(i));
+
                 }
             } catch (FileNotFoundException e) {
                 Log.e("dataUpload", "File not found: " + e.toString());
