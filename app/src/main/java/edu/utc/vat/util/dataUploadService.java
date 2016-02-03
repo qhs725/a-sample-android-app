@@ -78,16 +78,22 @@ public class dataUploadService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent workIntent) {
-      //  android.os.Debug.waitForDebugger(); //For debugging only
+        //  android.os.Debug.waitForDebugger(); //For debugging only
         mHandler = new Handler(getMainLooper());
 
 
+        //Packaging
+        //TODO: 1. Search for all dat files in internal storage
+        //TODO: 2. Traverse files using first line for JSON keys and the rest as the values to them
+        //TODO: 3. If f.dat exists then package it up as a nested json object
+        //TODO: 4. Add Google User ID, Access Token, and any other needed data to the JSON object
+        //Uploading/Saving
+        //TODO: 5. Upload JSON if there is an internet connection, else save the file to internal storage in JSON format (can't be CSV)
+        //TODO: 6. Delete .dat files
+        //TODO: 7. Look for remaining files if there is an Internet connection, delete on successful upload
+
         //Check if network is available
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        boolean isNetwork = activeNetworkInfo != null && activeNetworkInfo.isConnected();
-        if (!isNetwork) {
+        if (!isNetwork()) {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -141,7 +147,7 @@ public class dataUploadService extends IntentService {
         while (CallNative.CheckData() == false) {
             Log.d(LOG_NAME, " File is still being written to");
         }
-        getSensorData();
+
     }
 
     //Uploads json via Socket.io ti specified destination
@@ -218,6 +224,36 @@ public class dataUploadService extends IntentService {
         }
     }
 
+    //Retrieves list of names of files that exist in internal storage
+    private String[] filesList(){
+        String[] list = null;
+
+        return list;
+    }
+
+    //Combines data files into JSON format
+    private void packageData() {
+
+    }
+
+    //Saves data to single file in internal storage
+    private void saveData(String data) {
+
+    }
+
+
+    //Returns true if there is a network connection
+    private boolean isNetwork(){
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+}
+
+
+    /*
     private void getSensorData() {
         ArrayList<String> dataFileNames = new ArrayList<String>();
         int numColumns = 0;
@@ -366,5 +402,5 @@ public class dataUploadService extends IntentService {
         }
         Log.i("dataUpload", "Data upload complete");
     }
-
 }
+*/
