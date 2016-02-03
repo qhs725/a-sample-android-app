@@ -34,10 +34,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-//import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-//import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -56,10 +55,15 @@ public class dataUploadService extends IntentService {
 
     public static final String LOG_NAME = "Session";
     private static Context context = BlueMixApplication.getAppContext();
-    private static final String EXT = "csv";
-    private static JSONObject session_json;
-    private static JSONObject obj;
-    private static JSONObject user_json;
+    private static final String EXT = "dat";
+
+    private JSONObject obj = new JSONObject();
+    private JSONObject appsensor = new JSONObject();
+    private JSONObject flanker = new JSONObject();
+    private JSONObject body = new JSONObject();
+    private JSONObject user_json = new JSONObject();
+    private JSONObject name = new JSONObject();
+
     // create a handler to post messages to the main thread
     private Handler mHandler;
 
@@ -79,75 +83,52 @@ public class dataUploadService extends IntentService {
     @Override
     protected void onHandleIntent(Intent workIntent) {
         //  android.os.Debug.waitForDebugger(); //For debugging only
-        mHandler = new Handler(getMainLooper());
-
 
         //Packaging
-        //TODO: 1. Search for all dat files in internal storage
-        //TODO: 2. Traverse files using first line for JSON keys and the rest as the values to them
-        //TODO: 3. If f.dat exists then package it up as a nested json object
-        //TODO: 4. Add Google User ID, Access Token, and any other needed data to the JSON object
+        //TODO: ✓ 1. Search for all dat files in internal storage
+        //TODO: ✓ 2. Traverse files using first line for JSON keys and the rest as the values to them
+        //TODO: ✓ 3. If f.dat exists then package it up as a nested json object
+        //TODO: ✓ 4. Add Google User ID, Access Token, and any other needed data to the JSON object
         //Uploading/Saving
         //TODO: 5. Upload JSON if there is an internet connection, else save the file to internal storage in JSON format (can't be CSV)
         //TODO: 6. Delete .dat files
         //TODO: 7. Look for remaining files if there is an Internet connection, delete on successful upload
 
         //Check if network is available
-        if (!isNetwork()) {
-            mHandler.post(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(BlueMixApplication.getAppContext(), "No internet connection found", Toast.LENGTH_LONG).show();
-                }
-            });
-            return; //return if no internet connection
+
+
+        while (CallNative.CheckData() == false) {
+            Log.d(LOG_NAME, " File is still being written to");
         }
 
-        user_json = new JSONObject();
-        obj = new JSONObject();
-
-        //Check if intent was passed an extra like form answers
         try {
-            if (workIntent.hasExtra("jsonObject")) {
-                JSONObject temp = new JSONObject(workIntent.getStringExtra("jsonObject"));
-
-                JSONObject name = new JSONObject();
+            getUserJSON();
 
 
-                //Processing JSON
-                String given_name = UserAccount.getGivenName() != null ? UserAccount.getGivenName() : "null";
-                String family_name = UserAccount.getFamilyName() != null ? UserAccount.getFamilyName() : "null";
-                name.put("given_name", given_name);
-                name.put("family_name", family_name);
-                user_json.put("id", UserAccount.getGoogleUserID());
-                user_json.put("idToken", UserAccount.getIdToken());
-                user_json.put("accessToken", UserAccount.getAccessToken());
-                user_json.put("name", name);
-                obj.put("user", user_json);
+            if (workIntent.hasExtra("formData")) { //Form data
+                JSONObject temp = new JSONObject(workIntent.getStringExtra("formData"));
+
+                //formatting JSON
                 obj.put("body", temp);
 
                 Log.d("JSON: ", obj.toString());
                 if (temp.has("type")) {
                     String type = temp.getString("type");
                     if (type.equals("form")) {
+                        mHandler = new Handler(getMainLooper());
                         upload_json_post(obj, "http://utc-vat.mybluemix.net/upload/form", mHandler);
                     }
                 }
-
-                return; //End service after uploading
-            } else if (workIntent.hasExtra("flanker_json")) {
-                user_json = new JSONObject(workIntent.getStringExtra("flanker_json"));
-                Log.d("JSON_FLANKER: ", user_json.toString());
-
+            } else {
+                packageData();
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        while (CallNative.CheckData() == false) {
-            Log.d(LOG_NAME, " File is still being written to");
-        }
 
+
+        return; //End service
     }
 
     //Uploads json via Socket.io ti specified destination
@@ -224,31 +205,170 @@ public class dataUploadService extends IntentService {
         }
     }
 
-    //Retrieves list of names of files that exist in internal storage
-    private String[] filesList(){
-        String[] list = null;
+    //Retrieves list of names of dat files that exist in internal storage
+    private ArrayList<String> getFilesNames() {
+        ArrayList<String> dataFileNames = new ArrayList<String>();
+        //Get files directory and get names of all files within
+        File fileFinder = new File(context.getFilesDir() + "/");
+        File list[] = fileFinder.listFiles();
 
-        return list;
+        for (int i = 0; i < list.length; i++) {
+            Log.i("dataUpload", "FileName:" + list[i].getName());
+            String filenameArray[] = list[i].getName().split("\\.");
+            String extension = filenameArray[filenameArray.length - 1];
+            if (extension.equals(EXT)) {
+                //dataFileNames[num] = fileList[i].getName();
+                dataFileNames.add(list[i].getName());
+                Log.i("dataUpload", "Found Data file:" + list[i].getName());
+            } else if (filenameArray[0].equals("f")) {
+                dataFileNames.add(list[i].getName());
+                Log.i("dataUpload", "Found Flanker Data file:" + list[i].getName());
+            }
+        }
+        return dataFileNames;
     }
 
     //Combines data files into JSON format
     private void packageData() {
+        ArrayList<String> fileNames = getFilesNames();
 
+        //Data files should be in dataFileNames[] at this point
+       obj = new JSONObject(); //Single object upload for multiple files
+
+
+        try {
+            getUserJSON();
+
+            for (int i = 0; i < fileNames.size(); i++) {
+                int numColumns = 0;
+                String[] userInfo = null;
+                InputStream file = null;
+                BufferedReader reader = null;
+                String lineRow = "";
+                String[] keyNames = new String[20];
+                Log.d(LOG_NAME, "FILE NAME SIZE: " + fileNames.size());
+
+                //Get current file in dataFileNames
+                file = context.openFileInput(fileNames.get(i));
+
+                //check if file has data in it
+
+                InputStreamReader stream = new InputStreamReader(file);
+                reader = new BufferedReader(stream);
+
+
+                //Get first line to determine key names to sort data before adding it to the JSON Object.
+                if ((lineRow = reader.readLine()) != null) {
+                    keyNames = lineRow.split(",");
+                    numColumns = keyNames.length;
+                    for (int t = 0; t < keyNames.length; t++) {
+                        Log.d(LOG_NAME, "Keynames: " + keyNames[t]);
+                    }
+                }
+
+                //Create list of lists to dynamically load file data
+                List<List<String>> group = new ArrayList<List<String>>();
+                for (int u = 0; u < numColumns; u++) {
+                    List<String> tempList = new ArrayList<String>();
+                    group.add(tempList);
+                }
+
+                //Loop through file line by line
+                while ((lineRow = reader.readLine()) != null) {
+                    String[] RowData = lineRow.split(",");
+
+                    //Add value in each 'column' of the file to the respective ArrayList in the group List
+                    for (int y = 0; y < numColumns; y++) {
+
+                        if (y >= RowData.length) {
+                        } else {
+                            if (RowData[y] == "" || RowData[y] == null) {
+                                RowData[y] = "null";
+                            }
+                            group.get(y).add(RowData[y]);
+                            Log.i(LOG_NAME, "Added Data: " + RowData[y] + " to key " + keyNames[y]);
+                        }
+                    }
+                }
+
+                //Added each column to the Session object
+                for (int t = 0; t < numColumns; t++) {
+                    List data = group.get(t);
+                    if (fileNames.get(i).equals("f.dat")) {
+                        flanker.put(keyNames[t].toUpperCase(), (data != null) ? data : "");
+                    } else
+                        appsensor.put(keyNames[t].toUpperCase(), (data != null) ? data : "");
+                }
+                group.clear(); //reset for next file
+            }
+
+
+            //Form JSON object order
+            if( flanker.has("STIMULUS")) {
+                body.put("flanker", flanker);
+            }
+            if( appsensor.has("ACCELX")) {
+                body.put("appsensor", appsensor);
+            }
+            obj.put("body", body);
+
+
+
+            saveData(obj + "");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
-    //Saves data to single file in internal storage
-    private void saveData(String data) {
 
+    private void saveData(String data) {
+        String filename = "test.json";
+        FileOutputStream outputStream;
+
+        try {
+            outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+            outputStream.write(data.getBytes());
+            outputStream.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
     //Returns true if there is a network connection
-    private boolean isNetwork(){
+    private boolean isNetwork() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
 
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        Boolean isNetwork = activeNetworkInfo != null && activeNetworkInfo.isConnected();
+
+        mHandler = new Handler(getMainLooper());
+        if (isNetwork) {
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(BlueMixApplication.getAppContext(), "No internet connection found", Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+        return isNetwork;
+    }
+
+    private void getUserJSON() throws JSONException {
+        String given_name = UserAccount.getGivenName() != null ? UserAccount.getGivenName() : "null";
+        String family_name = UserAccount.getFamilyName() != null ? UserAccount.getFamilyName() : "null";
+        name.put("given_name", given_name);
+        name.put("family_name", family_name);
+        user_json.put("id", UserAccount.getGoogleUserID());
+        user_json.put("idToken", UserAccount.getIdToken());
+        user_json.put("accessToken", UserAccount.getAccessToken());
+        user_json.put("name", name);
+        obj.put("user", user_json);
     }
 }
 

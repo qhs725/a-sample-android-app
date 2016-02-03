@@ -109,7 +109,7 @@ public class SportInjuryForm extends AppCompatActivity {
                     }
 
                     Intent upload = new Intent(BlueMixApplication.getAppContext(), dataUploadService.class);
-                    upload.putExtra("jsonObject", form_json.toString());
+                    upload.putExtra("formData", form_json.toString());
 
 
                     BlueMixApplication.getAppContext().startService(upload);

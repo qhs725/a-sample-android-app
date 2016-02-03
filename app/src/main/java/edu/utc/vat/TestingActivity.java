@@ -171,7 +171,8 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
                         String id = UserAccount.getGoogleUserID();
 
-                        CallNative.PassID(sessionID + "," + id + "," + userInfo);
+
+                      CallNative.PassID(sessionID + "," + id + "," + userInfo); //TODO: deprecated
 
                         timer.countDown();
                         //Log.i("Testing", "Good--3");

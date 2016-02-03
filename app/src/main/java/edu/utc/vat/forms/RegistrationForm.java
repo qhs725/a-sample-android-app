@@ -431,7 +431,7 @@ public class RegistrationForm extends AppCompatActivity {
     //Sends all data to be uploaded to server
     private void submitForm(){
         Intent upload = new Intent(getApplication(), dataUploadService.class);
-        upload.putExtra("jsonObject", form_json.toString());
+        upload.putExtra("formData", form_json.toString());
 
         getApplication().startService(upload);
         Toast.makeText(BlueMixApplication.getAppContext(), "Submitting...", Toast.LENGTH_LONG).show();
