@@ -84,26 +84,25 @@ public class dataUploadService extends IntentService {
     protected void onHandleIntent(Intent workIntent) {
         //  android.os.Debug.waitForDebugger(); //For debugging only
 
-        //Packaging
-        //TODO: ✓ 1. Search for all dat files in internal storage
-        //TODO: ✓ 2. Traverse files using first line for JSON keys and the rest as the values to them
-        //TODO: ✓ 3. If f.dat exists then package it up as a nested json object
-        //TODO: ✓ 4. Add Google User ID, Access Token, and any other needed data to the JSON object
-        //Uploading/Saving
-        //TODO: 5. Upload JSON if there is an internet connection, else save the file to internal storage in JSON format (can't be CSV)
-        //TODO: 6. Delete .dat files
-        //TODO: 7. Look for remaining files if there is an Internet connection, delete on successful upload
+        /**Packaging
+        * TODO: ✓ 1. Search for all dat files in internal storage
+        * TODO: ✓ 2. Traverse files using first line for JSON keys and the rest as the values to them
+        * TODO: ✓ 3. If f.dat exists then package it up as a nested json object
+        * TODO: ✓ 4. Add Google User ID, Access Token, and any other needed data to the JSON object
+        * Uploading/Saving
+        * TODO: 5. Upload JSON if there is an internet connection, else save the file to internal storage in JSON format (can't be CSV)
+        * TODO: 5.1. give unique name to each file.
+        * TODO: 6. Delete .dat files
+        * TODO: 7. Look for remaining files if there is an Internet connection, delete on successful upload
+        */
 
-        //Check if network is available
-
-
+        //Check if C has finished writing to files
         while (CallNative.CheckData() == false) {
             Log.d(LOG_NAME, " File is still being written to");
         }
 
         try {
             getUserJSON();
-
 
             if (workIntent.hasExtra("formData")) { //Form data
                 JSONObject temp = new JSONObject(workIntent.getStringExtra("formData"));
@@ -206,7 +205,7 @@ public class dataUploadService extends IntentService {
     }
 
     //Retrieves list of names of dat files that exist in internal storage
-    private ArrayList<String> getFilesNames() {
+    private ArrayList<String> getFilesNames(String ext, int namesOnly) {
         ArrayList<String> dataFileNames = new ArrayList<String>();
         //Get files directory and get names of all files within
         File fileFinder = new File(context.getFilesDir() + "/");
@@ -216,13 +215,14 @@ public class dataUploadService extends IntentService {
             Log.i("dataUpload", "FileName:" + list[i].getName());
             String filenameArray[] = list[i].getName().split("\\.");
             String extension = filenameArray[filenameArray.length - 1];
-            if (extension.equals(EXT)) {
+            if (extension.equals(ext) && namesOnly == 0) {
                 //dataFileNames[num] = fileList[i].getName();
                 dataFileNames.add(list[i].getName());
                 Log.i("dataUpload", "Found Data file:" + list[i].getName());
-            } else if (filenameArray[0].equals("f")) {
-                dataFileNames.add(list[i].getName());
-                Log.i("dataUpload", "Found Flanker Data file:" + list[i].getName());
+            }
+            else if(extension.equals(ext) && namesOnly == 1){
+                dataFileNames.add(filenameArray[0]);
+                Log.i("dataUpload", "Found Data file:" + list[i].getName());
             }
         }
         return dataFileNames;
@@ -230,7 +230,7 @@ public class dataUploadService extends IntentService {
 
     //Combines data files into JSON format
     private void packageData() {
-        ArrayList<String> fileNames = getFilesNames();
+        ArrayList<String> fileNames = getFilesNames(EXT, 0);
 
         //Data files should be in dataFileNames[] at this point
        obj = new JSONObject(); //Single object upload for multiple files
@@ -313,8 +313,12 @@ public class dataUploadService extends IntentService {
             obj.put("body", body);
 
 
+            if(isNetwork())
+                //upload_json(obj, SERVER_IP, null);
+                 saveData(obj + ""); //Change to upload function
+            else
+                saveData(obj + "");
 
-            saveData(obj + "");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -326,7 +330,17 @@ public class dataUploadService extends IntentService {
 
 
     private void saveData(String data) {
-        String filename = "test.json";
+        ArrayList<String> fileNames = getFilesNames("json", 1);
+        int num =0;
+        for(String name : fileNames) {
+            int nameNumber = Integer.parseInt(name);
+
+            if(num <=  nameNumber){
+                num = nameNumber + 1;
+            }
+
+        }
+        String filename = num +".json";
         FileOutputStream outputStream;
 
         try {
@@ -348,7 +362,7 @@ public class dataUploadService extends IntentService {
         Boolean isNetwork = activeNetworkInfo != null && activeNetworkInfo.isConnected();
 
         mHandler = new Handler(getMainLooper());
-        if (isNetwork) {
+        if (!isNetwork) {
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -371,156 +385,3 @@ public class dataUploadService extends IntentService {
         obj.put("user", user_json);
     }
 }
-
-
-    /*
-    private void getSensorData() {
-        ArrayList<String> dataFileNames = new ArrayList<String>();
-        int numColumns = 0;
-        String[] userInfo = null;
-        InputStream file = null;
-
-        //Get files directory and get names of all files within
-        File fileFinder = new File(context.getFilesDir() + "/");
-        File fileList[] = fileFinder.listFiles();
-        Log.i("dataUpload", "Size: " + fileList.length);
-
-        //Look at each file in the directory
-        for (int i = 0; i < fileList.length; i++) {
-            Log.i("dataUpload", "FileName:" + fileList[i].getName());
-            String filenameArray[] = fileList[i].getName().split("\\.");
-            String extension = filenameArray[filenameArray.length - 1];
-
-            //Check if file extension is txt (CHANGE TO 'dat' when files are working)
-            if (extension.equals(EXT)) {
-                //dataFileNames[num] = fileList[i].getName();
-                dataFileNames.add(fileList[i].getName());
-                Log.i("dataUpload", "Found Data file:" + fileList[i].getName());
-            } else if (fileList[i].getName().equals("f.dat")) {
-                dataFileNames.add(fileList[i].getName());
-                Log.i("dataUpload", "Found Flanker Data file:" + fileList[i].getName());
-            }
-        }
-
-        //Data files should be in dataFileNames[] at this point
-        session_json = new JSONObject(); //Single object upload for multiple files
-
-        //Go through each data file, create object keys, add data values
-        for (int i = 0; i < dataFileNames.size(); i++) {
-
-            try {
-                //Get current file in dataFileNames
-                file = context.openFileInput(dataFileNames.get(i));
-
-                String[] keyNames = new String[20];
-
-                //check if file has data in it
-                if (file != null) {
-                    Log.i(LOG_NAME, "Data file is not null");
-                    InputStreamReader stream = new InputStreamReader(file);
-                    BufferedReader reader = new BufferedReader(stream);
-                    String lineRow = "";
-
-
-                    //Get first line to retrieve user/session based info to add to the Session Object.
-                    //Skip for Flanker
-                    if (dataFileNames.get(i).equals("f.dat")) {
-                    } else {
-                        if ((lineRow = reader.readLine()) != null) {
-                            userInfo = lineRow.split(",");
-
-                            //Add info from first line to Session Object
-                            session_json.put("SESSIONID", (userInfo[0] != null) ? userInfo[0] : "null");
-                            session_json.put("USERID", (userInfo[1] != null) ? userInfo[1] : "null");
-                            session_json.put("USERINPUT", (userInfo[2] != null) ? userInfo[2] : "null");
-                            session_json.put("type", "appsensor");
-                        }
-                    }
-                    //Get second line to determine key names to sort data before adding it to the Session Object.
-                    if ((lineRow = reader.readLine()) != null) {
-                        keyNames = lineRow.split(",");
-                        numColumns = keyNames.length;
-                        for (int t = 0; t < keyNames.length; t++) {
-                            Log.d(LOG_NAME, "Keynames: " + keyNames[t]);
-                        }
-                    }
-
-                    //Create list of lists to dynamically load file's sensor data
-                    List<List<String>> group = new ArrayList<List<String>>();
-                    for (int u = 0; u < numColumns; u++) {
-                        List<String> tempList = new ArrayList<String>();
-                        group.add(tempList);
-                    }
-
-                    //Loop through file line by line
-                    while ((lineRow = reader.readLine()) != null) {
-                        String[] RowData = lineRow.split(",");
-
-                        //Add value in each 'column' of the file to the respective ArrayList in the group List
-                        for (int y = 0; y < numColumns; y++) {
-                            try {
-                                if (y >= RowData.length) {
-                                } else {
-                                    if (RowData[y] == "" || RowData[y] == null) {
-                                        RowData[y] = "null";
-                                    }
-                                    group.get(y).add(RowData[y]);
-                                    //Log.i(LOG_NAME, "Added Data: " + RowData[y] + " to position " + y);
-                                }
-                            } catch (Exception e) {
-                                Log.e(LOG_NAME, "ERROR: " + e.getMessage());
-                            }
-                        }
-                    }
-
-                    //Added each column to the Session object
-                    for (int t = 0; t < numColumns; t++) {
-                        List data = group.get(t);
-                        session_json.put(keyNames[t].toUpperCase(), (data != null) ? data : "");
-                    }
-                    group.clear(); //reset for next file
-                }
-
-
-                //Call to upload file (INDIVIDUAL)
-                if (dataFileNames.get(i).equals("f.dat")) {
-                    obj.put("type", "flanker");
-
-                    obj.put("user", user_json);
-                    obj.put("body", session_json);
-                    upload_json(obj, SERVER_IP, null);
-                } else {
-                    upload_json(session_json, SERVER_IP, null);
-
-
-                    //TODO: Delete file after receiving response from server?
-                    this.deleteFile(dataFileNames.get(i));
-
-                }
-            } catch (FileNotFoundException e) {
-                Log.e("dataUpload", "File not found: " + e.toString());
-            } catch (IOException e) {
-                Log.e("dataUpload", "Can not read file: " + e.toString());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-        //mSocket.disconnect();
-
-        if (file != null) {
-            try {
-                file.close(); //close file once done
-            } catch (FileNotFoundException e) {
-                Log.e("dataUpload", "File not found: " + e.toString());
-            } catch (IOException e) {
-                Log.e("dataUpload", "Can not read file: " + e.toString());
-            }
-        }
-        Log.i("dataUpload", "Data upload complete");
-    }
-}
-*/
