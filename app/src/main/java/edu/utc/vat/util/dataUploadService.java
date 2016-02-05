@@ -338,7 +338,6 @@ public class dataUploadService extends IntentService {
             if(num <=  nameNumber){
                 num = nameNumber + 1;
             }
-
         }
         String filename = num +".json";
         FileOutputStream outputStream;
