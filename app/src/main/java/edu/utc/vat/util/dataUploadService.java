@@ -130,16 +130,17 @@ public class dataUploadService extends IntentService {
         return; //End service
     }
 
+   public void socketConnect(String destination) {
+       try {
+           mSocket = IO.socket(destination);
+           mSocket.connect();
+       } catch (URISyntaxException e) {
+       }
+   }
 
     //Uploads json via Socket.io ti specified destination
-    public void upload_json(JSONObject json, String destination, Handler mHandler) {
+    public void upload_json(JSONObject json, Handler mHandler) {
         Log.d(LOG_NAME, "JSON being uploaded: " + json.toString());
-
-        try {
-            mSocket = IO.socket(destination);
-            mSocket.connect();
-        } catch (URISyntaxException e) {
-        }
 
         //Send json object
         mSocket.emit("data", json);
@@ -311,9 +312,10 @@ public class dataUploadService extends IntentService {
                 }
                 obj.put("body", body);
 
-                if (isNetwork())
-                    //upload_json(obj, SERVER_IP, null);
-                    saveData(obj + "");
+                if (isNetwork()) {
+                    socketConnect(SERVER_IP);
+                    upload_json(obj, null);
+                }
                 else
                     saveData(obj + "");
 
@@ -325,10 +327,15 @@ public class dataUploadService extends IntentService {
                 e.printStackTrace();
             }
         }
+
+        if(isNetwork()) {
+            socketConnect(SERVER_IP);
+            uploadFiles();//upload any remaining files
+        }
     }
 
-    //if(isNetwork())
-    // uploadFiles();
+
+
 
     //Saves string input to file. The file name is generated using numbers to keep track of existing files
     private void saveData(String data) {
@@ -365,7 +372,7 @@ public class dataUploadService extends IntentService {
 
                 if(fileStr != null) {
                     obj = new JSONObject(fileStr);
-                    upload_json(obj, SERVER_IP, null);
+                    upload_json(obj, null);
                 }
 
                 context.deleteFile(fileNames.get(r)); //delete uploaded file TODO: delete after confirmation from server?
@@ -375,6 +382,7 @@ public class dataUploadService extends IntentService {
 
 
         }
+        mSocket.disconnect(); //disconnect when finished uploading
 
     }
 
