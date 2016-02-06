@@ -33,7 +33,7 @@
         android:typeface="sans"
         android:visibility="visible"
         android:textStyle="bold"
-        android:foreground="#d64177a5"
+        android:background="#d64177a5"
         android:textAlignment="center"
         android:paddingRight="15dp"
         android:paddingLeft="15dp"
@@ -42,7 +42,8 @@
         android:layout_alignEnd="@+id/MainMenuButton1"
         android:layout_alignTop="@+id/imageView"
         android:layout_toEndOf="@+id/imageView"
-        android:layout_toRightOf="@+id/imageView" />
+        android:layout_toRightOf="@+id/imageView"
+        android:gravity="center_vertical" />
 
     <Button
         android:paddingTop="6dp"

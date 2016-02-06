@@ -13,7 +13,7 @@
         android:typeface="sans"
         android:visibility="visible"
         android:textStyle="bold"
-        android:foreground="#d64177a5"
+        android:background="#d64177a5"
         android:layout_gravity="center"
         android:gravity="center|center_vertical|center_horizontal" />
 
