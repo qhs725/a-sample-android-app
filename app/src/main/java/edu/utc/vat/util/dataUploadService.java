@@ -376,7 +376,7 @@ public class dataUploadService extends IntentService {
                     Thread.sleep(500);//slight delay between files. Only 1 at most gets through without this
                 }
 
-             //   context.deleteFile(fileNames.get(r)); //delete uploaded file TODO: delete after confirmation from server?
+                context.deleteFile(fileNames.get(r)); //delete uploaded file TODO: delete after confirmation from server?
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
