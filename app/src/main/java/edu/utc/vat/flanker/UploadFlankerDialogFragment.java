@@ -22,10 +22,15 @@ import android.util.Log;
 
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import edu.utc.vat.BlueMixApplication;
 import edu.utc.vat.CallNative;
 import edu.utc.vat.R;
 import edu.utc.vat.TestingActivity;
-import edu.utc.vat.dataUploadService;
+import edu.utc.vat.UserAccount;
+import edu.utc.vat.util.dataUploadService;
 
 public class UploadFlankerDialogFragment extends DialogFragment {
 
@@ -44,17 +49,13 @@ public class UploadFlankerDialogFragment extends DialogFragment {
         builder.setMessage(R.string.dialog_upload_exercise_data)
                 .setPositiveButton(R.string.dialog_upload, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        if (TestingActivity.getisNetwork()) {
-                            Log.i("UPLOAD", "Calling PackageData");
-                            //Start background service to upload
-                            getActivity().startService(new Intent(getActivity(), dataUploadService.class));
-                            new UpdateTask().execute();
-                            Toast.makeText(context, "Uploading...", Toast.LENGTH_LONG);
-                            ((FlankerResultsActivity) context).finish();
-                        } else {
-                            Toast.makeText(context, "No network connection available", Toast.LENGTH_LONG).show();
-                            ((FlankerResultsActivity) context).finish();
-                        }
+                        Log.i("UPLOAD", "Calling PackageData");
+
+                        //Start upload service
+                        getActivity().startService(new Intent(getActivity(), dataUploadService.class));
+
+                        Toast.makeText(context.getApplicationContext(), "Uploading...", Toast.LENGTH_LONG);
+                        ((FlankerResultsActivity) context).finish();
                     }
                 })
                 .setNegativeButton(R.string.dialog_discard, new DialogInterface.OnClickListener() {
@@ -64,23 +65,4 @@ public class UploadFlankerDialogFragment extends DialogFragment {
                 });
         return builder.create();
     }
-
-    private class UpdateTask extends AsyncTask<Void, Void, Boolean> {
-
-        protected Void onPreExecute(Void v) {
-            return null;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... v) {
-            String x = "1000";  //TODO: Does PackageData() still require an argument?
-            CallNative.PackageData(x);
-            return true;
-        }
-
-        protected void onPostExecute(Boolean b) {
-            //TODO: nothing
-        }
-    }
-
 }

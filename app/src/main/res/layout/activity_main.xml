@@ -1,3 +1,8 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
@@ -28,7 +33,7 @@
         android:typeface="sans"
         android:visibility="visible"
         android:textStyle="bold"
-        android:foreground="#d64177a5"
+        android:background="#d64177a5"
         android:textAlignment="center"
         android:paddingRight="15dp"
         android:paddingLeft="15dp"
@@ -37,7 +42,8 @@
         android:layout_alignEnd="@+id/MainMenuButton1"
         android:layout_alignTop="@+id/imageView"
         android:layout_toEndOf="@+id/imageView"
-        android:layout_toRightOf="@+id/imageView" />
+        android:layout_toRightOf="@+id/imageView"
+        android:gravity="center_vertical" />
 
     <Button
         android:paddingTop="6dp"
@@ -127,3 +133,4 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="31dp" />
 </RelativeLayout>
+    </ScrollView>

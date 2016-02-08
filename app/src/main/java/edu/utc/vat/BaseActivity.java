@@ -29,6 +29,7 @@ import com.ibm.mobile.services.push.IBMPush;
 import bolts.Continuation;
 import bolts.Task;
 import edu.utc.vat.forms.SportInjuryForm;
+import edu.utc.vat.util.dataUploadService;
 
 
 public class BaseActivity extends AppCompatActivity {
@@ -63,9 +64,11 @@ public class BaseActivity extends AppCompatActivity {
             case R.id.action_settings:
                 return true;
             case R.id.action_exercise:
-                intent = new Intent(this, SportInjuryForm.class);//Temporary position
-                startActivity(intent);
+                //intent = new Intent(this, SportInjuryForm.class);//Temporary position
+                //startActivity(intent);
 
+                Intent upload = new Intent(BlueMixApplication.getAppContext(), dataUploadService.class);
+                BlueMixApplication.getAppContext().startService(upload);
                 return true;
 
             case R.id.logout:
@@ -103,7 +106,7 @@ public class BaseActivity extends AppCompatActivity {
 
 
     /**
-     * Checks network availability
+     * Checks network availability and sets isNetwork
      * TODO: CHECK -- Are both of these necessary??
      */
     public boolean isNetworkAvailable() {
@@ -113,6 +116,8 @@ public class BaseActivity extends AppCompatActivity {
         isNetwork = activeNetworkInfo != null && activeNetworkInfo.isConnected();
         return isNetwork;
     }
+
+    //Allows retrieval of isNetwork from other classes
     public static boolean getisNetwork() {
         return BaseActivity.isNetwork;
     }

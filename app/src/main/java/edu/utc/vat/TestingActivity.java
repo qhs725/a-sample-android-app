@@ -43,6 +43,7 @@ import edu.utc.vat.flanker.FlankerActivity;
 import edu.utc.vat.flanker.FlankerResultsActivity;
 import edu.utc.vat.post.test.ViewDialogFragment;
 import edu.utc.vat.post.test.ViewResultsActivity;
+import edu.utc.vat.util.dataUploadService;
 
 
 public class TestingActivity extends BaseActivity implements View.OnClickListener {
@@ -171,7 +172,8 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
                         String id = UserAccount.getGoogleUserID();
 
-                        CallNative.PassID(sessionID + "," + id + "," + userInfo);
+
+                      CallNative.PassID(sessionID + "," + id + "," + userInfo); //TODO: deprecated
 
                         timer.countDown();
                         //Log.i("Testing", "Good--3");
@@ -374,7 +376,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                                     //Add uUserID to User Account
                                     UserAccount.setuUserID(uUserID);
                                     // initialize IBM Bluemix Mobile Cloud Services
-                                    blApplication.initializeBluemixServices();
+                                   // blApplication.initializeBluemixServices();
                                     Log.i(CLASS_NAME, "Done initializing IBM Bluemix Services");
                                     Log.i(CLASS_NAME, "Done refreshing Session list.");
                                     // retrieve instance of the IBM Push service

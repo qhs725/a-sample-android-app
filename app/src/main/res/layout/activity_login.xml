@@ -1,3 +1,8 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -36,13 +41,14 @@
             android:typeface="sans"
             android:visibility="visible"
             android:textStyle="bold"
-            android:foreground="#d64177a5"
+            android:background="#d64177a5"
             android:layout_alignTop="@+id/imageView"
             android:layout_toRightOf="@+id/imageView"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:textAlignment="center"
-            android:layout_above="@+id/get_google_token_button" />
+            android:layout_above="@+id/get_google_token_button"
+            android:gravity="center" />
 
         <com.google.android.gms.common.SignInButton
             android:id="@+id/get_google_token_button"
@@ -75,3 +81,4 @@
         android:tint="#d64177a5" />
 
 </LinearLayout>
+    </ScrollView>

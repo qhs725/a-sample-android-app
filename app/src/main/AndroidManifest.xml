@@ -48,7 +48,7 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:parentActivityName=".LoginActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".TestingActivity"
             android:label="@string/title_testing_activity"
@@ -77,13 +77,12 @@
                 android:value="edu.utc.vat.post.test.ViewResultsActivity" />
         </activity>
         <activity android:name=".util.GoogleTokenManager"></activity>
+
         <activity
             android:name=".flanker.FlankerActivity"
             android:label="title_flanker_activity"
-
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait">
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.utc.vat.flanker.FlankerActivity" />
@@ -118,13 +117,17 @@
         <!-- Push Settings End -->
 
         <service
-            android:name=".dataUploadService"
+            android:name=".util.dataUploadService"
             android:exported="false" />
 
         <activity
             android:name=".forms.SportInjuryForm"
             android:label="@string/title_activity_sport_injury_form"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".forms.RegistrationForm"
+            android:label="@string/title_activity_registration_form"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

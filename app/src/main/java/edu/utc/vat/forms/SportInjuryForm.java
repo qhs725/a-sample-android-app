@@ -20,24 +20,19 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import edu.utc.vat.BlueMixApplication;
 import edu.utc.vat.MainActivity;
 import edu.utc.vat.R;
-import edu.utc.vat.TestingActivity;
 import edu.utc.vat.UserAccount;
-import edu.utc.vat.dataUploadService;
-
-//TODO: remove extra toasts that are commented out.
+import edu.utc.vat.util.dataUploadService;
 
 //Builds form with 12 static questions and a loop of 4 Injury questions
 //Outputs JSON similar to webapp version of form
 public class SportInjuryForm extends AppCompatActivity {
 
     private Intent intent;
-    private static final String CLASS_NAME = "SportInjuryForm";
     private RadioGroup rGroup;
     private TextView formQuestion;
     private ArrayList<String> qArr = new ArrayList<>();
@@ -46,7 +41,7 @@ public class SportInjuryForm extends AppCompatActivity {
     private int radioButtonID;
     private View radioButton;
     private Button formNextBtn;
-    private int newInjury;
+    private int newInjury = 13;
     private int injuryCount = 0;
     private static JSONObject form_json = new JSONObject();
     private EditText custom_injury;
@@ -66,7 +61,8 @@ public class SportInjuryForm extends AppCompatActivity {
         setContentView(R.layout.activity_sports_form);
 
         try {
-            form_json.put("type", "Sports Fitness & Injury Form");
+            form_json.put("type", "form");
+            form_json.put("form_id", "SPORTSFITNESSINJURY");
             form_json.put("id", UserAccount.getGoogleUserID());
             form_json.put("arr[null]", 0); //forces keys from being in an array format.
         } catch (JSONException e) {
@@ -100,6 +96,7 @@ public class SportInjuryForm extends AppCompatActivity {
 
         setTitle("Sports Fitness and Injury Form - Part 1");
 
+        //handles next and submit button click, gathers answers in json, and calls function to change to next question
         findViewById(R.id.formNextBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,14 +108,14 @@ public class SportInjuryForm extends AppCompatActivity {
                         e.printStackTrace();
                     }
 
-                    Intent upload = new Intent(getApplication(), dataUploadService.class);
-                    upload.putExtra("jsonObject", form_json.toString());
+                    Intent upload = new Intent(BlueMixApplication.getAppContext(), dataUploadService.class);
+                    upload.putExtra("formData", form_json.toString());
 
 
-                    getApplication().startService(upload);
+                    BlueMixApplication.getAppContext().startService(upload);
                     Toast.makeText(BlueMixApplication.getAppContext(), "Submitting...", Toast.LENGTH_LONG).show();
 
-                    intent = new Intent(getApplication(), MainActivity.class);
+                    intent = new Intent(BlueMixApplication.getAppContext(), MainActivity.class);
                     startActivity(intent);
                 }
                 if (formNextBtn.getText().toString().equals("Next")) {
@@ -130,7 +127,7 @@ public class SportInjuryForm extends AppCompatActivity {
                             radioButtonID = rGroup.getCheckedRadioButtonId();
                             radioButton = rGroup.findViewById(radioButtonID);
 
-                            int ans = rGroup.indexOfChild(radioButton);
+                            int ans = index+1 == 12 ?rGroup.indexOfChild(radioButton) : rGroup.indexOfChild(radioButton) + 1;
                             //get index of answer to store in database (can change to text if necessary)
 
                             try {
@@ -175,15 +172,11 @@ public class SportInjuryForm extends AppCompatActivity {
                             }
 
                             if (index == newInjury) {
-                                //Toast.makeText(BlueMixApplication.getAppContext(), "New Injury: " + index, Toast.LENGTH_LONG).show();
-
                                 injuryCount++;
                                 changeToLocation();
                             } else if (index == newInjury + 1) { //On Location
-                               //Toast.makeText(BlueMixApplication.getAppContext(), "Location: " + index, Toast.LENGTH_LONG).show();
                                 changeToType();
                             } else if (index == newInjury + 2) {//On Injury Type
-                                //Toast.makeText(BlueMixApplication.getAppContext(), "Type: " + index, Toast.LENGTH_LONG).show();
                                 String custom_ans;
                                 try {
                                     if (ans == 6) {
@@ -202,7 +195,6 @@ public class SportInjuryForm extends AppCompatActivity {
 
                                 changeToTimeLost();
                             } else if (index == newInjury + 3) {//On Time Lost
-                                //Toast.makeText(BlueMixApplication.getAppContext(), "Time: " + index, Toast.LENGTH_LONG).show();
                                 newInjury = newInjury + 4;//update index for next injury
                                 isInjury(1); //Ask if there is another injury
                             }
@@ -235,15 +227,6 @@ public class SportInjuryForm extends AppCompatActivity {
                     }
 
                 }
-            }
-        });
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
             }
         });
     }

@@ -25,7 +25,7 @@ import android.widget.Toast;
 import edu.utc.vat.CallNative;
 import edu.utc.vat.R;
 import edu.utc.vat.TestingActivity;
-import edu.utc.vat.dataUploadService;
+import edu.utc.vat.util.dataUploadService;
 
 
 public class UploadDataDialogFragment extends DialogFragment {
@@ -44,46 +44,15 @@ public class UploadDataDialogFragment extends DialogFragment {
         builder.setMessage(R.string.dialog_upload_exercise_data)
                 .setPositiveButton(R.string.dialog_upload, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        if (TestingActivity.getisNetwork()) {
-                            Log.i("UPLOAD", "Calling PackageData");
-
-                            //Start background service to upload
-                            getActivity().startService(new Intent(getActivity(), dataUploadService.class));
-
-                            new UpdateTask().execute();
-                            Toast.makeText(context, "Uploading...", Toast.LENGTH_LONG);
-                        } else {
-                            Toast.makeText(context, "No network connection available", Toast.LENGTH_LONG).show();
-                        }
+                        //Start background service to upload
+                        getActivity().startService(new Intent(getActivity(), dataUploadService.class));
                     }
                 })
                 .setNegativeButton(R.string.dialog_discard, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        //TODO: nothing
+                        //Do nothing
                     }
                 });
         return builder.create();
     }
-
-    private class UpdateTask extends AsyncTask<Void, Void, Boolean> {
-
-        protected Void onPreExecute(Void v) {
-
-            return null;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... v) {
-
-            String x = "1000";
-            CallNative.PackageData(x);
-            return true;
-        }
-
-        protected void onPostExecute(Boolean b) {
-            //TODO: something that will work if TestingActivity has been destroyed?
-
-        }
-    }
-
 }

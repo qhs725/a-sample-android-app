@@ -8,10 +8,13 @@ public class UserAccount {
 
 	private static String idToken = null;
 	private static String GoogleUserID = null;
+	private static String givenName = null;
+	private static String familyName = null;
 	private static String userName = null;
 	private static String userEmail = null;
 	private static String userPicture = null;
 	private static String accessToken = null;
+	//uUserID is IBM Bluemix unique user id. TODO: may be deprecated
 	private static String uUserID = null;
 	private static String sessionID = null;
 	private static String sessionInfo = null;
@@ -33,6 +36,18 @@ public class UserAccount {
 	}
 	public static void setName(String userName) {
 		UserAccount.userName = userName;
+	}
+	public static String getGivenName() {
+		return givenName;
+	}
+	public static void setGivenName(String givenName) {
+		UserAccount.givenName = givenName;
+	}
+	public static String getFamilyName() {
+		return familyName;
+	}
+	public static void setFamilyName(String familyName) {
+		UserAccount.familyName = familyName;
 	}
 	public static String getEmail() {
 		return userEmail;
