@@ -53,7 +53,7 @@ import edu.utc.vat.UserAccount;
 
 public class dataUploadService extends IntentService {
 
-    public static final String LOG_NAME = "Session";
+    public static final String LOG_NAME = "Upload";
     private static Context context = BlueMixApplication.getAppContext();
     private static final String EXT = "dat";
 
@@ -84,17 +84,6 @@ public class dataUploadService extends IntentService {
     protected void onHandleIntent(Intent workIntent) {
         //  android.os.Debug.waitForDebugger(); //For debugging only
 
-        /**Packaging
-        * TODO: ✓ 1. Search for all dat files in internal storage
-        * TODO: ✓ 2. Traverse files using first line for JSON keys and the rest as the values to them
-        * TODO: ✓ 3. If f.dat exists then package it up as a nested json object
-        * TODO: ✓ 4. Add Google User ID, Access Token, and any other needed data to the JSON object
-        * Uploading/Saving
-        * TODO: 5. Upload JSON if there is an internet connection, else save the file to internal storage in JSON format (can't be CSV)
-        * TODO: 5.1. give unique name to each file.
-        * TODO: 6. Delete .dat files
-        * TODO: 7. Look for remaining files if there is an Internet connection, delete on successful upload
-        */
 
         //Check if C++ has finished writing to files
         while (CallNative.CheckData() == false) {
@@ -130,6 +119,8 @@ public class dataUploadService extends IntentService {
         return; //End service
     }
 
+
+    //Opens socket connection to server
    public void socketConnect(String destination) {
        try {
            mSocket = IO.socket(destination);
@@ -138,7 +129,7 @@ public class dataUploadService extends IntentService {
        }
    }
 
-    //Uploads json via Socket.io ti specified destination
+    //Uploads json via Socket.io to the server specified in socketConnect()
     public void upload_json(JSONObject json, Handler mHandler) {
         Log.d(LOG_NAME, "JSON being uploaded: " + json.toString());
 
@@ -209,7 +200,7 @@ public class dataUploadService extends IntentService {
     //Retrieves list of names of dat files that exist in internal storage
     private ArrayList<String> getFilesNames(String ext, int namesOnly) {
         ArrayList<String> dataFileNames = new ArrayList<String>();
-        //Get files directory and get names of all files within
+
         File fileFinder = new File(context.getFilesDir() + "/");
         File list[] = fileFinder.listFiles();
 
@@ -232,7 +223,6 @@ public class dataUploadService extends IntentService {
     //Combines data files into JSON format
     private void packageData() {
 
-        //get list of dat files in internal storage
         ArrayList<String> fileNames = getFilesNames(EXT, 0);
 
         if(!fileNames.isEmpty()) {
@@ -254,7 +244,6 @@ public class dataUploadService extends IntentService {
                     InputStreamReader stream = new InputStreamReader(file);
                     reader = new BufferedReader(stream);
 
-                    //Get first line to determine key names to sort data before adding it to the JSON Object.
                     if ((lineRow = reader.readLine()) != null) {
                         keyNames = lineRow.split(",");
                         numColumns = keyNames.length;
@@ -287,7 +276,7 @@ public class dataUploadService extends IntentService {
                         }
                     }
 
-                    //Added each column to the Session object
+                    //Added each column to the JSON object(s)
                     for (int t = 0; t < numColumns; t++) {
                         List data = group.get(t);
                         if (fileNames.get(i).equals("f.dat")) {
@@ -382,8 +371,6 @@ public class dataUploadService extends IntentService {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-
         }
         mSocket.disconnect(); //disconnect when finished uploading
 
@@ -432,7 +419,7 @@ public class dataUploadService extends IntentService {
     }
 
 
-    //Adds user json object whith important info to main obj json
+    //Adds user json object with important info to main obj json
     private void getUserJSON() throws JSONException {
         String given_name = UserAccount.getGivenName() != null ? UserAccount.getGivenName() : "null";
         String family_name = UserAccount.getFamilyName() != null ? UserAccount.getFamilyName() : "null";
