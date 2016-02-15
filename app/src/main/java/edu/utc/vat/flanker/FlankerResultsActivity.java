@@ -88,8 +88,8 @@ public class FlankerResultsActivity extends TestingActivity implements View.OnCl
     @Override
     public void onBackPressed() {
         DialogFragment uploadData = new UploadFlankerDialogFragment();
-        uploadData.show(getFragmentManager(), "uploadData");
         CallNative.SetFlankerFlag(false);
+        uploadData.show(getFragmentManager(), "uploadData");
     }
 
     @Override

@@ -245,7 +245,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     public void onDestroy() {
         resetButton.performClick();
         if (CallNative.FlankerCheck())
-            launchViewer();
+            launchViewerF();
         super.onDestroy();
     }
 
@@ -314,9 +314,15 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         return new Intent(context, TestingActivity.class);
     }
 
-    public void launchViewer() {
+    public void launchViewerF() {
         Log.i("TESTING","launching viewer activity");
         startActivity(new Intent(this, FlankerResultsActivity.class));
+        Log.i("TESTING","launched viewer activity");
+    }
+
+    public void launchViewer() {
+        Log.i("TESTING","launching viewer activity");
+        startActivity(new Intent(this, ViewResultsActivity.class));
         Log.i("TESTING","launched viewer activity");
     }
 
