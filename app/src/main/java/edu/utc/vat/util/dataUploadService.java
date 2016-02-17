@@ -304,6 +304,7 @@ public class dataUploadService extends IntentService {
                 if (isNetwork()) {
                     socketConnect(SERVER_IP);
                     upload_json(obj, null);
+                    Thread.sleep(500);
                 }
                 else
                     saveData(obj + "");
@@ -313,6 +314,8 @@ public class dataUploadService extends IntentService {
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
