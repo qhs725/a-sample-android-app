@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.chart.PointStyle;
@@ -37,6 +38,8 @@ public class FlankerResultsActivity extends TestingActivity implements View.OnCl
     private static final int PF2 = 1;
     private static final int DEFAULT = 0;
     private static int STATE = DEFAULT;
+
+    private Toast newToast;
 
     private double T = 0.;
     private double yMax = 0., yMin = 0.;
@@ -196,7 +199,7 @@ public class FlankerResultsActivity extends TestingActivity implements View.OnCl
         Log.i("FlankerView","Flanker count "+ct);
         responseTime = responseTime/1.0e6;
         responseTime = responseTime/((double)responses[0]);
-        Log.i("FlankerView","Flanker time "+responseTime);
+        Log.i("FlankerView","Flanker time " + responseTime);
 
         //TODO: READ FLANKER DATA AND COMPUTE METRICS TO DISPLAY
 
@@ -206,6 +209,7 @@ public class FlankerResultsActivity extends TestingActivity implements View.OnCl
 
     private void openChart() {
         Log.i("FlankerResults","calling openChart");
+        showToast("Average response time " + responseTime);
         String[] code = new String[] {
                 "Correct", "Incorrect" , "No Response"
         };
@@ -239,6 +243,7 @@ public class FlankerResultsActivity extends TestingActivity implements View.OnCl
     }
 
     private void openPlot() {
+        showToast("Average response time " + responseTime);
         Log.i("FlankerResults","calling openPlot");
         XYMultipleSeriesDataset data = new XYMultipleSeriesDataset();
         data.addSeries(xSeries);
@@ -309,6 +314,14 @@ public class FlankerResultsActivity extends TestingActivity implements View.OnCl
         double yd = (double) y;
         double zd = (double) z;
         return Math.min(xd, Math.min(yd, zd));
+    }
+
+    void showToast(String message) {
+        if (newToast != null) {
+            newToast.cancel();
+        }
+        newToast = Toast.makeText(this, message, Toast.LENGTH_LONG);
+        newToast.show();
     }
 
 }

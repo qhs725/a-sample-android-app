@@ -62,7 +62,7 @@ namespace sh {
             bool _r;
             bool _l;
             bool _ts;
-            const float FT = 1.0f;
+            const float FT = 0.5f;
 
         private:
             bool sOn;
