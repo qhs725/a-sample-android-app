@@ -472,10 +472,14 @@ public class GoogleTokenManager extends LoadingActivity {
                 String id = token_json.getString("sub");
                 token_json = new JSONObject();
                 token_json.put("id", id);
+                token_json.put("access_token", googleAccessToken);
+                token_json.put("id_token", idToken);
+
+                Log.e("CHECK_TOKEN: ", token);
 
                 DefaultHttpClient httpclient = new DefaultHttpClient();
                 HttpPost post = new HttpPost("http://utc-vat.mybluemix.net/users/check");
-
+                post.addHeader( "access_token" , googleAccessToken );
 
                 StringEntity se = new StringEntity(token_json.toString());
                 se.setContentType("application/json;charset=UTF-8");
@@ -496,8 +500,10 @@ public class GoogleTokenManager extends LoadingActivity {
                 }
                 //get the string version of the response data
                 body = new JSONObject(sb.toString());
+
+
                 userExists = body.getInt("check") == 1 ? true : false;
-                Log.e("CHECK: ", body.getInt("check") + "");
+                Log.e("CHECK: ", body.getString("access"));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             } catch (ClientProtocolException e) {
