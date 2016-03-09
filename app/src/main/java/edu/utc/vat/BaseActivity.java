@@ -29,6 +29,7 @@ import com.ibm.mobile.services.push.IBMPush;
 import bolts.Continuation;
 import bolts.Task;
 import edu.utc.vat.forms.SportInjuryForm;
+import edu.utc.vat.util.DBHelper;
 import edu.utc.vat.util.dataUploadService;
 
 
@@ -40,6 +41,7 @@ public class BaseActivity extends AppCompatActivity {
     public String deviceAlias = "VAT_user_device";
     public String consumerID = "utc-vat-app";
     private static boolean isNetwork;
+    private DBHelper db =  new DBHelper(BlueMixApplication.getAppContext());
 
     private Toast newToast;
 
@@ -74,6 +76,7 @@ public class BaseActivity extends AppCompatActivity {
             case R.id.logout:
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
+                db.deleteActiveUser();
                 IBMBluemix.clearSecurityToken().continueWith(
                         new Continuation<IBMCurrentUser, Void>() {
                             @Override

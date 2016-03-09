@@ -9,7 +9,7 @@ import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -49,7 +49,6 @@ import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.Properties;
 
-import edu.utc.vat.BaseActivity;
 import edu.utc.vat.BlueMixApplication;
 import edu.utc.vat.LoginActivity;
 import edu.utc.vat.LoadingActivity;
@@ -105,12 +104,16 @@ public class GoogleTokenManager extends LoadingActivity {
     private String email = null;
     private String picture = null;
     private String id = null;
-    private boolean newUser;
-    private DBHelper db ;
+    private boolean newUser = true;
+    private DBHelper db;
+    private int action;
+    private Cursor activeUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle extras = getIntent().getExtras();
         try {
             BlueMixApplication blApplication = (BlueMixApplication) getApplication();
             Properties appSettings = blApplication.getApplicationSettings();
@@ -123,7 +126,17 @@ public class GoogleTokenManager extends LoadingActivity {
         }
         Log.i(CLASS_NAME, "Android Application Client ID is: " + androidAppClientIdValue);
         Log.i(CLASS_NAME, "Web Application Client ID is: " + webAppClientIdValue);
-        login();
+
+
+        //TODO: if extra action is == 1 then attempt to validate user on the server using access token from ACTIVEUSRE table. If there is no Internet connection then login with saved user data.
+        //TODO: if action == 0 then run the default login process.
+        action = extras.getInt("action");
+        if(extras.getInt("action") == 1){
+            new GetTokenTask().execute();
+        }
+        else if (extras.getInt("action") == 0) {
+            login();
+        }
     }
 
     protected void onStart() {
@@ -212,59 +225,70 @@ public class GoogleTokenManager extends LoadingActivity {
         protected String doInBackground(Void... params) {
             // if the user has not selected an account then
             // do nothing.
-            if (accountId == null)
+            if (accountId == null && action == 0)
                 return null;
 
-            try {
-                Log.i(CLASS_NAME_2, "Web Application Client ID read in: " + webAppClientIdValue);
+            if(isNetwork() && action == 0) {
+                try {
+                    Log.i(CLASS_NAME_2, "Web Application Client ID read in: " + webAppClientIdValue);
 
-                // USE THIS SCOPE TO GET THE ID_TOKEN
-                String clientIdScope = "audience:server:client_id:" + webAppClientIdValue;
+                    // USE THIS SCOPE TO GET THE ID_TOKEN
+                    String clientIdScope = "audience:server:client_id:" + webAppClientIdValue;
 
-                Log.i(CLASS_NAME_2, "client ID Scope: " + clientIdScope);
+                    Log.i(CLASS_NAME_2, "client ID Scope: " + clientIdScope);
 
-                // USE THIS SCOPE TO GET THE ACCESS_TOKEN
-                String oAuthScopes = "oauth2:";
-                oAuthScopes += " https://www.googleapis.com/auth/userinfo.profile";
-                oAuthScopes += " https://www.googleapis.com/auth/userinfo.email";
-                oAuthScopes += " https://www.googleapis.com/auth/plus.login";
-                idToken = GoogleAuthUtil.getToken(getApplicationContext(), accountId, clientIdScope);
+                    // USE THIS SCOPE TO GET THE ACCESS_TOKEN
+                    String oAuthScopes = "oauth2:";
+                    oAuthScopes += " https://www.googleapis.com/auth/userinfo.profile";
+                    oAuthScopes += " https://www.googleapis.com/auth/userinfo.email";
+                    oAuthScopes += " https://www.googleapis.com/auth/plus.login";
+                    idToken = GoogleAuthUtil.getToken(getApplicationContext(), accountId, clientIdScope);
 
-                Log.i(CLASS_NAME_2, "OAUTH Scope: " + oAuthScopes);
-                Log.i(CLASS_NAME_2, "Google ID Token: \n" + idToken);
-                googleAccessToken = GoogleAuthUtil.getToken(getApplicationContext(), accountId, oAuthScopes);
-                Log.i(CLASS_NAME_2, "Google Access Token: \n" + googleAccessToken);
+                    Log.i(CLASS_NAME_2, "OAUTH Scope: " + oAuthScopes);
+                    Log.i(CLASS_NAME_2, "Google ID Token: \n" + idToken);
+                    googleAccessToken = GoogleAuthUtil.getToken(getApplicationContext(), accountId, oAuthScopes);
+                    Log.i(CLASS_NAME_2, "Google Access Token: \n" + googleAccessToken);
 
-            } catch (UserRecoverableAuthException userAuthEx) {
-                // Launch the intent to open the UI dialog for resolving the error (e.g. enter correct password)
-                // The result (success / failure in case the user hit the Cancel button) is returned in onActivityResult()
-                startActivityForResult(
-                        userAuthEx.getIntent(),
-                        AUTH_REQUEST_CODE);
+                } catch (UserRecoverableAuthException userAuthEx) {
+                    // Launch the intent to open the UI dialog for resolving the error (e.g. enter correct password)
+                    // The result (success / failure in case the user hit the Cancel button) is returned in onActivityResult()
+                    startActivityForResult(
+                            userAuthEx.getIntent(),
+                            AUTH_REQUEST_CODE);
 
-            } catch (IOException e) {
-                Log.e(CLASS_NAME_2, e.getMessage());
-                e.printStackTrace();
-            } catch (GoogleAuthException e) {
-                Log.e("GetTokenTask", "A GoogleAuthException occurred. Please check your account credentials. "
-                        + "Check for any extra trailing whitespace in any properties files, remove them. "
-                        + "Ensure your device's debug keystore SHA-1 fingerprint is configured for your 'Client ID for Android application' ");
-                Log.e(CLASS_NAME_2, "GoogleAuthException " + e.getStackTrace()[0]);
-                e.printStackTrace();
-            } catch (Exception e) {
-                Log.e(CLASS_NAME_2, "General exception occured while trying to acquire Google Auth or ID Token.");
-                e.printStackTrace();
+                } catch (IOException e) {
+                    Log.e(CLASS_NAME_2, e.getMessage());
+                    e.printStackTrace();
+                } catch (GoogleAuthException e) {
+                    Log.e("GetTokenTask", "A GoogleAuthException occurred. Please check your account credentials. "
+                            + "Check for any extra trailing whitespace in any properties files, remove them. "
+                            + "Ensure your device's debug keystore SHA-1 fingerprint is configured for your 'Client ID for Android application' ");
+                    Log.e(CLASS_NAME_2, "GoogleAuthException " + e.getStackTrace()[0]);
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    Log.e(CLASS_NAME_2, "General exception occured while trying to acquire Google Auth or ID Token.");
+                    e.printStackTrace();
+                }
+            }
+            else if(action == 1){
+                db = new DBHelper(BlueMixApplication.getAppContext()); //init db
+                activeUser = db.getActiveUser();
+                activeUser.moveToFirst();
+
+                googleAccessToken = activeUser.getString(activeUser.getColumnIndexOrThrow("access_token"));
+                idToken = activeUser.getString(activeUser.getColumnIndexOrThrow("id_token"));
             }
 
+            getUserInfo();
             // get some useful information about the currently selected user
             // we will populate the Blue List form with these details later
-            getAccountDetails(googleAccessToken);
+           // getAccountDetails(googleAccessToken);
 
-            if (!validateToken(idToken, true)) {
-                return null;
-            }
+
+            //if (!validateToken(idToken, true)) {return null; }
             return idToken;
         }
+
 
         private boolean validateToken(String token, boolean production) {
             String details = null;
@@ -314,7 +338,7 @@ public class GoogleTokenManager extends LoadingActivity {
                 // ***************************************************************************
                 if (idToken.getPayload().getEmailVerified() != null &&
                         idToken.getPayload().getEmailVerified()) {
-                    Log.d(CLASS_NAME_2, "email_verified is TRUE");   /* SAFE */
+                    Log.d(CLASS_NAME_2, "email_verified is TRUE");
                 } else {
                     Log.d(CLASS_NAME_2, "Invalid token - email_verified is FALSE");
                     googleTokenFailedVerification = true;
@@ -341,13 +365,9 @@ public class GoogleTokenManager extends LoadingActivity {
                 e.printStackTrace();
             }
 
-            ConnectivityManager connectivityManager
-                    = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-            boolean isNetwork = activeNetworkInfo != null && activeNetworkInfo.isConnected();
 
-            if (isNetwork) {
-                newUser = getUserInfo(details);
+            if (isNetwork()) {
+                getUserInfo();
                 Log.e(CLASS_NAME, "NEW USER CHECK: " + newUser);
             }
             return details;
@@ -358,26 +378,31 @@ public class GoogleTokenManager extends LoadingActivity {
         private String validateTokenForTesting(String token) {
             String details = token;
 
+            if(action ==1 && !isNetwork())
+                details = idToken;
+
             try {
-                // use this url to get details from  id_token
-                URL url = new URL("https://www.googleapis.com/oauth2/v1/tokeninfo?alt=json&id_token=" + token);
+                if(isNetwork()) {
+                    // use this url to get details from  id_token
+                    URL url = new URL("https://www.googleapis.com/oauth2/v1/tokeninfo?alt=json&id_token=" + token);
 
-                HttpClient httpClient = new DefaultHttpClient();
-                HttpGet pageGet = new HttpGet(url.toURI());
-                org.apache.http.HttpResponse hResponse = httpClient.execute(pageGet);
+                    HttpClient httpClient = new DefaultHttpClient();
+                    HttpGet pageGet = new HttpGet(url.toURI());
+                    org.apache.http.HttpResponse hResponse = httpClient.execute(pageGet);
 
-                InputStreamReader isr = new InputStreamReader(
-                        hResponse.getEntity().getContent());
-                //read in the data from input stream, this can be done a variety of ways
-                BufferedReader reader = new BufferedReader(isr);
-                StringBuilder sb = new StringBuilder();
-                String line = "";
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line + "\n");
+                    InputStreamReader isr = new InputStreamReader(
+                            hResponse.getEntity().getContent());
+                    //read in the data from input stream, this can be done a variety of ways
+                    BufferedReader reader = new BufferedReader(isr);
+                    StringBuilder sb = new StringBuilder();
+                    String line = "";
+                    while ((line = reader.readLine()) != null) {
+                        sb.append(line + "\n");
+                    }
+                    //get the string version of the response data
+                    details = sb.toString();
+                    Log.d(CLASS_NAME_2, "ID Token details:\n" + details);
                 }
-                //get the string version of the response data
-                details = sb.toString();
-                Log.d(CLASS_NAME_2, "ID Token details:\n" + details);
 
             } catch (IOException e) {
                 System.out.println(e.toString());
@@ -388,32 +413,37 @@ public class GoogleTokenManager extends LoadingActivity {
             return details;
         }
 
+
         // Google recommends this form of validation for development purposes only
         // but might be good enough for client side verification of ACCESS_TOKEN or ID_TOKEN
         private String getAccountDetails(String accessToken) {
             String details = accessToken;
 
+            if(!isNetwork() && action == 1)
+                details = idToken;
+
             try {
 
-                // use this url to get details from access_token
-                URL url = new URL("https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + accessToken);
+                if(isNetwork()) {
+                    // use this url to get details from access_token
+                    URL url = new URL("https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + accessToken);
 
-                HttpClient httpClient = new DefaultHttpClient();
-                HttpGet pageGet = new HttpGet(url.toURI());
-                org.apache.http.HttpResponse hResponse = httpClient.execute(pageGet);
+                    HttpClient httpClient = new DefaultHttpClient();
+                    HttpGet pageGet = new HttpGet(url.toURI());
+                    org.apache.http.HttpResponse hResponse = httpClient.execute(pageGet);
 
-                InputStreamReader isr = new InputStreamReader(
-                        hResponse.getEntity().getContent());
-                //read in the data from input stream, this can be done a variety of ways
-                BufferedReader reader = new BufferedReader(isr);
-                StringBuilder sb = new StringBuilder();
-                String line = "";
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line + "\n");
-                }
-                //get the string version of the response data
-                details = sb.toString();
-                Log.d(CLASS_NAME_2, "Access Token details:" + details);
+                    InputStreamReader isr = new InputStreamReader(
+                            hResponse.getEntity().getContent());
+                    //read in the data from input stream, this can be done a variety of ways
+                    BufferedReader reader = new BufferedReader(isr);
+                    StringBuilder sb = new StringBuilder();
+                    String line = "";
+                    while ((line = reader.readLine()) != null) {
+                        sb.append(line + "\n");
+                    }
+                    //get the string version of the response data
+                    details = sb.toString();
+                    Log.d(CLASS_NAME_2, "Access Token details:" + details);
 
 	            /* convert string to json object so we can get at useful account details
 	            Details: {
@@ -429,6 +459,7 @@ public class GoogleTokenManager extends LoadingActivity {
 	            "locale": "en"
 	            }
 	            */
+                }
                 if (details != null) {
                     JSONObject jO = new JSONObject(details);
                     firstName = (String) jO.get("given_name");
@@ -465,59 +496,84 @@ public class GoogleTokenManager extends LoadingActivity {
         }
 
         //Retrieves user info from server including a JSONObject with the user's access permissions
-        private boolean getUserInfo(String token) {
+        private void getUserInfo() {
 
                 HttpResponse httpresponse;
-                boolean userExists = false;
+                //boolean userExists = false;
                 JSONObject body;
 
             try {
                 //Get id from sub key in initial token and only send that to server
-                JSONObject token_json = new JSONObject(token);
-                String id = token_json.getString("sub");
+                JSONObject token_json = new JSONObject();
+
                 token_json = new JSONObject();
-                token_json.put("id", id);
+                //token_json.put("id", id);
                 token_json.put("access_token", googleAccessToken);
                 token_json.put("id_token", idToken);
 
-                Log.e("CHECK_TOKEN: ", token);
+               // Log.e("CHECK_TOKEN: ", token);
 
-                DefaultHttpClient httpclient = new DefaultHttpClient();
-                HttpPost post = new HttpPost("http://utc-vat.mybluemix.net/users/check");
-                post.addHeader( "access_token" , googleAccessToken );
+                if(isNetwork()) {
+                    DefaultHttpClient httpclient = new DefaultHttpClient();
+                    HttpPost post = new HttpPost("http://utc-vat.mybluemix.net/users/check");
+                    post.addHeader("access_token", googleAccessToken);
 
-                StringEntity se = new StringEntity(token_json.toString());
-                se.setContentType("application/json;charset=UTF-8");
-                se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json;charset=UTF-8"));
+                    StringEntity se = new StringEntity(token_json.toString());
+                    se.setContentType("application/json;charset=UTF-8");
+                    se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json;charset=UTF-8"));
 
-                post.setEntity(se);
+                    post.setEntity(se);
 
-                //Retrieve server response
-                httpresponse = httpclient.execute(post);
+                    //Retrieve server response
+                    httpresponse = httpclient.execute(post);
 
-                InputStreamReader isr = new InputStreamReader(
-                        httpresponse.getEntity().getContent());
-                //read in the data from input stream, this can be done a variety of ways
-                BufferedReader reader = new BufferedReader(isr);
-                StringBuilder sb = new StringBuilder();
-                String line = "";
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line + "\n");
+                    InputStreamReader isr = new InputStreamReader(
+                            httpresponse.getEntity().getContent());
+                    //read in the data from input stream, this can be done a variety of ways
+                    BufferedReader reader = new BufferedReader(isr);
+                    StringBuilder sb = new StringBuilder();
+                    String line = "";
+                    while ((line = reader.readLine()) != null) {
+                        sb.append(line + "\n");
+                    }
+                    //get the string version of the response data
+                    body = new JSONObject(sb.toString());
+
+                    newUser = body.getBoolean("check");
+                    Log.d("ACCESS: ", body.getString("user")); //for dev use only
+
+                    //prepare access object
+                    if (body.has("user")) {
+                        JSONObject user = new JSONObject(body.getString("user"));
+                        JSONArray access_admin = user.has("Admin") ? user.getJSONArray("Admin") : null;
+                        JSONArray access_admin_groups = user.has("GROUPS") ? user.getJSONArray("GROUPS") : null;
+                        JSONArray access_group = user.has("Groups") ? user.getJSONArray("Groups") : null;
+
+
+                        if (user.length() != 0) {
+                            firstName = (String) user.get("given_name");
+                            lastName = (String) user.get("family_name");
+                            email = (String) user.get("email");
+                            picture = (String) user.get("picture");
+                            id = (String) user.get("id");
+
+                            Log.i(CLASS_NAME, "Account received is: " + email);
+                            Log.i(CLASS_NAME, "First Name: " + firstName);
+                            Log.i(CLASS_NAME, "Last Name: " + lastName);
+                            Log.i(CLASS_NAME, "ID:  " + id);
+                        }
+                        
+                        
+                    }
                 }
-                //get the string version of the response data
-                body = new JSONObject(sb.toString());
+                else if(action == 1){
+                    newUser = false;
+                    id = activeUser.getString(activeUser.getColumnIndexOrThrow("id"));
+                    firstName = activeUser.getString(activeUser.getColumnIndexOrThrow("given_name"));
+                    lastName = activeUser.getString(activeUser.getColumnIndexOrThrow("family_name"));
+                    email = activeUser.getString(activeUser.getColumnIndexOrThrow("email"));
 
-                userExists = body.getInt("check") != 1;
-                Log.d("ACCESS: ", body.getString("access")); //for dev use only
-
-                //prepare access object
-                if(body.has("access")) {
-                    JSONObject access = new JSONObject(body.getString("access"));
-                    JSONArray access_admin = access.has("Admin") ? access.getJSONArray("Admin") : null;
-                    JSONArray access_admin_groups = access.has("GROUPS") ? access.getJSONArray("GROUPS") : null;
-                    JSONArray access_group = access.has("Groups") ? access.getJSONArray("Groups") : null;
                 }
-
 
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
@@ -528,7 +584,6 @@ public class GoogleTokenManager extends LoadingActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            return userExists;
         }
 
     }// GetToken class
@@ -562,7 +617,7 @@ public class GoogleTokenManager extends LoadingActivity {
 
 
             // Save/Update Active user to SQLite db
-            db.insertActiveUser(id, firstName, lastName, googleAccessToken, null);
+            db.insertActiveUser(id, firstName, lastName, email, googleAccessToken, null, idToken);
 
             if (newUser) {
                 intent = new Intent(context, RegistrationForm.class);
@@ -581,4 +636,17 @@ public class GoogleTokenManager extends LoadingActivity {
 
     }
 
+    //Returns true if there is a network connection
+    private boolean isNetwork() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+
+        Boolean isNetwork = activeNetworkInfo != null && activeNetworkInfo.isConnected();
+
+
+        return isNetwork;
+    }
 }
+
+

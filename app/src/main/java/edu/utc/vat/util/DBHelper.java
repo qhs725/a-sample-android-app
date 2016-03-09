@@ -20,8 +20,8 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "sipsdb";
     public static final String ACTIVE_USER_TABLE_NAME = "activeUser";
     public static final String ACTIVE_USER_COLUMN_ID = "id";
-    public static final String ACTIVE_USER_COLUMN_FIRST_NAME = "first_name";
-    public static final String ACTIVE_USER_COLUMN_LAST_NAME = "last_name";
+    public static final String ACTIVE_USER_COLUMN_FIRST_NAME = "given_name";
+    public static final String ACTIVE_USER_COLUMN_LAST_NAME = "family_name";
     public static final String ACTIVE_USER_COLUMN_ACCESS = "access_token";
     public static final String ACTIVE_USER_COLUMN_REFRESH = "refresh_token";
     private HashMap hp;
@@ -36,7 +36,7 @@ public class DBHelper extends SQLiteOpenHelper {
         // TODO Auto-generated method stub
         db.execSQL(
                 "create table IF NOT EXISTS activeUser " +
-                        "(Lock char(1) not null DEFAULT 'X', id VARCHAR, first_name text,last_name text, access_token text, refresh_token text, \n" +
+                        "(Lock char(1) not null DEFAULT 'X', id VARCHAR, given_name text, family_name text, email text, access_token text, refresh_token text, id_token text," +
                         " constraint PK_ACTIVEUSER PRIMARY KEY (Lock),constraint CK_ACTIVEUSER_Locked CHECK (Lock='X'))"
         );
 
@@ -58,21 +58,23 @@ public class DBHelper extends SQLiteOpenHelper {
      *
      */
 
-    public Cursor getActiveUser(int id){
+    public Cursor getActiveUser(){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from activeuser where id="+id+"", null );
+        Cursor res =  db.rawQuery( "select * from activeuser", null );
         return res;
     }
 
-    public boolean insertActiveUser (String id, String first_name, String last_name, String access_token, String refresh_token)
+    public boolean insertActiveUser (String id, String given_name, String family_name, String email, String access_token, String refresh_token, String id_token)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("id", id);
-        contentValues.put("first_name", first_name);
-        contentValues.put("last_name", last_name);
+        contentValues.put("given_name", given_name);
+        contentValues.put("family_name", family_name);
+        contentValues.put("email", email);
         contentValues.put("access_token", access_token);
         contentValues.put("refresh_token", refresh_token);
+        contentValues.put("id_token", id_token);
 
         int check = (int) db.insertWithOnConflict("activeuser", null, contentValues, SQLiteDatabase.CONFLICT_IGNORE);
         if (check == -1) {
@@ -81,18 +83,20 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public boolean updateActiveUser (String id, String first_name, String last_name, String access_token, String refresh_token)
-    {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("first_name", first_name);
-        contentValues.put("last_name", last_name);
-        contentValues.put("access_token", access_token);
-        contentValues.put("refresh_token", refresh_token);
-        db.update("activeuser", contentValues, "id = ? ", new String[]{id});
-        return true;
+    //gets row count of ACTIVEUSER table to see if there is an entry
+    public int isSavedUser(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        int numRows = (int) DatabaseUtils.queryNumEntries(db, ACTIVE_USER_TABLE_NAME);
+        return numRows;
     }
 
+    public Integer deleteActiveUser()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        return db.delete("activeuser",
+                "lock = ? ",
+                new String[] { "X" });
+    }
 
     /**
      * Groups Table

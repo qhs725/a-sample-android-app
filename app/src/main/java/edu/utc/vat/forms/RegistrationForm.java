@@ -29,10 +29,12 @@ import edu.utc.vat.LoginActivity;
 import edu.utc.vat.MainActivity;
 import edu.utc.vat.R;
 import edu.utc.vat.UserAccount;
+import edu.utc.vat.util.DBHelper;
 import edu.utc.vat.util.dataUploadService;
 
 public class RegistrationForm extends AppCompatActivity {
     private Intent intent;
+    private DBHelper db = new DBHelper(BlueMixApplication.getAppContext());
     private RadioGroup rGroup;
     private RadioGroup rGroup2;
     private int qIndex = 0;
@@ -209,6 +211,7 @@ public class RegistrationForm extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.action_exit_form:
+                db.deleteActiveUser();
                 intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
                 return true;
