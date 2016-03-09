@@ -28,7 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public DBHelper(Context context)
     {
-        super(context, DATABASE_NAME , null, 1);
+        super(context, DATABASE_NAME, null, 1);
     }
 
     @Override
@@ -36,11 +36,12 @@ public class DBHelper extends SQLiteOpenHelper {
         // TODO Auto-generated method stub
         db.execSQL(
                 "create table IF NOT EXISTS activeUser " +
-                        "(id VARCHAR primary key, first_name text,last_name text, access_token text, refresh_token text)"
+                        "(Lock char(1) not null DEFAULT 'X', id VARCHAR, first_name text,last_name text, access_token text, refresh_token text, \n" +
+                        " constraint PK_ACTIVEUSER PRIMARY KEY (Lock),constraint CK_ACTIVEUSER_Locked CHECK (Lock='X'))"
         );
 
          db.execSQL("CREATE TABLE IF NOT EXISTS ORG(orgID VARCHAR PRIMARY KEY, org_name VARCHAR, premium_plan text, role_name VARCHAR, org_initial INT, org_groupCreate INT, org_groupDelete INT, org_editAdmin INT);");
-         db.execSQL("CREATE TABLE IF NOT EXISTS GROUPS(groupid VARCHAR primary key, orgID VARCHAR, group_name VARCHAR, group_description TEXT, role_name VARCHAR, group_editing_perm INT, group_sessions_perm INT, group_members_perm INT, group_results_perm INT, group_test_perm INT);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS GROUPS(groupid VARCHAR primary key, orgID VARCHAR, group_name VARCHAR, group_description TEXT, role_name VARCHAR, group_editing_perm INT, group_sessions_perm INT, group_members_perm INT, group_results_perm INT, group_test_perm INT);");
     }
 
     @Override
@@ -75,10 +76,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         int check = (int) db.insertWithOnConflict("activeuser", null, contentValues, SQLiteDatabase.CONFLICT_IGNORE);
         if (check == -1) {
-            db.update("activeuser", contentValues, "id = ? ", new String[] { id } );
+            db.update("activeuser", contentValues, "lock = ? ", new String[] { "X" } );
         }
-        ////db.update("activeuser", contentValues, "id = ? ", new String[] { id } );
-      //  db.insertWithOnConflict("activeuser", contentValues, "id = ? ", new String[] { id });
         return true;
     }
 

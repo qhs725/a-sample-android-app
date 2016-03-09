@@ -507,7 +507,7 @@ public class GoogleTokenManager extends LoadingActivity {
                 //get the string version of the response data
                 body = new JSONObject(sb.toString());
 
-                userExists = body.getInt("check") == 1;
+                userExists = body.getInt("check") != 1;
                 Log.d("ACCESS: ", body.getString("access")); //for dev use only
 
                 //prepare access object
@@ -561,12 +561,13 @@ public class GoogleTokenManager extends LoadingActivity {
             Intent intent;
 
 
+            // Save/Update Active user to SQLite db
             db.insertActiveUser(id, firstName, lastName, googleAccessToken, null);
-            Log.e("CHECK2: ", newUser + "");
+
             if (newUser) {
-                intent = new Intent(context, MainActivity.class);
-            } else {
                 intent = new Intent(context, RegistrationForm.class);
+            } else {
+                intent = new Intent(context, MainActivity.class);
             }
 
             Log.i(CLASS_NAME, "Opening Main Activity and passing Google ID Token:\n" + googleIdToken);
