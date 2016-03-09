@@ -9,6 +9,7 @@ import android.accounts.AccountManager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -34,6 +35,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
 import org.apache.http.protocol.HTTP;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -104,6 +106,7 @@ public class GoogleTokenManager extends LoadingActivity {
     private String picture = null;
     private String id = null;
     private boolean newUser;
+    private DBHelper db ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -182,6 +185,7 @@ public class GoogleTokenManager extends LoadingActivity {
 
             // start the getToken task to get the ID token
             System.out.println("Get Google ID Token for user: " + accountId);
+            db = new DBHelper(BlueMixApplication.getAppContext()); //init db
             new GetTokenTask().execute();
         } else {
             if (requestCode == AUTH_REQUEST_CODE && resultCode == RESULT_OK) {
@@ -343,7 +347,7 @@ public class GoogleTokenManager extends LoadingActivity {
             boolean isNetwork = activeNetworkInfo != null && activeNetworkInfo.isConnected();
 
             if (isNetwork) {
-                newUser = userExistsCheck(details);
+                newUser = getUserInfo(details);
                 Log.e(CLASS_NAME, "NEW USER CHECK: " + newUser);
             }
             return details;
@@ -460,7 +464,8 @@ public class GoogleTokenManager extends LoadingActivity {
 
         }
 
-        private boolean userExistsCheck(String token) {
+        //Retrieves user info from server including a JSONObject with the user's access permissions
+        private boolean getUserInfo(String token) {
 
                 HttpResponse httpresponse;
                 boolean userExists = false;
@@ -487,6 +492,7 @@ public class GoogleTokenManager extends LoadingActivity {
 
                 post.setEntity(se);
 
+                //Retrieve server response
                 httpresponse = httpclient.execute(post);
 
                 InputStreamReader isr = new InputStreamReader(
@@ -501,9 +507,18 @@ public class GoogleTokenManager extends LoadingActivity {
                 //get the string version of the response data
                 body = new JSONObject(sb.toString());
 
+                userExists = body.getInt("check") == 1;
+                Log.d("ACCESS: ", body.getString("access")); //for dev use only
 
-                userExists = body.getInt("check") == 1 ? true : false;
-                Log.e("CHECK: ", body.getString("access"));
+                //prepare access object
+                if(body.has("access")) {
+                    JSONObject access = new JSONObject(body.getString("access"));
+                    JSONArray access_admin = access.has("Admin") ? access.getJSONArray("Admin") : null;
+                    JSONArray access_admin_groups = access.has("GROUPS") ? access.getJSONArray("GROUPS") : null;
+                    JSONArray access_group = access.has("Groups") ? access.getJSONArray("Groups") : null;
+                }
+
+
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             } catch (ClientProtocolException e) {
@@ -545,6 +560,8 @@ public class GoogleTokenManager extends LoadingActivity {
             final Context context = thisActivity;
             Intent intent;
 
+
+            db.insertActiveUser(id, firstName, lastName, googleAccessToken, null);
             Log.e("CHECK2: ", newUser + "");
             if (newUser) {
                 intent = new Intent(context, MainActivity.class);
