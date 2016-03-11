@@ -600,7 +600,7 @@ public class GoogleTokenManager extends LoadingActivity {
 
         //Get Admin Access permissions and groups under organization
         JSONArray access_admin = user.has("Admin") ? user.getJSONArray("Admin") : null;
-        for (int i = 0; i < access_admin.length()-1; i++) {
+        for (int i = 0; i < access_admin.length(); i++) {
             JSONObject org = access_admin.getJSONObject(i);
             db.insertOrg(org.getString("ORGANIZATIONID"), org.getString("ORG_NAME"),
                     org.getString("PREMIUM_PLAN"), org.getString("ROLE_NAME"), org.getInt("ORG_INITIAL"), org.getInt("ORG_GROUPCREATE"), org.getInt("ORG_GROUPDELETE"),
@@ -609,7 +609,7 @@ public class GoogleTokenManager extends LoadingActivity {
             JSONObject org_groups = org.has("GROUPS") ? org.getJSONObject("GROUPS") : null;
             //Get groups within Organization
             if (org_groups.length() > 0)
-                for (int t = 0; t < org_groups.length()-1; t++) {
+                for (int t = 0; t < org_groups.length(); t++) {
                     JSONObject group = org_groups.getJSONObject(t + "");
                     db.insertGroups(group.getString("GROUPID"), org.getString("ORGANIZATIONID"), group.getString("GROUP_NAME"),
                             "", org.getString("ROLE_NAME"), org.getInt("GROUP_EDITING"), org.getInt("GROUP_SESSIONS"), org.getInt("GROUP_MEMBERS"),
