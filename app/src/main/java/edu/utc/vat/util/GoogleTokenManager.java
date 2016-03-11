@@ -131,10 +131,9 @@ public class GoogleTokenManager extends LoadingActivity {
         //TODO: if extra action is == 1 then attempt to validate user on the server using access token from ACTIVEUSRE table. If there is no Internet connection then login with saved user data.
         //TODO: if action == 0 then run the default login process.
         action = extras.getInt("action");
-        if(extras.getInt("action") == 1){
+        if (extras.getInt("action") == 1) {
             new GetTokenTask().execute();
-        }
-        else if (extras.getInt("action") == 0) {
+        } else if (extras.getInt("action") == 0) {
             login();
         }
     }
@@ -228,7 +227,7 @@ public class GoogleTokenManager extends LoadingActivity {
             if (accountId == null && action == 0)
                 return null;
 
-            if(isNetwork() && action == 0) {
+            if (isNetwork() && action == 0) {
                 try {
                     Log.i(CLASS_NAME_2, "Web Application Client ID read in: " + webAppClientIdValue);
 
@@ -269,8 +268,7 @@ public class GoogleTokenManager extends LoadingActivity {
                     Log.e(CLASS_NAME_2, "General exception occured while trying to acquire Google Auth or ID Token.");
                     e.printStackTrace();
                 }
-            }
-            else if(action == 1){
+            } else if (action == 1) {
                 db = new DBHelper(BlueMixApplication.getAppContext()); //init db
                 activeUser = db.getActiveUser();
                 activeUser.moveToFirst();
@@ -282,7 +280,7 @@ public class GoogleTokenManager extends LoadingActivity {
             getUserInfo();
             // get some useful information about the currently selected user
             // we will populate the Blue List form with these details later
-           // getAccountDetails(googleAccessToken);
+            // getAccountDetails(googleAccessToken);
 
 
             //if (!validateToken(idToken, true)) {return null; }
@@ -378,11 +376,11 @@ public class GoogleTokenManager extends LoadingActivity {
         private String validateTokenForTesting(String token) {
             String details = token;
 
-            if(action ==1 && !isNetwork())
+            if (action == 1 && !isNetwork())
                 details = idToken;
 
             try {
-                if(isNetwork()) {
+                if (isNetwork()) {
                     // use this url to get details from  id_token
                     URL url = new URL("https://www.googleapis.com/oauth2/v1/tokeninfo?alt=json&id_token=" + token);
 
@@ -419,12 +417,12 @@ public class GoogleTokenManager extends LoadingActivity {
         private String getAccountDetails(String accessToken) {
             String details = accessToken;
 
-            if(!isNetwork() && action == 1)
+            if (!isNetwork() && action == 1)
                 details = idToken;
 
             try {
 
-                if(isNetwork()) {
+                if (isNetwork()) {
                     // use this url to get details from access_token
                     URL url = new URL("https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=" + accessToken);
 
@@ -446,7 +444,7 @@ public class GoogleTokenManager extends LoadingActivity {
                     Log.d(CLASS_NAME_2, "Access Token details:" + details);
 
 	            /* convert string to json object so we can get at useful account details
-	            Details: {
+                Details: {
 	            "id": "112835395680253021869",
 	            "email": "",
 	            "verified_email": true,
@@ -498,9 +496,9 @@ public class GoogleTokenManager extends LoadingActivity {
         //Retrieves user info from server including a JSONObject with the user's access permissions
         private void getUserInfo() {
 
-                HttpResponse httpresponse;
-                //boolean userExists = false;
-                JSONObject body;
+            HttpResponse httpresponse;
+            //boolean userExists = false;
+            JSONObject body;
 
             try {
                 //Get id from sub key in initial token and only send that to server
@@ -511,9 +509,9 @@ public class GoogleTokenManager extends LoadingActivity {
                 token_json.put("access_token", googleAccessToken);
                 token_json.put("id_token", idToken);
 
-               // Log.e("CHECK_TOKEN: ", token);
+                // Log.e("CHECK_TOKEN: ", token);
 
-                if(isNetwork()) {
+                if (isNetwork()) {
                     DefaultHttpClient httpclient = new DefaultHttpClient();
                     HttpPost post = new HttpPost("http://utc-vat.mybluemix.net/users/check");
                     post.addHeader("access_token", googleAccessToken);
@@ -545,10 +543,7 @@ public class GoogleTokenManager extends LoadingActivity {
                     //prepare access object
                     if (body.has("user")) {
                         JSONObject user = new JSONObject(body.getString("user"));
-                        JSONArray access_admin = user.has("Admin") ? user.getJSONArray("Admin") : null;
-                        JSONArray access_admin_groups = user.has("GROUPS") ? user.getJSONArray("GROUPS") : null;
-                        JSONArray access_group = user.has("Groups") ? user.getJSONArray("Groups") : null;
-
+                        saveAccessObject(user);
 
                         if (user.length() != 0) {
                             firstName = (String) user.get("given_name");
@@ -562,11 +557,10 @@ public class GoogleTokenManager extends LoadingActivity {
                             Log.i(CLASS_NAME, "Last Name: " + lastName);
                             Log.i(CLASS_NAME, "ID:  " + id);
                         }
-                        
-                        
+
+
                     }
-                }
-                else if(action == 1){
+                } else if (action == 1) {
                     newUser = false;
                     id = activeUser.getString(activeUser.getColumnIndexOrThrow("id"));
                     firstName = activeUser.getString(activeUser.getColumnIndexOrThrow("given_name"));
@@ -587,6 +581,45 @@ public class GoogleTokenManager extends LoadingActivity {
         }
 
     }// GetToken class
+
+    /**
+     * Syncs Organizations and Groups the user is connected to into the database using the user object from the server
+     *
+     * @param user
+     * @throws JSONException
+     */
+    private void saveAccessObject(JSONObject user) throws JSONException {
+
+        JSONArray access_group = user.has("Groups") ? user.getJSONArray("Groups") : null;
+        for (int i = 0; i < access_group.length(); i++) {
+            JSONObject group = access_group.getJSONObject(i);
+            db.insertGroups(group.getString("GROUPID"), group.getString("ORGANIZATIONID"), group.getString("GROUP_NAME"),
+                    group.getString("GROUP_DESCRIPTION"), group.getString("ROLE_NAME"), group.getInt("GROUP_EDITING"), group.getInt("GROUP_SESSIONS"), group.getInt("GROUP_MEMBERS"),
+                    group.getInt("GROUP_RESULTS"), group.getInt("GROUP_TEST"));
+        }
+
+        //Get Admin Access permissions and groups under organization
+        JSONArray access_admin = user.has("Admin") ? user.getJSONArray("Admin") : null;
+        for (int i = 0; i < access_admin.length()-1; i++) {
+            JSONObject org = access_admin.getJSONObject(i);
+            db.insertOrg(org.getString("ORGANIZATIONID"), org.getString("ORG_NAME"),
+                    org.getString("PREMIUM_PLAN"), org.getString("ROLE_NAME"), org.getInt("ORG_INITIAL"), org.getInt("ORG_GROUPCREATE"), org.getInt("ORG_GROUPDELETE"),
+                    org.getInt("ORG_EDITADMIN"));
+
+            JSONObject org_groups = org.has("GROUPS") ? org.getJSONObject("GROUPS") : null;
+            //Get groups within Organization
+            if (org_groups.length() > 0)
+                for (int t = 0; t < org_groups.length()-1; t++) {
+                    JSONObject group = org_groups.getJSONObject(t + "");
+                    db.insertGroups(group.getString("GROUPID"), org.getString("ORGANIZATIONID"), group.getString("GROUP_NAME"),
+                            "", org.getString("ROLE_NAME"), org.getInt("GROUP_EDITING"), org.getInt("GROUP_SESSIONS"), org.getInt("GROUP_MEMBERS"),
+                            org.getInt("GROUP_RESULTS"), org.getInt("GROUP_TEST"));
+                }
+
+        }
+
+
+    }
 
     private void startNextActivity(String googleIdToken, String googleAccessToken) {
 

@@ -101,24 +101,36 @@ public class DBHelper extends SQLiteOpenHelper {
     /**
      * Groups Table
      *
+     * Functions for interacting with the groups table.
      *  */
 
 
-    public boolean insertGroups  (String name, String phone, String email, String street,String place)
+    public boolean insertGroups  (String groupId, String orgId, String name, String desc, String role, int edit_perm, int session_perm, int members_perm, int results_perm, int test_perm)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("name", name);
-        contentValues.put("phone", phone);
-        contentValues.put("email", email);
-        contentValues.put("street", street);
-        contentValues.put("place", place);
-        db.insert("contacts", null, contentValues);
+        contentValues.put("groupid", groupId);
+        contentValues.put("orgID", orgId);
+        contentValues.put("group_name", name);
+        contentValues.put("group_description", desc);
+        contentValues.put("role_name", role);
+        contentValues.put("group_editing_perm", edit_perm);
+        contentValues.put("group_sessions_perm", session_perm);
+        contentValues.put("group_members_perm", members_perm);
+        contentValues.put("group_results_perm", results_perm);
+        contentValues.put("group_test_perm", test_perm);
+
+       // db.insert("groups", null, contentValues);
+
+        int check = (int) db.insertWithOnConflict("groups", null, contentValues, SQLiteDatabase.CONFLICT_IGNORE);
+        if (check == -1) {
+            db.update("groups", contentValues, "groupid= ? ", new String[] { groupId } );
+        }
         return true;
     }
 
 
-    //TODO: change to get all Users within a group
+    //TODO: change to get all Users within a group? not working currently
     public ArrayList<String> getAllUSERS()
     {
         ArrayList<String> array_list = new ArrayList<String>();
@@ -136,6 +148,37 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
+
+    /**
+     * Org Table
+     *
+     * Functions for interacting with the organizations table.
+     *  */
+
+    public boolean insertOrg  (String orgID, String name, String plan, String role, int org_initial, int org_groupCreate, int org_groupDelete, int org_editAdmin)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put("orgID", orgID);
+        contentValues.put("org_name", name);
+        contentValues.put("premium_plan", plan);
+        contentValues.put("role_name", role);
+        contentValues.put("org_initial", org_initial);
+        contentValues.put("org_groupCreate", org_groupCreate);
+        contentValues.put("org_groupDelete", org_groupDelete);
+        contentValues.put("org_editAdmin", org_editAdmin);
+
+
+        // db.insert("groups", null, contentValues);
+
+        int check = (int) db.insertWithOnConflict("org", null, contentValues, SQLiteDatabase.CONFLICT_IGNORE);
+        if (check == -1) {
+            db.update("org", contentValues, "orgID= ? ", new String[] {orgID } );
+        }
+
+        return true;
+    }
 
     /*
     public int numberOfRows(){
