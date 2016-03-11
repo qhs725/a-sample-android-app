@@ -120,8 +120,6 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("group_results_perm", results_perm);
         contentValues.put("group_test_perm", test_perm);
 
-       // db.insert("groups", null, contentValues);
-
         int check = (int) db.insertWithOnConflict("groups", null, contentValues, SQLiteDatabase.CONFLICT_IGNORE);
         if (check == -1) {
             db.update("groups", contentValues, "groupid= ? ", new String[] { groupId } );
