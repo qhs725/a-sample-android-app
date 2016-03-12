@@ -84,7 +84,7 @@ public class MainActivity extends BaseActivity {
         findViewById(R.id.MainMenuButton5).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(SportInjuryForm.createIntent(self));
+                startActivity(GroupListActivity.createIntent(self));
             }
         });
 

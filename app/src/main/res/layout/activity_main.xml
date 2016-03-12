@@ -123,7 +123,7 @@
         android:layout_width="450dip"
         android:layout_height="36dip"
         android:textSize="24sp"
-        android:text="Sports Injury Form"
+        android:text="Test Groups List"
         android:id="@+id/MainMenuButton5"
         android:textStyle="bold"
         android:textAlignment="gravity"
