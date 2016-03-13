@@ -369,6 +369,10 @@ public class GoogleTokenManager extends LoadingActivity {
             db.insertGroups(group.getString("GROUPID"), group.getString("ORGANIZATIONID"), group.getString("GROUP_NAME"),
                     group.getString("GROUP_DESCRIPTION"), group.getString("ROLE_NAME"), group.getInt("GROUP_EDITING"), group.getInt("GROUP_SESSIONS"), group.getInt("GROUP_MEMBERS"),
                     group.getInt("GROUP_RESULTS"), group.getInt("GROUP_TEST"));
+
+            db.insertOrg(group.getString("ORGANIZATIONID"), group.getString("ORG_NAME"), null, "Member", 0, 0, 0,0);
+
+
         }
 
         //Get Admin Access permissions and groups under organization

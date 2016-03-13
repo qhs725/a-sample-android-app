@@ -34,14 +34,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         // TODO Auto-generated method stub
-        db.execSQL(
-                "create table IF NOT EXISTS activeUser " +
-                        "(Lock char(1) not null DEFAULT 'X', id VARCHAR, given_name text, family_name text, email text, access_token text, refresh_token text, id_token text," +
-                        " constraint PK_ACTIVEUSER PRIMARY KEY (Lock),constraint CK_ACTIVEUSER_Locked CHECK (Lock='X'))"
-        );
-
-         db.execSQL("CREATE TABLE IF NOT EXISTS ORG(orgID VARCHAR PRIMARY KEY, org_name VARCHAR, premium_plan text, role_name VARCHAR, org_initial INT, org_groupCreate INT, org_groupDelete INT, org_editAdmin INT);");
-        db.execSQL("CREATE TABLE IF NOT EXISTS GROUPS(groupid VARCHAR primary key, orgID VARCHAR, group_name VARCHAR, group_description TEXT, role_name VARCHAR, group_editing_perm INT, group_sessions_perm INT, group_members_perm INT, group_results_perm INT, group_test_perm INT);");
+        buildTables(db);
     }
 
     @Override
@@ -52,6 +45,19 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS ORG");
         onCreate(db);
     }
+
+
+    public void buildTables(SQLiteDatabase db){
+        db.execSQL(
+                "create table IF NOT EXISTS activeUser " +
+                        "(Lock char(1) not null DEFAULT 'X', id VARCHAR, given_name text, family_name text, email text, access_token text, refresh_token text, id_token text," +
+                        " constraint PK_ACTIVEUSER PRIMARY KEY (Lock),constraint CK_ACTIVEUSER_Locked CHECK (Lock='X'))"
+        );
+
+        db.execSQL("CREATE TABLE IF NOT EXISTS ORG(orgID VARCHAR PRIMARY KEY, org_name VARCHAR, premium_plan text, role_name VARCHAR, org_initial INT, org_groupCreate INT, org_groupDelete INT, org_editAdmin INT);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS GROUPS(groupid VARCHAR primary key, orgID VARCHAR, group_name VARCHAR, group_description TEXT, role_name VARCHAR, group_editing_perm INT, group_sessions_perm INT, group_members_perm INT, group_results_perm INT, group_test_perm INT);");
+    }
+
 
     /**
      * ActiveUser table
@@ -93,9 +99,17 @@ public class DBHelper extends SQLiteOpenHelper {
     public Integer deleteActiveUser()
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        return db.delete("activeuser",
+        int result = -9;
+
+        result = db.delete("activeuser",
                 "lock = ? ",
                 new String[] { "X" });
+
+        db.execSQL("DROP TABLE IF EXISTS ORG");
+        db.execSQL("DROP TABLE IF EXISTS GROUPS");
+
+        buildTables(db);
+        return result;
     }
 
     /**
@@ -176,6 +190,13 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
         return true;
+    }
+
+
+    public Cursor getOrgs(){
+            SQLiteDatabase db = this.getReadableDatabase();
+            Cursor res =  db.rawQuery( "select * from ORG", null );
+            return res;
     }
 
     /*

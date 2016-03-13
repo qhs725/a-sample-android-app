@@ -4,11 +4,14 @@ package edu.utc.vat;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import edu.utc.vat.util.DBHelper;
 import edu.utc.vat.util.adapters.GroupAdapter;
 import edu.utc.vat.util.adapters.GroupInfo;
 import java.util.ArrayList;
@@ -16,6 +19,8 @@ import java.util.List;
 
 
 public class GroupListActivity extends Activity {
+
+    private DBHelper db = new DBHelper(BlueMixApplication.getAppContext());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +34,7 @@ public class GroupListActivity extends Activity {
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         recList.setLayoutManager(llm);
 
-        GroupAdapter ca = new GroupAdapter(createList(30));
+        GroupAdapter ca = new GroupAdapter(createList());
         recList.setAdapter(ca);
     }
 
@@ -55,15 +60,20 @@ public class GroupListActivity extends Activity {
 
 
 
-    private List<GroupInfo> createList(int size) {
+    private List<GroupInfo> createList() {
 
         List<GroupInfo> result = new ArrayList<GroupInfo>();
-        for (int i=1; i <= size; i++) {
-            GroupInfo ci = new GroupInfo();
-            ci.name = GroupInfo.NAME_PREFIX + i;
-            ci.surname = GroupInfo.SURNAME_PREFIX + i;
-            ci.email = GroupInfo.EMAIL_PREFIX + i + "@test.com";
 
+        Cursor org = db.getOrgs();
+        int size = org.getCount();
+        org.moveToFirst();
+
+        for (int i=0; i < size; i++) {
+            GroupInfo ci = new GroupInfo();
+            ci.name = org.getString(org.getColumnIndexOrThrow("org_name"));
+            ci.email = "description";
+
+            org.moveToNext();
             result.add(ci);
 
         }
