@@ -13,25 +13,25 @@ import java.util.List;
 
 public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupsViewHolder> {
 
-    private List<edu.utc.vat.util.adapters.GroupInfo> contactList;
+    private List<edu.utc.vat.util.adapters.GroupInfo> itemList;
 
-    public GroupAdapter(List<edu.utc.vat.util.adapters.GroupInfo> contactList) {
-        this.contactList = contactList;
+    public GroupAdapter(List<edu.utc.vat.util.adapters.GroupInfo> itemList) {
+        this.itemList = itemList;
     }
 
 
     @Override
     public int getItemCount() {
-        return contactList.size();
+        return itemList.size();
     }
 
     @Override
     public void onBindViewHolder(GroupsViewHolder contactViewHolder, int i) {
-        GroupInfo ci = contactList.get(i);
-        contactViewHolder.vName.setText(ci.name);
-        contactViewHolder.vSurname.setText(ci.surname);
-        contactViewHolder.vEmail.setText(ci.email);
-        contactViewHolder.vTitle.setText(ci.name + " " + ci.surname);
+        GroupInfo ci = itemList.get(i);
+       //contactViewHolder.vName.setText(ci.name);
+        //contactViewHolder.vSurname.setText(ci.surname);
+        //contactViewHolder.vEmail.setText(ci.email);
+        contactViewHolder.vTitle.setText(ci.name);
     }
 
     @Override
@@ -52,9 +52,9 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupsViewHo
 
         public GroupsViewHolder(View v) {
             super(v);
-            vName =  (TextView) v.findViewById(R.id.txtName);
-            vSurname = (TextView)  v.findViewById(R.id.txtSurname);
-            vEmail = (TextView)  v.findViewById(R.id.txtEmail);
+            //vName =  (TextView) v.findViewById(R.id.txtName);
+            //vSurname = (TextView)  v.findViewById(R.id.txtSurname);
+            //vEmail = (TextView)  v.findViewById(R.id.txtEmail);
             vTitle = (TextView) v.findViewById(R.id.title);
         }
     }

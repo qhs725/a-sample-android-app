@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GroupListActivity extends Activity {
+public class GroupListActivity extends BaseActivity {
 
     private DBHelper db = new DBHelper(BlueMixApplication.getAppContext());
 
