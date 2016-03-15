@@ -2,12 +2,14 @@ package edu.utc.vat.util;
 
 /**
  * Created by Jaysp656 on 3/8/2016.
- * 
+ * <p>
  * Helper class for connections to SQLite Database
  */
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -26,8 +28,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String ACTIVE_USER_COLUMN_REFRESH = "refresh_token";
     private HashMap hp;
 
-    public DBHelper(Context context)
-    {
+    public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
     }
 
@@ -47,7 +48,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
-    public void buildTables(SQLiteDatabase db){
+    public void buildTables(SQLiteDatabase db) {
         db.execSQL(
                 "create table IF NOT EXISTS activeUser " +
                         "(Lock char(1) not null DEFAULT 'X', id VARCHAR, given_name text, family_name text, email text, access_token text, refresh_token text, id_token text," +
@@ -64,14 +65,13 @@ public class DBHelper extends SQLiteOpenHelper {
      *
      */
 
-    public Cursor getActiveUser(){
+    public Cursor getActiveUser() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from activeuser", null );
+        Cursor res = db.rawQuery("select * from activeuser", null);
         return res;
     }
 
-    public boolean insertActiveUser (String id, String given_name, String family_name, String email, String access_token, String refresh_token, String id_token)
-    {
+    public boolean insertActiveUser(String id, String given_name, String family_name, String email, String access_token, String refresh_token, String id_token) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("id", id);
@@ -84,26 +84,25 @@ public class DBHelper extends SQLiteOpenHelper {
 
         int check = (int) db.insertWithOnConflict("activeuser", null, contentValues, SQLiteDatabase.CONFLICT_IGNORE);
         if (check == -1) {
-            db.update("activeuser", contentValues, "lock = ? ", new String[] { "X" } );
+            db.update("activeuser", contentValues, "lock = ? ", new String[]{"X"});
         }
         return true;
     }
 
     //gets row count of ACTIVEUSER table to see if there is an entry
-    public int isSavedUser(){
+    public int isSavedUser() {
         SQLiteDatabase db = this.getReadableDatabase();
         int numRows = (int) DatabaseUtils.queryNumEntries(db, ACTIVE_USER_TABLE_NAME);
         return numRows;
     }
 
-    public Integer deleteActiveUser()
-    {
+    public Integer deleteActiveUser() {
         SQLiteDatabase db = this.getWritableDatabase();
         int result = -9;
 
         result = db.delete("activeuser",
                 "lock = ? ",
-                new String[] { "X" });
+                new String[]{"X"});
 
         db.execSQL("DROP TABLE IF EXISTS ORG");
         db.execSQL("DROP TABLE IF EXISTS GROUPS");
@@ -119,8 +118,7 @@ public class DBHelper extends SQLiteOpenHelper {
      *  */
 
 
-    public boolean insertGroups  (String groupId, String orgId, String name, String desc, String role, int edit_perm, int session_perm, int members_perm, int results_perm, int test_perm)
-    {
+    public boolean insertGroups(String groupId, String orgId, String name, String desc, String role, int edit_perm, int session_perm, int members_perm, int results_perm, int test_perm) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("groupid", groupId);
@@ -136,29 +134,27 @@ public class DBHelper extends SQLiteOpenHelper {
 
         int check = (int) db.insertWithOnConflict("groups", null, contentValues, SQLiteDatabase.CONFLICT_IGNORE);
         if (check == -1) {
-            db.update("groups", contentValues, "groupid= ? ", new String[] { groupId } );
+            db.update("groups", contentValues, "groupid= ? ", new String[]{groupId});
         }
         return true;
     }
 
 
     //TODO: change to get all Users within a group? not working currently
-    public ArrayList<String> getAllUSERS()
-    {
+    public ArrayList<String> getAllUSERS() {
         ArrayList<String> array_list = new ArrayList<String>();
 
         //hp = new HashMap();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from USER", null );
+        Cursor res = db.rawQuery("select * from USER", null);
         res.moveToFirst();
 
-        while(res.isAfterLast() == false){
+        while (res.isAfterLast() == false) {
             array_list.add(res.getString(res.getColumnIndex(ACTIVE_USER_COLUMN_ID)));
             res.moveToNext();
         }
         return array_list;
     }
-
 
 
     /**
@@ -167,8 +163,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * Functions for interacting with the organizations table.
      *  */
 
-    public boolean insertOrg  (String orgID, String name, String plan, String role, int org_initial, int org_groupCreate, int org_groupDelete, int org_editAdmin)
-    {
+    public boolean insertOrg(String orgID, String name, String plan, String role, int org_initial, int org_groupCreate, int org_groupDelete, int org_editAdmin) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -186,17 +181,36 @@ public class DBHelper extends SQLiteOpenHelper {
 
         int check = (int) db.insertWithOnConflict("org", null, contentValues, SQLiteDatabase.CONFLICT_IGNORE);
         if (check == -1) {
-            db.update("org", contentValues, "orgID= ? ", new String[] {orgID } );
+            db.update("org", contentValues, "orgID= ? ", new String[]{orgID});
         }
 
         return true;
     }
 
 
-    public Cursor getOrgs(){
-            SQLiteDatabase db = this.getReadableDatabase();
-            Cursor res =  db.rawQuery( "select * from ORG", null );
-            return res;
+    public Cursor getOrgs() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("select * from ORG", null);
+        return res;
+    }
+
+
+    //Retrieves groups within an organization OR members within a group OR task info for group
+    //Can not retrieve Organization using Organization ID
+    public Cursor getListByID(String id) {
+        //TODO: Create taskInfo and groupMembers tables. Determine best time to sync data to app from server.
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor res = db.rawQuery("select * from GROUPS WHERE orgID = '" + id + "'", null);
+
+        if (!(res.moveToFirst()) || res.getCount() == 0) {
+            res = db.rawQuery("select * from groupMembers WHERE groupID = '" + id + "'", null);
+        }
+        if (!(res.moveToFirst()) || res.getCount() == 0) {
+            res = db.rawQuery("select * from taskInfo", null);
+        }
+
+        return res;
     }
 
     /*

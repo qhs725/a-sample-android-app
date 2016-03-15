@@ -1,21 +1,24 @@
 
 package edu.utc.vat.util.adapters;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import edu.utc.vat.GroupListActivity;
 import edu.utc.vat.R;
+import edu.utc.vat.TestingActivity;
 
 import java.util.List;
 
 public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupsViewHolder> {
 
-    private List<edu.utc.vat.util.adapters.GroupInfo> itemList;
+    private static List<edu.utc.vat.util.adapters.listItemInfo> itemList;
 
-    public GroupAdapter(List<edu.utc.vat.util.adapters.GroupInfo> itemList) {
+    public GroupAdapter(List<edu.utc.vat.util.adapters.listItemInfo> itemList) {
         this.itemList = itemList;
     }
 
@@ -26,12 +29,11 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupsViewHo
     }
 
     @Override
-    public void onBindViewHolder(GroupsViewHolder contactViewHolder, int i) {
-        GroupInfo ci = itemList.get(i);
-       //contactViewHolder.vName.setText(ci.name);
-        //contactViewHolder.vSurname.setText(ci.surname);
-        //contactViewHolder.vEmail.setText(ci.email);
-        contactViewHolder.vTitle.setText(ci.name);
+    public void onBindViewHolder(GroupsViewHolder listViewHolder, int i) {
+        listItemInfo ci = itemList.get(i);
+
+        listViewHolder.vTitle.setText(ci.title);
+        listViewHolder.vRole.setText(ci.role);
     }
 
     @Override
@@ -45,17 +47,42 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupsViewHo
 
     public static class GroupsViewHolder extends RecyclerView.ViewHolder {
 
-        protected TextView vName;
-        protected TextView vSurname;
-        protected TextView vEmail;
+        protected TextView vRole;
         protected TextView vTitle;
 
         public GroupsViewHolder(View v) {
             super(v);
-            //vName =  (TextView) v.findViewById(R.id.txtName);
-            //vSurname = (TextView)  v.findViewById(R.id.txtSurname);
-            //vEmail = (TextView)  v.findViewById(R.id.txtEmail);
+
+            v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   listItemInfo ci = itemList.get(getAdapterPosition());
+                    Intent intent = new Intent(v.getContext(), GroupListActivity.class);
+                    intent.putExtra("id",ci.id);
+
+                    switch(ci.type){
+                        case "org":
+                        intent.putExtra("type", "groups");
+                            break;
+                        case "group":
+                            intent.putExtra("type", "members");
+                            break;
+                        case "member":
+                            intent.putExtra("type", "tasks");
+                            break;
+                        case "task":
+                            intent = new Intent(v.getContext(), TestingActivity.class);
+                            intent.putExtra("taskTitle", ci.title);
+                            break;
+                    }
+                    v.getContext().startActivity(intent);
+                }
+            });
+
             vTitle = (TextView) v.findViewById(R.id.title);
+            vRole= (TextView) v.findViewById(R.id.role_name);
         }
     }
+
+
 }

@@ -1,7 +1,6 @@
 
 package edu.utc.vat;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -13,7 +12,8 @@ import android.view.MenuItem;
 
 import edu.utc.vat.util.DBHelper;
 import edu.utc.vat.util.adapters.GroupAdapter;
-import edu.utc.vat.util.adapters.GroupInfo;
+import edu.utc.vat.util.adapters.listItemInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,14 +21,27 @@ import java.util.List;
 public class GroupListActivity extends BaseActivity {
 
     private DBHelper db = new DBHelper(BlueMixApplication.getAppContext());
+    private String type = "default";
+    private String id = "id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_my);
-
         setContentView(R.layout.activity_groupslist);
         RecyclerView recList = (RecyclerView) findViewById(R.id.cardList);
+
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+
+        if(intent.hasExtra("type")) {
+            type = intent.getStringExtra("type");
+            }
+        if(intent.hasExtra("id")) {
+            id = intent.getStringExtra("id");
+        }
+
+
+
         recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
@@ -60,23 +73,57 @@ public class GroupListActivity extends BaseActivity {
 
 
 
-    private List<GroupInfo> createList() {
+    private List<listItemInfo> createList() {
 
-        List<GroupInfo> result = new ArrayList<GroupInfo>();
+        List<listItemInfo> result = new ArrayList<listItemInfo>();
+        Cursor cursor;
+        int size;
 
-        Cursor org = db.getOrgs();
-        int size = org.getCount();
-        org.moveToFirst();
 
-        for (int i=0; i < size; i++) {
-            GroupInfo ci = new GroupInfo();
-            ci.name = org.getString(org.getColumnIndexOrThrow("org_name"));
-            ci.email = "description";
+        switch(type){
+            case "groups":
+                setTitle("Select Group");
+                cursor = db.getListByID(id);
+                size = cursor.getCount();
+                cursor.moveToFirst();
 
-            org.moveToNext();
-            result.add(ci);
+                for (int i=0; i < size; i++) {
+                    listItemInfo ci = new listItemInfo();
+                    ci.title = cursor.getString(cursor.getColumnIndexOrThrow("group_name"));
+                    ci.role = cursor.getString(cursor.getColumnIndexOrThrow("role_name"));
+                    ci.id = cursor.getString(cursor.getColumnIndexOrThrow("groupid"));
+                    ci.type = "group";
 
+                    cursor.moveToNext();
+                    result.add(ci);
+                }
+                break;
+            case "members":
+                setTitle("Select Group Member");
+                break;
+            case "tasks":
+                setTitle("Select Task");
+                break;
+            default: //Organizations
+                setTitle("Select Organization");
+
+                cursor = db.getOrgs();
+                size = cursor.getCount();
+                cursor.moveToFirst();
+
+                for (int i=0; i < size; i++) {
+                    listItemInfo ci = new listItemInfo();
+                    ci.title = cursor.getString(cursor.getColumnIndexOrThrow("org_name"));
+                    ci.role = cursor.getString(cursor.getColumnIndexOrThrow("role_name"));
+                    ci.id = cursor.getString(cursor.getColumnIndexOrThrow("orgID"));
+                    ci.type = "org";
+                    cursor.moveToNext();
+                    result.add(ci);
+
+                }
+                break;
         }
+
 
         return result;
     }
