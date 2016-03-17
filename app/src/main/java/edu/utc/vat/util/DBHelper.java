@@ -57,6 +57,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE IF NOT EXISTS ORG(orgID VARCHAR PRIMARY KEY, org_name VARCHAR, premium_plan text, role_name VARCHAR, org_initial INT, org_groupCreate INT, org_groupDelete INT, org_editAdmin INT);");
         db.execSQL("CREATE TABLE IF NOT EXISTS GROUPS(groupid VARCHAR primary key, orgID VARCHAR, group_name VARCHAR, group_description TEXT, role_name VARCHAR, group_editing_perm INT, group_sessions_perm INT, group_members_perm INT, group_results_perm INT, group_test_perm INT);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS groupMembers(memberID VARCHAR primary key, groupID VARCHAR, orgID VARCHAR, name VARCHAR, role_name VARCHAR, UNIQUE (memberID, groupID) ON CONFLICT REPLACE);");
     }
 
 
@@ -194,11 +195,42 @@ public class DBHelper extends SQLiteOpenHelper {
         return res;
     }
 
+    /**
+     * Group Members Table
+     *memberID VARCHAR, groupid VARCHAR, orgID VARCHAR, name VARCHAR, role_name VARCHAR
+     * Functions for interacting with the groupMembers table.
+     *  */
+
+    public boolean insertMember(String memberID,  String groupID, String orgId, String name, String role) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("memberID", memberID);
+        contentValues.put("groupID", groupID);
+        contentValues.put("orgID", orgId);
+        contentValues.put("name", name);
+        contentValues.put("role_name", role);
+
+        int check = (int) db.insertWithOnConflict("groupMembers", null, contentValues, SQLiteDatabase.CONFLICT_IGNORE);
+        if (check == -1) {
+            db.update("groupMembers", contentValues, "groupID= ? AND memberID = ? ", new String[]{groupID, memberID});
+        }
+        return true;
+    }
+
+
+
+
+
+
+    /**
+     * Misc
+     *
+     * Functions for interacting with the database
+     *  */
 
     //Retrieves groups within an organization OR members within a group OR task info for group
     //Can not retrieve Organization using Organization ID
     public Cursor getListByID(String id) {
-        //TODO: Create taskInfo and groupMembers tables. Determine best time to sync data to app from server.
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor res = db.rawQuery("select * from GROUPS WHERE orgID = '" + id + "'", null);
@@ -207,7 +239,8 @@ public class DBHelper extends SQLiteOpenHelper {
             res = db.rawQuery("select * from groupMembers WHERE groupID = '" + id + "'", null);
         }
         if (!(res.moveToFirst()) || res.getCount() == 0) {
-            res = db.rawQuery("select * from taskInfo", null);
+            //TODO: Create taskInfo table
+            //res = db.rawQuery("select * from taskInfo", null);
         }
 
         return res;

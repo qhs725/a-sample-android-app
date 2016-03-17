@@ -58,17 +58,23 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupsViewHo
                 public void onClick(View v) {
                    listItemInfo ci = itemList.get(getAdapterPosition());
                     Intent intent = new Intent(v.getContext(), GroupListActivity.class);
-                    intent.putExtra("id",ci.id);
+                   // intent.putExtra("id",ci.id);
 
-                    switch(ci.type){
+                    switch(listSelections.getSelectionType()){
                         case "org":
-                        intent.putExtra("type", "groups");
+                            listSelections.setSelectionType("group");
+                            listSelections.selectOrg(ci.id);
+                        //intent.putExtra("type", "groups");
                             break;
                         case "group":
-                            intent.putExtra("type", "members");
+                            listSelections.setSelectionType("member");
+                            listSelections.selectGroup(ci.id);
+                           // intent.putExtra("type", "members");
                             break;
                         case "member":
-                            intent.putExtra("type", "tasks");
+                            listSelections.setSelectionType("task");
+                            listSelections.selectMember(ci.id);
+                            //intent.putExtra("type", "tasks");
                             break;
                         case "task":
                             intent = new Intent(v.getContext(), TestingActivity.class);

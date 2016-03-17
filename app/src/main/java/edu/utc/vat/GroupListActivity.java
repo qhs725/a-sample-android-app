@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import edu.utc.vat.util.DBHelper;
 import edu.utc.vat.util.adapters.GroupAdapter;
 import edu.utc.vat.util.adapters.listItemInfo;
+import edu.utc.vat.util.adapters.listSelections;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,24 +23,20 @@ public class GroupListActivity extends BaseActivity {
 
     private DBHelper db = new DBHelper(BlueMixApplication.getAppContext());
     private String type = "default";
-    private String id = "id";
+    //private String id = "id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_groupslist);
+
+        setRecycler();
+    }
+
+    public void setRecycler(){
         RecyclerView recList = (RecyclerView) findViewById(R.id.cardList);
 
-        Intent intent = getIntent();
-        Bundle extras = intent.getExtras();
-
-        if(intent.hasExtra("type")) {
-            type = intent.getStringExtra("type");
-            }
-        if(intent.hasExtra("id")) {
-            id = intent.getStringExtra("id");
-        }
-
+        type = listSelections.getSelectionType();
 
 
         recList.setHasFixedSize(true);
@@ -50,7 +47,6 @@ public class GroupListActivity extends BaseActivity {
         GroupAdapter ca = new GroupAdapter(createList());
         recList.setAdapter(ca);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -72,7 +68,6 @@ public class GroupListActivity extends BaseActivity {
     }
 
 
-
     private List<listItemInfo> createList() {
 
         List<listItemInfo> result = new ArrayList<listItemInfo>();
@@ -80,28 +75,41 @@ public class GroupListActivity extends BaseActivity {
         int size;
 
 
-        switch(type){
-            case "groups":
+        switch (type) {
+            case "group":
                 setTitle("Select Group");
-                cursor = db.getListByID(id);
+                cursor = db.getListByID(listSelections.getSelectedOrg());
                 size = cursor.getCount();
                 cursor.moveToFirst();
 
-                for (int i=0; i < size; i++) {
+                for (int i = 0; i < size; i++) {
                     listItemInfo ci = new listItemInfo();
                     ci.title = cursor.getString(cursor.getColumnIndexOrThrow("group_name"));
                     ci.role = cursor.getString(cursor.getColumnIndexOrThrow("role_name"));
                     ci.id = cursor.getString(cursor.getColumnIndexOrThrow("groupid"));
-                    ci.type = "group";
 
                     cursor.moveToNext();
                     result.add(ci);
                 }
                 break;
-            case "members":
+            case "member":
                 setTitle("Select Group Member");
+                cursor = db.getListByID(listSelections.getSelectedGroup());
+                size = cursor.getCount();
+                cursor.moveToFirst();
+
+                for (int i = 0; i < size; i++) {
+                    listItemInfo ci = new listItemInfo();
+                    ci.title = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+                    ci.role = cursor.getString(cursor.getColumnIndexOrThrow("role_name"));
+                    ci.id = cursor.getString(cursor.getColumnIndexOrThrow("memberID"));
+
+                    cursor.moveToNext();
+                    result.add(ci);
+                }
+
                 break;
-            case "tasks":
+            case "task":
                 setTitle("Select Task");
                 break;
             default: //Organizations
@@ -111,12 +119,11 @@ public class GroupListActivity extends BaseActivity {
                 size = cursor.getCount();
                 cursor.moveToFirst();
 
-                for (int i=0; i < size; i++) {
+                for (int i = 0; i < size; i++) {
                     listItemInfo ci = new listItemInfo();
                     ci.title = cursor.getString(cursor.getColumnIndexOrThrow("org_name"));
                     ci.role = cursor.getString(cursor.getColumnIndexOrThrow("role_name"));
                     ci.id = cursor.getString(cursor.getColumnIndexOrThrow("orgID"));
-                    ci.type = "org";
                     cursor.moveToNext();
                     result.add(ci);
 
@@ -128,6 +135,39 @@ public class GroupListActivity extends BaseActivity {
         return result;
     }
 
+    @Override
+    public void onResume(){
+        setRecycler();
+
+        super.onResume();
+    }
+    @Override
+    public void onBackPressed() {
+
+        type = listSelections.getSelectionType();
+        switch(type){
+
+            case "org":
+                //default action
+                break;
+            case "group":
+                listSelections.setSelectionType("org");
+                listSelections.selectOrg(null);
+                break;
+            case "member":
+                listSelections.setSelectionType("group");
+                listSelections.selectGroup(null);
+                break;
+            case "task":
+                listSelections.setSelectionType("member");
+                listSelections.selectMember(null);
+
+                break;
+        }
+        // Write your code here
+
+        super.onBackPressed();
+    }
 
     public static Intent createIntent(Context context) {
         return new Intent(context, GroupListActivity.class);
