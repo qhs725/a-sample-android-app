@@ -8,6 +8,7 @@ public class listSelections {
     private static String org = null;
     private static String group = null;
     private static String member = null;
+    private static String task = null;
     private static String type = "org";
 
     //set type
@@ -34,11 +35,19 @@ public class listSelections {
         listSelections.group = group;
     }
     
-    //MEMEBER
+    //MEMBER
     public static String getSelectedMember() {
         return member;
     }
     public static void selectMember(String member) {
         listSelections.member = member;
+    }
+
+    //Task
+    public static String getSelectedTask() {
+        return task;
+    }
+    public static void selectTask(String task) {
+        listSelections.task = task;
     }
 }

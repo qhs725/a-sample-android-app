@@ -405,6 +405,8 @@ public class GoogleTokenManager extends LoadingActivity {
 
         }
 
+        db.insertTask("taskID1", "One Leg Squat Hold", "Squat and hold it", "regular");
+        db.insertTask("taskID2", "Flanker", "Look at screen and pull it in the direction of the middle arrow when it appears", "flanker");
 
     }
 

@@ -58,6 +58,8 @@ public class DBHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE TABLE IF NOT EXISTS ORG(orgID VARCHAR PRIMARY KEY, org_name VARCHAR, premium_plan text, role_name VARCHAR, org_initial INT, org_groupCreate INT, org_groupDelete INT, org_editAdmin INT);");
         db.execSQL("CREATE TABLE IF NOT EXISTS GROUPS(groupid VARCHAR primary key, orgID VARCHAR, group_name VARCHAR, group_description TEXT, role_name VARCHAR, group_editing_perm INT, group_sessions_perm INT, group_members_perm INT, group_results_perm INT, group_test_perm INT);");
         db.execSQL("CREATE TABLE IF NOT EXISTS groupMembers(memberID VARCHAR primary key, groupID VARCHAR, orgID VARCHAR, name VARCHAR, role_name VARCHAR, UNIQUE (memberID, groupID) ON CONFLICT REPLACE);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS taskInfo(taskID VARCHAR primary key, task_name VARCHAR, task_description text, task_type VARCHAR);");
+
     }
 
 
@@ -197,7 +199,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /**
      * Group Members Table
-     *memberID VARCHAR, groupid VARCHAR, orgID VARCHAR, name VARCHAR, role_name VARCHAR
+     *
      * Functions for interacting with the groupMembers table.
      *  */
 
@@ -218,7 +220,33 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * Tasks Info Table
+     *taskID VARCHAR primary key, task_name VARCHAR, task_description text, task_type VARCHAR
+     * Functions for interacting with the taskInfo table.
+     *  */
 
+    public boolean insertTask(String id,  String name, String desc, String type) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put("taskID", id);
+        contentValues.put("task_name", name);
+        contentValues.put("task_description", desc);
+        contentValues.put("task_type", type);
+
+        int check = (int) db.insertWithOnConflict("taskInfo", null, contentValues, SQLiteDatabase.CONFLICT_IGNORE);
+        if (check == -1) {
+            db.update("taskInfo", contentValues, "taskID= ?", new String[]{id});
+        }
+        return true;
+    }
+
+    public Cursor getTasks() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery("select * from taskInfo", null);
+        return res;
+    }
 
 
 

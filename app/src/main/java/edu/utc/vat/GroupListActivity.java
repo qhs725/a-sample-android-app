@@ -35,9 +35,7 @@ public class GroupListActivity extends BaseActivity {
 
     public void setRecycler(){
         RecyclerView recList = (RecyclerView) findViewById(R.id.cardList);
-
         type = listSelections.getSelectionType();
-
 
         recList.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -111,6 +109,19 @@ public class GroupListActivity extends BaseActivity {
                 break;
             case "task":
                 setTitle("Select Task");
+                cursor = db.getTasks();
+                size = cursor.getCount();
+                cursor.moveToFirst();
+
+                for (int i = 0; i < size; i++) {
+                    listItemInfo ci = new listItemInfo();
+                    ci.title = cursor.getString(cursor.getColumnIndexOrThrow("task_name"));
+                    ci.role = cursor.getString(cursor.getColumnIndexOrThrow("task_description"));
+                    ci.id = cursor.getString(cursor.getColumnIndexOrThrow("taskID"));
+
+                    cursor.moveToNext();
+                    result.add(ci);
+                }
                 break;
             default: //Organizations
                 setTitle("Select Organization");

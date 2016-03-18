@@ -349,6 +349,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
 
     //TODO: Move to BaseActivity
+    /*
     public  void initServices(){
         if (UserAccount.getIdToken() != null) {
             // set ID TOKEN so that all subsequent Service calls
@@ -412,6 +413,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
             finish();
         }
     }
+    */
 }
 
 

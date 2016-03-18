@@ -77,6 +77,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupsViewHo
                             //intent.putExtra("type", "tasks");
                             break;
                         case "task":
+                            listSelections.selectTask(ci.id);
                             intent = new Intent(v.getContext(), TestingActivity.class);
                             intent.putExtra("taskTitle", ci.title);
                             break;
