@@ -1,5 +1,8 @@
 package edu.utc.vat.util.adapters;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Saves selections to be be retrieved from any other class (TestingActivity being one of the most important).
  *
@@ -7,8 +10,8 @@ package edu.utc.vat.util.adapters;
 public class listSelections {
     private static String org = null;
     private static String group = null;
-    private static String member = null;
-    private static String task = null;
+    private static JSONObject member = new JSONObject();
+    private static JSONObject task = new JSONObject();
     private static String type = "org";
 
     //set type
@@ -36,18 +39,33 @@ public class listSelections {
     }
     
     //MEMBER
-    public static String getSelectedMember() {
+    public static JSONObject getSelectedMember() {
         return member;
     }
-    public static void selectMember(String member) {
-        listSelections.member = member;
+    public static void selectMember(String id, String name) {
+
+        try {
+            listSelections.member.put("id", id);
+            listSelections.member.put("name", name);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        //listSelections.member = member;
     }
 
     //Task
-    public static String getSelectedTask() {
+    public static JSONObject getSelectedTask() {
         return task;
     }
-    public static void selectTask(String task) {
-        listSelections.task = task;
+    public static void selectTask(String id, String name, String desc, String type) {
+        try {
+            listSelections.task.put("id", id);
+            listSelections.task.put("name", name);
+            listSelections.task.put("description", desc);
+            listSelections.task.put("type", type);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

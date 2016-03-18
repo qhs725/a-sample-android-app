@@ -50,6 +50,7 @@ import java.util.List;
 import edu.utc.vat.BlueMixApplication;
 import edu.utc.vat.CallNative;
 import edu.utc.vat.UserAccount;
+import edu.utc.vat.util.adapters.listSelections;
 
 public class dataUploadService extends IntentService {
 
@@ -106,28 +107,24 @@ public class dataUploadService extends IntentService {
                         upload_json_post(obj, "http://utc-vat.mybluemix.net/upload/form", mHandler);
                     }
                 }
-            }
-            else{
+            } else {
                 packageData();
             }
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
-        return; //End service
     }
 
 
     //Opens socket connection to server
-   public void socketConnect(String destination) {
-       try {
-           mSocket = IO.socket(destination);
-           mSocket.connect();
-       } catch (URISyntaxException e) {
-       }
-   }
+    public void socketConnect(String destination) {
+        try {
+            mSocket = IO.socket(destination);
+            mSocket.connect();
+        } catch (URISyntaxException e) {
+        }
+    }
 
     //Uploads json via Socket.io to the server specified in socketConnect()
     public void upload_json(JSONObject json, Handler mHandler) {
@@ -210,8 +207,7 @@ public class dataUploadService extends IntentService {
             if (extension.equals(ext) && namesOnly == 0) {
                 dataFileNames.add(list[i].getName());
                 Log.d("dataUpload", "Found Data file:" + list[i].getName());
-            }
-            else if(extension.equals(ext) && namesOnly == 1){
+            } else if (extension.equals(ext) && namesOnly == 1) {
                 dataFileNames.add(filenameArray[0]);
                 Log.d("dataUpload", "Found Data file:" + list[i].getName());
             }
@@ -225,7 +221,7 @@ public class dataUploadService extends IntentService {
 
         ArrayList<String> fileNames = getFilesNames(EXT, 0);
 
-        if(!fileNames.isEmpty()) {
+        if (!fileNames.isEmpty()) {
             obj = new JSONObject();
 
             try {
@@ -233,7 +229,6 @@ public class dataUploadService extends IntentService {
 
                 for (int i = 0; i < fileNames.size(); i++) {
                     int numColumns = 0;
-                    String[] userInfo = null;
                     InputStream file = null;
                     BufferedReader reader = null;
                     String lineRow = "";
@@ -289,12 +284,21 @@ public class dataUploadService extends IntentService {
                 }
 
                 //Form JSON object order
+
+                //Add the member selected to body if exists
+                if (listSelections.getSelectedMember() != null) {
+                    JSONObject selectedMember = listSelections.getSelectedMember();
+                    selectedMember.put("orgID", listSelections.getSelectedOrg());
+                    selectedMember.put("groupID", listSelections.getSelectedGroup());
+                    body.put("member", selectedMember);
+                }
+
                 if (flanker.has("STIMULUS")) {
                     body.put("flanker", flanker);
                 }
                 if (appsensor.has("ACCELX")) {
                     body.put("appsensor", appsensor);
-                    if(UserAccount.getSessionInfo() != "") {
+                    if (UserAccount.getSessionInfo().equals("")) {
                         body.put("tasknotes", UserAccount.getSessionInfo());
                         UserAccount.setSessionInfo("");
                     }
@@ -305,8 +309,7 @@ public class dataUploadService extends IntentService {
                     socketConnect(SERVER_IP);
                     upload_json(obj, null);
                     Thread.sleep(500);
-                }
-                else
+                } else
                     saveData(obj + "");
 
             } catch (FileNotFoundException e) {
@@ -320,28 +323,26 @@ public class dataUploadService extends IntentService {
             }
         }
 
-        if(isNetwork()) {
+        if (isNetwork()) {
             socketConnect(SERVER_IP);
             uploadFiles();//upload any remaining files
         }
     }
 
 
-
-
     //Saves string input to file. The file name is generated using numbers to keep track of existing files
     private void saveData(String data) {
         ArrayList<String> fileNames = getFilesNames("json", 1);
-        int num =0;
+        int num = 0;
 
-        for(String name : fileNames) {
+        for (String name : fileNames) {
             int nameNumber = Integer.parseInt(name);
 
-            if(num <=  nameNumber){
+            if (num <= nameNumber) {
                 num = nameNumber + 1;
             }
         }
-        String filename = num +".json";
+        String filename = num + ".json";
         FileOutputStream outputStream;
 
         try {
@@ -356,13 +357,13 @@ public class dataUploadService extends IntentService {
 
     //Converts each json file in internal storage to a JSON object and calls the function to send them to the server
     //Files are uploaded by highest number to lowest
-    private void uploadFiles(){
+    private void uploadFiles() {
         ArrayList<String> fileNames = getFilesNames("json", 0);
-        for(int r = fileNames.size()-1; r >= 0; r--) {
+        for (int r = fileNames.size() - 1; r >= 0; r--) {
             try {
                 String fileStr = loadJSONFromFile(fileNames.get(r));
 
-                if(fileStr != null) {
+                if (fileStr != null) {
                     obj = new JSONObject(fileStr);
                     upload_json(obj, null);
                     Thread.sleep(500);//slight delay between files. Only 1 at most gets through without this
@@ -424,14 +425,22 @@ public class dataUploadService extends IntentService {
 
     //Adds user json object with important info to main obj json
     private void getUserJSON() throws JSONException {
+
+        //Most important
+        obj.put("id_token", UserAccount.getIdToken());
+        obj.put("access_token", UserAccount.getAccessToken());
+
+
         String given_name = UserAccount.getGivenName() != null ? UserAccount.getGivenName() : "null";
         String family_name = UserAccount.getFamilyName() != null ? UserAccount.getFamilyName() : "null";
         name.put("given_name", given_name);
         name.put("family_name", family_name);
         user_json.put("id", UserAccount.getGoogleUserID());
-        user_json.put("idToken", UserAccount.getIdToken());
-        user_json.put("accessToken", UserAccount.getAccessToken());
+       // user_json.put("idToken", UserAccount.getIdToken());
+        //user_json.put("accessToken", UserAccount.getAccessToken());
         user_json.put("name", name);
         obj.put("user", user_json);
+
+
     }
 }

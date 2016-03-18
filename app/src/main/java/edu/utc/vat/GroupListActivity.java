@@ -116,8 +116,9 @@ public class GroupListActivity extends BaseActivity {
                 for (int i = 0; i < size; i++) {
                     listItemInfo ci = new listItemInfo();
                     ci.title = cursor.getString(cursor.getColumnIndexOrThrow("task_name"));
-                    ci.role = cursor.getString(cursor.getColumnIndexOrThrow("task_description"));
+                    ci.description = cursor.getString(cursor.getColumnIndexOrThrow("task_description"));
                     ci.id = cursor.getString(cursor.getColumnIndexOrThrow("taskID"));
+                    ci.type = cursor.getString(cursor.getColumnIndexOrThrow("task_type"));
 
                     cursor.moveToNext();
                     result.add(ci);
@@ -171,7 +172,7 @@ public class GroupListActivity extends BaseActivity {
                 break;
             case "task":
                 listSelections.setSelectionType("member");
-                listSelections.selectMember(null);
+                listSelections.selectMember(null, null);
 
                 break;
         }

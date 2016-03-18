@@ -33,6 +33,9 @@ import com.ibm.mobile.services.core.IBMBluemix;
 import com.ibm.mobile.services.core.IBMCurrentUser;
 import com.ibm.mobile.services.push.IBMPush;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.UUID;
 
@@ -43,6 +46,7 @@ import edu.utc.vat.flanker.FlankerActivity;
 import edu.utc.vat.flanker.FlankerResultsActivity;
 import edu.utc.vat.post.test.ViewDialogFragment;
 import edu.utc.vat.post.test.ViewResultsActivity;
+import edu.utc.vat.util.adapters.listSelections;
 import edu.utc.vat.util.dataUploadService;
 
 
@@ -112,7 +116,14 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         timerClock = (TextView) findViewById(R.id.timer);
         timerTime = 0;
         timerString = timerToString(timerTime);
-        currentExercise.setText(exerciseName);
+
+
+        try{
+        JSONObject task = listSelections.getSelectedTask();
+            currentExercise.setText(exerciseName != null ? exerciseName : task.getString("name"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         testStatus.setText(statusMessage);
         timerClock.setText(timerString);
         getUserInfo = (EditText) findViewById(R.id.SessionInfo);
@@ -166,14 +177,14 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                     if (status != COUNTDOWN && status != TESTING) {
                         userInfo = getUserInfo.getText().toString().trim();
                         //Create UUID for exercise on Start
-                        sessionID = UUID.randomUUID().toString();
-                        UserAccount.setSessionID(sessionID); //set session ID on Start
+                       // sessionID = UUID.randomUUID().toString();
+                       // UserAccount.setSessionID(sessionID); //set session ID on Start
                         UserAccount.setSessionInfo(userInfo);//add user input to UserAccount
 
                         String id = UserAccount.getGoogleUserID();
 
 
-                      CallNative.PassID(sessionID + "," + id + "," + userInfo); //TODO: deprecated
+                     // CallNative.PassID(sessionID + "," + id + "," + userInfo); //TODO: deprecated
 
                         timer.countDown();
                         //Log.i("Testing", "Good--3");
