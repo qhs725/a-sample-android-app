@@ -1,4 +1,7 @@
-
+/**
+ * Class summary:
+ * Uses GroupAdapter to display the Organizations, Groups, Group Members, and tasks related to the logged-in user.
+ */
 package edu.utc.vat;
 
 import android.content.Context;
@@ -85,7 +88,7 @@ public class GroupListActivity extends BaseActivity {
                     ci.title = cursor.getString(cursor.getColumnIndexOrThrow("group_name"));
                     ci.role = cursor.getString(cursor.getColumnIndexOrThrow("role_name"));
                     ci.id = cursor.getString(cursor.getColumnIndexOrThrow("groupid"));
-
+                    ci.test_perm = cursor.getInt(cursor.getColumnIndexOrThrow("group_test_perm"));
                     cursor.moveToNext();
                     result.add(ci);
                 }
@@ -131,6 +134,11 @@ public class GroupListActivity extends BaseActivity {
                 size = cursor.getCount();
                 cursor.moveToFirst();
 
+                if(size == 0){//If user is not in an Organization then display TestingActivity instead of lists
+                    Intent intent = new Intent(this, TestingActivity.class);
+                    listSelections.selectTask("FREE", "FREE Mode: Sample Task", "Limited version to task", "regular");
+                   this.startActivity(intent);
+                }
                 for (int i = 0; i < size; i++) {
                     listItemInfo ci = new listItemInfo();
                     ci.title = cursor.getString(cursor.getColumnIndexOrThrow("org_name"));
@@ -166,14 +174,16 @@ public class GroupListActivity extends BaseActivity {
                 listSelections.setSelectionType("org");
                 listSelections.selectOrg(null);
                 break;
+            case "task":
+                if(listSelections.getGroupPerm() == 1) {
+                    listSelections.setSelectionType("member");
+                    listSelections.selectMember(null, null);
+                    break;
+                }
+                //else: use next case
             case "member":
                 listSelections.setSelectionType("group");
-                listSelections.selectGroup(null);
-                break;
-            case "task":
-                listSelections.setSelectionType("member");
-                listSelections.selectMember(null, null);
-
+                listSelections.selectGroup(null, -1);
                 break;
         }
         // Write your code here

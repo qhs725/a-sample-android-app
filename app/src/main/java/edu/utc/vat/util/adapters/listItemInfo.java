@@ -9,5 +9,6 @@ public class listItemInfo {
     public String role;
     public String id;
     public String type;
+    public int test_perm;
 }
 

@@ -109,6 +109,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.execSQL("DROP TABLE IF EXISTS ORG");
         db.execSQL("DROP TABLE IF EXISTS GROUPS");
+        db.execSQL("DROP TABLE IF EXISTS groupMembers");
+        db.execSQL("DROP TABLE IF EXISTS taskInfo");
 
         buildTables(db);
         return result;

@@ -13,6 +13,7 @@ public class listSelections {
     private static JSONObject member = new JSONObject();
     private static JSONObject task = new JSONObject();
     private static String type = "org";
+    private static int perm = 0;
 
     //set type
     public static String getSelectionType() {
@@ -34,10 +35,15 @@ public class listSelections {
     public static String getSelectedGroup() {
         return group;
     }
-    public static void selectGroup(String group) {
-        listSelections.group = group;
+    public static int getGroupPerm() {
+        return perm;
     }
-    
+    public static void selectGroup(String group, int perm) {
+        listSelections.group = group;
+        listSelections.perm = perm;
+    }
+
+
     //MEMBER
     public static JSONObject getSelectedMember() {
         return member;

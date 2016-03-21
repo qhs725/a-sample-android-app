@@ -1,3 +1,10 @@
+/**
+ * Class summary
+ * Adapter for displaying and handling onClick functions for CardView items in a RecyclerView.
+ * This currently lists all the Organizations, Groups, Group Members, and tasks associated with the logged-in user.
+ * The type of item displayed is based on the values in the listSelections class.
+ * If the user is not an admin the Group Members part is skipped.
+ */
 
 package edu.utc.vat.util.adapters;
 
@@ -65,9 +72,11 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupsViewHo
                             listSelections.selectOrg(ci.id);
                             break;
                         case "group":
-                            listSelections.setSelectionType("member");
-                            listSelections.selectGroup(ci.id);
-                            break;
+                            if(ci.test_perm == 1) {
+                                listSelections.setSelectionType("member");
+                                listSelections.selectGroup(ci.id, ci.test_perm);
+                                break;
+                            } //else: use next case
                         case "member":
                             listSelections.setSelectionType("task");
                             listSelections.selectMember(ci.id, ci.title);

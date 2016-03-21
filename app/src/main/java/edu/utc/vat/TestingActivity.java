@@ -95,6 +95,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     private String uUserID = null;
     private String sessionID = null;
     private Timer timer;
+    private JSONObject task = new JSONObject();
 
 
     @Override
@@ -119,7 +120,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
 
         try{
-        JSONObject task = listSelections.getSelectedTask();
+        task = listSelections.getSelectedTask();
             currentExercise.setText(exerciseName != null ? exerciseName : task.getString("name"));
         } catch (JSONException e) {
             e.printStackTrace();
@@ -157,8 +158,13 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         if (CallNative.FlankerCheck() == true) {
             Log.i("TESTING","GO TO FLANKER RESULTS DIALOG .. NO .. ??");
             //Upload(); //TODO: Create alternate Flanker upload dialog fragment
-        } else if (exercise == FLANKER) {
-            startFlanker();
+        } else try {
+            if (exercise == FLANKER || task.getString("type") == "flanker") {
+                startFlanker();
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
@@ -176,16 +182,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                 } else {
                     if (status != COUNTDOWN && status != TESTING) {
                         userInfo = getUserInfo.getText().toString().trim();
-                        //Create UUID for exercise on Start
-                       // sessionID = UUID.randomUUID().toString();
-                       // UserAccount.setSessionID(sessionID); //set session ID on Start
                         UserAccount.setSessionInfo(userInfo);//add user input to UserAccount
-
-                        String id = UserAccount.getGoogleUserID();
-
-
-                     // CallNative.PassID(sessionID + "," + id + "," + userInfo); //TODO: deprecated
-
                         timer.countDown();
                         //Log.i("Testing", "Good--3");
                         status = COUNTDOWN;

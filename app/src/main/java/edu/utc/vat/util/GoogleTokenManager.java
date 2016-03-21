@@ -397,7 +397,7 @@ public class GoogleTokenManager extends LoadingActivity {
                         JSONArray groupMembers = group.getJSONArray("Members");
                         for(int y = 0; y < groupMembers.length(); y++){
                             JSONObject member = groupMembers.getJSONObject(y);
-                            db.insertMember(member.getString("USERID"), member.getString("GROUPID"), member.getString("ORGANIZATIONID"), member.getString("NAME_FIRST") + " " + member.getString("NAME_LAST"), member.getString("ROLE_NAME"));
+                            db.insertMember(member.getString("USERID"), group.getString("GROUPID"), org.getString("ORGANIZATIONID"), member.getString("NAME_FIRST") + " " + member.getString("NAME_LAST"), member.getString("ROLE_NAME"));
                         }
                     }
 
