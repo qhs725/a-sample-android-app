@@ -179,6 +179,7 @@ public class GroupListActivity extends BaseActivity {
         // Write your code here
 
         super.onBackPressed();
+        finish();
     }
 
     public static Intent createIntent(Context context) {

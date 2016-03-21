@@ -45,6 +45,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener{
             intent = new Intent(context, GoogleTokenManager.class);
             intent.putExtra("action", 1);
             startActivity(intent);
+			finish();
         }
 
 		setContentView(R.layout.activity_login);

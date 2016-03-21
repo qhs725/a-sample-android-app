@@ -308,7 +308,6 @@ public class dataUploadService extends IntentService {
                 if (isNetwork()) {
                     socketConnect(SERVER_IP);
                     upload_json(obj, null);
-                    Thread.sleep(500);
                 } else
                     saveData(obj + "");
 
@@ -317,8 +316,6 @@ public class dataUploadService extends IntentService {
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
@@ -376,6 +373,11 @@ public class dataUploadService extends IntentService {
                 e.printStackTrace();
             }
         }
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         mSocket.disconnect(); //disconnect when finished uploading
 
     }
@@ -427,8 +429,8 @@ public class dataUploadService extends IntentService {
     private void getUserJSON() throws JSONException {
 
         //Most important
-        obj.put("id_token", UserAccount.getIdToken());
-        obj.put("access_token", UserAccount.getAccessToken());
+        body.put("id_token", UserAccount.getIdToken());
+        body.put("access_token", UserAccount.getAccessToken());
 
 
         String given_name = UserAccount.getGivenName() != null ? UserAccount.getGivenName() : "null";
