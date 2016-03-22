@@ -285,14 +285,6 @@ public class dataUploadService extends IntentService {
 
                 //Form JSON object order
 
-                //Add the member selected to body if exists
-                if (listSelections.getSelectedMember() != null) {
-                    JSONObject selectedMember = listSelections.getSelectedMember();
-                    selectedMember.put("orgID", listSelections.getSelectedOrg());
-                    selectedMember.put("groupID", listSelections.getSelectedGroup());
-                    body.put("member", selectedMember);
-                }
-
                 if (flanker.has("STIMULUS")) {
                     body.put("flanker", flanker);
                 }
@@ -432,6 +424,11 @@ public class dataUploadService extends IntentService {
         body.put("id_token", UserAccount.getIdToken());
         body.put("access_token", UserAccount.getAccessToken());
 
+        //Add the member selected to body if exists
+            body.put("orgID", listSelections.getSelectedOrg());
+            body.put("groupID", listSelections.getSelectedGroup());
+            body.put("testedMember", listSelections.getSelectedMember());
+            // body.put("member", selectedMember);
 
         String given_name = UserAccount.getGivenName() != null ? UserAccount.getGivenName() : "null";
         String family_name = UserAccount.getFamilyName() != null ? UserAccount.getFamilyName() : "null";
