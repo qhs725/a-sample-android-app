@@ -99,7 +99,7 @@
             android:id="@+id/SessionInfo"
             android:layout_width="320dp"
             android:layout_height="86dp"
-            android:hint="ENTER: NAME"
+            android:hint="Notes"
             android:textSize="28sp"
             android:background="#d1000000"
             android:textColor="#ffffff"

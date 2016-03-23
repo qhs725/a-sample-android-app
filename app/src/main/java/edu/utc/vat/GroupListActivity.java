@@ -72,6 +72,7 @@ public class GroupListActivity extends BaseActivity {
     private List<listItemInfo> createList() {
 
         List<listItemInfo> result = new ArrayList<listItemInfo>();
+        listItemInfo header = new listItemInfo();
         Cursor cursor;
         int size;
 
@@ -79,9 +80,14 @@ public class GroupListActivity extends BaseActivity {
         switch (type) {
             case "group":
                 setTitle("Select Group");
+                listSelections.selectGroup(null, -1);
                 cursor = db.getListByID(listSelections.getSelectedOrg());
                 size = cursor.getCount();
                 cursor.moveToFirst();
+
+                //Header
+                header.title = "Select Group";
+                result.add(header);
 
                 for (int i = 0; i < size; i++) {
                     listItemInfo ci = new listItemInfo();
@@ -95,9 +101,14 @@ public class GroupListActivity extends BaseActivity {
                 break;
             case "member":
                 setTitle("Select Group Member");
+                listSelections.selectMember(null, null);
                 cursor = db.getListByID(listSelections.getSelectedGroup());
                 size = cursor.getCount();
                 cursor.moveToFirst();
+
+                //Header
+                header.title = "Select Group Member";
+                result.add(header);
 
                 for (int i = 0; i < size; i++) {
                     listItemInfo ci = new listItemInfo();
@@ -112,9 +123,14 @@ public class GroupListActivity extends BaseActivity {
                 break;
             case "task":
                 setTitle("Select Task");
+                listSelections.selectTask(null, null, null, null);
                 cursor = db.getTasks();
                 size = cursor.getCount();
                 cursor.moveToFirst();
+
+                //Header
+                header.title = "Select Task";
+                result.add(header);
 
                 for (int i = 0; i < size; i++) {
                     listItemInfo ci = new listItemInfo();
@@ -129,10 +145,14 @@ public class GroupListActivity extends BaseActivity {
                 break;
             default: //Organizations
                 setTitle("Select Organization");
-
+                listSelections.selectOrg(null);
                 cursor = db.getOrgs();
                 size = cursor.getCount();
                 cursor.moveToFirst();
+
+                //Header
+                header.title = "Select Organization";
+                result.add(header);
 
                 if(size == 0){//If user is not in an Organization then display TestingActivity instead of lists
                     Intent intent = new Intent(this, TestingActivity.class);

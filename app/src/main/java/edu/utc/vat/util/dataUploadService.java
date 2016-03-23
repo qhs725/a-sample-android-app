@@ -290,7 +290,7 @@ public class dataUploadService extends IntentService {
                 }
                 if (appsensor.has("ACCELX")) {
                     body.put("appsensor", appsensor);
-                    if (UserAccount.getSessionInfo().equals("")) {
+                    if (UserAccount.getSessionInfo() != null) {
                         body.put("tasknotes", UserAccount.getSessionInfo());
                         UserAccount.setSessionInfo("");
                     }

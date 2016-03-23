@@ -14,7 +14,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
@@ -128,8 +130,6 @@ public class GoogleTokenManager extends LoadingActivity {
         Log.i(CLASS_NAME, "Web Application Client ID is: " + webAppClientIdValue);
 
 
-        //TODO: if extra action is == 1 then attempt to validate user on the server using access token from ACTIVEUSRE table. If there is no Internet connection then login with saved user data.
-        //TODO: if action == 0 then run the default login process.
         action = extras.getInt("action");
         if (extras.getInt("action") == 1) {
             new GetTokenTask().execute();
@@ -277,7 +277,6 @@ public class GoogleTokenManager extends LoadingActivity {
                 //Get id from sub key in initial token and only send that to server
                 JSONObject token_json = new JSONObject();
 
-                token_json = new JSONObject();
                 //token_json.put("id", id);
                 token_json.put("access_token", googleAccessToken);
                 token_json.put("id_token", idToken);
@@ -307,39 +306,50 @@ public class GoogleTokenManager extends LoadingActivity {
                     while ((line = reader.readLine()) != null) {
                         sb.append(line + "\n");
                     }
-                    //get the string version of the response data
-                    body = new JSONObject(sb.toString());
+                    //get the string version of the response data and check if it is empty
+                    if(sb.toString().equals("") || sb.toString() == null) {
+                        getUserfromDB();
 
-                    newUser = body.getBoolean("check");
-                    Log.d("ACCESS: ", body.getString("user")); //for dev use only
-
-                    //prepare access object
-                    if (body.has("user")) {
-                        JSONObject user = new JSONObject(body.getString("user"));
-                        saveAccessObject(user);
-
-                        if (user.length() != 0) {
-                            firstName = (String) user.get("given_name");
-                            lastName = (String) user.get("family_name");
-                            email = (String) user.get("email");
-                            picture = (String) user.get("picture");
-                            id = (String) user.get("id");
-
-                            Log.i(CLASS_NAME, "Account received is: " + email);
-                            Log.i(CLASS_NAME, "First Name: " + firstName);
-                            Log.i(CLASS_NAME, "Last Name: " + lastName);
-                            Log.i(CLASS_NAME, "ID:  " + id);
-                        }
-
+                        //toast made outside of activity
+                        Handler mHandler = new Handler(getMainLooper());
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(BlueMixApplication.getAppContext(), "Unable to sync account info from server",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
                     }
-                } else if (action == 1) {
-                    newUser = false;
-                    id = activeUser.getString(activeUser.getColumnIndexOrThrow("id"));
-                    firstName = activeUser.getString(activeUser.getColumnIndexOrThrow("given_name"));
-                    lastName = activeUser.getString(activeUser.getColumnIndexOrThrow("family_name"));
-                    email = activeUser.getString(activeUser.getColumnIndexOrThrow("email"));
+                    else {
+                        body = new JSONObject(sb.toString());
 
+                        newUser = body.getBoolean("check");
+                        Log.d("ACCESS: ", body.getString("user")); //for dev use only
+
+                        //prepare access object
+                        if (body.has("user")) {
+                            JSONObject user = new JSONObject(body.getString("user"));
+                            saveAccessObject(user);
+
+                            if (user.length() != 0) {
+                                firstName = (String) user.get("given_name");
+                                lastName = (String) user.get("family_name");
+                                email = (String) user.get("email");
+                                picture = (String) user.get("picture");
+                                id = (String) user.get("id");
+
+                                Log.i(CLASS_NAME, "Account received is: " + email);
+                                Log.i(CLASS_NAME, "First Name: " + firstName);
+                                Log.i(CLASS_NAME, "Last Name: " + lastName);
+                                Log.i(CLASS_NAME, "ID:  " + id);
+                            }
+
+
+                        }
+                    }
+                } else if (action == 1) {
+                  getUserfromDB();
                 }
 
             } catch (UnsupportedEncodingException e) {
@@ -468,6 +478,19 @@ public class GoogleTokenManager extends LoadingActivity {
 
 
         return isNetwork;
+    }
+
+
+    /**
+     * Retrieves User from database
+     */
+    private void getUserfromDB(){
+        newUser = false;
+        id = activeUser.getString(activeUser.getColumnIndexOrThrow("id"));
+        firstName = activeUser.getString(activeUser.getColumnIndexOrThrow("given_name"));
+        lastName = activeUser.getString(activeUser.getColumnIndexOrThrow("family_name"));
+        email = activeUser.getString(activeUser.getColumnIndexOrThrow("email"));
+
     }
 }
 

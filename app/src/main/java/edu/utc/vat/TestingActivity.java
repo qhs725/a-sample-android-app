@@ -2,9 +2,9 @@
  * Sports Injury Prevention Screening -- SIPS
  * v0.01.1b (12/?/15)
  * rg 9/9/15
- *
+ * <p/>
  * TODO: Get status updating appropriately
- *
+ * <p/>
  * TODO: Add fragments for displaying timer and Exercise instructions
  * TODO: Move FLAG_KEEP_SCREEN_ON to timer fragment, so, screen only remains on during testing
  */
@@ -16,6 +16,8 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 
+import android.support.v4.app.NavUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -70,7 +72,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
     private TextView currentExercise;
     public String exerciseName;
-    private HashMap<Integer, String> exerciseList = new HashMap <Integer, String>();
+    private HashMap<Integer, String> exerciseList = new HashMap<Integer, String>();
 
     private TextView timerClock;
     private int timerTime;
@@ -119,8 +121,8 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         timerString = timerToString(timerTime);
 
 
-        try{
-        task = listSelections.getSelectedTask();
+        try {
+            task = listSelections.getSelectedTask();
             currentExercise.setText(exerciseName != null ? exerciseName : task.getString("name"));
         } catch (JSONException e) {
             e.printStackTrace();
@@ -156,10 +158,10 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         //initServices(); //Initialize Bluemix connection
 
         if (CallNative.FlankerCheck() == true) {
-            Log.i("TESTING","GO TO FLANKER RESULTS DIALOG .. NO .. ??");
+            Log.i("TESTING", "GO TO FLANKER RESULTS DIALOG .. NO .. ??");
             //Upload(); //TODO: Create alternate Flanker upload dialog fragment
         } else try {
-            if (exercise == FLANKER || task.getString("type") == "flanker") {
+            if (exercise == FLANKER || task.getString("type").equals("flanker")) {
                 startFlanker();
             }
 
@@ -171,26 +173,17 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.TestingStartButton: {
-                if (getUserInfo.getText().toString().trim().length() > 0) {
-                    status = READY;
-                }
-                if (status != READY) {
-                    Toast.makeText(this, "Please enter your NAME...",
-                            Toast.LENGTH_SHORT).show();
-                    resetButton.performClick();
+                if (status != COUNTDOWN && status != TESTING) {
+                    userInfo = getUserInfo.getText().toString().trim();
+                    UserAccount.setSessionInfo(userInfo);//add user input to UserAccount
+                    timer.countDown();
+                    //Log.i("Testing", "Good--3");
+                    status = COUNTDOWN;
                     break;
                 } else {
-                    if (status != COUNTDOWN && status != TESTING) {
-                        userInfo = getUserInfo.getText().toString().trim();
-                        UserAccount.setSessionInfo(userInfo);//add user input to UserAccount
-                        timer.countDown();
-                        //Log.i("Testing", "Good--3");
-                        status = COUNTDOWN;
-                        break;
-                    } else {
-                        showToast("TEST IN PROGRESS, PLEASE RESET TO START NEW TEST");
-                        break;
-                    }
+                    status = READY;
+                    showToast("TEST IN PROGRESS, PRESS RESET TO CANCEL");
+                    break;
                 }
             }
             case R.id.TestingResetButton: {
@@ -200,14 +193,14 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                 statusUpdate(status);
                 getUserInfo.setText("");
                 getUserInfo.setOnClickListener(new View.OnClickListener() {
-                   public void onClick(View view) {
-                       getUserInfo.requestFocus();
-                       InputMethodManager inputManager = (InputMethodManager)
-                               getSystemService(Context.INPUT_METHOD_SERVICE);
-                       inputManager.showSoftInput(getUserInfo,
-                               InputMethodManager.SHOW_IMPLICIT);
-                       }
-                   }
+                                                   public void onClick(View view) {
+                                                       getUserInfo.requestFocus();
+                                                       InputMethodManager inputManager = (InputMethodManager)
+                                                               getSystemService(Context.INPUT_METHOD_SERVICE);
+                                                       inputManager.showSoftInput(getUserInfo,
+                                                               InputMethodManager.SHOW_IMPLICIT);
+                                                   }
+                                               }
                 );
                 break;
             }
@@ -266,8 +259,8 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         Log.i("update", "statusUpdate");
         String statusUpdate = statusList.get(status);
         testStatus.setText(statusUpdate);
-        if(status == STOPPED) {
-            Log.e("testing","STATUS == STOPPED");
+        if (status == STOPPED) {
+            Log.e("testing", "STATUS == STOPPED");
         }
     }
 
@@ -282,6 +275,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         timerString = timerToString(timerTime);
         timerClock.setText(timerString);
     }
+
     public int Upload() {
         status = READY;
         String statusUpdate = statusList.get(status);
@@ -291,6 +285,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         statusUpdate(status);
         return 0;
     }
+
     public int Viewer() {
         DialogFragment viewResults = new ViewDialogFragment();
         viewResults.show(getFragmentManager(), "viewResults");
@@ -306,8 +301,9 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         exerciseList.put(2, "SINGLE LEG JUMP TEST");
         exerciseList.put(3, "FLANKER");
     }
+
     public void completeStatusList() {
-        statusList.put(-1, "Enter NAME...");
+        statusList.put(-1, "Add notes or press START...");
         statusList.put(3, "Press START to begin...");
         statusList.put(2, "Countdown to test...");
         statusList.put(1, "Testing...");
@@ -325,15 +321,15 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     }
 
     public void launchViewerF() {
-        Log.i("TESTING","launching viewer activity");
+        Log.i("TESTING", "launching viewer activity");
         startActivity(new Intent(this, FlankerResultsActivity.class));
-        Log.i("TESTING","launched viewer activity");
+        Log.i("TESTING", "launched viewer activity");
     }
 
     public void launchViewer() {
-        Log.i("TESTING","launching viewer activity");
+        Log.i("TESTING", "launching viewer activity");
         startActivity(new Intent(this, ViewResultsActivity.class));
-        Log.i("TESTING","launched viewer activity");
+        Log.i("TESTING", "launched viewer activity");
     }
 
     private void startFlanker() {
@@ -356,6 +352,21 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     }
 
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                if(task == null) {
+                    NavUtils.navigateUpFromSameTask(this);
+                }
+                else{
+                    finish();
+                }
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     //TODO: Move to BaseActivity
     /*
     public  void initServices(){
