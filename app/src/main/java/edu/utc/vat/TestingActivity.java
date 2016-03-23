@@ -11,6 +11,7 @@
 
 package edu.utc.vat;
 
+import android.app.Activity;
 import android.app.DialogFragment;
 
 import android.content.Context;
@@ -18,6 +19,11 @@ import android.content.Intent;
 
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -101,6 +107,9 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     private String sessionID = null;
     private Timer timer;
     private JSONObject task = new JSONObject();
+    private DrawerLayout mDrawerLayout;
+    private Toolbar mToolbar;
+    private ActionBarDrawerToggleCompat mDrawerToggle;
 
 
     @Override
@@ -110,8 +119,11 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         getWindow().addFlags(
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
         );
-        setContentView(R.layout.activity_testing);
 
+        changeTheme();
+        setContentView(R.layout.activity_testing);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.navDrawer);
+        Button button = new Button(this);
         status = VOID;
         completeExerciseList();
         completeStatusList();
@@ -123,6 +135,20 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         timerTime = 0;
         timerString = timerToString(timerTime);
 
+
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        mDrawerToggle = new ActionBarDrawerToggleCompat(this, mDrawerLayout, mToolbar);
+      //  mDrawerLayout.addDrawerListener(mDrawerToggle);
+
+        this.setSupportActionBar(mToolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+
+        if (actionBar != null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+        }
 
         try {
             task = listSelections.getSelectedTask();
@@ -362,17 +388,40 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         switch (item.getItemId()) {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
-                if(task == null) {
-                    NavUtils.navigateUpFromSameTask(this);
-                }
-                else{
-                    finish();
+                if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
+                    mDrawerLayout.closeDrawer(Gravity.LEFT);
+                } else {
+                    mDrawerLayout.openDrawer(Gravity.LEFT);
                 }
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    public void open()
+    {
+
+        mDrawerLayout.openDrawer(Gravity.LEFT);
+    }
+
+    private class ActionBarDrawerToggleCompat extends ActionBarDrawerToggle {
+
+        public ActionBarDrawerToggleCompat(Activity activity, DrawerLayout drawerLayout, Toolbar toolbar) {
+            super(
+                    activity,
+                    drawerLayout, toolbar,
+                    R.string.hello_world,
+                    R.string.hello_world);
+        }
+    }
+    public void onDrawerClosed(View view) {
+        supportInvalidateOptionsMenu();
+    }
+    public void onDrawerOpened(View drawerView) {
+        supportInvalidateOptionsMenu();
+    }
 }
+
 
 
 

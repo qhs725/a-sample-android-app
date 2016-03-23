@@ -148,6 +148,10 @@ public class BaseActivity extends AppCompatActivity {
         Snackbar.make(findViewById(v), message, Snackbar.LENGTH_LONG).show();
     }
 
+    void changeTheme(){
+        setTheme(android.R.style.Theme_DeviceDefault_NoActionBar_TranslucentDecor );
+    }
+
 }
 
 
