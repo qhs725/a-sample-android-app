@@ -16,6 +16,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.os.Bundle;
 
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Toast;
@@ -173,6 +176,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.TestingStartButton: {
+
                 if (status != COUNTDOWN && status != TESTING) {
                     userInfo = getUserInfo.getText().toString().trim();
                     UserAccount.setSessionInfo(userInfo);//add user input to UserAccount
@@ -182,7 +186,8 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                     break;
                 } else {
                     status = READY;
-                    showToast("TEST IN PROGRESS, PRESS RESET TO CANCEL");
+                    showSnackbar(R.id.TestScroll, "TEST IN PROGRESS, PRESS RESET TO CANCEL");
+                    //showToast("TEST IN PROGRESS, PRESS RESET TO CANCEL");
                     break;
                 }
             }

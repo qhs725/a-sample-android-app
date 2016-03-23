@@ -13,6 +13,7 @@ import android.net.NetworkInfo;
 
 import android.os.Bundle;
 
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 
 import android.util.Log;
@@ -20,6 +21,7 @@ import android.util.Log;
 import android.view.Menu;
 
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.ibm.mobile.services.core.IBMBluemix;
@@ -137,6 +139,14 @@ public class BaseActivity extends AppCompatActivity {
         newToast.show();
     }
 
+
+    /**
+     * Displays a Snackbar widget(alternative to toasts). Must include the layout to appear at and message to show.
+     *
+     */
+    void showSnackbar(int v, String message){
+        Snackbar.make(findViewById(v), message, Snackbar.LENGTH_LONG).show();
+    }
 
 }
 
