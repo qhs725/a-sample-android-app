@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    style="@style/Theme.AppCompat.NoActionBar">
+    android:fitsSystemWindows="true">
 
     <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -15,8 +15,8 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -75,13 +75,18 @@
                         android:layout_below="@+id/imageView"
                         android:layout_centerHorizontal="true"
                         android:layout_gravity="center_horizontal"
-                        android:background="#000000"
+                        android:background="@drawable/black_rect"
                         android:paddingLeft="5dip"
-                        android:paddingTop="3dip"
+                        android:paddingTop="3dp"
                         android:textColor="#ff0000"
                         android:textIsSelectable="false"
                         android:textSize="48sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:elevation="2dp"
+                        android:editable="true"
+                        android:text="00:00"
+                        android:paddingBottom="2dp"
+                        android:elegantTextHeight="false" />
 
                     <TextView
                         android:id="@+id/testing_status"
@@ -95,7 +100,8 @@
                         android:layout_below="@+id/timer"
                         android:gravity="center_vertical|center_horizontal"
                         android:textSize="28sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:nestedScrollingEnabled="true" />
 
                     <Button
                         android:id="@+id/TestingResetButton"
@@ -104,7 +110,7 @@
                         android:layout_above="@+id/SessionInfo"
                         android:layout_alignLeft="@+id/SessionInfo"
                         android:layout_alignStart="@+id/SessionInfo"
-                        android:background="#ff0000"
+                        android:background="@drawable/red_btn"
                         android:gravity="center"
                         android:paddingTop="6dp"
                         android:text="@string/reset_testing_menu"
@@ -118,12 +124,13 @@
                         android:layout_alignEnd="@+id/SessionInfo"
                         android:layout_alignRight="@+id/SessionInfo"
                         android:layout_below="@+id/testing_status"
-                        android:background="#ddb9a826"
+                        android:background="@drawable/start_button"
                         android:gravity="center"
                         android:paddingTop="6dp"
                         android:text="@string/start_testing_menu"
                         android:textSize="42sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:elevation="5dp"/>
 
                     <EditText
                         android:id="@+id/SessionInfo"
@@ -140,7 +147,8 @@
                         android:textColorHint="#ffffff"
                         android:textSize="28sp"
                         android:textStyle="bold"
-                        android:visibility="visible" />
+                        android:visibility="visible"
+                        android:layout_marginTop="10dp" />
 
                     <Button
                         android:id="@+id/TestingInstructionsButton"
@@ -151,7 +159,8 @@
                         android:layout_gravity="center_horizontal"
                         android:paddingTop="6dp"
                         android:text="Instructions"
-                        android:textSize="24sp" />
+                        android:textSize="24sp"
+                        android:elevation="5dp"/>
 
                 </RelativeLayout>
 
