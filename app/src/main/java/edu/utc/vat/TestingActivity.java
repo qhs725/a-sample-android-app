@@ -17,6 +17,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 
+import android.graphics.Bitmap;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
@@ -435,8 +436,13 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         TextView nam = (TextView) header.findViewById(R.id.header_name);
 
 
-        cv.setImageBitmap(UserAccount.getPicture());
+        Bitmap image = UserAccount.getPicture();
+        if(image != null)
+            cv.setImageBitmap(UserAccount.getPicture());
+
+        if(UserAccount.getEmail() != null)
         em.setText(UserAccount.getEmail());
+        if(UserAccount.getName() != null)
         nam.setText(UserAccount.getName());
 
         nav.addHeaderView(header);
