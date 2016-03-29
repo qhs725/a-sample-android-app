@@ -10,6 +10,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -43,6 +45,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
@@ -65,6 +68,7 @@ public class GoogleTokenManager extends LoadingActivity {
     private static final String CLASS_NAME = GoogleTokenManager.class.getName();
     private static final int ACCOUNT_PICKER_REQUEST_CODE = 17;
     private static final int AUTH_REQUEST_CODE = 18;
+    private Bitmap profile_img = null;
 
     // Bearer Tokens from Google Actions will always specify this issuer.
     static String GOOGLE_ISSUER = "accounts.google.com";
@@ -339,10 +343,19 @@ public class GoogleTokenManager extends LoadingActivity {
                                 picture = (String) user.get("picture");
                                 id = (String) user.get("id");
 
+                                Log.i(CLASS_NAME, "User Info received is: " + user.toString());
                                 Log.i(CLASS_NAME, "Account received is: " + email);
                                 Log.i(CLASS_NAME, "First Name: " + firstName);
                                 Log.i(CLASS_NAME, "Last Name: " + lastName);
                                 Log.i(CLASS_NAME, "ID:  " + id);
+
+                                try {
+                                    InputStream in = new java.net.URL(picture).openStream();
+                                    profile_img = BitmapFactory.decodeStream(in);
+                                } catch (Exception e) {
+                                    Log.e("Error", e.getMessage());
+                                    e.printStackTrace();
+                                }
                             }
 
 
@@ -441,7 +454,7 @@ public class GoogleTokenManager extends LoadingActivity {
                 UserAccount.setFamilyName(lastName);
                 UserAccount.setGivenName(firstName);
                 UserAccount.setEmail(email);
-                UserAccount.setPicture(picture);
+                UserAccount.setPicture(profile_img);
                 UserAccount.setGoogleUserID(id);
             }
             final Context context = thisActivity;

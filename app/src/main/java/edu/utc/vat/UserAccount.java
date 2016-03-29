@@ -1,5 +1,6 @@
 package edu.utc.vat;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import java.io.UnsupportedEncodingException;
@@ -12,17 +13,17 @@ public class UserAccount {
 	private static String familyName = null;
 	private static String userName = null;
 	private static String userEmail = null;
-	private static String userPicture = null;
+	private static Bitmap userPicture = null;
 	private static String accessToken = null;
 	//uUserID is IBM Bluemix unique user id. TODO: may be deprecated
 	private static String uUserID = null;
 	private static String sessionID = null;
 	private static String sessionInfo = null;
 	
-	public static String getPicture() {
+	public static Bitmap getPicture() {
 		return userPicture;
 	}
-	public static void setPicture(String userPicture) {
+	public static void setPicture(Bitmap userPicture) {
 		UserAccount.userPicture = userPicture;
 	}
 	public static String getIdToken() {

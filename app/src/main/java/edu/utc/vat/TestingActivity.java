@@ -17,6 +17,7 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v4.widget.DrawerLayout;
@@ -53,6 +54,7 @@ import java.util.UUID;
 import bolts.Continuation;
 import bolts.Task;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import edu.utc.vat.flanker.FlankerActivity;
 import edu.utc.vat.flanker.FlankerResultsActivity;
 import edu.utc.vat.post.test.ViewDialogFragment;
@@ -99,12 +101,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     public final long JUMP_TESTING_TIME = 5;
     private final long LEG_BALANCE_TESTING_TIME = 30;
 
-    private Toast concurrentToast;
-
-    public BlueMixApplication blApplication = null;
     private static final String CLASS_NAME = "LoginActivity";
-    private String uUserID = null;
-    private String sessionID = null;
     private Timer timer;
     private JSONObject task = new JSONObject();
     private DrawerLayout mDrawerLayout;
@@ -122,8 +119,9 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
         changeTheme();
         setContentView(R.layout.activity_testing);
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.navDrawer);
-        Button button = new Button(this);
+
         status = VOID;
         completeExerciseList();
         completeStatusList();
@@ -139,13 +137,12 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
         mDrawerToggle = new ActionBarDrawerToggleCompat(this, mDrawerLayout, mToolbar);
-      //  mDrawerLayout.addDrawerListener(mDrawerToggle);
-
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
         this.setSupportActionBar(mToolbar);
-
         ActionBar actionBar = getSupportActionBar();
+        addUserToHeader();
 
-        if (actionBar != null){
+        if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeButtonEnabled(true);
         }
@@ -398,8 +395,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         return super.onOptionsItemSelected(item);
     }
 
-    public void open()
-    {
+    public void open() {
 
         mDrawerLayout.openDrawer(Gravity.LEFT);
     }
@@ -410,15 +406,41 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
             super(
                     activity,
                     drawerLayout, toolbar,
-                    R.string.hello_world,
-                    R.string.hello_world);
+                    R.string.drawer_open,
+                    R.string.close_drawer);
         }
+
+        @Override
+        public void onDrawerClosed(View view) {
+            super.onDrawerOpened(view);
+            supportInvalidateOptionsMenu();
+        }
+
+        @Override
+        public void onDrawerOpened(View drawerView) {
+            super.onDrawerOpened(drawerView);
+            supportInvalidateOptionsMenu();
+        }
+
     }
-    public void onDrawerClosed(View view) {
-        supportInvalidateOptionsMenu();
-    }
-    public void onDrawerOpened(View drawerView) {
-        supportInvalidateOptionsMenu();
+
+    /**
+     * Add Active user info to navigation drawer header
+     */
+    private void addUserToHeader() {
+        View header = getLayoutInflater().inflate(R.layout.drawer_header, null);
+        NavigationView nav = (NavigationView) findViewById(R.id.nav_view);
+        CircleImageView cv = (CircleImageView) header.findViewById(R.id.profile_image);
+        TextView em = (TextView) header.findViewById(R.id.header_email);
+        TextView nam = (TextView) header.findViewById(R.id.header_name);
+
+
+        cv.setImageBitmap(UserAccount.getPicture());
+        em.setText(UserAccount.getEmail());
+        nam.setText(UserAccount.getName());
+
+        nav.addHeaderView(header);
+
     }
 }
 
