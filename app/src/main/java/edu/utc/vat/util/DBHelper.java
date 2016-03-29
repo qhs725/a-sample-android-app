@@ -2,7 +2,7 @@ package edu.utc.vat.util;
 
 /**
  * Created by Jaysp656 on 3/8/2016.
- * <p>
+ * <p/>
  * Helper class for connections to SQLite Database
  */
 
@@ -205,7 +205,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * Functions for interacting with the groupMembers table.
      *  */
 
-    public boolean insertMember(String memberID,  String groupID, String orgId, String name, String role) {
+    public boolean insertMember(String memberID, String groupID, String orgId, String name, String role) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("memberID", memberID);
@@ -228,7 +228,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * Functions for interacting with the taskInfo table.
      *  */
 
-    public boolean insertTask(String id,  String name, String desc, String type) {
+    public boolean insertTask(String id, String name, String desc, String type) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
@@ -249,7 +249,6 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor res = db.rawQuery("select * from taskInfo", null);
         return res;
     }
-
 
 
     /**

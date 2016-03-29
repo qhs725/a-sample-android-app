@@ -114,7 +114,6 @@ public class RegistrationForm extends AppCompatActivity {
         formQuestion.setText("What is your name?");
 
 
-
         //Adds answers to a json object and calls method for the next question
         findViewById(R.id.formNextBtn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,7 +125,7 @@ public class RegistrationForm extends AppCompatActivity {
                         return;
                     }
 
-                    if(getSportsAnswers()) {
+                    if (getSportsAnswers()) {
                         submitForm();
                     }
                 }
@@ -381,46 +380,45 @@ public class RegistrationForm extends AppCompatActivity {
     }
 
     //Adds sport to json if checked, leaves out if doesn't exist to mimic how a web form handles post requests
-    private boolean getSportsAnswers(){
+    private boolean getSportsAnswers() {
 
-        if(soccer.isChecked())
+        if (soccer.isChecked())
             put_json("sport_soccer", "Soccer");
 
-        if(volleyball.isChecked())
+        if (volleyball.isChecked())
             put_json("sport_volleyball", "Volleyball");
 
-        if(football.isChecked())
+        if (football.isChecked())
             put_json("sport_football", "Football");
 
-        if(volleyball.isChecked())
+        if (volleyball.isChecked())
             put_json("sport_baseball", "Baseball");
 
-        if(baseball.isChecked())
+        if (baseball.isChecked())
             put_json("sport_basketball", "Basketball");
 
-        if(golf.isChecked())
+        if (golf.isChecked())
             put_json("sport_golf", "Golf");
 
-        if(tennis.isChecked())
+        if (tennis.isChecked())
             put_json("sport_tennis", "Tennis");
 
-        if(track_cross_country.isChecked())
+        if (track_cross_country.isChecked())
             put_json("sport_track_cross", "Track/Cross-Country");
 
-        if(softball.isChecked())
+        if (softball.isChecked())
             put_json("sport_softball", "Softball");
 
-        if(wrestling.isChecked())
+        if (wrestling.isChecked())
             put_json("sport_wrestling", "Wrestling");
 
-        if(lacrosse.isChecked())
+        if (lacrosse.isChecked())
             put_json("sport_lacrosse", "Lacrosse");
 
-        if(isOther.isChecked()) {
-            if(other.getText().toString() != "") {
+        if (isOther.isChecked()) {
+            if (other.getText().toString() != "") {
                 put_json("sport_other", other.getText().toString());
-            }
-            else{
+            } else {
                 Toast.makeText(this, "Please enter sport in text field", Toast.LENGTH_SHORT).show();
                 return false;
             }
@@ -432,7 +430,7 @@ public class RegistrationForm extends AppCompatActivity {
     }
 
     //Sends all data to be uploaded to server
-    private void submitForm(){
+    private void submitForm() {
         Intent upload = new Intent(getApplication(), dataUploadService.class);
         upload.putExtra("formData", form_json.toString());
 

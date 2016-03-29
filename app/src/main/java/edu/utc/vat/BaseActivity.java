@@ -43,7 +43,7 @@ public class BaseActivity extends AppCompatActivity {
     public String deviceAlias = "VAT_user_device";
     public String consumerID = "utc-vat-app";
     private static boolean isNetwork;
-    private DBHelper db =  new DBHelper(BlueMixApplication.getAppContext());
+    private DBHelper db = new DBHelper(BlueMixApplication.getAppContext());
 
     private Toast newToast;
 
@@ -142,14 +142,13 @@ public class BaseActivity extends AppCompatActivity {
 
     /**
      * Displays a Snackbar widget(alternative to toasts). Must include the layout to appear at and message to show.
-     *
      */
-    void showSnackbar(int v, String message){
+    void showSnackbar(int v, String message) {
         Snackbar.make(findViewById(v), message, Snackbar.LENGTH_LONG).show();
     }
 
-    void changeTheme(){
-        setTheme(android.R.style.Theme_DeviceDefault_NoActionBar_TranslucentDecor );
+    void changeTheme() {
+        setTheme(android.R.style.Theme_DeviceDefault_NoActionBar_TranslucentDecor);
     }
 
 }

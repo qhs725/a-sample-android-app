@@ -15,10 +15,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_launcher"
-        android:id="@+id/imageView"
-        />
+        android:id="@+id/imageView" />
 
-    <TextView android:text="@string/select_main_menu"
+    <TextView
+        android:text="@string/select_main_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/text"

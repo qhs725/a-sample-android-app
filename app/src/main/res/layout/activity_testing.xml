@@ -130,7 +130,7 @@
                         android:text="@string/start_testing_menu"
                         android:textSize="42sp"
                         android:textStyle="bold"
-                        android:elevation="5dp"/>
+                        android:elevation="5dp" />
 
                     <EditText
                         android:id="@+id/SessionInfo"
@@ -160,7 +160,7 @@
                         android:paddingTop="6dp"
                         android:text="Instructions"
                         android:textSize="24sp"
-                        android:elevation="5dp"/>
+                        android:elevation="5dp" />
 
                 </RelativeLayout>
 

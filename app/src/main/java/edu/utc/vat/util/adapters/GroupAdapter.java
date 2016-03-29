@@ -41,11 +41,9 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupsViewHo
     public void onBindViewHolder(GroupsViewHolder listViewHolder, int i) {
         listItemInfo ci = itemList.get(i);
 
-        if(i == TYPE_HEADER)
-        {
+        if (i == TYPE_HEADER) {
             listViewHolder.vTitle.setText(ci.title);
-        }
-        else{
+        } else {
 
             listViewHolder.vTitle.setText(ci.title);
             listViewHolder.vRole.setText(ci.role);
@@ -56,13 +54,11 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupsViewHo
     public GroupsViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View itemView = null;
 
-        if(i == TYPE_HEADER)
-        {
+        if (i == TYPE_HEADER) {
             itemView = LayoutInflater.
                     from(viewGroup.getContext()).
                     inflate(R.layout.card_header_layout, viewGroup, false);
-        }
-        else{
+        } else {
             itemView = LayoutInflater.
                     from(viewGroup.getContext()).
                     inflate(R.layout.card_layout, viewGroup, false);
@@ -80,11 +76,9 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupsViewHo
         public GroupsViewHolder(View v, int pos) {
             super(v);
 
-            if(pos == TYPE_HEADER)
-            {
+            if (pos == TYPE_HEADER) {
                 vTitle = (TextView) v.findViewById(R.id.header_text);
-            }
-            else{
+            } else {
                 v.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -125,13 +119,12 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupsViewHo
     //    need to override this method
     @Override
     public int getItemViewType(int position) {
-        if(isPositionHeader(position))
+        if (isPositionHeader(position))
             return TYPE_HEADER;
         return TYPE_ITEM;
     }
 
-    private boolean isPositionHeader(int position)
-    {
+    private boolean isPositionHeader(int position) {
         return position == 0;
     }
 }

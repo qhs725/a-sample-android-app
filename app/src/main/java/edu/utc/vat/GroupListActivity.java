@@ -36,7 +36,7 @@ public class GroupListActivity extends BaseActivity {
         setRecycler();
     }
 
-    public void setRecycler(){
+    public void setRecycler() {
         RecyclerView recList = (RecyclerView) findViewById(R.id.cardList);
         type = listSelections.getSelectionType();
 
@@ -154,10 +154,10 @@ public class GroupListActivity extends BaseActivity {
                 header.title = "Select Organization";
                 result.add(header);
 
-                if(size == 0){//If user is not in an Organization then display TestingActivity instead of lists
+                if (size == 0) {//If user is not in an Organization then display TestingActivity instead of lists
                     Intent intent = new Intent(this, TestingActivity.class);
                     listSelections.selectTask("FREE", "FREE Mode: Sample Task", "Limited version to task", "regular");
-                   this.startActivity(intent);
+                    this.startActivity(intent);
                 }
                 for (int i = 0; i < size; i++) {
                     listItemInfo ci = new listItemInfo();
@@ -176,16 +176,17 @@ public class GroupListActivity extends BaseActivity {
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         setRecycler();
 
         super.onResume();
     }
+
     @Override
     public void onBackPressed() {
 
         type = listSelections.getSelectionType();
-        switch(type){
+        switch (type) {
 
             case "org":
                 //default action
@@ -195,7 +196,7 @@ public class GroupListActivity extends BaseActivity {
                 listSelections.selectOrg(null);
                 break;
             case "task":
-                if(listSelections.getGroupPerm() == 1) {
+                if (listSelections.getGroupPerm() == 1) {
                     listSelections.setSelectionType("member");
                     listSelections.selectMember(null, null);
                     break;

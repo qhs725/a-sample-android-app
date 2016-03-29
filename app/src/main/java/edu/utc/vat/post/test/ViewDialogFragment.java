@@ -43,7 +43,7 @@ public class ViewDialogFragment extends DialogFragment {
                         if (TestingActivity.getisNetwork()) {
                             Log.i("ViewDialog", "Starting ViewResultsActivity");
 
-                            ((TestingActivity)context).launchViewer();
+                            ((TestingActivity) context).launchViewer();
 
                             Toast.makeText(context, "Opening accelerometer results.", Toast.LENGTH_SHORT);
                         } else {
@@ -53,7 +53,7 @@ public class ViewDialogFragment extends DialogFragment {
                 })
                 .setNegativeButton(R.string.dialog_no, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        ((TestingActivity)context).Upload();
+                        ((TestingActivity) context).Upload();
                     }
                 });
         return builder.create();

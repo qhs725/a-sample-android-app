@@ -311,7 +311,7 @@ public class GoogleTokenManager extends LoadingActivity {
                         sb.append(line + "\n");
                     }
                     //get the string version of the response data and check if it is empty
-                    if(sb.toString().equals("") || sb.toString() == null) {
+                    if (sb.toString().equals("") || sb.toString() == null) {
                         getUserfromDB();
 
                         //toast made outside of activity
@@ -324,8 +324,7 @@ public class GoogleTokenManager extends LoadingActivity {
                             }
                         });
 
-                    }
-                    else {
+                    } else {
                         body = new JSONObject(sb.toString());
 
                         newUser = body.getBoolean("check");
@@ -362,7 +361,7 @@ public class GoogleTokenManager extends LoadingActivity {
                         }
                     }
                 } else if (action == 1) {
-                  getUserfromDB();
+                    getUserfromDB();
                 }
 
             } catch (UnsupportedEncodingException e) {
@@ -393,7 +392,7 @@ public class GoogleTokenManager extends LoadingActivity {
                     group.getString("GROUP_DESCRIPTION"), group.getString("ROLE_NAME"), group.getInt("GROUP_EDITING"), group.getInt("GROUP_SESSIONS"), group.getInt("GROUP_MEMBERS"),
                     group.getInt("GROUP_RESULTS"), group.getInt("GROUP_TEST"));
 
-            db.insertOrg(group.getString("ORGANIZATIONID"), group.getString("ORG_NAME"), null, "Member", 0, 0, 0,0);
+            db.insertOrg(group.getString("ORGANIZATIONID"), group.getString("ORG_NAME"), null, "Member", 0, 0, 0, 0);
 
 
         }
@@ -416,9 +415,9 @@ public class GoogleTokenManager extends LoadingActivity {
                             org.getInt("GROUP_RESULTS"), org.getInt("GROUP_TEST"));
 
                     //Get members of the groups
-                    if(group.has("Members") && group.getJSONArray("Members").length()> 0){
+                    if (group.has("Members") && group.getJSONArray("Members").length() > 0) {
                         JSONArray groupMembers = group.getJSONArray("Members");
-                        for(int y = 0; y < groupMembers.length(); y++){
+                        for (int y = 0; y < groupMembers.length(); y++) {
                             JSONObject member = groupMembers.getJSONObject(y);
                             db.insertMember(member.getString("USERID"), group.getString("GROUPID"), org.getString("ORGANIZATIONID"), member.getString("NAME_FIRST") + " " + member.getString("NAME_LAST"), member.getString("ROLE_NAME"));
                         }
@@ -497,7 +496,7 @@ public class GoogleTokenManager extends LoadingActivity {
     /**
      * Retrieves User from database
      */
-    private void getUserfromDB(){
+    private void getUserfromDB() {
         newUser = false;
         id = activeUser.getString(activeUser.getColumnIndexOrThrow("id"));
         firstName = activeUser.getString(activeUser.getColumnIndexOrThrow("given_name"));

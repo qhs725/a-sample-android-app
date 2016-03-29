@@ -10,6 +10,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.util.Log;
+
 import java.util.Vector;
 import java.lang.Math;
 import java.util.Random;
@@ -52,11 +53,11 @@ public class Flanker {
         myContext = context;
         setTestTime(FLANKER_TEST_TIME);
         getParams();
-        Log.i("flanker","flanker object created");
+        Log.i("flanker", "flanker object created");
     }
 
     public void setTestTime(long time) {
-        if (time >= 1000) time = time/1000;
+        if (time >= 1000) time = time / 1000;
         flankerTime = time;
     }
 
@@ -64,7 +65,7 @@ public class Flanker {
         return 0;
     }
 
-    private void sync ( long t){
+    private void sync(long t) {
         time = t;
     }
 
@@ -114,9 +115,9 @@ public class Flanker {
         Context fcontext;
         Vector slideVector = new Vector();
 
-        public FlankerSchedule(Context context){
+        public FlankerSchedule(Context context) {
             fcontext = context;
-            Log.i("flanker","flanker schedule creating");
+            Log.i("flanker", "flanker schedule creating");
             if (gapNumber > 0) {
                 possibleClues = 5;
             }
@@ -125,20 +126,20 @@ public class Flanker {
             gapNumber = 4;
             clueNumber = 16;
             possibleClues = 5;
-            step = (int) ((intervalTime + clueTime)*60.f);
-            clueStep = (int) (clueTime*60.f);
+            step = (int) ((intervalTime + clueTime) * 60.f);
+            clueStep = (int) (clueTime * 60.f);
             clueCount = gapNumber + clueNumber;
-            if (clueCount > 60 || clueNumber%4 != 0) {
-                Log.i("flanker","ERROR - DO SOMETHING"); //TODO: do something for this error
+            if (clueCount > 60 || clueNumber % 4 != 0) {
+                Log.i("flanker", "ERROR - DO SOMETHING"); //TODO: do something for this error
             }
-            totalEachClue = clueNumber/4;
+            totalEachClue = clueNumber / 4;
             maxcount = step * clueCount;
             for (int i = 0; i < 60; i++) {
                 slides[i] = 4;
             }
             cdown = true;
             createSchedule();
-            Log.i("flanker","flanker created");
+            Log.i("flanker", "flanker created");
         }
 
         //TODO: onDestroy()
@@ -146,7 +147,7 @@ public class Flanker {
         //TODO: onResume()
 
         private void createSchedule() {
-            Log.i("flanker","preparing to order stimuli");
+            Log.i("flanker", "preparing to order stimuli");
             int a = 0;
             int b = 0;
             int c = 0;
@@ -155,23 +156,23 @@ public class Flanker {
             ctr = 0;
             cslide = 14;
             //while (building == false) {
-                //get time
+            //get time
             long time = System.currentTimeMillis();
             //new random int
             Random rand = new Random(time);
             int i = 19;
             for (int j = 0; j < 4; j++) {
-                for (int k = 0; k < 5; k ++) {
+                for (int k = 0; k < 5; k++) {
                     slideVector.add(k);
                 }
             }
-            for (i = 19; i > -1; i-=1) {
-                int v = Math.abs(rand.nextInt(i+1));
-                slides[i] = (int)(slideVector.elementAt(v));
+            for (i = 19; i > -1; i -= 1) {
+                int v = Math.abs(rand.nextInt(i + 1));
+                slides[i] = (int) (slideVector.elementAt(v));
                 slideVector.removeElementAt(v);
-                Log.i("flanker","creating random order for stimuli");
+                Log.i("flanker", "creating random order for stimuli");
                 if (i == 0) {
-                    Log.i("flanker","i == 0");
+                    Log.i("flanker", "i == 0");
                 }
             }
         }
@@ -179,7 +180,7 @@ public class Flanker {
         public int currentSlide() {
             int nextSlide = 4;
             if (cdown == true) {
-                if (ctr > 0 && ctr%60 == 0) {
+                if (ctr > 0 && ctr % 60 == 0) {
                     cslide -= 1;
                 }
                 ctr++;
@@ -205,15 +206,15 @@ public class Flanker {
                 if (count == maxcount)
                     nextSlide = -1; //OR nextSlide = 4 FOR BLANK SCREEN FOLLOWING TEST
             }
-            if(sensorFlag == false) {
-                if(nextSlide < 4) {
+            if (sensorFlag == false) {
+                if (nextSlide < 4) {
                     edu.utc.vat.CallNative.StartSensorsF(true);
                     edu.utc.vat.CallNative.WriteOn();
                     sensorFlag = true;
-                    Log.i("FLANKER","WTI ON");
+                    Log.i("FLANKER", "WTI ON");
                 }
-            } else if(sensorFlag == true) {
-                if(nextSlide == -1) {
+            } else if (sensorFlag == true) {
+                if (nextSlide == -1) {
                     //edu.utc.vat.CallNative.WriteOff();
                     //edu.utc.vat.CallNative.StopSensors();
                     sensorFlag = false;

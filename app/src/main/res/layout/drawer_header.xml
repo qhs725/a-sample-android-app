@@ -6,8 +6,7 @@
     android:orientation="vertical"
     android:weightSum="1">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/profile_image"
         android:layout_width="70dp"
         android:layout_height="70dp"
@@ -20,37 +19,37 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="10dp" />
 
-        <TextView
-            android:id="@+id/header_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:text= "Test Name"
-            android:textSize="14sp"
-            android:textStyle="bold"
+    <TextView
+        android:id="@+id/header_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:text="Test Name"
+        android:textSize="14sp"
+        android:textStyle="bold"
 
-            android:phoneNumber="true"
-            android:password="false"
-            android:layout_below="@+id/profile_image"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="15dp" />
+        android:phoneNumber="true"
+        android:password="false"
+        android:layout_below="@+id/profile_image"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="15dp" />
 
-        <TextView
-            android:id="@+id/header_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#000000"
-            android:text="test@example.com"
-            android:textSize="14sp"
-            android:textStyle="normal"
+    <TextView
+        android:id="@+id/header_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:text="test@example.com"
+        android:textSize="14sp"
+        android:textStyle="normal"
 
-            android:layout_marginBottom="5dp"
-            android:layout_below="@+id/header_name"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="15dp" />
+        android:layout_marginBottom="5dp"
+        android:layout_below="@+id/header_name"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="15dp" />
 
 </RelativeLayout>

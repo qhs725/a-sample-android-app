@@ -5,7 +5,6 @@ import org.json.JSONObject;
 
 /**
  * Saves selections to be be retrieved from any other class (TestingActivity being one of the most important).
- *
  */
 public class listSelections {
     private static String org = null;
@@ -19,25 +18,29 @@ public class listSelections {
     public static String getSelectionType() {
         return type;
     }
+
     public static void setSelectionType(String type) {
         listSelections.type = type;
     }
-    
+
     //ORG
     public static String getSelectedOrg() {
         return org;
     }
+
     public static void selectOrg(String org) {
         listSelections.org = org;
     }
-    
+
     //GROUP
     public static String getSelectedGroup() {
         return group;
     }
+
     public static int getGroupPerm() {
         return perm;
     }
+
     public static void selectGroup(String group, int perm) {
         listSelections.group = group;
         listSelections.perm = perm;
@@ -48,6 +51,7 @@ public class listSelections {
     public static JSONObject getSelectedMember() {
         return member;
     }
+
     public static void selectMember(String id, String name) {
 
         try {
@@ -63,6 +67,7 @@ public class listSelections {
     public static JSONObject getSelectedTask() {
         return task;
     }
+
     public static void selectTask(String id, String name, String desc, String type) {
         try {
             listSelections.task.put("id", id);

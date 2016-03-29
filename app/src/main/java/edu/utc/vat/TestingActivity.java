@@ -435,15 +435,12 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         TextView em = (TextView) header.findViewById(R.id.header_email);
         TextView nam = (TextView) header.findViewById(R.id.header_name);
 
-
-        Bitmap image = UserAccount.getPicture();
-        if(image != null)
+        if (UserAccount.getPicture() != null)
             cv.setImageBitmap(UserAccount.getPicture());
-
-        if(UserAccount.getEmail() != null)
-        em.setText(UserAccount.getEmail());
-        if(UserAccount.getName() != null)
-        nam.setText(UserAccount.getName());
+        if (UserAccount.getEmail() != null)
+            em.setText(UserAccount.getEmail());
+        if (UserAccount.getName() != null)
+            nam.setText(UserAccount.getName());
 
         nav.addHeaderView(header);
 

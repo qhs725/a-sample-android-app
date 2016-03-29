@@ -49,23 +49,23 @@ import edu.utc.vat.util.dataUploadService;
 //import bolts.Task;
 
 public final class BlueMixApplication extends Application {
-	public static IBMPush push = null;
+    public static IBMPush push = null;
     private static Context context;
-	private Activity mActivity;
-	private static final String CLASS_NAME = BlueMixApplication.class.getSimpleName();
-	private static final String APP_ID = "applicationID";
-	private static final String APP_SECRET = "applicationSecret";
-	private static final String APP_ROUTE = "applicationRoute";
-	private static final String PROPS_FILE = "google_bluemix.properties";
-	public Properties appProperties = null;
+    private Activity mActivity;
+    private static final String CLASS_NAME = BlueMixApplication.class.getSimpleName();
+    private static final String APP_ID = "applicationID";
+    private static final String APP_SECRET = "applicationSecret";
+    private static final String APP_ROUTE = "applicationRoute";
+    private static final String PROPS_FILE = "google_bluemix.properties";
+    public Properties appProperties = null;
 
     private boolean bluemixServicesInitialized = false;
     public IBMCloudCode myCloudCodeService;
 
-	private IBMPushNotificationListener notificationListener = null;
+    private IBMPushNotificationListener notificationListener = null;
 
-	public BlueMixApplication() {
-		registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
+    public BlueMixApplication() {
+        registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
                 Log.d(CLASS_NAME, "Activity created: " + activity.getLocalClassName());
@@ -151,39 +151,38 @@ public final class BlueMixApplication extends Application {
                 Log.d(CLASS_NAME, "Activity destroyed: " + activity.getLocalClassName());
             }
         });
-	}
+    }
 
-	/**
-	 * (non-Javadoc)
-	 * Called when the application is starting, before any activity, service, 
-	 * or receiver objects (excluding content providers) have been created.
-	 * 
-	 * @see Application#onCreate()
-	 *
-	 */
-	@Override
-	public void onCreate() {
-		super.onCreate();
+    /**
+     * (non-Javadoc)
+     * Called when the application is starting, before any activity, service,
+     * or receiver objects (excluding content providers) have been created.
+     *
+     * @see Application#onCreate()
+     */
+    @Override
+    public void onCreate() {
+        super.onCreate();
         BlueMixApplication.context = getApplicationContext();
 
-		// Read from properties file
-		appProperties = new Properties();
-		Context context = getApplicationContext();
-		try {
-			AssetManager assetManager = context.getAssets();					
-			appProperties.load(assetManager.open(PROPS_FILE));
-			Log.i(CLASS_NAME, "Found configuration file: " + PROPS_FILE);
-		} catch (FileNotFoundException e) {
-			Log.e(CLASS_NAME, "The bluemix properties file was not found.", e);
-		} catch (IOException e) {
-			Log.e(CLASS_NAME, "The bluemix properties file could not be read properly.", e);
-		}
-		Log.i(CLASS_NAME, "Application ID is: " + appProperties.getProperty(APP_ID));
+        // Read from properties file
+        appProperties = new Properties();
+        Context context = getApplicationContext();
+        try {
+            AssetManager assetManager = context.getAssets();
+            appProperties.load(assetManager.open(PROPS_FILE));
+            Log.i(CLASS_NAME, "Found configuration file: " + PROPS_FILE);
+        } catch (FileNotFoundException e) {
+            Log.e(CLASS_NAME, "The bluemix properties file was not found.", e);
+        } catch (IOException e) {
+            Log.e(CLASS_NAME, "The bluemix properties file could not be read properly.", e);
+        }
+        Log.i(CLASS_NAME, "Application ID is: " + appProperties.getProperty(APP_ID));
 
-		IBMLogger.addLogCategory("DEBUG", "TRACE");
-		// initialize the IBM core backend-as-a-service
-		IBMBluemix.initialize(this, appProperties.getProperty(APP_ID), appProperties.getProperty(APP_SECRET), appProperties.getProperty(APP_ROUTE));
-	}
+        IBMLogger.addLogCategory("DEBUG", "TRACE");
+        // initialize the IBM core backend-as-a-service
+        IBMBluemix.initialize(this, appProperties.getProperty(APP_ID), appProperties.getProperty(APP_SECRET), appProperties.getProperty(APP_ROUTE));
+    }
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -191,17 +190,17 @@ public final class BlueMixApplication extends Application {
         MultiDex.install(this);
     }
 
-	public Properties getApplicationSettings() {
-		return appProperties;
-	}
+    public Properties getApplicationSettings() {
+        return appProperties;
+    }
 
     public void initializeBluemixServices() {
         Log.d(CLASS_NAME, "Entering initializeBluemixServices() method.");
 
-        if(!bluemixServicesInitialized) {
+        if (!bluemixServicesInitialized) {
             Log.i(CLASS_NAME, "IBM Bluemix Mobile Cloud Service SDKs have not been previously initialized...initializing.");
             // initialize the IBM Data Service
-           // IBMData.initializeService();
+            // IBMData.initializeService();
 
             // initialize and retrieve an instance of the IBM CloudCode service
             IBMCloudCode.initializeService();
@@ -209,16 +208,16 @@ public final class BlueMixApplication extends Application {
             Log.i(CLASS_NAME, "IBM Bluemix Mobile Cloud Service SDKs have been previously initialized...skipping.");
         }
 
-        if(myCloudCodeService == null) {
+        if (myCloudCodeService == null) {
             myCloudCodeService = IBMCloudCode.getService();
         }
 
-        if(!bluemixServicesInitialized) {
+        if (!bluemixServicesInitialized) {
             // initialize IBM Push service
             IBMPush.initializeService();
         }
         // retrieve instance of the IBM Push service
-        if(push == null) {
+        if (push == null) {
             push = IBMPush.getService();
         }
 

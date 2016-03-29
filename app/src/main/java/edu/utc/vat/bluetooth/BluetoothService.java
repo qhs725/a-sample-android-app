@@ -300,7 +300,7 @@ public class BluetoothService {
     /**
      * Thread runs for attempting an outgoing connection w/ another device
      * Connection is success/fail
-    */
+     */
     private class ConnectThread extends Thread {
         private final BluetoothSocket mmSocket;
         private final BluetoothDevice mmDevice;

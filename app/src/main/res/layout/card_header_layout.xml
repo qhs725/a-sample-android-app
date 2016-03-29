@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/card_header_view"
     android:layout_width="fill_parent"
@@ -24,10 +23,10 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_launcher"
             android:paddingRight="10dp"
-            android:id="@+id/imageView"
-            />
+            android:id="@+id/imageView" />
 
-        <TextView android:text="Select from below:"
+        <TextView
+            android:text="Select from below:"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/header_text"
@@ -48,7 +47,6 @@
             android:gravity="left|center_vertical" />
 
     </RelativeLayout>
-
 
 
 </android.support.v7.widget.CardView>

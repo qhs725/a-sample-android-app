@@ -425,17 +425,17 @@ public class dataUploadService extends IntentService {
         body.put("access_token", UserAccount.getAccessToken());
 
         //Add the member selected to body if exists
-            body.put("orgID", listSelections.getSelectedOrg());
-            body.put("groupID", listSelections.getSelectedGroup());
-            body.put("testedMember", listSelections.getSelectedMember());
-            // body.put("member", selectedMember);
+        body.put("orgID", listSelections.getSelectedOrg());
+        body.put("groupID", listSelections.getSelectedGroup());
+        body.put("testedMember", listSelections.getSelectedMember());
+        // body.put("member", selectedMember);
 
         String given_name = UserAccount.getGivenName() != null ? UserAccount.getGivenName() : "null";
         String family_name = UserAccount.getFamilyName() != null ? UserAccount.getFamilyName() : "null";
         name.put("given_name", given_name);
         name.put("family_name", family_name);
         user_json.put("id", UserAccount.getGoogleUserID());
-       // user_json.put("idToken", UserAccount.getIdToken());
+        // user_json.put("idToken", UserAccount.getIdToken());
         //user_json.put("accessToken", UserAccount.getAccessToken());
         user_json.put("name", name);
         obj.put("user", user_json);

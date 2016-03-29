@@ -9,7 +9,7 @@ package edu.utc.vat;
 import android.util.Log;
 
 public class CallNative {
-    static  {
+    static {
         try {
             System.loadLibrary("utcvatjni");
         } catch (UnsatisfiedLinkError e) {

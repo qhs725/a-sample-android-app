@@ -26,7 +26,8 @@ public class FlankerActivity extends Activity {
     FlankerView fox;
     Context me;
 
-    @Override protected void onCreate(Bundle penguin) {
+    @Override
+    protected void onCreate(Bundle penguin) {
         super.onCreate(penguin);
         System.gc();
         getWindow().setFlags(
@@ -41,16 +42,19 @@ public class FlankerActivity extends Activity {
         me = this;
     }
 
-    @Override protected void onPause() {
+    @Override
+    protected void onPause() {
         super.onPause();
     }
 
-    @Override protected void onResume() {
+    @Override
+    protected void onResume() {
         super.onResume();
         fox.onResume();
     }
 
-    @Override protected void onDestroy() {
+    @Override
+    protected void onDestroy() {
         super.onDestroy();
     }
 
