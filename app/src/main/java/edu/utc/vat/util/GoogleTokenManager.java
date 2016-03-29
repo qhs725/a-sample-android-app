@@ -24,16 +24,9 @@ import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.AccountPicker;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
-import com.google.api.client.http.apache.ApacheHttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson.JacksonFactory;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -44,14 +37,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.security.GeneralSecurityException;
-import java.util.Collections;
 import java.util.Properties;
 
 import edu.utc.vat.BlueMixApplication;
@@ -68,7 +58,6 @@ public class GoogleTokenManager extends LoadingActivity {
     private static final String CLASS_NAME = GoogleTokenManager.class.getName();
     private static final int ACCOUNT_PICKER_REQUEST_CODE = 17;
     private static final int AUTH_REQUEST_CODE = 18;
-    private Bitmap profile_img = null;
 
     // Bearer Tokens from Google Actions will always specify this issuer.
     static String GOOGLE_ISSUER = "accounts.google.com";
@@ -109,9 +98,13 @@ public class GoogleTokenManager extends LoadingActivity {
     private String lastName = null;
     private String email = null;
     private String picture = null;
+    private Bitmap profile_img = null;
+    private byte[] profile_byte_arr = null;
     private String id = null;
     private boolean newUser = true;
     private DBHelper db;
+
+    //action == 1 means to load user from database, action == 2 means to load user info by connecting to server
     private int action;
     private Cursor activeUser;
 
@@ -351,6 +344,7 @@ public class GoogleTokenManager extends LoadingActivity {
                                 try {
                                     InputStream in = new java.net.URL(picture).openStream();
                                     profile_img = BitmapFactory.decodeStream(in);
+                                    profile_byte_arr = getBytes(profile_img);
                                 } catch (Exception e) {
                                     Log.e("Error", e.getMessage());
                                     e.printStackTrace();
@@ -461,7 +455,7 @@ public class GoogleTokenManager extends LoadingActivity {
 
 
             // Save/Update Active user to SQLite db
-            db.insertActiveUser(id, firstName, lastName, email, googleAccessToken, null, idToken);
+            db.insertActiveUser(id, profile_byte_arr, firstName, lastName, email, googleAccessToken, null, idToken);
 
             if (newUser) {
                 intent = new Intent(context, RegistrationForm.class);
@@ -502,7 +496,27 @@ public class GoogleTokenManager extends LoadingActivity {
         firstName = activeUser.getString(activeUser.getColumnIndexOrThrow("given_name"));
         lastName = activeUser.getString(activeUser.getColumnIndexOrThrow("family_name"));
         email = activeUser.getString(activeUser.getColumnIndexOrThrow("email"));
+        profile_img = getImage(activeUser.getBlob(activeUser.getColumnIndexOrThrow("image")));
 
+    }
+
+
+    /**
+     * Converts bitmap to byte array. Next function is the reverse
+     *
+     * @param bitmap
+     * @return
+     */
+    // convert from bitmap to byte array
+    public static byte[] getBytes(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 0, stream);
+        return stream.toByteArray();
+    }
+
+    // convert from byte array to bitmap
+    public static Bitmap getImage(byte[] image) {
+        return image != null ? BitmapFactory.decodeByteArray(image, 0, image.length): null;
     }
 }
 

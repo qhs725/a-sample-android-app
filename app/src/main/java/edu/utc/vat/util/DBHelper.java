@@ -51,7 +51,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void buildTables(SQLiteDatabase db) {
         db.execSQL(
                 "create table IF NOT EXISTS activeUser " +
-                        "(Lock char(1) not null DEFAULT 'X', id VARCHAR, given_name text, family_name text, email text, access_token text, refresh_token text, id_token text," +
+                        "(Lock char(1) not null DEFAULT 'X', id VARCHAR, image BLOB, given_name text, family_name text, email text, access_token text, refresh_token text, id_token text," +
                         " constraint PK_ACTIVEUSER PRIMARY KEY (Lock),constraint CK_ACTIVEUSER_Locked CHECK (Lock='X'))"
         );
 
@@ -74,10 +74,11 @@ public class DBHelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public boolean insertActiveUser(String id, String given_name, String family_name, String email, String access_token, String refresh_token, String id_token) {
+    public boolean insertActiveUser(String id, byte[] image, String given_name, String family_name, String email, String access_token, String refresh_token, String id_token) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("id", id);
+        contentValues.put("image", image);
         contentValues.put("given_name", given_name);
         contentValues.put("family_name", family_name);
         contentValues.put("email", email);
