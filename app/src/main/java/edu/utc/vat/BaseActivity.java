@@ -36,6 +36,8 @@ import com.ibm.mobile.services.core.IBMBluemix;
 import com.ibm.mobile.services.core.IBMCurrentUser;
 import com.ibm.mobile.services.push.IBMPush;
 
+import org.json.JSONException;
+
 import bolts.Continuation;
 import bolts.Task;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -191,6 +193,9 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
+
+    //Initializes Navigation Drawer
+    //Activity must have appropriate xml tags before calling this
     public void initNavDrawer() {
         drawerInit = true;
         mDrawerLayout = (DrawerLayout) findViewById(R.id.navDrawer);
@@ -208,7 +213,17 @@ public class BaseActivity extends AppCompatActivity {
 
 
         //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
+        //also making the text changed based on the picked items from GroupListAdapter
         NavigationView nav = (NavigationView) findViewById(R.id.nav_view);
+        Menu navMenu = nav.getMenu();
+        try {
+            if (!listSelections.getSelectedMember().getString("name").equals("")) {
+                navMenu.findItem(R.id.action_change_member).setTitle("Member: " + listSelections.getSelectedMember().getString("name"));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
             // This method will trigger on item Click of navigation menu
@@ -247,6 +262,8 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
+
+    //Drawer toggle config
     private class ActionBarDrawerToggleCompat extends ActionBarDrawerToggle {
 
         public ActionBarDrawerToggleCompat(Activity activity, DrawerLayout drawerLayout, Toolbar toolbar) {
@@ -271,7 +288,9 @@ public class BaseActivity extends AppCompatActivity {
 
     }
 
-    public static Boolean openGroupListActivity(){
+
+    //Starts GroupListActivity
+    public static Boolean openGroupListActivity() {
         Intent intent = new Intent(BlueMixApplication.getAppContext(), GroupListActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         BlueMixApplication.getAppContext().startActivity(intent);

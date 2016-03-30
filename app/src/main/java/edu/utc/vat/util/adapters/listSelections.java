@@ -87,7 +87,7 @@ public class listSelections {
     }
 
     //Resets Organization, Group, Member, and tasks
-    public static void resetOrg(){
+    public static void resetOrg() {
         setSelectionType("org");
         selectOrg(null);
         selectGroup(null, -1);
@@ -95,20 +95,20 @@ public class listSelections {
         selectTask(null, null, null, null);
     }
 
-    public static void resetGroup(){
+    public static void resetGroup() {
         setSelectionType("group");
         selectGroup(null, -1);
         selectMember(null, null);
         selectTask(null, null, null, null);
     }
 
-    public static void resetMember(){
+    public static void resetMember() {
         setSelectionType("member");
         selectMember(null, null);
         selectTask(null, null, null, null);
     }
 
-    public static void resetTask(){
+    public static void resetTask() {
         setSelectionType("group");
         selectTask(null, null, null, null);
     }

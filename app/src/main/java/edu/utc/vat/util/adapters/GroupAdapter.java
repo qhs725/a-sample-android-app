@@ -52,7 +52,7 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupsViewHo
 
     @Override
     public GroupsViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
-        View itemView = null;
+        View itemView;
 
         if (i == TYPE_HEADER) {
             itemView = LayoutInflater.
@@ -75,11 +75,12 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupsViewHo
 
         public GroupsViewHolder(View v, int pos) {
             super(v);
-
             if (pos == TYPE_HEADER) {
                 vTitle = (TextView) v.findViewById(R.id.header_text);
             } else {
                 v.setOnClickListener(new View.OnClickListener() {
+
+                    //handles onclick actions for each item in the RecyclerView. Action changes based on type from listSelections
                     @Override
                     public void onClick(View v) {
                         listItemInfo ci = itemList.get(getAdapterPosition());
@@ -95,7 +96,10 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupsViewHo
                                     listSelections.setSelectionType("member");
                                     listSelections.selectGroup(ci.id, ci.test_perm);
                                     break;
-                                } //else: use next case
+                                } else {
+                                    listSelections.setSelectionType("task");
+                                    break;
+                                }
                             case "member":
                                 listSelections.setSelectionType("task");
                                 listSelections.selectMember(ci.id, ci.title);
@@ -116,7 +120,6 @@ public class GroupAdapter extends RecyclerView.Adapter<GroupAdapter.GroupsViewHo
         }
     }
 
-    //    need to override this method
     @Override
     public int getItemViewType(int position) {
         if (isPositionHeader(position))

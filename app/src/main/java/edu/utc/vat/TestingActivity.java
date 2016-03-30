@@ -107,7 +107,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     private JSONObject task = new JSONObject();
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

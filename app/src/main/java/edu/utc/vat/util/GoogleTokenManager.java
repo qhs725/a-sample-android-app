@@ -516,7 +516,7 @@ public class GoogleTokenManager extends LoadingActivity {
 
     // convert from byte array to bitmap
     public static Bitmap getImage(byte[] image) {
-        return image != null ? BitmapFactory.decodeByteArray(image, 0, image.length): null;
+        return image != null ? BitmapFactory.decodeByteArray(image, 0, image.length) : null;
     }
 }
 

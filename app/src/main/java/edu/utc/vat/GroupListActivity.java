@@ -36,6 +36,8 @@ public class GroupListActivity extends BaseActivity {
         setRecycler();
     }
 
+
+    //Init RecyclerView
     public void setRecycler() {
         RecyclerView recList = (RecyclerView) findViewById(R.id.cardList);
         type = listSelections.getSelectionType();
@@ -69,8 +71,8 @@ public class GroupListActivity extends BaseActivity {
     }
 
 
+    //Creates list to display using the value of type variable to decide which list to display
     private List<listItemInfo> createList() {
-
         List<listItemInfo> result = new ArrayList<listItemInfo>();
         listItemInfo header = new listItemInfo();
         Cursor cursor;
@@ -170,21 +172,19 @@ public class GroupListActivity extends BaseActivity {
                 }
                 break;
         }
-
-
         return result;
     }
 
     @Override
     public void onResume() {
         setRecycler();
-
         super.onResume();
     }
 
+
+    //Makes necessary changes to listSelections before returning to previous activity
     @Override
     public void onBackPressed() {
-
         type = listSelections.getSelectionType();
         switch (type) {
 

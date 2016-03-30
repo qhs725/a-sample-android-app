@@ -65,7 +65,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /**
      * ActiveUser table
-     *
      */
 
     public Cursor getActiveUser() {
@@ -119,9 +118,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /**
      * Groups Table
-     *
+     * <p/>
      * Functions for interacting with the groups table.
-     *  */
+     */
 
 
     public boolean insertGroups(String groupId, String orgId, String name, String desc, String role, int edit_perm, int session_perm, int members_perm, int results_perm, int test_perm) {
@@ -165,9 +164,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /**
      * Org Table
-     *
+     * <p/>
      * Functions for interacting with the organizations table.
-     *  */
+     */
 
     public boolean insertOrg(String orgID, String name, String plan, String role, int org_initial, int org_groupCreate, int org_groupDelete, int org_editAdmin) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -202,9 +201,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /**
      * Group Members Table
-     *
+     * <p/>
      * Functions for interacting with the groupMembers table.
-     *  */
+     */
 
     public boolean insertMember(String memberID, String groupID, String orgId, String name, String role) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -225,9 +224,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /**
      * Tasks Info Table
-     *taskID VARCHAR primary key, task_name VARCHAR, task_description text, task_type VARCHAR
+     * taskID VARCHAR primary key, task_name VARCHAR, task_description text, task_type VARCHAR
      * Functions for interacting with the taskInfo table.
-     *  */
+     */
 
     public boolean insertTask(String id, String name, String desc, String type) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -254,9 +253,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /**
      * Misc
-     *
+     * <p/>
      * Functions for interacting with the database
-     *  */
+     */
 
     //Retrieves groups within an organization OR members within a group OR task info for group
     //Can not retrieve Organization using Organization ID
