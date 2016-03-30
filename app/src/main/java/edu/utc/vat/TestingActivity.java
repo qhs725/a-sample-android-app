@@ -105,23 +105,15 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     private static final String CLASS_NAME = "LoginActivity";
     private Timer timer;
     private JSONObject task = new JSONObject();
-    private DrawerLayout mDrawerLayout;
-    private Toolbar mToolbar;
-    private ActionBarDrawerToggleCompat mDrawerToggle;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        getWindow().addFlags(
-                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-        );
-
-        changeTheme();
         setContentView(R.layout.activity_testing);
+        initNavDrawer();
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.navDrawer);
 
         status = VOID;
         completeExerciseList();
@@ -133,20 +125,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         timerClock = (TextView) findViewById(R.id.timer);
         timerTime = 0;
         timerString = timerToString(timerTime);
-
-
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        mDrawerToggle = new ActionBarDrawerToggleCompat(this, mDrawerLayout, mToolbar);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-        this.setSupportActionBar(mToolbar);
-        ActionBar actionBar = getSupportActionBar();
-        addUserToHeader();
-
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setHomeButtonEnabled(true);
-        }
 
         try {
             task = listSelections.getSelectedTask();
@@ -180,6 +158,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
             }
         }
 
+
         //use application class to maintain global state
         //blApplication = (BlueMixApplication) getApplication();
         //initServices(); //Initialize Bluemix connection
@@ -202,6 +181,8 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
             case R.id.TestingStartButton: {
 
                 if (status != COUNTDOWN && status != TESTING) {
+                    getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
                     userInfo = getUserInfo.getText().toString().trim();
                     UserAccount.setSessionInfo(userInfo);//add user input to UserAccount
                     timer.countDown();
@@ -216,6 +197,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                 }
             }
             case R.id.TestingResetButton: {
+                getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 timer.stopTimer();
                 timerUpdate(0);
                 status = VOID;
@@ -223,7 +205,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                 getUserInfo.setText("");
                 getUserInfo.setOnClickListener(new View.OnClickListener() {
                                                    public void onClick(View view) {
-                                                       getUserInfo.requestFocus();
                                                        InputMethodManager inputManager = (InputMethodManager)
                                                                getSystemService(Context.INPUT_METHOD_SERVICE);
                                                        inputManager.showSoftInput(getUserInfo,
@@ -380,71 +361,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         return string;
     }
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
-                    mDrawerLayout.closeDrawer(Gravity.LEFT);
-                } else {
-                    mDrawerLayout.openDrawer(Gravity.LEFT);
-                }
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void open() {
-
-        mDrawerLayout.openDrawer(Gravity.LEFT);
-    }
-
-    private class ActionBarDrawerToggleCompat extends ActionBarDrawerToggle {
-
-        public ActionBarDrawerToggleCompat(Activity activity, DrawerLayout drawerLayout, Toolbar toolbar) {
-            super(
-                    activity,
-                    drawerLayout, toolbar,
-                    R.string.drawer_open,
-                    R.string.close_drawer);
-        }
-
-        @Override
-        public void onDrawerClosed(View view) {
-            super.onDrawerOpened(view);
-            supportInvalidateOptionsMenu();
-        }
-
-        @Override
-        public void onDrawerOpened(View drawerView) {
-            super.onDrawerOpened(drawerView);
-            supportInvalidateOptionsMenu();
-        }
-
-    }
-
-    /**
-     * Add Active user info to navigation drawer header
-     */
-    private void addUserToHeader() {
-        View header = getLayoutInflater().inflate(R.layout.drawer_header, null);
-        NavigationView nav = (NavigationView) findViewById(R.id.nav_view);
-        CircleImageView cv = (CircleImageView) header.findViewById(R.id.profile_image);
-        TextView em = (TextView) header.findViewById(R.id.header_email);
-        TextView nam = (TextView) header.findViewById(R.id.header_name);
-
-        if (UserAccount.getPicture() != null)
-            cv.setImageBitmap(UserAccount.getPicture());
-        if (UserAccount.getEmail() != null)
-            em.setText(UserAccount.getEmail());
-        if (UserAccount.getName() != null)
-            nam.setText(UserAccount.getName());
-
-        nav.addHeaderView(header);
-
-    }
 }
 
 

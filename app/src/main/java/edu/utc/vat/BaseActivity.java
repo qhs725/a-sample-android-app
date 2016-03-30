@@ -5,6 +5,7 @@
 
 package edu.utc.vat;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
@@ -13,15 +14,22 @@ import android.net.NetworkInfo;
 
 import android.os.Bundle;
 
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 
+import android.view.Gravity;
 import android.view.Menu;
 
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ibm.mobile.services.core.IBMBluemix;
@@ -30,8 +38,10 @@ import com.ibm.mobile.services.push.IBMPush;
 
 import bolts.Continuation;
 import bolts.Task;
+import de.hdodenhof.circleimageview.CircleImageView;
 import edu.utc.vat.forms.SportInjuryForm;
 import edu.utc.vat.util.DBHelper;
+import edu.utc.vat.util.adapters.listSelections;
 import edu.utc.vat.util.dataUploadService;
 
 
@@ -39,13 +49,13 @@ public class BaseActivity extends AppCompatActivity {
 
     private Intent intent;
     private static final String CLASS_NAME = "LoginActivity";
-    public IBMPush push;
-    public String deviceAlias = "VAT_user_device";
-    public String consumerID = "utc-vat-app";
     private static boolean isNetwork;
     private DBHelper db = new DBHelper(BlueMixApplication.getAppContext());
-
+    private DrawerLayout mDrawerLayout;
+    private Toolbar mToolbar;
+    private ActionBarDrawerToggleCompat mDrawerToggle;
     private Toast newToast;
+    private Boolean drawerInit = false;
 
 
     @Override
@@ -95,6 +105,17 @@ public class BaseActivity extends AppCompatActivity {
                 Log.i(CLASS_NAME, "Finishing Main Activity. Returning to Login Screen.");
                 finish();
                 return true;
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                if (drawerInit) {
+                    if (mDrawerLayout.isDrawerOpen(Gravity.LEFT)) {
+                        mDrawerLayout.closeDrawer(Gravity.LEFT);
+                    } else {
+                        mDrawerLayout.openDrawer(Gravity.LEFT);
+                    }
+                    return true;
+                }
+
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -104,6 +125,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        drawerInit = false;
         //setContentView(R.layout.activity_testing);
         setContentView(R.layout.activity_main);
         isNetworkAvailable();
@@ -143,12 +165,117 @@ public class BaseActivity extends AppCompatActivity {
     /**
      * Displays a Snackbar widget(alternative to toasts). Must include the layout to appear at and message to show.
      */
-    void showSnackbar(int v, String message) {
+    public void showSnackbar(int v, String message) {
         Snackbar.make(findViewById(v), message, Snackbar.LENGTH_LONG).show();
     }
 
-    void changeTheme() {
-        setTheme(android.R.style.Theme_DeviceDefault_NoActionBar_TranslucentDecor);
+
+    /**
+     * Add Active user info to navigation drawer header
+     */
+    public void addUserToHeader() {
+        View header = getLayoutInflater().inflate(R.layout.drawer_header, null);
+        NavigationView nav = (NavigationView) findViewById(R.id.nav_view);
+        CircleImageView cv = (CircleImageView) header.findViewById(R.id.profile_image);
+        TextView em = (TextView) header.findViewById(R.id.header_email);
+        TextView nam = (TextView) header.findViewById(R.id.header_name);
+
+        if (UserAccount.getPicture() != null)
+            cv.setImageBitmap(UserAccount.getPicture());
+        if (UserAccount.getEmail() != null)
+            em.setText(UserAccount.getEmail());
+        if (UserAccount.getName() != null)
+            nam.setText(UserAccount.getName());
+
+        nav.addHeaderView(header);
+
+    }
+
+    public void initNavDrawer() {
+        drawerInit = true;
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.navDrawer);
+        //Toolbar and Navigation drawer
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mDrawerToggle = new ActionBarDrawerToggleCompat(this, mDrawerLayout, mToolbar);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        this.setSupportActionBar(mToolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+
+        addUserToHeader();
+        mDrawerToggle.syncState();
+
+
+        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
+        NavigationView nav = (NavigationView) findViewById(R.id.nav_view);
+        nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+            // This method will trigger on item Click of navigation menu
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+
+
+                //Checking if the item is in checked state or not, if not make it in checked state
+                if (menuItem.isChecked()) menuItem.setChecked(false);
+                else menuItem.setChecked(true);
+
+                //Closing drawer on item click
+                mDrawerLayout.closeDrawers();
+
+                switch (menuItem.getItemId()) {
+                    case R.id.action_change_org:
+                        Toast.makeText(getApplicationContext(), "Organization change requested", Toast.LENGTH_SHORT).show();
+                        listSelections.resetOrg();
+                        return openGroupListActivity();
+                    case R.id.action_change_group:
+                        Toast.makeText(getApplicationContext(), "Group change requested", Toast.LENGTH_SHORT).show();
+                        listSelections.resetGroup();
+                        return openGroupListActivity();
+                    case R.id.action_change_member:
+                        Toast.makeText(getApplicationContext(), "Member change requested", Toast.LENGTH_SHORT).show();
+                        listSelections.resetMember();
+                        return openGroupListActivity();
+
+                    default: //Use regular onClickMethod if nothing matches
+                        onOptionsItemSelected(menuItem);
+                        return true;
+
+                }
+            }
+        });
+
+    }
+
+    private class ActionBarDrawerToggleCompat extends ActionBarDrawerToggle {
+
+        public ActionBarDrawerToggleCompat(Activity activity, DrawerLayout drawerLayout, Toolbar toolbar) {
+            super(
+                    activity,
+                    drawerLayout, toolbar,
+                    R.string.drawer_open,
+                    R.string.close_drawer);
+        }
+
+        @Override
+        public void onDrawerClosed(View v) {
+            super.onDrawerClosed(v);
+            supportInvalidateOptionsMenu();
+        }
+
+        @Override
+        public void onDrawerOpened(View v) {
+            super.onDrawerOpened(v);
+            supportInvalidateOptionsMenu();
+        }
+
+    }
+
+    public static Boolean openGroupListActivity(){
+        Intent intent = new Intent(BlueMixApplication.getAppContext(), GroupListActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        BlueMixApplication.getAppContext().startActivity(intent);
+        return true;
     }
 
 }

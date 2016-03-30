@@ -1,0 +1,49 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group
+        android:id="@+id/group1"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/action_change_org"
+            android:orderInCategory="100"
+            android:title="Organization"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/action_change_group"
+            android:orderInCategory="100"
+            android:title="Group"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/action_change_member"
+            android:orderInCategory="100"
+            android:title="Member"
+            app:showAsAction="never" />
+    </group>
+
+    <group
+        android:id="@+id/group_settings"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_settings"
+            android:icon="@drawable/settings_48"
+            android:orderInCategory="100"
+            android:title="@string/action_settings"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/action_about"
+            android:orderInCategory="200"
+            android:title="@string/action_about"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/action_exercise"
+            android:orderInCategory="300"
+            android:title="Start Upload process"
+            app:showAsAction="never" />
+        <item
+            android:id="@+id/logout"
+            android:orderInCategory="400"
+            android:title="@string/action_logout"
+            app:showAsAction="never" />
+    </group>
+</menu>

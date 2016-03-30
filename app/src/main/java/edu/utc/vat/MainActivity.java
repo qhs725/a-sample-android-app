@@ -46,6 +46,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
+        initNavDrawer();
 
         findViewById(R.id.MainMenuButton1).setOnClickListener(new OnClickListener() {
             @Override

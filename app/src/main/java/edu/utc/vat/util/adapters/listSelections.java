@@ -1,7 +1,13 @@
 package edu.utc.vat.util.adapters;
 
+import android.content.Context;
+import android.content.Intent;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import edu.utc.vat.BlueMixApplication;
+import edu.utc.vat.GroupListActivity;
 
 /**
  * Saves selections to be be retrieved from any other class (TestingActivity being one of the most important).
@@ -78,5 +84,32 @@ public class listSelections {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    //Resets Organization, Group, Member, and tasks
+    public static void resetOrg(){
+        setSelectionType("org");
+        selectOrg(null);
+        selectGroup(null, -1);
+        selectMember(null, null);
+        selectTask(null, null, null, null);
+    }
+
+    public static void resetGroup(){
+        setSelectionType("group");
+        selectGroup(null, -1);
+        selectMember(null, null);
+        selectTask(null, null, null, null);
+    }
+
+    public static void resetMember(){
+        setSelectionType("member");
+        selectMember(null, null);
+        selectTask(null, null, null, null);
+    }
+
+    public static void resetTask(){
+        setSelectionType("group");
+        selectTask(null, null, null, null);
     }
 }

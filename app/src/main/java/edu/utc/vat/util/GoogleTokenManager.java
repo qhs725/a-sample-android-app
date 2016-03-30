@@ -321,7 +321,7 @@ public class GoogleTokenManager extends LoadingActivity {
                         body = new JSONObject(sb.toString());
 
                         newUser = body.getBoolean("check");
-                        Log.d("ACCESS: ", body.getString("user")); //for dev use only
+                        //Log.d("ACCESS: ", body.getString("user")); //for dev use only
 
                         //prepare access object
                         if (body.has("user")) {
