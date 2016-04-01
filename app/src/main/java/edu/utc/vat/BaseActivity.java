@@ -217,7 +217,7 @@ public class BaseActivity extends AppCompatActivity {
         NavigationView nav = (NavigationView) findViewById(R.id.nav_view);
         Menu navMenu = nav.getMenu();
         try {
-            if (!listSelections.getSelectedMember().getString("name").equals("")) {
+            if (listSelections.getSelectedMember().has("name") && !listSelections.getSelectedMember().getString("name").equals("")) {
                 navMenu.findItem(R.id.action_change_member).setTitle("Member: " + listSelections.getSelectedMember().getString("name"));
             }
         } catch (JSONException e) {

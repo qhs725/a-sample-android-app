@@ -206,6 +206,7 @@ public class GoogleTokenManager extends LoadingActivity {
                     oAuthScopes += " https://www.googleapis.com/auth/userinfo.profile";
                     oAuthScopes += " https://www.googleapis.com/auth/userinfo.email";
                     oAuthScopes += " https://www.googleapis.com/auth/plus.login";
+                    //oAuthScopes += " https://www.googleapis.com/auth/plus.me";
                     idToken = GoogleAuthUtil.getToken(getApplicationContext(), accountId, clientIdScope);
 
                     Log.i(CLASS_NAME_2, "OAUTH Scope: " + oAuthScopes);
@@ -242,12 +243,11 @@ public class GoogleTokenManager extends LoadingActivity {
                 idToken = activeUser.getString(activeUser.getColumnIndexOrThrow("id_token"));
             }
 
+            //Log.e("CHECK_TOKEN: ", idToken);
             getUserInfo();
             // get some useful information about the currently selected user
             // we will populate the Blue List form with these details later
             // getAccountDetails(googleAccessToken);
-
-
             //if (!validateToken(idToken, true)) {return null; }
             return idToken;
         }
@@ -278,7 +278,7 @@ public class GoogleTokenManager extends LoadingActivity {
                 token_json.put("access_token", googleAccessToken);
                 token_json.put("id_token", idToken);
 
-                // Log.e("CHECK_TOKEN: ", token);
+
 
                 if (isNetwork()) {
                     DefaultHttpClient httpclient = new DefaultHttpClient();
@@ -293,6 +293,14 @@ public class GoogleTokenManager extends LoadingActivity {
 
                     //Retrieve server response
                     httpresponse = httpclient.execute(post);
+                    Log.e(CLASS_NAME, "CHECK RESPONSE STATUS CODE:  " + httpresponse.getStatusLine().getStatusCode());
+
+                    /*
+                    if(httpresponse.getStatusLine().getStatusCode() != 200){
+                        new GetTokenTask().execute();
+                        return;
+                    }
+                    */
 
                     InputStreamReader isr = new InputStreamReader(
                             httpresponse.getEntity().getContent());
