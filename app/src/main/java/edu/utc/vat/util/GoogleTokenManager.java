@@ -206,7 +206,7 @@ public class GoogleTokenManager extends LoadingActivity {
                     oAuthScopes += " https://www.googleapis.com/auth/userinfo.profile";
                     oAuthScopes += " https://www.googleapis.com/auth/userinfo.email";
                     oAuthScopes += " https://www.googleapis.com/auth/plus.login";
-                    //oAuthScopes += " https://www.googleapis.com/auth/plus.me";
+                    oAuthScopes += " https://www.googleapis.com/auth/plus.me";
                     idToken = GoogleAuthUtil.getToken(getApplicationContext(), accountId, clientIdScope);
 
                     Log.i(CLASS_NAME_2, "OAUTH Scope: " + oAuthScopes);
@@ -238,12 +238,12 @@ public class GoogleTokenManager extends LoadingActivity {
                 db = new DBHelper(BlueMixApplication.getAppContext()); //init db
                 activeUser = db.getActiveUser();
                 activeUser.moveToFirst();
-
+                accountId = activeUser.getString(activeUser.getColumnIndexOrThrow("email"));
                 googleAccessToken = activeUser.getString(activeUser.getColumnIndexOrThrow("access_token"));
                 idToken = activeUser.getString(activeUser.getColumnIndexOrThrow("id_token"));
             }
 
-            //Log.e("CHECK_TOKEN: ", idToken);
+            Log.e("CHECK_TOKEN: ", idToken);
             getUserInfo();
             // get some useful information about the currently selected user
             // we will populate the Blue List form with these details later
@@ -252,6 +252,24 @@ public class GoogleTokenManager extends LoadingActivity {
             return idToken;
         }
 
+        public void retrieveToken() throws GoogleAuthException, IOException {
+
+            String clientIdScope = "audience:server:client_id:" + webAppClientIdValue;
+            Log.i(CLASS_NAME_2, "client ID Scope: " + clientIdScope);
+            String oAuthScopes = "oauth2:";
+            oAuthScopes += " https://www.googleapis.com/auth/userinfo.profile";
+            oAuthScopes += " https://www.googleapis.com/auth/userinfo.email";
+            oAuthScopes += " https://www.googleapis.com/auth/plus.login";
+            oAuthScopes += " https://www.googleapis.com/auth/plus.me";
+            idToken = GoogleAuthUtil.getToken(getApplicationContext(), accountId, clientIdScope);
+
+            Log.i(CLASS_NAME_2, "OAUTH Scope: " + oAuthScopes);
+            Log.i(CLASS_NAME_2, "Google ID Token: \n" + idToken);
+            googleAccessToken = GoogleAuthUtil.getToken(getApplicationContext(), accountId, oAuthScopes);
+            Log.i(CLASS_NAME_2, "Google Access Token: \n" + googleAccessToken);
+
+            getUserInfo();
+        }
 
         @Override
         protected void onPostExecute(String token) {
@@ -295,12 +313,13 @@ public class GoogleTokenManager extends LoadingActivity {
                     httpresponse = httpclient.execute(post);
                     Log.e(CLASS_NAME, "CHECK RESPONSE STATUS CODE:  " + httpresponse.getStatusLine().getStatusCode());
 
-                    /*
                     if(httpresponse.getStatusLine().getStatusCode() != 200){
-                        new GetTokenTask().execute();
-                        return;
+                        try {
+                            retrieveToken();
+                        } catch (GoogleAuthException e) {
+                            e.printStackTrace();
+                        }
                     }
-                    */
 
                     InputStreamReader isr = new InputStreamReader(
                             httpresponse.getEntity().getContent());
