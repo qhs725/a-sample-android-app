@@ -454,7 +454,7 @@ public class GoogleTokenManager extends LoadingActivity {
         db.insertTask("UVJ-D", "Unilateral Vertical Jump (Dominate)", "", "regular");
         db.insertTask("UVJ-ND", "Unilateral Vertical Jump (Non-dominate)", "", "regular");
         db.insertTask("HTH", "Horizontal Trunk Hold", "", "regular");
-        db.insertTask("taskIDF", "Flanker", "Look at screen and pull it in the direction of the middle arrow when it appears", "flanker");
+        db.insertTask("FLKR", "Flanker", "Look at screen and pull it in the direction of the middle arrow when it appears", "flanker");
 
     }
 
