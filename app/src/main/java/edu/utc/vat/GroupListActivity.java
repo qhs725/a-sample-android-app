@@ -109,7 +109,7 @@ public class GroupListActivity extends BaseActivity {
                 cursor.moveToFirst();
 
                 //Header
-                header.title = "Select Group Member";
+                header.title = "Select Member";
                 result.add(header);
 
                 for (int i = 0; i < size; i++) {

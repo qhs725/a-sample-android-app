@@ -416,6 +416,14 @@ public class GoogleTokenManager extends LoadingActivity {
             db.insertOrg(group.getString("ORGANIZATIONID"), group.getString("ORG_NAME"), null, "Member", 0, 0, 0, 0);
 
 
+            //Get members of the groups
+            if (group.has("Members") && group.getJSONArray("Members").length() > 0) {
+                JSONArray groupMembers = group.getJSONArray("Members");
+                for (int v = 0; v < groupMembers.length(); v++) {
+                    JSONObject member = groupMembers.getJSONObject(v);
+                    db.insertMember(member.getString("USERID"), group.getString("GROUPID"), group.getString("ORGANIZATIONID"), member.getString("NAME_FIRST") + " " + member.getString("NAME_LAST"), member.getString("ROLE_NAME"));
+                }
+            }
         }
 
         //Get Admin Access permissions and groups under organization
