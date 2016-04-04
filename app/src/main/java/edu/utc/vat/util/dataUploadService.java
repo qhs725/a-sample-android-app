@@ -358,18 +358,20 @@ public class dataUploadService extends IntentService {
                     Thread.sleep(500);//slight delay between files. Only 1 at most gets through without this
                 }
 
-                context.deleteFile(fileNames.get(r)); //delete uploaded file TODO: delete after confirmation from server?
+               // context.deleteFile(fileNames.get(r)); //delete uploaded file TODO: delete after confirmation from server?
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
+
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         mSocket.disconnect(); //disconnect when finished uploading
 
     }
@@ -428,6 +430,7 @@ public class dataUploadService extends IntentService {
         body.put("orgID", listSelections.getSelectedOrg());
         body.put("groupID", listSelections.getSelectedGroup());
         body.put("testedMember", listSelections.getSelectedMember());
+        body.put("task", listSelections.getSelectedTask());
         // body.put("member", selectedMember);
 
         String given_name = UserAccount.getGivenName() != null ? UserAccount.getGivenName() : "null";

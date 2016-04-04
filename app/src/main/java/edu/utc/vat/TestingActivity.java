@@ -111,7 +111,14 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testing);
-        initNavDrawer();
+
+        try {
+            task = listSelections.getSelectedTask();
+            if(!task.getString("type").equals("flanker"))
+            initNavDrawer();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
         status = VOID;
@@ -126,7 +133,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         timerString = timerToString(timerTime);
 
         try {
-            task = listSelections.getSelectedTask();
             currentExercise.setText(exerciseName != null ? exerciseName : task.getString("name"));
         } catch (JSONException e) {
             e.printStackTrace();

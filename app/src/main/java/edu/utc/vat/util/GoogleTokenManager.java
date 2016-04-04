@@ -448,8 +448,13 @@ public class GoogleTokenManager extends LoadingActivity {
 
         }
 
-        db.insertTask("taskID1", "One Leg Squat Hold", "Squat and hold it", "regular");
-        db.insertTask("taskID2", "Flanker", "Look at screen and pull it in the direction of the middle arrow when it appears", "flanker");
+        //TODO: Task List, add instruction text and times
+        db.insertTask("USH-D", "Unilateral Squat Hold (Dominate)", "", "regular");
+        db.insertTask("USH-ND", "Unilateral Squat Hold (Non-dominate)", "", "regular");
+        db.insertTask("UVJ-D", "Unilateral Vertical Jump (Dominate)", "", "regular");
+        db.insertTask("UVJ-ND", "Unilateral Vertical Jump (Non-dominate)", "", "regular");
+        db.insertTask("HTH", "Horizontal Trunk Hold", "", "regular");
+        db.insertTask("taskIDF", "Flanker", "Look at screen and pull it in the direction of the middle arrow when it appears", "flanker");
 
     }
 
