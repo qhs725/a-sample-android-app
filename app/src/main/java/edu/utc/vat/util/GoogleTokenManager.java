@@ -424,6 +424,15 @@ public class GoogleTokenManager extends LoadingActivity {
                     db.insertMember(member.getString("USERID"), group.getString("GROUPID"), group.getString("ORGANIZATIONID"), member.getString("NAME_FIRST") + " " + member.getString("NAME_LAST"), member.getString("ROLE_NAME"));
                 }
             }
+
+            //Get Active group sessions for today
+            if (group.has("Sessions") && group.getJSONArray("Sessions").length() > 0) {
+                JSONArray groupSessions = group.getJSONArray("Sessions");
+                for (int v = 0; v < groupSessions.length(); v++) {
+                    JSONObject session = groupSessions.getJSONObject(v);
+                    db.insertSession(session.getString("SESSIONID"), session.getString("SESSION_DESC"), session.getString("SESSION_TYPE"), session.getString("GROUPID"), session.getString("CREATEDBY"), session.getString("START_DATE"), session.getString("END_DATE"), session.getString("DATEADDED"));
+                }
+            }
         }
 
         //Get Admin Access permissions and groups under organization
@@ -449,6 +458,15 @@ public class GoogleTokenManager extends LoadingActivity {
                         for (int y = 0; y < groupMembers.length(); y++) {
                             JSONObject member = groupMembers.getJSONObject(y);
                             db.insertMember(member.getString("USERID"), group.getString("GROUPID"), org.getString("ORGANIZATIONID"), member.getString("NAME_FIRST") + " " + member.getString("NAME_LAST"), member.getString("ROLE_NAME"));
+                        }
+                    }
+
+                    //Get Active group sessions for today
+                    if (group.has("Sessions") && group.getJSONArray("Sessions").length() > 0) {
+                        JSONArray groupSessions = group.getJSONArray("Sessions");
+                        for (int v = 0; v < groupSessions.length(); v++) {
+                            JSONObject session = groupSessions.getJSONObject(v);
+                            db.insertSession(session.getString("SESSIONID"), session.getString("SESSION_DESC"), session.getString("SESSION_TYPE"), session.getString("GROUPID"), session.getString("CREATEDBY"), session.getString("START_DATE"), session.getString("END_DATE"), session.getString("DATEADDED"));
                         }
                     }
 

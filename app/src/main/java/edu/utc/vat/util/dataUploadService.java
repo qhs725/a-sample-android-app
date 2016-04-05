@@ -422,6 +422,7 @@ public class dataUploadService extends IntentService {
     //Adds user json object with important info to main obj json
     private void getUserJSON() throws JSONException {
 
+        DBHelper db = new DBHelper(BlueMixApplication.getAppContext());
         //Most important
         body.put("id_token", UserAccount.getIdToken());
         body.put("access_token", UserAccount.getAccessToken());
@@ -431,6 +432,9 @@ public class dataUploadService extends IntentService {
         body.put("groupID", listSelections.getSelectedGroup());
         body.put("testedMember", listSelections.getSelectedMember());
         body.put("task", listSelections.getSelectedTask());
+
+
+        body.put("sessionID", db.getActiveSessionID(listSelections.getSelectedGroup()));
         // body.put("member", selectedMember);
 
         String given_name = UserAccount.getGivenName() != null ? UserAccount.getGivenName() : "null";
