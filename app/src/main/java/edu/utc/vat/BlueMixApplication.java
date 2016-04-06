@@ -22,7 +22,6 @@ import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.multidex.MultiDex;
@@ -30,20 +29,19 @@ import android.util.Log;
 
 import com.ibm.mobile.services.cloudcode.IBMCloudCode;
 import com.ibm.mobile.services.core.IBMBluemix;
-//import com.ibm.mobile.services.core.IBMCurrentUser;
 import com.ibm.mobile.services.core.internal.IBMLogger;
-//import com.ibm.mobile.services.data.IBMData;
 import com.ibm.mobile.services.push.IBMPush;
 import com.ibm.mobile.services.push.IBMPushNotificationListener;
 import com.ibm.mobile.services.push.IBMSimplePushNotification;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-//import java.util.ArrayList;
-//import java.util.List;
 import java.util.Properties;
 
-import edu.utc.vat.util.dataUploadService;
+//import com.ibm.mobile.services.core.IBMCurrentUser;
+//import com.ibm.mobile.services.data.IBMData;
+//import java.util.ArrayList;
+//import java.util.List;
 
 //import bolts.Continuation;
 //import bolts.Task;

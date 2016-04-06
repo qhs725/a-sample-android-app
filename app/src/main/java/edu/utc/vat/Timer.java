@@ -6,18 +6,12 @@
 
 package edu.utc.vat;
 
-import android.os.CountDownTimer;
-
 import android.content.Context;
-
-import android.media.RingtoneManager;
 import android.media.Ringtone;
-
+import android.media.RingtoneManager;
 import android.net.Uri;
-import android.telecom.Call;
+import android.os.CountDownTimer;
 import android.util.Log;
-
-import java.lang.Exception;
 
 
 public class Timer {

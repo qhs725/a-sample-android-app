@@ -13,13 +13,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.utc.vat.util.DBHelper;
 import edu.utc.vat.util.adapters.GroupAdapter;
 import edu.utc.vat.util.adapters.listItemInfo;
 import edu.utc.vat.util.adapters.listSelections;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class GroupListActivity extends BaseActivity {

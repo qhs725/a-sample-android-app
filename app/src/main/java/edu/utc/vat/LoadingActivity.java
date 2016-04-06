@@ -8,7 +8,6 @@ package edu.utc.vat;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 public class LoadingActivity extends Activity {
 

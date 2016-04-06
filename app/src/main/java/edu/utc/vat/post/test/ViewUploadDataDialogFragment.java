@@ -10,21 +10,14 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-
-import android.os.AsyncTask;
 import android.os.Bundle;
-
 import android.util.Log;
-
 import android.widget.Toast;
 
-import edu.utc.vat.CallNative;
 import edu.utc.vat.R;
-import edu.utc.vat.TestingActivity;
 import edu.utc.vat.util.dataUploadService;
 
 public class ViewUploadDataDialogFragment extends DialogFragment {

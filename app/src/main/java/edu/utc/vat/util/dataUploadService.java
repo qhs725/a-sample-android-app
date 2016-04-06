@@ -8,16 +8,12 @@
 package edu.utc.vat.util;
 
 import android.app.IntentService;
-
 import android.content.Context;
 import android.content.Intent;
-
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Handler;
-
 import android.util.Log;
-
 import android.widget.Toast;
 
 import com.github.nkzawa.socketio.client.IO;
@@ -40,10 +36,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -193,14 +187,12 @@ public class dataUploadService extends IntentService {
         }
     }
 
-
     //Retrieves list of names of dat files that exist in internal storage
     private ArrayList<String> getFilesNames(String ext, int namesOnly) {
         ArrayList<String> dataFileNames = new ArrayList<String>();
-
         File fileFinder = new File(context.getFilesDir() + "/");
-        File list[] = fileFinder.listFiles();
 
+        File list[] = fileFinder.listFiles();
         for (int i = 0; i < list.length; i++) {
             String filenameArray[] = list[i].getName().split("\\.");
             String extension = filenameArray[filenameArray.length - 1];
@@ -215,15 +207,12 @@ public class dataUploadService extends IntentService {
         return dataFileNames;
     }
 
-
     //Combines data files into JSON format
     private void packageData() {
-
         ArrayList<String> fileNames = getFilesNames(EXT, 0);
 
         if (!fileNames.isEmpty()) {
             obj = new JSONObject();
-
             try {
                 getUserJSON();
 
@@ -257,7 +246,6 @@ public class dataUploadService extends IntentService {
                     //Loop through file line by line
                     while ((lineRow = reader.readLine()) != null) {
                         String[] RowData = lineRow.split(",");
-
                         //Add value in each 'column' of the file to the respective ArrayList in the group List
                         for (int y = 0; y < numColumns; y++) {
 
@@ -318,7 +306,6 @@ public class dataUploadService extends IntentService {
         }
     }
 
-
     //Saves string input to file. The file name is generated using numbers to keep track of existing files
     private void saveData(String data) {
         ArrayList<String> fileNames = getFilesNames("json", 1);
@@ -343,7 +330,6 @@ public class dataUploadService extends IntentService {
         }
     }
 
-
     //Converts each json file in internal storage to a JSON object and calls the function to send them to the server
     //Files are uploaded by highest number to lowest
     private void uploadFiles() {
@@ -365,21 +351,18 @@ public class dataUploadService extends IntentService {
                 e.printStackTrace();
             }
         }
-
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
         mSocket.disconnect(); //disconnect when finished uploading
-
     }
 
 
     //Returns entire file as string
     private String loadJSONFromFile(String name) {
-        String json = null;
+        String json;
         try {
             InputStream is = context.openFileInput(name);
             int size = is.available();
@@ -397,7 +380,6 @@ public class dataUploadService extends IntentService {
         return json;
     }
 
-
     //Returns true if there is a network connection
     private boolean isNetwork() {
         ConnectivityManager connectivityManager
@@ -405,7 +387,6 @@ public class dataUploadService extends IntentService {
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
 
         Boolean isNetwork = activeNetworkInfo != null && activeNetworkInfo.isConnected();
-
         mHandler = new Handler(getMainLooper());
         if (!isNetwork) {
             mHandler.post(new Runnable() {
@@ -427,26 +408,19 @@ public class dataUploadService extends IntentService {
         body.put("id_token", UserAccount.getIdToken());
         body.put("access_token", UserAccount.getAccessToken());
 
-        //Add the member selected to body if exists
+        //Add Selected and relevant info to body if exists
         body.put("orgID", listSelections.getSelectedOrg());
         body.put("groupID", listSelections.getSelectedGroup());
         body.put("testedMember", listSelections.getSelectedMember());
         body.put("task", listSelections.getSelectedTask());
-
-
         body.put("sessionID", db.getActiveSessionID(listSelections.getSelectedGroup()));
-        // body.put("member", selectedMember);
 
         String given_name = UserAccount.getGivenName() != null ? UserAccount.getGivenName() : "null";
         String family_name = UserAccount.getFamilyName() != null ? UserAccount.getFamilyName() : "null";
         name.put("given_name", given_name);
         name.put("family_name", family_name);
         user_json.put("id", UserAccount.getGoogleUserID());
-        // user_json.put("idToken", UserAccount.getIdToken());
-        //user_json.put("accessToken", UserAccount.getAccessToken());
         user_json.put("name", name);
         obj.put("user", user_json);
-
-
     }
 }

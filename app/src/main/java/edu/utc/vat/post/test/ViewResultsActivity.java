@@ -7,23 +7,12 @@
 package edu.utc.vat.post.test;
 
 import android.app.DialogFragment;
-
 import android.graphics.Color;
-
 import android.os.Bundle;
-
-import android.view.View;
-
-import android.widget.LinearLayout;
-import android.widget.Button;
-
 import android.util.Log;
-
-import edu.utc.vat.*;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.chart.PointStyle;
@@ -31,6 +20,14 @@ import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+import edu.utc.vat.CallNative;
+import edu.utc.vat.R;
+import edu.utc.vat.TestingActivity;
 
 public class ViewResultsActivity extends TestingActivity implements View.OnClickListener {
 

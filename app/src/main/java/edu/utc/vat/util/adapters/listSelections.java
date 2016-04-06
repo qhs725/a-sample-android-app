@@ -1,13 +1,8 @@
 package edu.utc.vat.util.adapters;
 
-import android.content.Context;
-import android.content.Intent;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import edu.utc.vat.BlueMixApplication;
-import edu.utc.vat.GroupListActivity;
 
 /**
  * Saves selections to be be retrieved from any other class (TestingActivity being one of the most important).

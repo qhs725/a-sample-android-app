@@ -6,25 +6,19 @@
 
 package edu.utc.vat;
 
+import android.content.Context;
 import android.content.Intent;
-
 import android.os.Bundle;
-
 import android.util.Log;
-
 import android.view.View;
 import android.view.View.OnClickListener;
-
-import android.content.Context;
 
 import com.ibm.mobile.services.core.IBMBluemix;
 import com.ibm.mobile.services.core.IBMCurrentUser;
 
 import bolts.Continuation;
 import bolts.Task;
-
 import edu.utc.vat.bluetooth.BtActivity;
-import edu.utc.vat.forms.SportInjuryForm;
 import edu.utc.vat.post.test.ViewResultsActivity;
 
 

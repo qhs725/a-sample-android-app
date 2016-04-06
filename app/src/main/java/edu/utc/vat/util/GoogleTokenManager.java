@@ -45,8 +45,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
 import edu.utc.vat.BlueMixApplication;
-import edu.utc.vat.LoginActivity;
 import edu.utc.vat.LoadingActivity;
+import edu.utc.vat.LoginActivity;
 import edu.utc.vat.MainActivity;
 import edu.utc.vat.UserAccount;
 import edu.utc.vat.forms.RegistrationForm;
@@ -297,7 +297,6 @@ public class GoogleTokenManager extends LoadingActivity {
                 token_json.put("id_token", idToken);
 
 
-
                 if (isNetwork()) {
                     DefaultHttpClient httpclient = new DefaultHttpClient();
                     HttpPost post = new HttpPost("http://utc-vat.mybluemix.net/users/check");
@@ -313,7 +312,7 @@ public class GoogleTokenManager extends LoadingActivity {
                     httpresponse = httpclient.execute(post);
                     Log.e(CLASS_NAME, "CHECK RESPONSE STATUS CODE:  " + httpresponse.getStatusLine().getStatusCode());
 
-                    if(httpresponse.getStatusLine().getStatusCode() != 200){
+                    if (httpresponse.getStatusLine().getStatusCode() != 200) {
                         try {
                             retrieveToken();
                         } catch (GoogleAuthException e) {

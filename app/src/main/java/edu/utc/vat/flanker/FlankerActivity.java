@@ -8,17 +8,14 @@
 package edu.utc.vat.flanker;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.Context;
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.view.WindowManager;
 import android.util.Log;
+import android.view.WindowManager;
 
 import edu.utc.vat.CallNative;
-import edu.utc.vat.MainActivity;
-import edu.utc.vat.TestingActivity;
 import edu.utc.vat.post.test.ViewResultsActivity;
 
 public class FlankerActivity extends Activity {

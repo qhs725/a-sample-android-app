@@ -6,30 +6,20 @@ package edu.utc.vat.util;
  * Helper class for connections to SQLite Database
  */
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Hashtable;
-
-import android.app.Application;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 
-import edu.utc.vat.BlueMixApplication;
+import java.util.ArrayList;
 
 public class DBHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "sipsdb";
     public static final String ACTIVE_USER_TABLE_NAME = "activeUser";
     public static final String ACTIVE_USER_COLUMN_ID = "id";
-    public static final String ACTIVE_USER_COLUMN_FIRST_NAME = "given_name";
-    public static final String ACTIVE_USER_COLUMN_LAST_NAME = "family_name";
-    public static final String ACTIVE_USER_COLUMN_ACCESS = "access_token";
-    public static final String ACTIVE_USER_COLUMN_REFRESH = "refresh_token";
-    private HashMap hp;
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
@@ -228,7 +218,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     /**
      * Sessions Table
-     *
+     * <p/>
      * sessionID VARCHAR primary key, session_desc text, start_date DATE, end_date DATE, groupID VARCHAR,
      * createdBy VARCHAR, session_type VARCHAR, dateAdded DATE
      */
@@ -252,7 +242,7 @@ public class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
-    public String getActiveSessionID(String groupID){
+    public String getActiveSessionID(String groupID) {
         SQLiteDatabase db = this.getReadableDatabase();
         String sessionID = "";
         boolean first = true;
@@ -261,13 +251,12 @@ public class DBHelper extends SQLiteOpenHelper {
         res.moveToFirst();
 
         while (res.isAfterLast() == false) {
-            if(first) {
-            first = false;
+            if (first) {
+                first = false;
                 sessionID = res.getString(res.getColumnIndexOrThrow("sessionID"));
-            }else{
+            } else {
                 sessionID = sessionID + ", " + res.getString(res.getColumnIndexOrThrow("sessionID"));
             }
-
             res.moveToNext();
         }
         return sessionID;
@@ -334,8 +323,6 @@ public class DBHelper extends SQLiteOpenHelper {
         return numRows;
     }
 
-
-
     public Integer deleteContact (Integer id)
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -343,7 +330,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 "id = ? ",
                 new String[] { Integer.toString(id) });
     }
-
     */
 
 

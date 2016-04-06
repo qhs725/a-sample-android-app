@@ -7,13 +7,10 @@
 package edu.utc.vat.flanker;
 
 import android.content.Context;
-import android.os.AsyncTask;
-import android.os.CountDownTimer;
 import android.util.Log;
 
-import java.util.Vector;
-import java.lang.Math;
 import java.util.Random;
+import java.util.Vector;
 
 public class Flanker {
 

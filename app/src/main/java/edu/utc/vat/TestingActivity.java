@@ -11,57 +11,29 @@
 
 package edu.utc.vat;
 
-import android.app.Activity;
-import android.app.DialogFragment;
 
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
-
-import android.graphics.Bitmap;
-import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.NavUtils;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
-import android.view.MenuItem;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-
-import android.os.Bundle;
-
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Button;
-import android.widget.Toast;
-
-import android.util.Log;
-
-import com.ibm.mobile.services.core.IBMBluemix;
-import com.ibm.mobile.services.core.IBMCurrentUser;
-import com.ibm.mobile.services.push.IBMPush;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.UUID;
 
-import bolts.Continuation;
-import bolts.Task;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 import edu.utc.vat.flanker.FlankerActivity;
 import edu.utc.vat.flanker.FlankerResultsActivity;
 import edu.utc.vat.post.test.ViewDialogFragment;
 import edu.utc.vat.post.test.ViewResultsActivity;
 import edu.utc.vat.util.adapters.listSelections;
-import edu.utc.vat.util.dataUploadService;
 
 
 public class TestingActivity extends BaseActivity implements View.OnClickListener {
@@ -114,8 +86,8 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
         try {
             task = listSelections.getSelectedTask();
-            if(!task.getString("type").equals("flanker"))
-            initNavDrawer();
+            if (!task.getString("type").equals("flanker"))
+                initNavDrawer();
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -162,11 +134,6 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
                 break;
             }
         }
-
-
-        //use application class to maintain global state
-        //blApplication = (BlueMixApplication) getApplication();
-        //initServices(); //Initialize Bluemix connection
 
         if (CallNative.FlankerCheck() == true) {
             Log.i("TESTING", "GO TO FLANKER RESULTS DIALOG .. NO .. ??");
