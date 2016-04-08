@@ -420,7 +420,7 @@ public class GoogleTokenManager extends LoadingActivity {
                 JSONArray groupMembers = group.getJSONArray("Members");
                 for (int v = 0; v < groupMembers.length(); v++) {
                     JSONObject member = groupMembers.getJSONObject(v);
-                    db.insertMember(member.getString("USERID"), group.getString("GROUPID"), group.getString("ORGANIZATIONID"), member.getString("NAME_FIRST") + " " + member.getString("NAME_LAST"), member.getString("ROLE_NAME"));
+                    db.insertMember(member.getString("USERID"), group.getString("GROUPID"), group.getString("ORGANIZATIONID"), member.getString("NUMBER")/*member.getString("NAME_FIRST") + " " + member.getString("NAME_LAST")*/, member.getString("ROLE_NAME"));
                 }
             }
 
@@ -456,7 +456,7 @@ public class GoogleTokenManager extends LoadingActivity {
                         JSONArray groupMembers = group.getJSONArray("Members");
                         for (int y = 0; y < groupMembers.length(); y++) {
                             JSONObject member = groupMembers.getJSONObject(y);
-                            db.insertMember(member.getString("USERID"), group.getString("GROUPID"), org.getString("ORGANIZATIONID"), member.getString("NAME_FIRST") + " " + member.getString("NAME_LAST"), member.getString("ROLE_NAME"));
+                            db.insertMember(member.getString("USERID"), group.getString("GROUPID"), org.getString("ORGANIZATIONID"), member.getString("NUMBER")/*member.getString("NAME_FIRST") + " " + member.getString("NAME_LAST")*/, member.getString("ROLE_NAME"));
                         }
                     }
 
