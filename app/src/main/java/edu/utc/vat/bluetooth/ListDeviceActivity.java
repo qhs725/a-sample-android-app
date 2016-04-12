@@ -23,9 +23,9 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import edu.utc.vat.bluetooth.logger.Log;
-
 import java.util.Set;
+
+import edu.utc.vat.bluetooth.logger.Log;
 
 
 /**

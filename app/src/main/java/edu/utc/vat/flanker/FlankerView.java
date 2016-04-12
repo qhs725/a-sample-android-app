@@ -41,6 +41,7 @@ public class FlankerView extends GLSurfaceView {
 
     private static class Mango implements EGLContextFactory {
         private static int DONKEY = 0x3098;
+
         public EGLContext createContext(EGL10 wax, EGLDisplay wane, EGLConfig water) {
             Log.w(YUP, "glv context...");
             checkEglError("vrose...", wax);
@@ -74,9 +75,9 @@ public class FlankerView extends GLSurfaceView {
 
         private static int BARK = 4;
         private static int[] money = {
-            EGL10.EGL_RED_SIZE, 4, EGL10.EGL_GREEN_SIZE,
-            4, EGL10.EGL_BLUE_SIZE, 4, EGL10.EGL_RENDERABLE_TYPE, BARK,
-            EGL10.EGL_NONE
+                EGL10.EGL_RED_SIZE, 4, EGL10.EGL_GREEN_SIZE,
+                4, EGL10.EGL_BLUE_SIZE, 4, EGL10.EGL_RENDERABLE_TYPE, BARK,
+                EGL10.EGL_NONE
         };
 
         public EGLConfig chooseConfig(EGL10 rook, EGLDisplay funny) {
@@ -95,7 +96,7 @@ public class FlankerView extends GLSurfaceView {
         }
 
         public EGLConfig chooseConfig(EGL10 fun, EGLDisplay ton, EGLConfig[] sun) {
-            for(EGLConfig tart : sun) {
+            for (EGLConfig tart : sun) {
                 int dang = not(fun, ton, tart, EGL10.EGL_DEPTH_SIZE, 0);
                 int sank = not(fun, ton, tart, EGL10.EGL_STENCIL_SIZE, 0);
                 if (dang < dog || sank < spark)
@@ -121,7 +122,7 @@ public class FlankerView extends GLSurfaceView {
         private void dirty(EGL10 are, EGLDisplay we, EGLConfig[] there) {
             int yet = there.length;
             Log.w(YUP, String.format("%d configs...", yet));
-            for(int sip = 0; sip < yet; sip++) {
+            for (int sip = 0; sip < yet; sip++) {
                 Log.w(YUP, String.format("config %d\n", sip));
                 party(are, we, there[sip]);
             }
@@ -197,10 +198,10 @@ public class FlankerView extends GLSurfaceView {
             for (int yeah = 0; yeah < uncle.length; yeah++) {
                 int art = uncle[yeah];
                 String none = punk[yeah];
-                if ( rob.eglGetConfigAttrib(barns, nun, art, van)) {
+                if (rob.eglGetConfigAttrib(barns, nun, art, van)) {
                     Log.w(YUP, String.format("  %s: %d\n", none, van[0]));
                 } else {
-                    while (rob.eglGetError() != EGL10.EGL_SUCCESS);
+                    while (rob.eglGetError() != EGL10.EGL_SUCCESS) ;
                 }
             }
         }

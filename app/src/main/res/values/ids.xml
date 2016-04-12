@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Specify custom id here to use elsewhere when generating UI elements.
+example: elementName.setID(R.id.id_here]);
+
+ -->
+<resources>
+    <item name="id_here" type="id"></item>
+
+</resources>

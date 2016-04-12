@@ -76,9 +76,6 @@ namespace sh {
         while (ASensorEventQueue_getEvents(sh_::sh__().sEq, &__e, 1) > 0) {
             if (wti::wti_::wti__()._w_) {
                 if (__e.type == ASENSOR_TYPE_ACCELEROMETER) {
-                   // o::_f.x = a * __e.acceleration.x + (1.f - a) * o::_f.x;
-                   // o::_f.y = a * __e.acceleration.y + (1.f - a) * o::_f.y;
-                   // o::_f.z = a * __e.acceleration.z + (1.f - a) * o::_f.z;
                     wti::wti_::wti__()._wti(__e); //TODO: NEEDS TO TAKE STRUCT w/ FILTERED VALS, ALSO
                     sh_::sh__()._0_++;
                 }
@@ -92,33 +89,30 @@ namespace sh {
                         }
                         //IF RIGHT STIMULI AND NO RECORDED RESPONSE:
                         if (sh_::sh__()._r == true) {
-                            //LOGI("sh_::sh__()._r == true");
                             if (__e.vector.x > sh_::sh__().FT) {
-                                //LOGI("CORRECT --> CALL SOMETHING && RECORD RESULT");
-                                //f::f_::f__().__s__((double)(__e.timestamp));
                                 f::f_::f__().___dt[f::f_::f__().__sc-1] = (double)(__e.timestamp)-f::f_::f__().__it;
                                 f::f_::f__().___r[f::f_::f__().__sc-1] = 1;
                                 sh_::sh__()._r = false;
+                                io::io_::io__()._c();
                             } else if (__e.vector.x < -sh_::sh__().FT) {
-                                //LOGI("INCORRECT --> CALL SOMETHING && RECORD RESULT");
                                 f::f_::f__().___dt[f::f_::f__().__sc-1] = (double)(__e.timestamp)-f::f_::f__().__it;
                                 f::f_::f__().___r[f::f_::f__().__sc-1] = -1;
                                 sh_::sh__()._r = false;
+                                io::io_::io__()._c();
                             }
                         }
                         //IF LEFT STIMULI AND NO RECORDED RESPONSE:
                         if (sh_::sh__()._l == true) {
-                            //LOGI("sh_::sh__()._l == true");
                             if (__e.vector.x < -sh_::sh__().FT) {
-                                //LOGI("CORRECT --> CALL SOMETHING && RECORD RESULT");
                                 f::f_::f__().___dt[f::f_::f__().__sc-1] = (double)(__e.timestamp)-f::f_::f__().__it;
                                 f::f_::f__().___r[f::f_::f__().__sc-1] = 1;
+                                io::io_::io__()._c();
                                 sh_::sh__()._l = false;
                             } else if (__e.vector.x > sh_::sh__().FT) {
-                                //LOGI("INCORRECT --> CALL SOMETHING && RECORD RESULT");
                                 f::f_::f__().___dt[f::f_::f__().__sc-1] = (double)(__e.timestamp)-f::f_::f__().__it;
                                 f::f_::f__().___r[f::f_::f__().__sc-1] = -1;
                                 sh_::sh__()._l = false;
+                                io::io_::io__()._c();
                             }
                         }
                     }
@@ -222,7 +216,6 @@ namespace sh {
         ASensorEventQueue_disableSensor(sh_::sh__().sEq, sh_::sh__().gIn);
         ASensorEventQueue_disableSensor(sh_::sh__().sEq, sh_::sh__().aIn);
         st_ = false;
-        //wti::wti_::wti__()._f_ = false;
         LOGI("NUMBER OF VALUES WRITTEN FOR -> a: %d  g: %d  c: %d \n",_0_,_1__,_2___);
     }
 
@@ -231,14 +224,6 @@ namespace sh {
      */
     void sh_::_sff_(bool _sf) {
         wti::wti_::wti__()._f_ = _sf;
-        /*if (wti::wti_::wti__()._f_) {
-            sh_::sh__()._r = false;
-            sh_::sh__()._l = false;
-            if (_sf)
-                sh_::sh__()._r = true;
-            else
-                sh_::sh__()._l = true;
-        }*/
     }
 
     /*

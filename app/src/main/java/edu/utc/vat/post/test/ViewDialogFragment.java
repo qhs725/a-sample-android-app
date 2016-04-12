@@ -10,20 +10,14 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-
 import android.os.Bundle;
-
 import android.util.Log;
-
 import android.widget.Toast;
 
 import edu.utc.vat.R;
 import edu.utc.vat.TestingActivity;
-import edu.utc.vat.dataUploadService;
 
 
 public class ViewDialogFragment extends DialogFragment {
@@ -45,7 +39,7 @@ public class ViewDialogFragment extends DialogFragment {
                         if (TestingActivity.getisNetwork()) {
                             Log.i("ViewDialog", "Starting ViewResultsActivity");
 
-                            ((TestingActivity)context).launchViewer();
+                            ((TestingActivity) context).launchViewer();
 
                             Toast.makeText(context, "Opening accelerometer results.", Toast.LENGTH_SHORT);
                         } else {
@@ -55,7 +49,7 @@ public class ViewDialogFragment extends DialogFragment {
                 })
                 .setNegativeButton(R.string.dialog_no, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        ((TestingActivity)context).Upload();
+                        ((TestingActivity) context).Upload();
                     }
                 });
         return builder.create();

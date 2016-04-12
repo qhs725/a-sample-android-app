@@ -14,62 +14,75 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
+import edu.utc.vat.util.DBHelper;
 import edu.utc.vat.util.GoogleTokenManager;
 
 
-public class LoginActivity extends AppCompatActivity implements OnClickListener{
+public class LoginActivity extends AppCompatActivity implements OnClickListener {
 
-	private Activity thisActivity = this;
-	
-	private com.google.android.gms.common.SignInButton mGetGoogleTokenButton;
-	@SuppressWarnings("unused")
-	private TextView mStatus;
-	@SuppressWarnings("unused")
-	private TextView statusWindow;
-	@SuppressWarnings("unused")
-	private String statusMessage = "";
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) 
-	{
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_login);
+    private Activity thisActivity = this;
 
-	    mGetGoogleTokenButton = (com.google.android.gms.common.SignInButton) findViewById(R.id.get_google_token_button);
-	    mGetGoogleTokenButton.setOnClickListener(this);
+    private com.google.android.gms.common.SignInButton mGetGoogleTokenButton;
+    @SuppressWarnings("unused")
+    private TextView mStatus;
+    @SuppressWarnings("unused")
+    private TextView statusWindow;
+    @SuppressWarnings("unused")
+    private String statusMessage = "";
+
+    private final Context context = thisActivity;
+    private Intent intent = null;
+
+    private DBHelper db;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        db = new DBHelper(BlueMixApplication.getAppContext()); //init db
+
+        if (db.isSavedUser() == 1) {
+            intent = new Intent(context, GoogleTokenManager.class);
+            intent.putExtra("action", 1);
+            startActivity(intent);
+            finish();
+        }
+
+        setContentView(R.layout.activity_login);
+
+        mGetGoogleTokenButton = (com.google.android.gms.common.SignInButton) findViewById(R.id.get_google_token_button);
+        mGetGoogleTokenButton.setOnClickListener(this);
         //String dirPath = getFilesDir().toString();
-	}
+    }
 
-	protected void onActivityResult(final int requestCode, final int resultCode,
-	         final Intent data) {
+    protected void onActivityResult(final int requestCode, final int resultCode,
+                                    final Intent data) {
 
-	}
-	
-	protected void onStart() {
-		super.onStart();
-	}
+    }
 
-	protected void onStop() {
-		super.onStop();
-	}
+    protected void onStart() {
+        super.onStart();
+    }
 
-	@Override
-	public void onClick(View v) {
-		
-		final Context context = thisActivity;
-		Intent intent = null;
+    protected void onStop() {
+        super.onStop();
+    }
 
-		switch (v.getId()) {
+    @Override
+    public void onClick(View v) {
 
-			case R.id.get_google_token_button:
-			    intent = new Intent(context, GoogleTokenManager.class);
-	            startActivity(intent);
-	            finish();
-				break;
-			default:
-				break;
-				
-		}
-	}
+        switch (v.getId()) {
+
+            case R.id.get_google_token_button:
+                intent = new Intent(context, GoogleTokenManager.class);
+                intent.putExtra("action", 0);
+                startActivity(intent);
+                finish();
+                break;
+            default:
+                break;
+
+        }
+    }
 
 }

@@ -30,7 +30,6 @@ import java.util.Scanner;
 import edu.utc.vat.CallNative;
 import edu.utc.vat.R;
 import edu.utc.vat.TestingActivity;
-import edu.utc.vat.post.test.ViewUploadDataDialogFragment;
 
 public class FlankerResultsActivity extends TestingActivity implements View.OnClickListener {
 
@@ -53,7 +52,7 @@ public class FlankerResultsActivity extends TestingActivity implements View.OnCl
     private Button pf1Button, pf2Button;
     private View currentChart;
 
-    int[] responses = {0,0,0};
+    int[] responses = {0, 0, 0};
     double responseTime = 0.0;
 
     @Override
@@ -73,7 +72,7 @@ public class FlankerResultsActivity extends TestingActivity implements View.OnCl
         if (!loadFlag)
             Log.e("FlankerResults", "Couldn't load files to view");
 
-        Log.i("FlankerResults","calling openPlot from onCreate");
+        Log.i("FlankerResults", "calling openPlot from onCreate");
         openChart();
         Log.i("FlankerResults", "returning to onCreate from openPlot");
     }
@@ -112,23 +111,23 @@ public class FlankerResultsActivity extends TestingActivity implements View.OnCl
     }
 
     private boolean loadResults() {
-        Log.i("FlankerResults","loadResults 1");
+        Log.i("FlankerResults", "loadResults 1");
         int ct = 0;
         // First, scan g.dat for gyroscope data
         Scanner scanGyro;
         try {
             scanGyro = new Scanner(new File("/data/data/edu.utc.vat/files/g.dat"));
         } catch (FileNotFoundException e) {
-            Log.e("FlankerResults","g.dat not accessible");
+            Log.e("FlankerResults", "g.dat not accessible");
             return false;
         }
-        Log.i("FlankerResults","loadResults 2");
+        Log.i("FlankerResults", "loadResults 2");
         gCount = CallNative.CountGyro();
         scanGyro.useDelimiter("\n");
         ct = 0;
-        Log.i("FlankerResults","loadResults 3");
+        Log.i("FlankerResults", "loadResults 3");
         try {
-            while(scanGyro.hasNext()) {
+            while (scanGyro.hasNext()) {
                 Scanner scanLine;
                 scanLine = new Scanner(scanGyro.next());
                 scanLine.useDelimiter(",");
@@ -142,7 +141,7 @@ public class FlankerResultsActivity extends TestingActivity implements View.OnCl
                     z = Float.parseFloat(scanLine.next());
                     if (ct == 1) {
                         T = Double.parseDouble(scanLine.next()) - 1000000.f;
-                        t = T-T;
+                        t = T - T;
                     } else {
                         t = Double.parseDouble(scanLine.next()) - 1000000.f - T;
                     }
@@ -163,33 +162,32 @@ public class FlankerResultsActivity extends TestingActivity implements View.OnCl
         } catch (Exception e) {
             Log.getStackTraceString(e);
         }
-        Log.i("ViewResults","Gyro data lines count %d" + gCount);
+        Log.i("ViewResults", "Gyro data lines count %d" + gCount);
         Log.i("ViewResults", "Gyro values count %d" + ct);
 
         Scanner scanF;
         try {
             scanF = new Scanner(new File("/data/data/edu.utc.vat/files/f.dat"));
         } catch (FileNotFoundException e) {
-            Log.e("ViewResults","f.dat not accessible");
+            Log.e("ViewResults", "f.dat not accessible");
             return false;
         }
         scanF.useDelimiter("\n");
         ct = 0;
-        while(scanF.hasNext()){
+        while (scanF.hasNext()) {
             Scanner scanLine;
             scanLine = new Scanner(scanF.next());
             scanLine.useDelimiter(",");
-            int s,r;
+            int s, r;
             float rt;
-            if(ct>0){
+            if (ct > 0) {
                 s = Integer.parseInt(scanLine.next());
                 r = Integer.parseInt(scanLine.next());
                 rt = Float.parseFloat(scanLine.next());
-                if(r>0) {
+                if (r > 0) {
                     responses[0]++;
-                    responseTime+=rt;
-                }
-                else if(r<0)
+                    responseTime += rt;
+                } else if (r < 0)
                     responses[1]++;
                 else
                     responses[2]++;
@@ -203,7 +201,7 @@ public class FlankerResultsActivity extends TestingActivity implements View.OnCl
 
         //TODO: READ FLANKER DATA AND COMPUTE METRICS TO DISPLAY
 
-        Log.i("FlankerResults","returning from loadResults");
+        Log.i("FlankerResults", "returning from loadResults");
         return true;
     }
 
@@ -213,13 +211,13 @@ public class FlankerResultsActivity extends TestingActivity implements View.OnCl
         String[] code = new String[] {
                 "Correct", "Incorrect" , "No Response"
         };
-        double[] distribution = {33.33,33.33,33.33};
-        distribution[0] = ((double)(responses[0]))/16.;
-        distribution[1] = ((double)responses[1])/16.;
-        distribution[2] = ((double)responses[2])/16.;
+        double[] distribution = {33.33, 33.33, 33.33};
+        distribution[0] = ((double) (responses[0])) / 16.;
+        distribution[1] = ((double) responses[1]) / 16.;
+        distribution[2] = ((double) responses[2]) / 16.;
         int[] colors = {Color.GREEN, Color.RED, Color.BLUE};
         CategorySeries results = new CategorySeries("Flanker Results");
-        for (int i=0; i < distribution.length; i++) {
+        for (int i = 0; i < distribution.length; i++) {
             results.add(code[i], distribution[i]);
         }
         DefaultRenderer renderer = new DefaultRenderer();
@@ -284,7 +282,7 @@ public class FlankerResultsActivity extends TestingActivity implements View.OnCl
         multiRender.setChartTitleTextSize(48.f);
         multiRender.setLabelsTextSize(32.f);
         multiRender.setLegendTextSize(40.f);
-        int[] margins = new int[] {230, 90, 70, 90};
+        int[] margins = new int[]{230, 90, 70, 90};
         multiRender.setMargins(margins);
 
         multiRender.setYAxisMin(yMin - 2.);

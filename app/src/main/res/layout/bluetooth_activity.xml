@@ -15,10 +15,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_launcher"
-        android:id="@+id/imageView"
-        />
+        android:id="@+id/imageView" />
 
-    <TextView android:text="@string/select_main_menu"
+    <TextView
+        android:text="@string/select_main_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/text"
@@ -27,7 +27,7 @@
         android:typeface="sans"
         android:visibility="visible"
         android:textStyle="bold"
-        android:foreground="#d64177a5"
+        android:background="#d64177a5"
         android:layout_alignBottom="@+id/imageView"
         android:layout_alignRight="@+id/BtMenuButton1"
         android:layout_alignEnd="@+id/BtMenuButton1" />
