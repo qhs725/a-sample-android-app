@@ -45,6 +45,7 @@ public class Flanker {
 
     //instantiate schedule object
     public FlankerSchedule schedule;
+    public Chime chime;
 
     public Flanker(Context context) {
         myContext = context;
@@ -70,10 +71,9 @@ public class Flanker {
         return time;
     }
 
-    public void startFlanker() {
-        //startCountDown();
+    public void startFlanker(Context context) {
         schedule = new FlankerSchedule(myContext);
-        //schedule.onCreate();
+        chime = new Chime(context);
     }
 
     public void stopFlanker() {
@@ -92,7 +92,8 @@ public class Flanker {
     public int getSlide() {
         int slide;
         slide = schedule.currentSlide();
-        //Log.i("flanker","calling getSlide");
+
+        if (edu.utc.vat.CallNative.Chime()) chime.chime();
         return slide;
     }
 

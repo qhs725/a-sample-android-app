@@ -156,11 +156,13 @@ public class GroupListActivity extends BaseActivity {
                 header.title = "Select Organization";
                 result.add(header);
 
+                /*//TODO: ***GO TO TEST LIST INSTEAD***
                 if (size == 0) {//If user is not in an Organization then display TestingActivity instead of lists
                     Intent intent = new Intent(this, TestingActivity.class);
                     listSelections.selectTask("FREE", "FREE Mode: Sample Task", "Limited version to task", "regular");
                     this.startActivity(intent);
                 }
+                */
                 for (int i = 0; i < size; i++) {
                     listItemInfo ci = new listItemInfo();
                     ci.title = cursor.getString(cursor.getColumnIndexOrThrow("org_name"));

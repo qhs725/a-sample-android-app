@@ -31,15 +31,16 @@ namespace io {
 
         void id_(const char *);
 
+        bool __ck__();
+
+        void _c();
+
         const char * __id;
 
-        //bool __ff__;
-
-        //void __fo__();
-        //bool __fc__();
 
     private:
         bool o;
+        bool _ch = false;
 
     };
 
