@@ -207,7 +207,11 @@ b = f::f_::f__().__r__();
 return b;
 }
 
-
+JNIEXPORT jboolean JNICALL
+Java_edu_utc_vat_CallNative_Chime__(JNIEnv *, jobject) {
+bool b;
+b = io::io_::io__().__ck__();
+}
 
 
 #ifdef __cplusplus

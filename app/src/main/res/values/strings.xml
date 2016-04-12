@@ -35,4 +35,6 @@
     <string name="submit_text">Submit</string>
     <string name="nextbtn_text">Next</string>
     <string name="title_activity_registration_form">Registration</string>
+    <string name="drawer_open">Open Drawer Navigation</string>
+    <string name="close_drawer">Close Drawer Navigation</string>
 </resources>

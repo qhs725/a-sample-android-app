@@ -9,8 +9,8 @@ package edu.utc.vat.bluetooth;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.os.Bundle;
-import android.widget.Toast;
 import android.widget.Button;
+import android.widget.Toast;
 
 import edu.utc.vat.R;
 

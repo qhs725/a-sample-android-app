@@ -2,48 +2,38 @@
  * Sports Injury Prevention Screening -- SIPS
  * v0.01.1b (12/?/15)
  * rg 9/9/15
- *
+ * <p/>
  * TODO: Get status updating appropriately
- *
+ * <p/>
  * TODO: Add fragments for displaying timer and Exercise instructions
  * TODO: Move FLAG_KEEP_SCREEN_ON to timer fragment, so, screen only remains on during testing
  */
 
 package edu.utc.vat;
 
-import android.app.DialogFragment;
 
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
-
+import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-
-import android.os.Bundle;
-
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Button;
-import android.widget.Toast;
 
-import android.util.Log;
-
-import com.ibm.mobile.services.core.IBMBluemix;
-import com.ibm.mobile.services.core.IBMCurrentUser;
-import com.ibm.mobile.services.push.IBMPush;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.UUID;
-
-import bolts.Continuation;
-import bolts.Task;
 
 import edu.utc.vat.flanker.FlankerActivity;
 import edu.utc.vat.flanker.FlankerResultsActivity;
 import edu.utc.vat.post.test.ViewDialogFragment;
 import edu.utc.vat.post.test.ViewResultsActivity;
-import edu.utc.vat.util.dataUploadService;
+import edu.utc.vat.util.adapters.listSelections;
 
 
 public class TestingActivity extends BaseActivity implements View.OnClickListener {
@@ -66,7 +56,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
 
     private TextView currentExercise;
     public String exerciseName;
-    private HashMap<Integer, String> exerciseList = new HashMap <Integer, String>();
+    private HashMap<Integer, String> exerciseList = new HashMap<Integer, String>();
 
     private TextView timerClock;
     private int timerTime;
@@ -84,23 +74,24 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     public final long JUMP_TESTING_TIME = 5;
     private final long LEG_BALANCE_TESTING_TIME = 30;
 
-    private Toast concurrentToast;
-
-    public BlueMixApplication blApplication = null;
     private static final String CLASS_NAME = "LoginActivity";
-    private String uUserID = null;
-    private String sessionID = null;
     private Timer timer;
+    private JSONObject task = new JSONObject();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        getWindow().addFlags(
-                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
-        );
         setContentView(R.layout.activity_testing);
+
+        try {
+            task = listSelections.getSelectedTask();
+            if (!task.getString("type").equals("flanker"))
+                initNavDrawer();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
         status = VOID;
         completeExerciseList();
@@ -112,7 +103,12 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         timerClock = (TextView) findViewById(R.id.timer);
         timerTime = 0;
         timerString = timerToString(timerTime);
-        currentExercise.setText(exerciseName);
+
+        try {
+            currentExercise.setText(exerciseName != null ? exerciseName : task.getString("name"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         testStatus.setText(statusMessage);
         timerClock.setText(timerString);
         getUserInfo = (EditText) findViewById(R.id.SessionInfo);
@@ -139,67 +135,54 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
             }
         }
 
-        //use application class to maintain global state
-        //blApplication = (BlueMixApplication) getApplication();
-        //initServices(); //Initialize Bluemix connection
-
         if (CallNative.FlankerCheck() == true) {
-            Log.i("TESTING","GO TO FLANKER RESULTS DIALOG .. NO .. ??");
+            Log.i("TESTING", "GO TO FLANKER RESULTS DIALOG .. NO .. ??");
             //Upload(); //TODO: Create alternate Flanker upload dialog fragment
-        } else if (exercise == FLANKER) {
-            startFlanker();
+        } else try {
+            if (exercise == FLANKER || task.getString("type").equals("flanker")) {
+                startFlanker();
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.TestingStartButton: {
-                if (getUserInfo.getText().toString().trim().length() > 0) {
-                    status = READY;
-                }
-                if (status != READY) {
-                    Toast.makeText(this, "Please enter your NAME...",
-                            Toast.LENGTH_SHORT).show();
-                    resetButton.performClick();
+
+                if (status != COUNTDOWN && status != TESTING) {
+                    getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+                    userInfo = getUserInfo.getText().toString().trim();
+                    UserAccount.setSessionInfo(userInfo);//add user input to UserAccount
+                    timer.countDown();
+                    //Log.i("Testing", "Good--3");
+                    status = COUNTDOWN;
                     break;
                 } else {
-                    if (status != COUNTDOWN && status != TESTING) {
-                        userInfo = getUserInfo.getText().toString().trim();
-                        //Create UUID for exercise on Start
-                        sessionID = UUID.randomUUID().toString();
-                        UserAccount.setSessionID(sessionID); //set session ID on Start
-                        UserAccount.setSessionInfo(userInfo);//add user input to UserAccount
-
-                        String id = UserAccount.getGoogleUserID();
-
-
-                      CallNative.PassID(sessionID + "," + id + "," + userInfo); //TODO: deprecated
-
-                        timer.countDown();
-                        //Log.i("Testing", "Good--3");
-                        status = COUNTDOWN;
-                        break;
-                    } else {
-                        showToast("TEST IN PROGRESS, PLEASE RESET TO START NEW TEST");
-                        break;
-                    }
+                    status = READY;
+                    showSnackbar(R.id.TestScroll, "TEST IN PROGRESS, PRESS RESET TO CANCEL");
+                    //showToast("TEST IN PROGRESS, PRESS RESET TO CANCEL");
+                    break;
                 }
             }
             case R.id.TestingResetButton: {
+                getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 timer.stopTimer();
                 timerUpdate(0);
                 status = VOID;
                 statusUpdate(status);
                 getUserInfo.setText("");
                 getUserInfo.setOnClickListener(new View.OnClickListener() {
-                   public void onClick(View view) {
-                       getUserInfo.requestFocus();
-                       InputMethodManager inputManager = (InputMethodManager)
-                               getSystemService(Context.INPUT_METHOD_SERVICE);
-                       inputManager.showSoftInput(getUserInfo,
-                               InputMethodManager.SHOW_IMPLICIT);
-                       }
-                   }
+                                                   public void onClick(View view) {
+                                                       InputMethodManager inputManager = (InputMethodManager)
+                                                               getSystemService(Context.INPUT_METHOD_SERVICE);
+                                                       inputManager.showSoftInput(getUserInfo,
+                                                               InputMethodManager.SHOW_IMPLICIT);
+                                                   }
+                                               }
                 );
                 break;
             }
@@ -258,8 +241,8 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         Log.i("update", "statusUpdate");
         String statusUpdate = statusList.get(status);
         testStatus.setText(statusUpdate);
-        if(status == STOPPED) {
-            Log.e("testing","STATUS == STOPPED");
+        if (status == STOPPED) {
+            Log.e("testing", "STATUS == STOPPED");
         }
     }
 
@@ -274,6 +257,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         timerString = timerToString(timerTime);
         timerClock.setText(timerString);
     }
+
     public int Upload() {
         status = READY;
         String statusUpdate = statusList.get(status);
@@ -283,6 +267,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         statusUpdate(status);
         return 0;
     }
+
     public int Viewer() {
         DialogFragment viewResults = new ViewDialogFragment();
         viewResults.show(getFragmentManager(), "viewResults");
@@ -298,8 +283,9 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         exerciseList.put(2, "SINGLE LEG JUMP TEST");
         exerciseList.put(3, "FLANKER");
     }
+
     public void completeStatusList() {
-        statusList.put(-1, "Enter NAME...");
+        statusList.put(-1, "Add notes or press START...");
         statusList.put(3, "Press START to begin...");
         statusList.put(2, "Countdown to test...");
         statusList.put(1, "Testing...");
@@ -317,15 +303,15 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
     }
 
     public void launchViewerF() {
-        Log.i("TESTING","launching viewer activity");
+        Log.i("TESTING", "launching viewer activity");
         startActivity(new Intent(this, FlankerResultsActivity.class));
-        Log.i("TESTING","launched viewer activity");
+        Log.i("TESTING", "launched viewer activity");
     }
 
     public void launchViewer() {
-        Log.i("TESTING","launching viewer activity");
+        Log.i("TESTING", "launching viewer activity");
         startActivity(new Intent(this, ViewResultsActivity.class));
-        Log.i("TESTING","launched viewer activity");
+        Log.i("TESTING", "launched viewer activity");
     }
 
     private void startFlanker() {
@@ -347,72 +333,8 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         return string;
     }
 
-
-    //TODO: Move to BaseActivity
-    public  void initServices(){
-        if (UserAccount.getIdToken() != null) {
-            // set ID TOKEN so that all subsequent Service calls
-            // will contain the ID TOKEN in the header
-            Log.d(CLASS_NAME, "Setting the Google ID token: \n"
-                    + UserAccount.getIdToken());
-            Log.d(CLASS_NAME, "Setting the Google Access token for all future IBM Bluemix Mobile Cloud Service calls: \n"
-                    + UserAccount.getAccessToken());
-            // set the access token so that all subsequent calls to IBM Bluemix Mobile Cloud Services
-            // will contain the access token in the header
-            // Note: Kicking off a Bolts Asynchronous task to initialize services, chained with
-            // an additional Bolts Task, in series with first one, in order to register the device
-            // with the IBM Push service
-            IBMBluemix.setSecurityToken(IBMBluemix.IBMSecurityProvider.GOOGLE, UserAccount.getAccessToken())
-                    .continueWithTask(
-                            new Continuation<IBMCurrentUser, Task<String>>() {
-                                @Override
-                                public Task<String> then(Task<IBMCurrentUser> user) throws Exception {
-                                    // if setting the security token has failed...
-                                    if (user.isFaulted()) {
-                                        Log.e(CLASS_NAME, "There was an error setting the Google security token: " + user.getError().getMessage());
-                                        user.getError().printStackTrace();
-                                        // clear the security token
-                                        return null;
-                                    }
-                                    // if setting the security token succeeds...
-                                    Log.i(CLASS_NAME, "Set the Google security token successfully. Retrieved IBMCurrentUser: "
-                                            + user.getResult().getUuid());
-                                    // Save the IBMCurrentUser unique User Id
-                                    uUserID = user.getResult().getUuid();
-                                    //Add uUserID to User Account
-                                    UserAccount.setuUserID(uUserID);
-                                    // initialize IBM Bluemix Mobile Cloud Services
-                                   // blApplication.initializeBluemixServices();
-                                    Log.i(CLASS_NAME, "Done initializing IBM Bluemix Services");
-                                    Log.i(CLASS_NAME, "Done refreshing Session list.");
-                                    // retrieve instance of the IBM Push service
-                                    if (push == null) {
-                                        push = IBMPush.getService();
-                                    }
-                                    Log.i(CLASS_NAME, "Registering device with the IBM Push service.");
-                                    // register the device with the IBM Push service
-                                    return push.register(deviceAlias, consumerID);
-                                }
-
-                            }).continueWith(new Continuation<String, Void>() {
-                public Void then(Task<String> deviceIdTask) {
-                    if (deviceIdTask.isFaulted()) {
-                        Log.e(CLASS_NAME, "Device not registered with IBM Push service successfully.");
-                        Log.e(CLASS_NAME, "Exception : " + deviceIdTask.getError().getMessage());
-                        deviceIdTask.getError().printStackTrace();
-                        return null;
-                    }
-                    Log.i(CLASS_NAME, "Device registered with IBM Push service successfully. Device Id: "
-                            + deviceIdTask.getResult());
-                    return null;
-                }
-            });
-        } else {
-            Log.e(CLASS_NAME, "Did not receive an expected authentication token. Finishing activity.");
-            finish();
-        }
-    }
 }
+
 
 
 

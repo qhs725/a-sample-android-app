@@ -7,23 +7,12 @@
 package edu.utc.vat.post.test;
 
 import android.app.DialogFragment;
-
 import android.graphics.Color;
-
 import android.os.Bundle;
-
-import android.view.View;
-
-import android.widget.LinearLayout;
-import android.widget.Button;
-
 import android.util.Log;
-
-import edu.utc.vat.*;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.chart.PointStyle;
@@ -31,6 +20,14 @@ import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+import edu.utc.vat.CallNative;
+import edu.utc.vat.R;
+import edu.utc.vat.TestingActivity;
 
 public class ViewResultsActivity extends TestingActivity implements View.OnClickListener {
 
@@ -77,7 +74,7 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
 
         boolean loadFlag = loadResults();
         if (!loadFlag)
-            Log.e("ViewResults","Couldn't load files to view");
+            Log.e("ViewResults", "Couldn't load files to view");
 
         openChart();
     }
@@ -166,13 +163,13 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
         try {
             scanGyro = new Scanner(new File("/data/data/edu.utc.vat/files/g.dat"));
         } catch (FileNotFoundException e) {
-            Log.e("ViewResults","g.dat not accessible");
+            Log.e("ViewResults", "g.dat not accessible");
             return false;
         }
         gCount = CallNative.CountGyro();
         scanGyro.useDelimiter("\n");
         ct = 0;
-        while(scanGyro.hasNext()) {
+        while (scanGyro.hasNext()) {
             Scanner scanLine;
             scanLine = new Scanner(scanGyro.next());
             scanLine.useDelimiter(",");
@@ -184,20 +181,20 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
                 z = Float.parseFloat(scanLine.next());
                 if (ct == 1) {
                     T = Float.parseFloat(scanLine.next()) - 1000000.f;
-                    t = T-T;
+                    t = T - T;
                 } else {
                     t = Float.parseFloat(scanLine.next()) - 1000000.f - T;
                 }
-                rxSeries.add(t/1000.f, x);
-                rySeries.add(t/1000.f, y);
-                rzSeries.add(t/1000.f, z);
+                rxSeries.add(t / 1000.f, x);
+                rySeries.add(t / 1000.f, y);
+                rzSeries.add(t / 1000.f, z);
                 yrMax = Math.max(yrMax, getMax(x, y, z));
                 yrMin = Math.min(yrMin, getMin(x, y, z));
             }
             ct++;
         }
-        Log.i("ViewResults","Gyro data lines count %d" + gCount);
-        Log.i("ViewResults","Gyro values count %d" + ct);
+        Log.i("ViewResults", "Gyro data lines count %d" + gCount);
+        Log.i("ViewResults", "Gyro values count %d" + ct);
 
         // Third, scan c.dat for magnetic field data
         Scanner scanCompass;
@@ -237,7 +234,7 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
         Log.i("ViewResults", "Compass data lines count %d" + cCount);
         Log.i("ViewResults", "Compass values count %d" + ct);
 
-        Log.i("ViewResults","loadResults complete");
+        Log.i("ViewResults", "loadResults complete");
         return true;
     }
 
@@ -308,21 +305,21 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
         multiRender.setChartTitleTextSize(48.f);
         multiRender.setLabelsTextSize(32.f);
         multiRender.setLegendTextSize(40.f);
-        int[] margins = new int[] {230, 90, 70, 90};
+        int[] margins = new int[]{230, 90, 70, 90};
         multiRender.setMargins(margins);
 
         switch (STATE) {
             case ACCELERATION:
-                multiRender.setYAxisMin(yaMin-2.);
-                multiRender.setYAxisMax(yaMax+2.);
+                multiRender.setYAxisMin(yaMin - 2.);
+                multiRender.setYAxisMax(yaMax + 2.);
                 break;
             case ROTATION:
-                multiRender.setYAxisMin(yrMin-2.);
-                multiRender.setYAxisMax(yrMax+2.);
+                multiRender.setYAxisMin(yrMin - 2.);
+                multiRender.setYAxisMax(yrMax + 2.);
                 break;
             case MAGNETIC:
-                multiRender.setYAxisMin(ymMin-2.);
-                multiRender.setYAxisMax(ymMax+2.);
+                multiRender.setYAxisMin(ymMin - 2.);
+                multiRender.setYAxisMax(ymMax + 2.);
                 break;
         }
 
@@ -337,7 +334,7 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
 
 
     private void openFlankerChart() {
-        
+
     }
 
 
@@ -346,7 +343,7 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
         double xd = (double) x;
         double yd = (double) y;
         double zd = (double) z;
-        accelMag = Math.sqrt(xd*xd+yd*yd+zd*zd);
+        accelMag = Math.sqrt(xd * xd + yd * yd + zd * zd);
         if (accelMag < 9.0) {
             jumpCount++;
             if (jumpCount > jumpMax)
@@ -360,7 +357,7 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
         double h;
         float dt = testTime / ((float) totalCount);
         float t = dt * (float) jumpMax;
-        h = 6.*(32.174*((t/2.)*(t/2.)));
+        h = 6. * (32.174 * ((t / 2.) * (t / 2.)));
         return (float) h; // height in inches
     }
 

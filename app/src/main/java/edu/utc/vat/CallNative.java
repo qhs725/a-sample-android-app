@@ -9,7 +9,7 @@ package edu.utc.vat;
 import android.util.Log;
 
 public class CallNative {
-    static  {
+    static {
         try {
             System.loadLibrary("utcvatjni");
         } catch (UnsatisfiedLinkError e) {
@@ -50,7 +50,7 @@ public class CallNative {
     @SuppressWarnings("JniMissingFunction")
     public static native int WriteOff(); //stops writing to files in sensor loop
 
-    @SuppressWarnings("JniMissingFunction")
+    @SuppressWarnings("JniMissingFunction") //TODO: THIS IS DEPRECATED .. ??
     public static native boolean PackageData(String x); //groups accel, gyro, comp data
 
     @SuppressWarnings("JniMissingFunction")
@@ -88,4 +88,8 @@ public class CallNative {
 
     @SuppressWarnings("JniMissingFunction")
     public static native boolean FlankerCheck();
+
+    @SuppressWarnings("JniMissingFunction")
+    public static native boolean Chime();
+
 }

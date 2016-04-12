@@ -3,8 +3,6 @@ package edu.utc.vat.forms;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -127,7 +125,7 @@ public class SportInjuryForm extends AppCompatActivity {
                             radioButtonID = rGroup.getCheckedRadioButtonId();
                             radioButton = rGroup.findViewById(radioButtonID);
 
-                            int ans = index+1 == 12 ?rGroup.indexOfChild(radioButton) : rGroup.indexOfChild(radioButton) + 1;
+                            int ans = index + 1 == 12 ? rGroup.indexOfChild(radioButton) : rGroup.indexOfChild(radioButton) + 1;
                             //get index of answer to store in database (can change to text if necessary)
 
                             try {

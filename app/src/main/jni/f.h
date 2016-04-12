@@ -24,9 +24,9 @@ namespace f {
 
             ~f_();
 
-            void __s__(double _);
+            //void __s__(double _);
 
-            void __f__(double _, int _0);
+            //void __f__(double _, int _0);
 
             void __i__();
 
@@ -61,7 +61,7 @@ namespace f {
             double *__s;
             double *__t;
 
-            double __dt;
+            //double __dt;
 
             int *__;
 

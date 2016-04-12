@@ -6,25 +6,19 @@
 
 package edu.utc.vat;
 
+import android.content.Context;
 import android.content.Intent;
-
 import android.os.Bundle;
-
 import android.util.Log;
-
 import android.view.View;
 import android.view.View.OnClickListener;
-
-import android.content.Context;
 
 import com.ibm.mobile.services.core.IBMBluemix;
 import com.ibm.mobile.services.core.IBMCurrentUser;
 
 import bolts.Continuation;
 import bolts.Task;
-
 import edu.utc.vat.bluetooth.BtActivity;
-import edu.utc.vat.forms.SportInjuryForm;
 import edu.utc.vat.post.test.ViewResultsActivity;
 
 
@@ -46,6 +40,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
+        initNavDrawer();
 
         findViewById(R.id.MainMenuButton1).setOnClickListener(new OnClickListener() {
             @Override
@@ -84,7 +79,7 @@ public class MainActivity extends BaseActivity {
         findViewById(R.id.MainMenuButton5).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(SportInjuryForm.createIntent(self));
+                startActivity(GroupListActivity.createIntent(self));
             }
         });
 

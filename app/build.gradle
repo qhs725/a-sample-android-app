@@ -11,21 +11,17 @@ android {
             storePassword 'utcandroid'
         }
     }
-
-    compileSdkVersion 'Google Inc.:Google APIs:23'
-    buildToolsVersion '23.0.1'
-
+    compileSdkVersion 23
+    buildToolsVersion '23.0.2'
     useLibrary 'org.apache.http.legacy'
-
     defaultConfig {
         applicationId "edu.utc.vat"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
     }
-
     dexOptions {
         javaMaxHeapSize "2g"
     }
@@ -49,6 +45,8 @@ android {
             jni.srcDirs = [] //disable automatic ndk-build
         }
     }
+    productFlavors {
+    }
 }
 
 tasks.withType(JavaCompile) {
@@ -68,7 +66,7 @@ task ndkBuild(type: Exec) {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     // compile 'com.google.http-client:google-http-client-gson:1.20.0'
     //compile 'com.google.http-client:google-http-client:1.20.0'
     compile('com.google.api-client:google-api-client:1.20.0') {
@@ -90,4 +88,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.github.nkzawa:socket.io-client:0.6.0'
+    compile 'com.android.support:recyclerview-v7:23.0.0'
+    compile 'com.android.support:cardview-v7:23.0.0'
+    compile 'de.hdodenhof:circleimageview:2.0.0'
 }

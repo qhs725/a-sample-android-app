@@ -11,4 +11,12 @@
     <color name="background_color_main">#d62f7bad</color>
     <color name="abc_search_url_text_normal">#71909e</color>
 
+    <color name="theme_accent">#ffbc40</color>
+    <!-- general colors for drawer -->
+    <color name="list_background">#F2F2F2</color>
+    <!-- primary colors for drawer -->
+    <color name="list_background_normal">#FCFCFC</color>
+    <!-- secondary colors for drawer -->
+    <color name="list_background_secondary_normal">#F2F2F2</color>
+
 </resources>

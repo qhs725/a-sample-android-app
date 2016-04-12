@@ -6,18 +6,12 @@
 
 package edu.utc.vat;
 
-import android.os.CountDownTimer;
-
 import android.content.Context;
-
-import android.media.RingtoneManager;
 import android.media.Ringtone;
-
+import android.media.RingtoneManager;
 import android.net.Uri;
-import android.telecom.Call;
+import android.os.CountDownTimer;
 import android.util.Log;
-
-import java.lang.Exception;
 
 
 public class Timer {
@@ -51,14 +45,17 @@ public class Timer {
         if (time >= 1000) time = time / 1000;
         countDownTime = time;
     }
+
     public void setCountDownTime(int time) {
         if (time >= 1000) time = time / 1000;
         countDownTime = (long) time;
     }
+
     public void setTestingTime(long time) {
         if (time >= 1000) time = time / 1000;
         testingTime = time;
     }
+
     public void setTestingTime(int time) {
         if (time >= 1000) time = time / 1000;
         testingTime = (long) time;
@@ -84,8 +81,8 @@ public class Timer {
             state = READY;
         } else if (state == COUNTDOWN) {
             countDownTimer.cancel();
-            Log.i("timer","TRIED KILLING COUNTDOWN TIMER");
-            if(CallNative.FilesOpen())
+            Log.i("timer", "TRIED KILLING COUNTDOWN TIMER");
+            if (CallNative.FilesOpen())
                 CallNative.CloseFiles();
             timeron = false;
             state = READY;
@@ -97,7 +94,7 @@ public class Timer {
             state = COUNTDOWN;
         if (timeron) {
             stopTimer();
-            ((TestingActivity)appContext).showToast("RESTARTING TEST\nCOUNTDOWN ...");
+            ((TestingActivity) appContext).showToast("RESTARTING TEST\nCOUNTDOWN ...");
         }
         timeron = true;
         state = COUNTDOWN;
@@ -113,7 +110,9 @@ public class Timer {
         }
         CallNative.StartSensors();
 
-        if (state != STOPPED) {Log.i("timer","ERROR, INCORRECT STATE IN COUNTDOWN TIMER");}
+        if (state != STOPPED) {
+            Log.i("timer", "ERROR, INCORRECT STATE IN COUNTDOWN TIMER");
+        }
 
 
         if (countDownTime > 0)
@@ -162,8 +161,8 @@ public class Timer {
             @Override
             public void onTick(long timeRemaining) {
                 state = TESTING;
-                ((TestingActivity)appContext).timerUpdate(timeRemaining);
-                ((TestingActivity)appContext).statusUpdate(state);
+                ((TestingActivity) appContext).timerUpdate(timeRemaining);
+                ((TestingActivity) appContext).statusUpdate(state);
             }
 
             @Override
@@ -176,8 +175,8 @@ public class Timer {
                 }
 
                 state = STOPPED;
-                ((TestingActivity)appContext).timerUpdate(0);
-                ((TestingActivity)appContext).statusUpdate(state);
+                ((TestingActivity) appContext).timerUpdate(0);
+                ((TestingActivity) appContext).statusUpdate(state);
 
                 CallNative.WriteOff();
                 CallNative.StopSensors();
