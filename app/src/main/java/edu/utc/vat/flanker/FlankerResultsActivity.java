@@ -133,9 +133,7 @@ public class FlankerResultsActivity extends TestingActivity implements View.OnCl
                 scanLine.useDelimiter(",");
                 float x, y, z;
                 double t;
-                // g.dat -- ignoring first line; header
                 if (ct > 0) {
-                    //Log.i("FlankerResults","---1---");
                     x = Float.parseFloat(scanLine.next());
                     y = Float.parseFloat(scanLine.next());
                     z = Float.parseFloat(scanLine.next());
@@ -145,7 +143,6 @@ public class FlankerResultsActivity extends TestingActivity implements View.OnCl
                     } else {
                         t = Double.parseDouble(scanLine.next()) - 1000000.f - T;
                     }
-                    //Log.i("FlankerResults","---2---");
                     try {
                         xSeries.add(t / 1000.f, x);
                         ySeries.add(t / 1000.f, y);
@@ -153,7 +150,6 @@ public class FlankerResultsActivity extends TestingActivity implements View.OnCl
                     } catch (Exception e) {
                         Log.getStackTraceString(e);
                     }
-                    //Log.i("FlankerResults","---3---");
                     yMax = Math.max(yMax, getMax(x, y, z));
                     yMin = Math.min(yMin, getMin(x, y, z));
                 }
