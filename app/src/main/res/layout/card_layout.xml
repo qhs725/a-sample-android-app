@@ -11,7 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_rect_list_normal"
+        android:background="#ddb9a826"
         android:focusable="false"
         android:elevation="20dp"
         android:contextClickable="false"
@@ -31,12 +31,23 @@
             android:paddingTop="5dp" />
 
         <TextView
+            android:id="@+id/id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="auxillary user id"
+            android:textSize="10dp"
+            android:layout_below="@id/title"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="25dp"
+            android:gravity="center_vertical" />
+
+        <TextView
             android:id="@+id/role_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="role"
             android:textSize="10dp"
-            android:layout_below="@id/title"
+            android:layout_below="@id/id"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="25dp"
             android:gravity="center_vertical" />

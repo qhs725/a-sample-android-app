@@ -149,7 +149,7 @@ public class GroupListActivity extends BaseActivity {
                 setTitle("Select Organization");
                 listSelections.selectOrg(null);
                 cursor = db.getOrgs();
-                size = cursor.getCount();
+                size = cursor.getCount(); //TODO: IF SIZE == 0 --> SKIP TO DEFAULT TASKS
                 cursor.moveToFirst();
 
                 //Header

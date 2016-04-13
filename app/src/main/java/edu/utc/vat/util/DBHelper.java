@@ -200,7 +200,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * Functions for interacting with the groupMembers table.
      */
 
-    public boolean insertMember(String memberID, String groupID, String orgId, String name, String role) {
+    public boolean insertMember(String memberID, String groupID, String orgId, String name, String role) {//}, String number) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("memberID", memberID);
@@ -208,6 +208,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("orgID", orgId);
         contentValues.put("name", name);
         contentValues.put("role_name", role);
+        //contentValues.put("numID", number);
 
         int check = (int) db.insertWithOnConflict("groupMembers", null, contentValues, SQLiteDatabase.CONFLICT_IGNORE);
         if (check == -1) {

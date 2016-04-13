@@ -310,7 +310,7 @@ public class GoogleTokenManager extends LoadingActivity {
 
                     //Retrieve server response
                     httpresponse = httpclient.execute(post);
-                    Log.e(CLASS_NAME, "CHECK RESPONSE STATUS CODE:  " + httpresponse.getStatusLine().getStatusCode());
+                    Log.i(CLASS_NAME, "CHECK RESPONSE STATUS CODE:  " + httpresponse.getStatusLine().getStatusCode());
 
                     if (httpresponse.getStatusLine().getStatusCode() != 200) {
                         try {

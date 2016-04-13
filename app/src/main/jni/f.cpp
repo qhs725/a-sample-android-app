@@ -48,6 +48,9 @@ namespace f {
         f_::__fo = true; //TODO: fix this .. (still necessary -- ??)
     }
 
+    /**
+     * __w__() --> WRITE FLANKER TASK DATA TO FILES
+     */
     void f_::__w__() {
         LOGI("FLANKER -- WRITING TO f.dat");
         std::ofstream ff ("/data/data/edu.utc.vat/files/f.dat",std::ofstream::out);
