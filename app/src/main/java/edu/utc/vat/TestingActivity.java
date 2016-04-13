@@ -38,7 +38,7 @@ import edu.utc.vat.util.adapters.listSelections;
 
 public class TestingActivity extends BaseActivity implements View.OnClickListener {
 
-    private static final int NO_EXERCISE_SELECTED = 0;
+    public static final int NO_EXERCISE_SELECTED = 0;
     private static final int ONE_LEG_SQUAT_HOLD = 1;
     public static final int SINGLE_LEG_JUMP = 2;
     public static final int FLANKER = 3;
@@ -232,6 +232,14 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         if (CallNative.FlankerCheck())
             launchViewerF();
         super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        resetButton.performClick();
+        exercise = NO_EXERCISE_SELECTED;
+        this.finish();
+        super.onBackPressed();
     }
 
     /**

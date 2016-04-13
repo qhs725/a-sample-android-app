@@ -88,6 +88,12 @@ public class FlankerResultsActivity extends TestingActivity implements View.OnCl
     }
 
     @Override
+    public void onDestroy() {
+        exercise = NO_EXERCISE_SELECTED;
+        super.onDestroy();
+    }
+
+    @Override
     public void onBackPressed() {
         DialogFragment uploadData = new UploadFlankerDialogFragment();
         CallNative.SetFlankerFlag(false);
