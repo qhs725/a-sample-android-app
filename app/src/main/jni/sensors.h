@@ -62,7 +62,8 @@ namespace sh {
             bool _r;
             bool _l;
             bool _ts;
-            const float FT = 0.5f;
+            //TODO: CHANGE FLANKER THRESHOLD VALUE HERE
+            const float FT = 1.0f;
 
         private:
             bool sOn;

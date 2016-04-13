@@ -116,7 +116,7 @@ public class GroupListActivity extends BaseActivity {
                     listItemInfo ci = new listItemInfo();
                     ci.title = cursor.getString(cursor.getColumnIndexOrThrow("name"));
                     ci.role = cursor.getString(cursor.getColumnIndexOrThrow("role_name"));
-                    ci.id = cursor.getString(cursor.getColumnIndexOrThrow("memberID"));
+                    ci.id = cursor.getString(cursor.getColumnIndexOrThrow("number"));
 
                     cursor.moveToNext();
                     result.add(ci);
@@ -149,7 +149,7 @@ public class GroupListActivity extends BaseActivity {
                 setTitle("Select Organization");
                 listSelections.selectOrg(null);
                 cursor = db.getOrgs();
-                size = cursor.getCount();
+                size = cursor.getCount(); //TODO: IF SIZE == 0 --> SKIP TO DEFAULT TASKS
                 cursor.moveToFirst();
 
                 //Header

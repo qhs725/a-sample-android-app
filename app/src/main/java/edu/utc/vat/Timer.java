@@ -100,7 +100,8 @@ public class Timer {
         state = COUNTDOWN;
 
         //if files aren't open, open for current test
-        if (!CallNative.FilesOpen()) {
+        if (!CallNative.FilesOpen())
+        { //TODO: THIS IS DEPRECATED ...
             if (CallNative.CheckData())
                 CallNative.OpenFiles();
             else {

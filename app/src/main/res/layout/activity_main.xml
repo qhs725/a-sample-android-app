@@ -124,38 +124,19 @@
                     android:textStyle="bold" />
 
                 <Button
-                    android:id="@+id/MainMenuButton4"
-                    android:layout_width="450dip"
-                    android:layout_height="36dip"
-                    android:layout_alignEnd="@+id/MainMenuButton3"
-                    android:layout_alignLeft="@+id/MainMenuButton3"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignRight="@+id/MainMenuButton3"
-                    android:layout_alignStart="@+id/MainMenuButton3"
-                    android:layout_below="@+id/MainMenuButton3"
-                    android:layout_marginTop="33dp"
-                    android:background="#ddb9a826"
-                    android:paddingTop="6dp"
-                    android:text="Bluetooth"
-                    android:textAlignment="gravity"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
-
-                <Button
                     android:id="@+id/MainMenuButton5"
                     android:layout_width="450dip"
                     android:layout_height="36dip"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/MainMenuButton4"
                     android:layout_marginTop="31dp"
                     android:background="#ddb9a826"
                     android:paddingTop="6dp"
                     android:text="Test Groups List"
                     android:textAlignment="gravity"
                     android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_below="@+id/MainMenuButton3" />
             </RelativeLayout>
         </ScrollView>
 

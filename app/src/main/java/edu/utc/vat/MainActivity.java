@@ -67,13 +67,13 @@ public class MainActivity extends BaseActivity {
             }
         });
 
-        findViewById(R.id.MainMenuButton4).setOnClickListener(new OnClickListener() {
+        /*findViewById(R.id.MainMenuButton4).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 showToast("Bluetooth pairing tests are currently under development.");
                 //startBluetooth();
             }
-        });
+        });*/
 
 
         findViewById(R.id.MainMenuButton5).setOnClickListener(new OnClickListener() {

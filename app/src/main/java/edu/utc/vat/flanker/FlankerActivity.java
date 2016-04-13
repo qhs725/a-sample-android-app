@@ -63,11 +63,9 @@ public class FlankerActivity extends Activity {
         Log.i("FLANKER", "onEnd -- 2 exiting ...");
         NavUtils.navigateUpFromSameTask(this);
         Log.i("FLANKER", "onEnd -- 3 exiting ...");
-        /* if (CallNative.FlankerCheck() == true) {
-            launchViewer();
-        } */
     }
 
+    //TODO: DEPRECATED ...
     public void launchViewer() {
         startActivity(new Intent(this, ViewResultsActivity.class));
     }
