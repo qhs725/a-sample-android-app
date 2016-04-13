@@ -90,6 +90,12 @@ public class ViewResultsActivity extends TestingActivity implements View.OnClick
     }
 
     @Override
+    public void onDestroy() {
+        exercise = NO_EXERCISE_SELECTED;
+        super.onDestroy();
+    }
+
+    @Override
     public void onBackPressed() {
         DialogFragment uploadData = new ViewUploadDataDialogFragment();
         uploadData.show(getFragmentManager(), "uploadData");
