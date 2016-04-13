@@ -46,16 +46,24 @@ public class MainActivity extends BaseActivity {
         findViewById(R.id.MainMenuButton1).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                exercise = ONE_LEG_SQUAT_HOLD;
-                startActivity(TestingActivity.createIntent(self, exercise));
+
+                listSelections.selectTask("SLBT", "Single Leg Balance Test", "n/a", "regular");
+              //  exercise = ONE_LEG_SQUAT_HOLD;
+              //  startActivity(TestingActivity.createIntent(self, exercise));
+                Intent intent = new Intent(BlueMixApplication.getAppContext(), TestingActivity.class);
+                startActivity(intent);
             }
         });
 
         findViewById(R.id.MainMenuButton2).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                exercise = ONE_LEG_JUMP_BALANCE;
-                startActivity(TestingActivity.createIntent(self, exercise));
+               // exercise = ONE_LEG_JUMP_BALANCE;
+               // startActivity(TestingActivity.createIntent(self, exercise));
+
+                listSelections.selectTask("SLJT", "Single Leg Jump Test", "n/a", "regular");
+                Intent intent = new Intent(BlueMixApplication.getAppContext(), TestingActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -63,8 +71,12 @@ public class MainActivity extends BaseActivity {
         findViewById(R.id.MainMenuButton3).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                exercise = FLANKER;
-                startActivity(TestingActivity.createIntent(self, exercise));
+                //exercise = FLANKER;
+                //startActivity(TestingActivity.createIntent(self, exercise));
+
+                listSelections.selectTask("FLKR", "Flanker", "n/a", "flanker");
+                Intent intent = new Intent(BlueMixApplication.getAppContext(), TestingActivity.class);
+                startActivity(intent);
             }
         });
 

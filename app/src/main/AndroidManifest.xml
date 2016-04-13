@@ -77,7 +77,8 @@
             android:name=".post.test.ViewResultsActivity"
             android:label="@string/title_testing_activity"
             android:parentActivityName=".TestingActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="edu.utc.vat.post.test.ViewResultsActivity" />
