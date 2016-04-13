@@ -116,7 +116,7 @@ public class GroupListActivity extends BaseActivity {
                     listItemInfo ci = new listItemInfo();
                     ci.title = cursor.getString(cursor.getColumnIndexOrThrow("name"));
                     ci.role = cursor.getString(cursor.getColumnIndexOrThrow("role_name"));
-                    ci.id = cursor.getString(cursor.getColumnIndexOrThrow("number"));
+                    ci.id = cursor.getString(cursor.getColumnIndexOrThrow("memberID"));
 
                     cursor.moveToNext();
                     result.add(ci);

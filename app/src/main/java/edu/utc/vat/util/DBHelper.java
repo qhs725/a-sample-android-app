@@ -50,7 +50,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         db.execSQL("CREATE TABLE IF NOT EXISTS ORG(orgID VARCHAR PRIMARY KEY, org_name VARCHAR, premium_plan text, role_name VARCHAR, org_initial INT, org_groupCreate INT, org_groupDelete INT, org_editAdmin INT);");
         db.execSQL("CREATE TABLE IF NOT EXISTS GROUPS(groupid VARCHAR primary key, orgID VARCHAR, group_name VARCHAR, group_description TEXT, role_name VARCHAR, group_editing_perm INT, group_sessions_perm INT, group_members_perm INT, group_results_perm INT, group_test_perm INT);");
-        db.execSQL("CREATE TABLE IF NOT EXISTS groupMembers(memberID VARCHAR, groupID VARCHAR, orgID VARCHAR, name VARCHAR, role_name VARCHAR, numID VARCHAR, UNIQUE (memberID, groupID) ON CONFLICT REPLACE);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS groupMembers(memberID VARCHAR, groupID VARCHAR, orgID VARCHAR, name VARCHAR, role_name VARCHAR, UNIQUE (memberID, groupID) ON CONFLICT REPLACE);");
         db.execSQL("CREATE TABLE IF NOT EXISTS taskInfo(taskID VARCHAR primary key, task_name VARCHAR, task_description text, task_type VARCHAR);");
         db.execSQL("CREATE TABLE IF NOT EXISTS Sessions(sessionID VARCHAR primary key, session_desc text, start_date DATE, end_date DATE, groupID VARCHAR, createdBy VARCHAR, session_type VARCHAR, dateAdded DATE);");
 
@@ -200,7 +200,7 @@ public class DBHelper extends SQLiteOpenHelper {
      * Functions for interacting with the groupMembers table.
      */
 
-    public boolean insertMember(String memberID, String groupID, String orgId, String name, String role, String number) {
+    public boolean insertMember(String memberID, String groupID, String orgId, String name, String role) {//}, String number) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("memberID", memberID);
@@ -208,7 +208,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("orgID", orgId);
         contentValues.put("name", name);
         contentValues.put("role_name", role);
-        contentValues.put("numID", number);
+        //contentValues.put("numID", number);
 
         int check = (int) db.insertWithOnConflict("groupMembers", null, contentValues, SQLiteDatabase.CONFLICT_IGNORE);
         if (check == -1) {
