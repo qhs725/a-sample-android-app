@@ -105,7 +105,7 @@ public class TestingActivity extends BaseActivity implements View.OnClickListene
         timerString = timerToString(timerTime);
 
         try {
-            currentExercise.setText(exerciseName != null ? exerciseName : task.getString("name"));
+            currentExercise.setText(task.getString("name") != null ? task.getString("name"): exerciseName);
         } catch (JSONException e) {
             e.printStackTrace();
         }

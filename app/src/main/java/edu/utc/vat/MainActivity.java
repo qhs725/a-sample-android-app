@@ -20,6 +20,7 @@ import bolts.Continuation;
 import bolts.Task;
 import edu.utc.vat.bluetooth.BtActivity;
 import edu.utc.vat.post.test.ViewResultsActivity;
+import edu.utc.vat.util.adapters.listSelections;
 
 
 public class MainActivity extends BaseActivity {
@@ -99,6 +100,7 @@ public class MainActivity extends BaseActivity {
     public void onResume() {
         //if (CallNative.FlankerCheck())
         //    launchViewer();
+        listSelections.resetOrg();
         super.onResume();
     }
 
